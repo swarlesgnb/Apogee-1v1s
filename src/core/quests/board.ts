@@ -46,21 +46,33 @@ export type QuestKind =
   // ceiling: one good run
   | "reach_rank"
   | "beat_median"
+  | "personal_best"
+  | "top_five"
+  | "rising_runs"
   // floor: no bad run
   | "clean_set"
   | "no_disasters"
+  | "median_streak"
+  | "steady_ten"
   // variety: breadth, revisits, the ranked queue
   | "category_volume"
   | "variety"
   | "revisit"
   | "ranked_play"
+  | "new_scenario"
+  | "harder_band"
+  | "category_tour"
   // weekly
   | "weekly_rank_ups"
   | "weekly_floors"
   | "weekly_wins"
-  | "weekly_days";
+  | "weekly_days"
+  | "weekly_bests"
+  | "weekly_family_sweep";
 
-export type QuestUnit = "score" | "runs" | "scenarios" | "matches" | "wins" | "days" | "sets" | "ranks";
+export type QuestUnit =
+  | "score" | "runs" | "scenarios" | "matches" | "wins" | "days" | "sets" | "ranks"
+  | "categories" | "families" | "bests";
 
 /** What a quest measures, fixed when it is issued. */
 export interface QuestParams {
@@ -192,6 +204,16 @@ const XP: Record<QuestKind, number> = {
   weekly_floors: 1000,
   weekly_wins: 1000,
   weekly_days: 800,
+  personal_best: 300,
+  top_five: 200,
+  rising_runs: 200,
+  median_streak: 250,
+  steady_ten: 350,
+  new_scenario: 150,
+  harder_band: 250,
+  category_tour: 200,
+  weekly_bests: 1000,
+  weekly_family_sweep: 900,
 };
 
 /** Runs in a row a floor quest asks for: the same five the floor itself is the worst of. */
@@ -205,6 +227,21 @@ const CLEAN_SET = 5;
  * would have completed it.
  */
 const DISASTER_FRACTION = 0.9;
+
+/** Runs in a row, each higher than the one before, that a rising-runs quest asks for. */
+const RISING_RUNS = 4;
+
+/** A steady-ten quest: this many in a row, none under DISASTER_FRACTION of the median. */
+const STEADY_RUNS = 10;
+
+/** A personal best is offered only where the recent median is this close to it. */
+const PB_REACH = 0.93;
+
+/** Runs a step-up quest asks for on the harder variant, and the fewest before it counts as new. */
+const STEP_UP_RUNS = 3;
+
+/** New bests a weekly-bests quest asks for. */
+const WEEKLY_BESTS = 10;
 
 /** A scenario untouched this long is worth a revisit quest. */
 const NEGLECTED_DAYS = 21;
@@ -361,6 +398,17 @@ function before(h: ScenarioHistory | undefined, t: Date): Run[] {
 /** Runs in [since, until), oldest first. */
 function within(h: ScenarioHistory | undefined, since: Date, until: Date): Run[] {
   return h ? h.runs.filter((r) => r.playedAt && r.playedAt >= since && r.playedAt < until) : [];
+}
+
+/** The longest run of scores each strictly higher than the one before, counting the first. */
+function longestRise(scores: number[]): number {
+  let best = scores.length > 0 ? 1 : 0;
+  let run = 1;
+  for (let i = 1; i < scores.length; i++) {
+    run = scores[i] > scores[i - 1] ? run + 1 : 1;
+    best = Math.max(best, run);
+  }
+  return best;
 }
 
 function longestStreak(flags: boolean[]): number {
@@ -629,6 +677,141 @@ function dailyCandidates(ctx: IssueContext): Record<"ceiling" | "floor" | "varie
     });
   }
 
+
+  // ---- more ceiling: a best, a top-five run, a rising session -----------------------
+  //
+  // All read the same recent scenarios beat_median does: played in the last month, with
+  // enough runs for a median to mean something. So do the two floor kinds after them.
+  for (const { p, runs } of recent) {
+    const scores = runs.map((r) => r.score);
+    const median = recentMedian(scores);
+    const best = Math.max(...scores);
+    const label = labelFor(p.def.name);
+    if (median <= 0 || best <= 0) continue;
+
+    // A best is only a quest where the median sits close under it; a best set on one
+    // lucky run months ago is not a thing to ask for today.
+    if (median >= best * PB_REACH) {
+      ceiling.push({
+        id: `personal_best:${p.def.name}`,
+        slot: "ceiling",
+        kind: "personal_best",
+        title: `Set a new best on ${label}`,
+        detail: `Your best is ${fmt(best)} and your median is ${fmt(median)}, ${Math.round((1 - median / best) * 100)}% under it.`,
+        xp: XP.personal_best,
+        target: Math.floor(best) + 1,
+        unit: "score",
+        params: { scenario: p.def.name, bar: best, from: median },
+      });
+    }
+
+    // The fifth-best run: a real high, and one reached before, so it is not a best.
+    if (scores.length >= 10) {
+      const fifth = [...scores].sort((a, b) => b - a)[4];
+      if (fifth > median) {
+        ceiling.push({
+          id: `top_five:${p.def.name}`,
+          slot: "ceiling",
+          kind: "top_five",
+          title: `A top-five run on ${label}`,
+          detail: `Your fifth-best run is ${fmt(fifth)}. Match it once today.`,
+          xp: XP.top_five,
+          target: Math.ceil(fifth),
+          unit: "score",
+          params: { scenario: p.def.name, bar: fifth, from: median },
+        });
+      }
+    }
+
+    ceiling.push({
+      id: `rising_runs:${p.def.name}`,
+      slot: "ceiling",
+      kind: "rising_runs",
+      title: `${RISING_RUNS} rising runs on ${label}`,
+      detail: `${RISING_RUNS} runs in a row on ${label}, each scoring higher than the one before.`,
+      xp: XP.rising_runs,
+      target: RISING_RUNS,
+      unit: "runs",
+      params: { scenario: p.def.name },
+    });
+
+    floor.push({
+      id: `median_streak:${p.def.name}`,
+      slot: "floor",
+      kind: "median_streak",
+      title: `Three in a row over your median on ${label}`,
+      detail: `Your median is ${fmt(median)}. Three consecutive runs above it; one under starts the count again.`,
+      xp: XP.median_streak,
+      target: 3,
+      unit: "runs",
+      params: { scenario: p.def.name, bar: median },
+    });
+    floor.push({
+      id: `steady_ten:${p.def.name}`,
+      slot: "floor",
+      kind: "steady_ten",
+      title: `Ten steady runs on ${label}`,
+      detail: `Ten in a row, none under ${fmt(median * DISASTER_FRACTION)}: ${Math.round(DISASTER_FRACTION * 100)}% of your median of ${fmt(median)}.`,
+      xp: XP.steady_ten,
+      target: STEADY_RUNS,
+      unit: "runs",
+      params: { scenario: p.def.name, bar: median * DISASTER_FRACTION },
+    });
+  }
+
+  // ---- try something new, in one category ---------------------------------------------
+  for (const cat of difficulty.categories) {
+    const unplayed = cat.scenarios.filter((sc) => before(history.get(sc.name), since).length === 0);
+    if (unplayed.length === 0) continue;
+    variety.push({
+      id: `new_scenario:${cat.name}`,
+      slot: "variety",
+      kind: "new_scenario",
+      title: `Try a new ${cat.name} scenario`,
+      detail: `${unplayed.length} ${cat.name} scenario${unplayed.length === 1 ? "" : "s"} in the pool you have never played. One run on any of them.`,
+      xp: XP.new_scenario,
+      target: 1,
+      unit: "scenarios",
+      params: { category: cat.name },
+    });
+  }
+
+  // ---- step up a band: the family is topped, the harder variant barely touched --------
+  //
+  // A window's thresholds reach into the one above it (windows.ts), so a player at the top
+  // of Novice is already at the first ranks of Intermediate and just has not launched it.
+  for (const p of pool) {
+    const top = p.def.rankMaxes[p.def.rankMaxes.length - 1];
+    const best = ctx.bests.get(p.def.name);
+    if (!p.def.family || top == null || best == null || best < top) continue;
+    const harder = p.category.scenarios.find((sc) => sc.family === p.def.family && (sc.window ?? 0) === (p.def.window ?? 0) + 1);
+    if (!harder || before(history.get(harder.name), since).length >= STEP_UP_RUNS) continue;
+    variety.push({
+      id: `harder_band:${harder.name}`,
+      slot: "variety",
+      kind: "harder_band",
+      title: `Step up to ${labelFor(harder.name)}`,
+      detail: `You have topped ${labelFor(p.def.name)}. The harder version grades the ranks above it. Play it ${STEP_UP_RUNS} times.`,
+      xp: XP.harder_band,
+      target: STEP_UP_RUNS,
+      unit: "runs",
+      params: { scenario: harder.name },
+    });
+  }
+
+  // ---- every category in one day --------------------------------------------------------
+  variety.push({
+    id: "category_tour",
+    slot: "variety",
+    kind: "category_tour",
+    title: `Play all ${difficulty.categories.length} categories`,
+    detail: "One run in each, any scenario and any difficulty. A queue for Any draws from all of them.",
+    xp: XP.category_tour,
+    target: difficulty.categories.length,
+    unit: "categories",
+    params: {},
+  });
+
   return { ceiling, floor, variety };
 }
 
@@ -695,6 +878,37 @@ function weeklyCandidates(ctx: IssueContext): Quest[] {
     unit: "days",
     params: {},
   });
+
+  out.push({
+    id: "weekly_bests",
+    slot: "weekly",
+    kind: "weekly_bests",
+    title: `Set ${WEEKLY_BESTS} new bests this week`,
+    detail: "On scenarios you had played before the week began. Every run over your best so far counts, even two on the same scenario.",
+    xp: XP.weekly_bests,
+    target: WEEKLY_BESTS,
+    unit: "bests",
+    params: {},
+  });
+
+  // The two weakest categories, so the sweep lands where the work is.
+  const standing = evaluateBenchmark(difficulty, ctx.bests);
+  for (const cat of [...standing.categories].sort((a, b) => a.energy - b.energy).slice(0, 2)) {
+    const def = difficulty.categories.find((c) => c.name === cat.name);
+    const families = new Set((def?.scenarios ?? []).map((sc) => sc.family ?? sc.name)).size;
+    if (families < 2) continue;
+    out.push({
+      id: `weekly_family_sweep:${cat.name}`,
+      slot: "weekly",
+      kind: "weekly_family_sweep",
+      title: `Play every ${cat.name} family this week`,
+      detail: `All ${families} of them, at any difficulty. ${cat.name} is one of your two lowest categories.`,
+      xp: XP.weekly_family_sweep,
+      target: families,
+      unit: "families",
+      params: { category: cat.name },
+    });
+  }
 
   return out;
 }
@@ -768,7 +982,9 @@ export function measure(q: IssuedQuest, ctx: BoardContext, matches: MatchRecord[
 
   switch (q.kind) {
     case "reach_rank":
-    case "revisit": {
+    case "revisit":
+    case "personal_best":
+    case "top_five": {
       const runs = runsOn(q.params.scenario!);
       return runs.length > 0 ? Math.max(...runs.map((r) => r.score)) : 0;
     }
@@ -777,7 +993,48 @@ export function measure(q: IssuedQuest, ctx: BoardContext, matches: MatchRecord[
       return runsOn(q.params.scenario!).filter((r) => r.score > q.params.bar!).length;
 
     case "clean_set":
+    case "steady_ten":
       return longestStreak(runsOn(q.params.scenario!).map((r) => r.score >= q.params.bar!));
+
+    case "median_streak":
+      return longestStreak(runsOn(q.params.scenario!).map((r) => r.score > q.params.bar!));
+
+    case "rising_runs":
+      return longestRise(runsOn(q.params.scenario!).map((r) => r.score));
+
+    case "harder_band":
+      return runsOn(q.params.scenario!).length;
+
+    case "new_scenario": {
+      // Never played before the board was issued, played since.
+      const cat = ctx.difficulty.categories.find((c) => c.name === q.params.category);
+      return (cat?.scenarios ?? []).filter((s) => before(history.get(s.name), since).length === 0 && runsOn(s.name).length > 0).length;
+    }
+
+    case "category_tour":
+      return ctx.difficulty.categories.filter((c) => c.scenarios.some((s) => runsOn(s.name).length > 0)).length;
+
+    case "weekly_bests": {
+      // Walked in play order per scenario, so two bests in one session are two bests.
+      let bests = 0;
+      for (const p of poolOf(ctx.difficulty)) {
+        const prior = before(history.get(p.def.name), since);
+        if (prior.length === 0) continue;
+        let best = Math.max(...prior.map((r) => r.score));
+        for (const r of runsOn(p.def.name)) {
+          if (r.score > best) {
+            bests++;
+            best = r.score;
+          }
+        }
+      }
+      return bests;
+    }
+
+    case "weekly_family_sweep": {
+      const cat = ctx.difficulty.categories.find((c) => c.name === q.params.category);
+      return new Set((cat?.scenarios ?? []).filter((s) => runsOn(s.name).length > 0).map((s) => s.family ?? s.name)).size;
+    }
 
     case "no_disasters": {
       // In the order they were played, across scenarios: a bad run on one breaks the

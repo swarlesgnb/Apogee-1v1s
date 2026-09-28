@@ -296,6 +296,51 @@ if (history.size === 0) {
         for (let i = 0; i < 5; i++) play(scenario, bar);
         break;
       }
+      case "personal_best":
+      case "top_five":
+        play(q.params.scenario!, q.target);
+        break;
+      case "rising_runs":
+        for (let i = 0; i < q.target; i++) play(q.params.scenario!, 1000 + i);
+        break;
+      case "median_streak":
+        for (let i = 0; i < q.target; i++) play(q.params.scenario!, q.params.bar! + 1);
+        break;
+      case "steady_ten":
+        for (let i = 0; i < q.target; i++) play(q.params.scenario!, q.params.bar!);
+        break;
+      case "harder_band":
+        for (let i = 0; i < q.target; i++) play(q.params.scenario!, 1);
+        break;
+      case "new_scenario": {
+        const cat = diff.categories.find((c) => c.name === q.params.category);
+        const fresh = cat?.scenarios.find((s) => !(base.get(s.name)?.runs ?? []).some((r) => !r.playedAt || r.playedAt < new Date(q.since)));
+        if (!fresh) return null;
+        play(fresh.name, 1);
+        break;
+      }
+      case "category_tour":
+        for (const c of diff.categories) play(c.scenarios[0].name, 1);
+        break;
+      case "weekly_bests": {
+        // Ten ascending runs over the best on one scenario played before the week.
+        const known = pool.find((s) => (base.get(s)?.runs ?? []).some((r) => r.playedAt && r.playedAt < new Date(q.since)));
+        if (!known) return null;
+        const best = Math.max(...base.get(known)!.runs.map((r) => r.score));
+        for (let i = 1; i <= q.target; i++) play(known, best + i);
+        break;
+      }
+      case "weekly_family_sweep": {
+        const cat = diff.categories.find((c) => c.name === q.params.category)!;
+        const seen = new Set<string>();
+        for (const s of cat.scenarios) {
+          const family = s.family ?? s.name;
+          if (seen.has(family)) continue;
+          seen.add(family);
+          play(s.name, 1);
+        }
+        break;
+      }
       case "category_volume":
         for (let i = 0; i < 8; i++) play(firstIn(q.params.category!)!, 1);
         break;
@@ -354,8 +399,8 @@ if (history.size === 0) {
     const progress = measure(q, at(done.h, now), done.matches);
     check(`${q.kind.padEnd(16)} completes when done`, progress >= q.target, `${progress}/${q.target}  ${q.title}`);
   }
-  console.log(`       ${seen.size} of 12 kinds exercised`);
-  check("most kinds were issued at least once", seen.size >= 9, [...seen.keys()].join(", "));
+  console.log(`       ${seen.size} of 22 kinds exercised`);
+  check("most kinds were issued at least once", seen.size >= 16, [...seen.keys()].join(", "));
 
   // The whole loop, on today's board: finish one quest, and the board keeps it and pays it.
   const priorDay = new Map([...history].map(([name,h]) => {
@@ -428,7 +473,8 @@ if (history.size === 0) {
     const count = (scenario: string) =>
       (history.get(scenario)?.runs ?? []).filter((r) => r.playedAt && r.playedAt >= since && r.playedAt < until).length;
     if (q.params.scenario) {
-      const needed = q.kind === "clean_set" || q.kind === "beat_median" ? q.target : 1;
+      const counted = ["clean_set", "beat_median", "rising_runs", "median_streak", "steady_ten", "harder_band"];
+      const needed = counted.includes(q.kind) ? q.target : 1;
       return count(q.params.scenario) >= needed;
     }
     if (q.params.category) {

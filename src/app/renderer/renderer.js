@@ -7988,6 +7988,9 @@ const QUEST_UNITS = {
   days: ["day", "days"],
   sets: ["set", "sets"],
   ranks: ["rank-up", "rank-ups"],
+  categories: ["category", "categories"],
+  families: ["family", "families"],
+  bests: ["new best", "new bests"],
 };
 
 /**
@@ -8149,6 +8152,7 @@ function nextCelebration() {
     quest.kind === "board_clear" ? "Board cleared"
     : quest.slot === "weekly" ? "Weekly quest complete"
     : quest.kind === "clean_set" ? "Floor raised"
+    : quest.kind === "personal_best" ? "New best"
     : "Quest complete";
   $("celebrateTitle").textContent = quest.title;
   $("celebrateDetail").textContent = quest.detail;
