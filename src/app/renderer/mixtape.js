@@ -9,7 +9,7 @@
   const number = n => Number(n).toLocaleString(undefined,{maximumFractionDigits:1});
   const signed = n => `${n > 0 ? '+' : n < 0 ? '−' : '±'}${number(Math.abs(n))}`;
   const names = {balance:'Full spectrum',push:'Close the gap',discover:'Side quests'};
-  const descriptions = {balance:'One of each discipline. A warm-up, or a check-up on everything at once.',push:'The scenarios where your best sits closest to the next threshold. Your likeliest rank-ups.',discover:'Your least-played scenarios. Widen the base the rest is built on.'};
+  const descriptions = {balance:'One scenario from each category.',push:'Scenarios where your best is closest to the next rank.',discover:'Scenarios you have played least.'};
   const captions = {balance:'One of each discipline',push:'Closest to a threshold',discover:'Least played first'};
   let data = typeof practice !== 'undefined' ? practice : window.__APOGEE_PRACTICE__;
   if (!data && window.__APOGEE_SEASON__) {
@@ -93,7 +93,7 @@
     if (m === 'push') return t.threshold === null ? 'Nothing left above your best here in this difficulty.'
       : t.best === null ? `No best yet; ${rankName(t)} starts at ${number(t.threshold)}.`
       : `${number(t.threshold - t.best)} from ${rankName(t)}. Your best is ${percent(t.best,t.threshold)}% of the way.`;
-    if (m === 'discover') return t.runs ? `Played ${t.runs} time${t.runs===1?'':'s'}. Widens your base.` : 'Never played. A fresh look.';
+    if (m === 'discover') return t.runs ? `Played ${t.runs} time${t.runs===1?'':'s'}.` : 'Never played.';
     return t.best === null ? 'New to you. Your first run sets the reference.' : `Best ${number(t.best)}${t.threshold!==null?` · ${number(t.threshold-t.best)} to ${rankName(t)}`:''}.`;
   }
   /** How a run landed against what its track froze. Display only; nothing is awarded. */
@@ -152,7 +152,7 @@
     const standout=played.sort((a,b)=>b.score/b.reference-a.score/a.reference)[0];
     const highlight=stats.bests?`${stats.bests} new personal best${stats.bests===1?'':'s'}: ${s.tracks.filter(t=>t.pb).map(t=>t.label).join(', ')}.`
       : standout&&standout.score>standout.reference?`Standout: ${standout.label}, ${signed(standout.score-standout.reference)} on its ${standout.referenceLabel.toLowerCase()}.`
-      : stats.compared?'No track beat its reference this time. The same set again is the fairest rematch.':'Every played track now has a reference to beat next time.';
+      : stats.compared?'No track beat its reference this time.':'Every played track now has a reference to beat next time.';
     return `<section class="mix-recap"><div class="mix-eyebrow">SESSION SLEEVE / ${e(new Date(s.startedAt).toLocaleDateString())}</div><h2 tabindex="-1">${stats.played===s.tracks.length?'That’s a wrap.':'Your set, saved.'}</h2><p>${e(names[s.mood])} · ${e(windows()[s.band])} · local run results</p>
       <div class="mix-recap-stats"><div><strong>${stats.played}<small>/${s.tracks.length}</small></strong><span>tracks played</span></div>${stats.compared?`<div><strong>${stats.improved}<small>/${stats.compared}</small></strong><span>above their reference</span></div>`:`<div><strong>${stats.played}</strong><span>references set</span></div>`}<div><strong>${stats.bests}</strong><span>personal bests</span></div><div><strong>${stats.categories}</strong><span>disciplines played</span></div></div>
       <p class="mix-highlight">${e(highlight)}</p>${stats.skipped?`<p>${stats.skipped} skipped. Skips never count as played.</p>`:''}${trackList(s.tracks)}
@@ -184,7 +184,7 @@
         <div class="mix-actions">${button(busy?'Opening…':listening?'Open again ↗':'Open in KovaaK’s ↗','launch','class="mix-primary"',busy||!canLaunch())}${button('Skip track','skip','',busy)}</div>
         ${listening?`<p class="mix-listening"><i aria-hidden="true"></i>Listening for your run on ${e(current.label)}. Play it in KovaaK’s; the result lands here.</p>`:''}
         ${bridge?.onRun&&canLaunch()?`<div class="mix-auto">${button(`<i aria-hidden="true"></i>Auto-open next track: ${autoOpen?'on':'off'}`,'auto',`aria-pressed="${autoOpen}" class="mix-switch"`)}<span>After each run, the next scenario opens in KovaaK’s by itself.</span></div>`:''}
-        <p class="mix-footnote">${bridge?.onRun?'The next matching run advances the set by itself; opening a scenario alone does not complete it. Keep Apogee open while playing: runs played while it is closed are not added.':'This preview lets you build a set. Launching and automatic run tracking need the desktop app.'}</p>
+        <p class="mix-footnote">${bridge?.onRun?'Each finished run ticks off its track. Keep Apogee open while you play; runs finished while it is closed are not counted.':'This preview lets you build a set. Launching and automatic run tracking need the desktop app.'}</p>
         ${bridge?.onRun&&!data?.playlistDir&&bridge.chooseFolder?button('Connect your stats folder','folder'):''}</div>${trackList(active.tracks,active.index,active.mood)}`;
   }
   function render() {

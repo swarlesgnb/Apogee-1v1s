@@ -42,18 +42,18 @@
 
   // What each discipline is for, in a sentence. The definition's own description is flavour.
   const disciplines = {
-    'Static Clicking': 'Snap onto still targets and stop dead. The flick that wins the first shot of a fight.',
-    'Dynamic Clicking': 'Click targets that are moving, at the right moment. Timing as much as speed.',
-    'Precise Tracking': 'Stay on smooth, predictable movement. Steadiness over reaction.',
-    'Reactive Tracking': 'Stay on targets that turn without warning. React to the change; do not guess it.',
-    'Speed Switching': 'Kill, then move straight to the next. The pace between targets is the skill.',
-    'Evasive Switching': 'Choose the next target while this one dodges. Awareness under pressure.',
+    'Static Clicking': 'Flick to still targets and stop on them.',
+    'Dynamic Clicking': 'Click moving targets. Timing matters as much as speed.',
+    'Precise Tracking': 'Stay on targets that move smoothly and predictably.',
+    'Reactive Tracking': 'Stay on targets that change direction without warning.',
+    'Speed Switching': 'Kill a target, then get to the next one fast.',
+    'Evasive Switching': 'Switch between targets that dodge.',
   };
   const bandGuide = [
     { tag: 'Checkpoints save', miss: 'Retry a missed target as often as you like. Cleared targets stay cleared, even after closing the app.', best: 'are new to these scenarios, or want progress without pressure' },
-    { tag: 'Warm up, then prove it', miss: 'One short warm-up opens a three-round trial. A miss ends that attempt, but the warm-up stays done: try again straight away.', best: 'like a short goal before the real test' },
-    { tag: 'One safety net', miss: 'Finish a warm-up here and every attempt gets one retry. Or go in unassisted for a trophy of its own.', best: 'want a real test with a little room for error' },
-    { tag: 'Every run counts', miss: 'Nothing to unlock. A miss ends the attempt; the destination stays open to try again.', best: 'want every run to count' },
+    { tag: 'Warm-up first', miss: 'One short warm-up opens a three-round trial. A miss ends that attempt, but the warm-up stays done: try again straight away.', best: 'like a short goal before the real test' },
+    { tag: 'One safety net', miss: 'Finish a warm-up here and every attempt gets one retry. Clearing without it earns a separate trophy.', best: 'want a real test with a little room for error' },
+    { tag: 'Every run counts', miss: 'No warm-ups. A miss ends the attempt; try again any time.', best: 'want every run to count' },
   ];
 
   function art(kind, design = 0, color = '#8de8ff') {
@@ -272,7 +272,7 @@
     if (!s) return `<header class="exp-heading"><div><span class="exp-eyebrow">SOLO EXPEDITION</span><h1>First Light</h1></div></header>`;
     return `<header class="exp-heading"><div><span class="exp-eyebrow">SOLO EXPEDITION / 01</span><h1>First Light<span>Make your way out there.</span></h1></div>
       <div class="exp-heading-controls"><label>Difficulty<select id="expBand" aria-label="Expedition difficulty">${def.bands.map((name, i) => `<option value="${i}" ${i === b ? 'selected' : ''}>${e(name)}</option>`).join('')}</select></label><span class="exp-local">Saved on this device</span></div></header>
-      <div class="exp-toolbar"><div class="exp-tabs" role="group" aria-label="Expedition views">${['map', 'collection', 'recap'].map(p => `<button data-exp-action="page" data-page="${p}" aria-pressed="${page === p}">${p === 'map' ? 'Star chart' : p === 'collection' ? `Collection · ${Object.keys(s?.rewards || {}).length}/${view.rewards.length}` : 'Session recap'}</button>`).join('')}</div><details class="exp-band-help"><summary>What changes with difficulty?</summary><p>Only how forgiving a miss is, and how high the targets are. Lower difficulties are never required. Each has its own clear insignias and mastery trophies; ships, frames, banners, titles and relics are shared, so each is earned once.</p></details></div>`;
+      <div class="exp-toolbar"><div class="exp-tabs" role="group" aria-label="Expedition views">${['map', 'collection', 'recap'].map(p => `<button data-exp-action="page" data-page="${p}" aria-pressed="${page === p}">${p === 'map' ? 'Star chart' : p === 'collection' ? `Collection · ${Object.keys(s?.rewards || {}).length}/${view.rewards.length}` : 'Session recap'}</button>`).join('')}</div><details class="exp-band-help"><summary>What changes with difficulty?</summary><p>How forgiving a miss is, and how high the targets are. You can start at any difficulty. Ships and profile rewards are earned once; each difficulty has its own insignias and trophies.</p></details></div>`;
   }
   function rewardSpotlight(id, kicker, explanation) {
     const reward = view.rewards.find(r => r.id === id);
@@ -304,7 +304,7 @@
     const goalId = cleared ? has(`${id}:${b}:mastery`) ? `${id}:${b}:clear` : `${id}:${b}:mastery` : has(`${id}:ship`) ? `${id}:${b}:clear` : `${id}:ship`;
     const begin = () => button(b === 0 && !cleared ? 'Start checkpoints ↗' : 'Replay the trial ↗', 'start', 'data-approach="direct" data-launch="1"', !bridge || !view.canPlay || !!active);
     return `<aside class="exp-detail" style="--destination:${e(d?.color || '#f9df83')}"><span class="exp-eyebrow">${final ? 'THE LAST PASSAGE' : e(d.category)}</span><h2>${e(final ? 'Beyond the first light' : d.name)}</h2>
-      <p class="exp-brief">${e(final ? 'One round from every destination, back to back: the whole of your aim in six scenarios.' : disciplines[d.category] || d.description)}</p>${final ? '' : `<p class="exp-flavour">${e(d.description)}</p>`}
+      <p class="exp-brief">${e(final ? 'One scenario from each planet, back to back.' : disciplines[d.category] || d.description)}</p>${final ? '' : `<p class="exp-flavour">${e(d.description)}</p>`}
       <div class="exp-brief-status"><span>${e(def.bands[b])}</span><b>${e(status)}</b>${record.length ? `<span>Best clear ${number(Math.max(...record) * 100)}% on the weakest round</span>` : ''}</div>
       ${active && !inTrial ? `<div class="exp-finale-ready"><p>Your attempt at ${e(destinationName(active.destination))} is still running. Finish or stop it to start one here.</p>${button('Back to that attempt', 'select', `data-destination="${active.destination}" data-band="${active.band}"`)}</div>` : ''}
       <div class="exp-roster-head"><small>THE TRIAL · ${r.length} ROUNDS, IN ORDER</small></div><ol class="exp-scenarios exp-roster">${rows}</ol>
@@ -325,7 +325,7 @@
     const finished = has(`final:${b}:clear`);
     return `${deck()}
       ${s ? `<section class="exp-journey" aria-label="Your expedition goal"><div class="exp-journey-copy"><span class="exp-eyebrow">${e(def.bands[b]).toUpperCase()} · ${e(bandGuide[b]?.tag || '').toUpperCase()}</span><h2>${e(j.title)}</h2><p>${e(j.description)}</p></div><div class="exp-journey-progress"><strong>${finished ? 'First Light conquered' : `${j.cleared} / 6 destinations`}</strong><span>${finished ? 'Your collection and records stay yours.' : j.cleared === 6 ? 'The last passage is open.' : 'All six open the last passage.'}</span><div class="exp-signals" role="group" aria-label="Destination progress">${def.destinations.map((d, i) => `<button data-exp-action="select" data-destination="${d.id}" aria-label="${e(d.name)}: ${has(`${d.id}:${b}:clear`) ? 'cleared' : 'not cleared'}" title="${e(d.name)}" class="${has(`${d.id}:${b}:clear`) ? 'lit' : ''}">${has(`${d.id}:${b}:clear`) ? '✓' : i + 1}</button>`).join('')}</div></div></section>` : ''}
-      ${finished ? `<div class="exp-finish"><span aria-hidden="true">✦</span><div><small>${e(def.bands[b]).toUpperCase()} EXPEDITION COMPLETE</small><h2>You found the first light.</h2><p>Your clears and rewards are permanent. Return for mastery, or take on another difficulty.</p></div>${button('Visit your collection', 'page', 'data-page="collection"')}</div>` : ''}
+      ${finished ? `<div class="exp-finish"><span aria-hidden="true">✦</span><div><small>${e(def.bands[b]).toUpperCase()} EXPEDITION COMPLETE</small><h2>Expedition complete</h2><p>Clears and rewards are permanent. Mastery and the other difficulties are still open.</p></div>${button('Visit your collection', 'page', 'data-page="collection"')}</div>` : ''}
       <div class="exp-layout ${!s && !picked ? 'exp-layout-solo' : ''}">${!s && !picked ? '' : detail()}<div class="exp-chart-panel"><div class="exp-chart-top"><span>STAR CHART · ANY DESTINATION, ANY ORDER</span><button class="exp-button" data-exp-action="layout" aria-pressed="${listMode}">${listMode ? 'Show star chart' : 'Show destination list'}</button></div>
         <div class="exp-map ${listMode ? 'exp-map-list' : ''}"><div class="exp-orbits" aria-hidden="true"><i></i><i></i><i></i></div>
           ${def.destinations.map((d, i) => {
@@ -361,7 +361,7 @@
       const best = Math.max(...runs.filter(r => r.scenario === scenario).map(r => r.score));
       return { scenario, previous: before.length ? Math.max(...before) : null, best };
     }).filter(g => g.previous !== null && g.best > g.previous).sort((a, b) => (b.best / (b.previous || 1)) - (a.best / (a.previous || 1))).slice(0, 4);
-    return `<div class="exp-recap-hero"><span class="exp-eyebrow">SINCE YOU OPENED APOGEE</span><h2>Every session leaves a trace.</h2><div class="exp-stats"><span><b>${runs.length}</b>valid runs</span><span><b>${completed.length}</b>warm-ups finished</span><span><b>${trials.length}</b>trials attempted</span><span><b>${earned.length}</b>rewards earned</span></div></div>
+    return `<div class="exp-recap-hero"><span class="exp-eyebrow">SINCE YOU OPENED APOGEE</span><h2>This session</h2><div class="exp-stats"><span><b>${runs.length}</b>valid runs</span><span><b>${completed.length}</b>warm-ups finished</span><span><b>${trials.length}</b>trials attempted</span><span><b>${earned.length}</b>rewards earned</span></div></div>
       ${banked || gains.length ? `<div class="exp-session-progress"><h3>Session progress</h3>${banked ? `<p>${banked} new checkpoint${banked === 1 ? '' : 's'} secured this session.</p>` : ''}${gains.map(g => `<p><strong>${e(g.scenario)}</strong><span>${number(g.previous)} → ${number(g.best)} · new best in your expedition log</span></p>`).join('')}<small>Score comparisons use runs recorded since joining this expedition.</small></div>` : ''}
       <div class="exp-recap-columns"><div><h3>Warm-ups</h3>${completed.map(({ key: k, c }) => `<p class="exp-recap-entry">✓ ${e(destinationName(k.split(':')[0]))} / ${e(view.definition.bands[Number(k.split(':')[1])])} · ${label(c.kind)} complete</p>`).join('')}${active.map(({ key: k, c }) => `<p class="exp-recap-entry">${e(destinationName(k.split(':')[0]))} / ${e(view.definition.bands[Number(k.split(':')[1])])} · ${label(c.kind)}<span>${c.steps.reduce((n, step) => n + (c.progress[step.scenario] || 0), 0)} qualifying runs so far</span></p>`).join('') || '<p>Nothing completed this session.</p>'}</div><div><h3>Trial log & records</h3>${[...trials].reverse().map(t => {
         const prior = (s?.trials || []).filter(p => p.destination === t.destination && p.band === t.band && p.status === 'cleared' && p.startedAt < t.startedAt);

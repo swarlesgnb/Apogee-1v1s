@@ -770,6 +770,20 @@ function badge(tier, uid) {
     '<path d="m29 46 11-21 11 21-11-6Zm3 5 8 7 8-7-8 2Z" fill="currentColor"/>' + pips + '</svg>';
 }
 
+/**
+ * What a run's verification tier means, for the tooltip on the tier word. Players saw
+ * "consistent" and "suspect" with no gloss; the definitions lived only in FAIR-PLAY.md,
+ * and these are that table's rows, shortened.
+ */
+function tierMeaning(tier) {
+  return {
+    verified: "KovaaK's servers hold a matching record. Counts in full.",
+    consistent: "No server record yet, but the file checks out and is near your verified best. Counts in full.",
+    suspect: "Above your verified best with no server record. Counts, and is held for review.",
+    rejected: "The file failed a check or was played outside the match. The match is void.",
+  }[tier] || "";
+}
+
 /* Discipline marks describe movement; they never decide the scenario pool. */
 const DISCIPLINES = {
   "Any": { key: "all", ink: "#d7fa52", cue: "Scenarios from all six categories", path: '<path d="M12 2 22 12 12 22 2 12ZM12 7v10M7 12h10"/>' },
@@ -7425,7 +7439,7 @@ function renderTodo(arriving) {
     li.innerHTML =
       '<span class="n">' + (s.tier === "rejected" ? "!" : s.done ? "✓" : i + 1) + "</span>" +
       "<span>" + esc(s.label) + "</span>" +
-      (s.tier ? '<span class="tier-tag">received · ' + esc(s.tier) + "</span>" : s.uploading ? '<span class="tier-tag">Submitting…</span>' : s.failed ? '<span class="tier-tag">Upload failed · retry</span>' : '<span class="tier-tag">Awaiting run</span>') +
+      (s.tier ? '<span class="tier-tag" title="' + esc(tierMeaning(s.tier)) + '">received · ' + esc(s.tier) + "</span>" : s.uploading ? '<span class="tier-tag">Submitting…</span>' : s.failed ? '<span class="tier-tag">Upload failed · retry</span>' : '<span class="tier-tag">Awaiting run</span>') +
       (mine
         ? '<span class="scen-best" title="' +
           esc(num(mine.runs) + " runs on this scenario") +
@@ -7744,7 +7758,7 @@ function renderSettled(s) {
       "<td>" + esc(r.scenario) + "</td>" +
       "<td>" + (Number.isFinite(r.score) ? pts(r.score) : "—") + '<div class="base">base ' + (Number.isFinite(r.baseline) ? num(r.baseline) : "—") +
         (r.verificationTier && r.verificationTier !== "verified"
-          ? " · " + esc(r.verificationTier)
+          ? ' · <span title="' + esc(tierMeaning(r.verificationTier)) + '">' + esc(r.verificationTier) + "</span>"
           : "") +
         "</div></td>" +
       '<td class="' + (Number.isFinite(yours) ? yours >= 0 ? "up" : "down" : "") + '">' +
@@ -8155,7 +8169,7 @@ function nextCelebration() {
 
   // More waiting? Say so, so the button does not look like it dismissed them all.
   $("celebrateClose").textContent =
-    celebrationQueue.length > 0 ? `Next (${celebrationQueue.length} more)` : "Nice";
+    celebrationQueue.length > 0 ? `Next (${celebrationQueue.length} more)` : "Close";
 }
 
 function renderProgression(p) {
@@ -12348,12 +12362,12 @@ function mountArcadeCommand() {
   if (!dialog || !input || !list) return;
   let opener = null;
   const descriptions = {
-    mixtape: 'Build a personal practice mix and keep your session recaps.',
-    queue: 'Pick a discipline. Find your rival.', seasonview: 'Benchmarks, families and your next rank.',
-    tournaments: 'Groups, brackets and fixtures.', result: 'Every round. Every rating point.',
-    profile: 'Your strengths and the work ahead.', quests: 'A fresh target for your next session.',
-    scenarios: 'Find the right scenario to train.', ranks: 'The ladder and your place on it.',
-    consistency: 'See what your recent runs are saying.', admin: 'Local appearance and app settings.',
+    mixtape: 'Build a practice playlist.',
+    queue: 'Queue a ranked match.', seasonview: 'Season benchmarks and your next rank.',
+    tournaments: 'Groups, brackets and fixtures.', result: 'Rounds and rating change from your last match.',
+    profile: 'Category strengths and weak spots.', quests: 'Current quests.',
+    scenarios: 'Search every scenario.', ranks: 'Rank thresholds and where you sit.',
+    consistency: 'How steady your recent scores are.', admin: 'Local appearance and app settings.',
     season: 'Manage the season definition.'
   };
   function renderRoutes() {

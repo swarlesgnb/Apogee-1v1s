@@ -3252,7 +3252,7 @@
             <label for="soundVolume">Volume <output id="soundVolumeReadout">65%</output></label>
             <input id="soundVolume" type="range" min="0" max="100" step="1" value="65" aria-label="Sound volume">
             <div class="sound-preview"><button type="button" data-sound-preview="press">Ready</button><button type="button" data-sound-preview="matchFound">Match</button><button type="button" data-sound-preview="victory">Win</button></div>
-            <p>Short cues. Big moments. Press M to mute.</p>
+            <p>Press M to mute.</p>
           </div>
         </details>
         <!-- The player's own chrome. Beside the sound because it is the same kind of
@@ -3328,7 +3328,7 @@
                 <h1 data-copy="queue.title">Ranked 1v1</h1>
                 <p data-copy="queue.lede">3 scenarios, one opponent. Each round goes to whoever beats their own baseline by more.</p>
               </div>
-              <div class="arcade-hero-links"><button type="button" class="exp-home" id="expeditionHome" data-arcade-route="expedition"><span class="exp-home-symbol" aria-hidden="true">✦</span><span><small>SOLO PRACTICE</small><strong id="expeditionHomeTitle">First Light expedition</strong><span id="expeditionHomeDetail">Complete six destinations to earn ships and open the final challenge.</span></span><b>Continue →</b></button><button type="button" class="mixtape-entry" data-arcade-route="mixtape">Make a mixtape <span aria-hidden="true">↗</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
+              <div class="arcade-hero-links"><button type="button" class="exp-home" id="expeditionHome" data-arcade-route="expedition"><span class="exp-home-symbol" aria-hidden="true">✦</span><span><small>SOLO PRACTICE</small><strong id="expeditionHomeTitle">First Light expedition</strong><span id="expeditionHomeDetail">Solo. Six planets, one per aim category.</span></span><b>Continue →</b></button><button type="button" class="mixtape-entry" data-arcade-route="mixtape">Make a mixtape <span aria-hidden="true">↗</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
             </div>
 
             <!-- Getting started. Above everything on the screen it gates, and gone for good
@@ -3386,7 +3386,7 @@
             </div>
 
             <div class="command-focus" id="commandFocus" hidden>
-              <div><span class="command-kicker">Practice direction</span><strong id="commandFocusName"></strong><p id="commandFocusDetail"></p></div>
+              <div><span class="command-kicker">Practice next</span><strong id="commandFocusName"></strong><p id="commandFocusDetail"></p></div>
               <button type="button" id="commandFocusOpen">View your aim</button>
             </div>
 
@@ -3397,7 +3397,7 @@
               </div>
               <div class="pbody queue-body">
                 <ol class="queue-journey" aria-label="Match stages"><li class="current" aria-current="step"><span>01</span>Category</li><li><span>02</span>Match</li><li><span>03</span>Play</li><li><span>04</span>Results</li></ol>
-                <div class="queue-signal"><span id="queueSignal" role="status">Choose your discipline</span></div>
+                <div class="queue-signal"><span id="queueSignal" role="status">Pick a category</span></div>
 
                 <div class="queue-pick">
                   <div>
@@ -3408,7 +3408,7 @@
 
                 <div class="queue-selection">
                   <div class="versus-mark" id="disciplineMark" aria-hidden="true"></div>
-                  <div class="queue-selection-copy"><span class="selection-label">Your selection</span><strong id="selectedDisciplineLabel">All categories</strong><span id="disciplineCue"></span></div>
+                  <div class="queue-selection-copy"><span class="selection-label">Category</span><strong id="selectedDisciplineLabel">All categories</strong><span id="disciplineCue"></span></div>
                   <button type="button" class="commit" id="queueBtn" aria-describedby="poolNote queueGateText">
                     <span><span class="commit-verb" id="queueVerb">Find opponent</span><span class="commit-sub" id="queueSub"></span></span>
                     <span class="commit-meta" id="queueMeta"></span>
