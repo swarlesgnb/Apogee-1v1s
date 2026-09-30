@@ -1313,6 +1313,43 @@ async function main(): Promise<void> {
   const ghostOrphans = await db.query<{ n: number }>(`select count(*)::int as n from ghost_results where player_id = '${ghostPlayer}'`);
   check("a deleted player leaves no card behind", ghostOrphans.rows[0].n === 0);
 
+  // post-ghost's one UPDATE on runs, run for real: a file already counted by a ranked
+  // match must come through a ghost post byte for byte, because settle-match reads its
+  // played_at and tier. The statement is the one the function builds (player, sha,
+  // match_id is null); validate:ghost holds the function's source to that filter and
+  // runs planRunWrite, which decides it is never even attempted on a bound row.
+  const racerUser = await db.query<{ id: string }>(`insert into auth.users (email) values ('ghost2@arena.invalid') returning id`);
+  const racer = racerUser.rows[0].id;
+  await db.exec(`insert into players (id, steam_id, display_name) values ('${racer}', '76561199000000078', 'ghost racer two')`);
+  const ranked = await db.query<{ id: string }>(
+    `insert into matches (mode, category, benchmark_name, difficulty, window_index, seed, scenario_ids, status)
+     values ('async', 'Static Clicking', 'Season 1', 'Intermediate', 1, 'ghost-bound', '{1,2,3}', 'awaiting_runs')
+     returning id`,
+  );
+  const rankedId = ranked.rows[0].id;
+  await db.exec(
+    `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, match_id, verification_tier)
+     values ('${racer}', 'bound scenario', 100, '2026-09-30T12:00:00Z', 'sha-bound', '${rankedId}', 'rejected'),
+            ('${racer}', 'loose scenario', 100, '2026-09-30T12:00:00Z', 'sha-loose', null, 'suspect')`,
+  );
+  const ghostUpdate = (sha: string) =>
+    db.query<{ id: string }>(
+      `update runs set played_at = '2026-09-29T03:00:00Z', verification_tier = 'consistent', duration_seconds = 1
+        where player_id = '${racer}' and csv_sha256 = '${sha}' and match_id is null returning id`,
+    );
+  const boundTouched = await ghostUpdate("sha-bound");
+  const bound = await db.query<{ played_at: Date; verification_tier: string; match_id: string; duration_seconds: number | null }>(
+    `select played_at, verification_tier, match_id, duration_seconds from runs where csv_sha256 = 'sha-bound'`,
+  );
+  check("a ghost post's update writes no row a ranked match has counted", boundTouched.rows.length === 0, `${boundTouched.rows.length} rows`);
+  check("and that run's played_at, tier and match are exactly as the match left them",
+    new Date(bound.rows[0].played_at).toISOString() === "2026-09-30T12:00:00.000Z" &&
+      bound.rows[0].verification_tier === "rejected" && bound.rows[0].match_id === rankedId && bound.rows[0].duration_seconds === null,
+    `${new Date(bound.rows[0].played_at).toISOString()} ${bound.rows[0].verification_tier}`);
+  const looseTouched = await ghostUpdate("sha-loose");
+  check("while a history row no match has claimed is rewritten, so the filter is not simply matching nothing",
+    looseTouched.rows.length === 1);
+
   await db.close();
 
   console.log();

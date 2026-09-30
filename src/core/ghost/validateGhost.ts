@@ -54,6 +54,7 @@ import {
   type GhostMatch,
   type IncomingRun,
 } from "./ghost.ts";
+import { lowerTier, planRunWrite, sittingProblem } from "./serverRules.ts";
 
 const DEFAULT_STATS_DIR =
   "E:\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
@@ -374,6 +375,49 @@ check("a rematch is the same three and the same ghosts on a fresh clock",
   JSON.stringify(rematch.rounds.map((r) => [r.scenario, r.ghost, r.baseline])) ===
     JSON.stringify(drawn.rounds.map((r) => [r.scenario, r.ghost, r.baseline])) &&
     rematch.startedAt === null && rematch.result === null && rematch.rounds.every((r) => r.live === null));
+
+// ---------------------------------------------------------------------------
+console.log("\n── the server never writes a ranked match's runs ─");
+
+// post-ghost cannot run here, so its decisions are held two ways: the pure planner it
+// calls, every branch, and its source, for the filter on the one UPDATE it may issue.
+// validate:schema runs that UPDATE against Postgres on a match-bound row.
+const boundRow = { id: "r1", match_id: "m1", verification_tier: "rejected" };
+const keep = planRunWrite(boundRow, "consistent");
+check("a run a ranked match counted is kept, never written", keep.action === "keep", keep.action);
+check("and keeps its stored tier when that is the weaker", keep.action === "keep" && keep.tier === "rejected");
+const lowered = planRunWrite({ ...boundRow, verification_tier: "verified" }, "suspect");
+check("or takes this parse's tier when that is the weaker", lowered.action === "keep" && lowered.tier === "suspect");
+check("a history row no match claimed is rewritten",
+  planRunWrite({ id: "r2", match_id: null, verification_tier: "suspect" }, "consistent").action === "update-unbound");
+check("a new file is inserted", planRunWrite(null, "consistent").action === "insert");
+check("lowerTier never raises", lowerTier("rejected", "verified") === "rejected" && lowerTier("verified", "consistent") === "consistent");
+
+const postGhost = readFileSync(new URL("../../../supabase/functions/post-ghost/index.ts", import.meta.url), "utf8");
+const updates = [...postGhost.matchAll(/\.from\("runs"\)\s*\.update\(/g)];
+const unguarded = updates.filter((m) => !/\.is\("match_id", null\)/.test(postGhost.slice(m.index!, postGhost.indexOf(";", m.index!))));
+check("post-ghost updates runs somewhere, so the next check has something to look at", updates.length > 0, `${updates.length}`);
+check("and every such update is filtered to match_id is null", unguarded.length === 0, `${unguarded.length} unguarded`);
+const firstWrite = Math.min(...[".insert(", ".update("].map((w) => postGhost.indexOf(w)).filter((i) => i >= 0));
+check("post-ghost refuses a bad sitting before its first write", postGhost.indexOf("sittingProblem(") > 0 && postGhost.indexOf("sittingProblem(") < firstWrite);
+check("and returns an already-minted card before its first write", postGhost.indexOf("The same three posted again") < firstWrite);
+const bad = sittingProblem([
+  { scenario: "a", sha: "1", began: 0, ended: 60_000 },
+  { scenario: "a", sha: "2", began: 70_000, ended: 130_000 },
+  { scenario: "c", sha: "3", began: 140_000, ended: 200_000 },
+]);
+check("two runs on one scenario are not a ghost match", bad !== null, bad ?? "accepted");
+const apart = sittingProblem([
+  { scenario: "a", sha: "1", began: 0, ended: 60_000 },
+  { scenario: "b", sha: "2", began: 70_000, ended: 130_000 },
+  { scenario: "c", sha: "3", began: 130_000 + GHOST_IDLE_ALLOWANCE_MS + GHOST_END_GRACE_MS + 1, ended: 10e6 },
+]);
+check("nor are three with an idle gap longer than the ranked clock allows", apart !== null, apart ?? "accepted");
+check("three different scenarios in one sitting are", sittingProblem([
+  { scenario: "a", sha: "1", began: 0, ended: 60_000 },
+  { scenario: "b", sha: "2", began: 70_000, ended: 130_000 },
+  { scenario: "c", sha: "3", began: 140_000, ended: 200_000 },
+]) === null);
 
 console.log();
 if (failures > 0) {
