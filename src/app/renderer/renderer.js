@@ -1113,7 +1113,12 @@ function render(data) {
   $("myTier").textContent = tierName;
   $("myTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
   paintRating();
-  $("myStreak").textContent = data.player.streak + "-day streak";
+  // A streak counts from yesterday, so zero means nothing yesterday or today. "0-day
+  // streak" was the first thing under a new player's name; the fact worth saying is how
+  // to start one.
+  $("myStreak").textContent = data.player.streak > 0
+    ? data.player.streak + "-day streak"
+    : "Start a streak today";
 
   $("heroBadge").innerHTML = badge(me.tier, "hero");
   document.querySelector(".rank-showcase").dataset.material = String(me.tier.id || "tier-1");

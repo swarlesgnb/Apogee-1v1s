@@ -353,6 +353,9 @@
     border: 1px solid var(--rule); border-radius: var(--r);
     padding: 3px 10px; white-space: nowrap;
   }
+  /* The rail shows before there is a snapshot to fill it, so sign-in has somewhere to
+     be; an unfilled streak was a bordered oval with nothing in it. */
+  .streak:empty { display: none; }
 
   /* Small, quiet, and always there. Policies that can only be found by going to the
      repository are policies the people they are about will never read. */
