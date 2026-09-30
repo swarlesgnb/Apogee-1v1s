@@ -8136,7 +8136,8 @@ function renderQuests(data) {
     bonus.classList.toggle("earned", board.bonus.earned);
     bonus.innerHTML = board.bonus.earned
       ? "Board cleared · <b>+" + num(board.bonus.xp) + " XP</b> on a " + num(board.bonus.streak) + "-day streak"
-      : "Clear all three for <b>+" + num(board.bonus.xp) + " XP</b>" +
+      // Not a number: the board went from three to five, and a small pool can issue fewer.
+      : "Clear the board for <b>+" + num(board.bonus.xp) + " XP</b>" +
         (board.bonus.streak > 1 ? " on a " + num(board.bonus.streak) + "-day streak" : "") +
         " · " + done + " of " + board.daily.length + " done";
   }
