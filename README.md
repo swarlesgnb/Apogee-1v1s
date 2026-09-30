@@ -1,5 +1,7 @@
 # Apogee
 
+![Apogee: ranked 1v1 for KovaaK's](assets/brand/readme-hero.png)
+
 Ranked 1v1 for KovaaK's. Queue for a category, get matched against someone near your
 rank, play three scenarios in KovaaK's as normal, and the ladder settles itself. Scores
 are read straight from the stats folder, never typed in.
