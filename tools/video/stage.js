@@ -30,19 +30,24 @@
     /* Hover states would otherwise stick to wherever the pointer last was. */
     html.video-stage { cursor: none !important; }
 
+    /* Opaque over everything the caption's text can sit on, then a short fade. The first
+       cut was a gradient that was already 10% see-through at the text's height, and the
+       sidebar's rank, rating and streak read through behind "03" in the result shot. */
     .vs-caption { position: fixed; left: 0; right: 0; bottom: 0; z-index: 2147483000; pointer-events: none;
       padding: 0 var(--vs-pad) var(--vs-pad); display: flex; align-items: flex-end;
-      background: linear-gradient(to top, rgba(6,8,12,.97) 0, rgba(6,8,12,.9) 45%, rgba(6,8,12,0) 100%);
+      background: linear-gradient(to top, rgb(6,8,12) 0, rgb(6,8,12) 64%, rgba(6,8,12,.86) 76%, rgba(6,8,12,0) 100%);
       height: var(--vs-band); opacity: 0; transition: opacity .45s cubic-bezier(.2,.7,.2,1); }
     .vs-caption.on { opacity: 1; }
     .vs-caption .vs-inner { display: flex; gap: var(--vs-gap); align-items: baseline;
       transform: translateY(1.6vmin); transition: transform .7s cubic-bezier(.16,1,.3,1); }
     .vs-caption.on .vs-inner { transform: none; }
-    .vs-caption .vs-index { font: 600 var(--vs-index-size) var(--mono, monospace); letter-spacing: .18em;
+    /* The brand kit's faces (record.cjs inlines them), as on the title cards, rather than
+       the app's Bahnschrift: the captions are the video's voice, not the app's UI. */
+    .vs-caption .vs-index { font: 600 var(--vs-index-size) 'Apogee Mono', var(--mono, monospace); letter-spacing: .18em;
       color: var(--brand, #e5edb0); }
-    .vs-caption .vs-text { font: 600 var(--vs-text-size)/1.04 var(--display, "Bahnschrift", sans-serif);
+    .vs-caption .vs-text { font: 600 var(--vs-text-size)/1.04 'Apogee Display', var(--display, "Bahnschrift", sans-serif);
       letter-spacing: -.02em; color: var(--ink, #f2f0e8); }
-    .vs-caption .vs-sub { display: block; margin-top: .9vmin; font: 400 var(--vs-sub-size)/1.3 var(--font, sans-serif);
+    .vs-caption .vs-sub { display: block; margin-top: .9vmin; font: 400 var(--vs-sub-size)/1.3 'Apogee Display', var(--font, sans-serif);
       letter-spacing: 0; color: var(--ink-dim, #a4b2c4); }
     .vs-caption .vs-rule { display: block; height: 2px; width: 0; margin-top: 1.6vmin; background: var(--brand, #e5edb0);
       transition: width 1.1s cubic-bezier(.16,1,.3,1) .15s; }
@@ -202,6 +207,13 @@
       const current = R("current");
       R("renderResult")(current);
       if (provenance) document.getElementById("debriefProvenance").textContent = provenance;
+    },
+    /**
+     * Ghost Mode's next screen from tools/video/ghost.json, pushed the way main pushes
+     * apogee:ghost when a run lands. ghost.js plays the lane's 3-2-1 reveal itself.
+     */
+    ghost({ screen }) {
+      window.__ghostPush(screen);
     },
     promotion({ from, to }) {
       R("showCelebration")({ promotion: { from, to } });

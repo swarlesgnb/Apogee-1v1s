@@ -15,7 +15,7 @@
  *   3. clips joined with the shot list's transitions over a synthesised bed (music.mjs),
  *      encoded once at final quality;
  *   4. the GIF, cut from the trailer and shrunk until it is under the README's limit;
- *   5. every output probed, and a frame every three seconds written to
+ *   5. every output probed, and a frame every two seconds written to
  *      .cache/video/review/ for a person to look at before anything is posted.
  *
  * Fails, rather than shipping, if a clip came back mostly repeated frames, a caption or
@@ -183,13 +183,17 @@ for (const file of [...cuts.map((c) => shots.cuts[c].out), "apogee-readme.gif"].
   const a = p.streams.find((s) => !s.width);
   const frames = Number(v.nb_frames) || 0;
   console.log(`  ${file.slice(root.length + 1)}  ${v.codec_name} ${v.width}x${v.height} ${v.pix_fmt ?? ""} ${v.r_frame_rate}  ${Number(p.format.duration).toFixed(2)}s  ${frames || "?"} frames  ${(p.format.size / 1e6).toFixed(2)} MB${a ? "  " + a.codec_name : ""}`);
-  if (!file.endsWith(".gif")) {
-    if (frames <= 0) failures.push(`${file}: no frames`);
-    const review = join(cache, "review", file.split(/[\\/]/).pop().replace(/\.\w+$/, ""));
-    rmSync(review, { recursive: true, force: true });
-    mkdirSync(review, { recursive: true });
-    run("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-i", file, "-vf", "fps=1/3", join(review, "t%02d.png")], "review frames");
-  }
+  if (!file.endsWith(".gif") && frames <= 0) failures.push(`${file}: no frames`);
+  const cut = Object.values(shots.cuts).find((c) => file.endsWith(c.out));
+  // Posting limits, not taste: X and most feeds cap a native clip's autoplay at 60 s, and
+  // a story slot is 15 s, so a cut over its limit gets trimmed by the platform instead.
+  if (cut?.maxSeconds && Number(p.format.duration) > cut.maxSeconds + 0.05) failures.push(`${file}: ${Number(p.format.duration).toFixed(2)}s is over ${cut.maxSeconds}s`);
+  // Every two seconds, GIF included: at three, a card shorter than that (the ghost clip's
+  // close is 2.2 s) could fall between two review frames and never be looked at.
+  const review = join(cache, "review", file.split(/[\\/]/).pop().replace(/\.\w+$/, ""));
+  rmSync(review, { recursive: true, force: true });
+  mkdirSync(review, { recursive: true });
+  run("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-i", file, "-vf", "fps=1/2", join(review, "t%02d.png")], "review frames");
 }
 console.log(`\nreview frames in ${join(cache, "review").slice(root.length + 1)}`);
 
