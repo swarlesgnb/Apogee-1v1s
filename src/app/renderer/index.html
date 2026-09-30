@@ -1627,7 +1627,7 @@
   .draw-rows { display: grid; }
   .draw-row {
     display: grid;
-    grid-template-columns: minmax(0, 40ch) minmax(0, 1fr) 108px;
+    grid-template-columns: minmax(0, 40ch) minmax(0, 1fr) 108px 64px;
     gap: var(--s4); align-items: center;
     padding: var(--s3) 0; border-top: 1px solid var(--rule);
   }
@@ -1659,6 +1659,20 @@
   }
   .draw-row.short .base { color: var(--warn); }
   .draw-row.none .base { color: var(--ink-dim); }
+  .draw-row .scen-play {
+    justify-self: end; font: inherit; font-size: var(--t-sm); font-weight: 560;
+    color: var(--ink); background: var(--control);
+    border: 1px solid var(--rule-2); border-radius: var(--r);
+    padding: 3px 12px; cursor: pointer;
+  }
+  .draw-row .scen-play:hover:not(:disabled) { border-color: var(--rule-3); }
+  .pool-note .pool-go {
+    display: inline; min-height: 0; line-height: inherit;
+    margin-left: var(--s2); padding: 0; font: inherit; font-weight: 600;
+    color: var(--ink); background: transparent; border: 0;
+    text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+  }
+  .pool-note .pool-go:hover { color: var(--brand); }
   .draw-cat {
     font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
     letter-spacing: .12em; text-transform: uppercase; color: var(--ink-dim);
@@ -1674,7 +1688,7 @@
   .draw-legend b { color: var(--ink-mid); font-weight: 600; }
 
   @media (max-width: 860px) {
-    .draw-row { grid-template-columns: minmax(0, 1fr) 100px; gap: var(--s2) var(--s3); }
+    .draw-row { grid-template-columns: minmax(0, 1fr) 100px 64px; gap: var(--s2) var(--s3); }
     .draw-row .meter { grid-column: 1 / -1; grid-row: 2; }
   }
 

@@ -1338,7 +1338,10 @@ function renderDraw(data) {
     who.className = "draw-name";
     who.append(nm, sk);
 
-    el.append(who, meter, base);
+    // Every row opens its scenario, the way the match rows do. The note by the button
+    // told a new player to "play a few runs on those first", and this list was the only
+    // place that named them, with nothing in it to press.
+    el.append(who, meter, base, playButton(r.scenario) ?? document.createElement("span"));
     host.append(el);
   }
 
@@ -1413,6 +1416,21 @@ function renderPool(data) {
     `${short.length < relevant.length ? ` (short in ${esc(short.map((c) => c.category).join(", "))})` : ""}. ` +
     `A scenario without a baseline is scored against an estimate, which halves the ` +
     `match's weight and can void it. Play a few runs on those first.`;
+
+  // "Those" were named only in the folded Scenario pool panel at the foot of the page, so
+  // the sentence pointed at a list nobody could see from here.
+  const draw = $("drawPanel");
+  if (draw && !draw.hidden) {
+    const go = document.createElement("button");
+    go.type = "button";
+    go.className = "pool-go";
+    go.textContent = "Show which";
+    go.addEventListener("click", () => {
+      draw.open = true;
+      draw.scrollIntoView({ block: "start", behavior: reduceMotion.matches ? "auto" : "smooth" });
+    });
+    note.append(go);
+  }
 }
 
 /**
