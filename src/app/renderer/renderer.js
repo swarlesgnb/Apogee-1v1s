@@ -10896,9 +10896,17 @@ function renderTournaments(list) {
   const side = tnEl("div");
 
   if (!list) {
-    main.append(HOST === "electron" && signedIn
+    const empty = HOST === "electron" && signedIn
       ? tnEmpty("Couldn't load tournaments", "The server did not answer. They reload on their own while this screen is open.")
-      : tnEmpty(HOST === "electron" ? "Sign in to play" : "Loading", "Sign in to see and join tournaments."));
+      : tnEmpty(HOST === "electron" ? "Sign in to play" : "Loading", "Sign in to see and join tournaments.");
+    // "Sign in to play" with nothing to press, and the only sign-in button at the foot of
+    // the rail. The same button, so the two cannot behave differently.
+    if (HOST === "electron" && !signedIn && $("btnSignIn") && !$("btnSignIn").disabled) {
+      const signIn = tnButton("Sign in with Steam", "primary", () => $("btnSignIn").click());
+      signIn.style.marginTop = "16px";
+      empty.append(document.createElement("br"), signIn);
+    }
+    main.append(empty);
   } else {
     const live = (t) => t.phase === "groups" || t.phase === "playoffs";
     const mine = (t) => t.entered || t.hostedByYou;
