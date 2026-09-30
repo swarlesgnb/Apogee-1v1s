@@ -14,6 +14,11 @@ Both run in under a minute and need no network. `brand` exits non-zero if any
 ink/ground pair in either palette falls under its contrast floor, if text leaves a canvas,
 if a font fails to load, or if a PNG comes out the wrong size.
 
+A rerun reproduces every SVG byte for byte and every PNG except the four trimmed lockups,
+which can move by a few bytes: their viewBox is shrink-wrapped to the drawing, so they
+are scaled by a non-integer factor and Chromium's text anti-aliasing is not stable
+between runs at that scale. Discard those diffs unless the SVG beside them changed too.
+
 ## What is in it
 
 | Path | What |
