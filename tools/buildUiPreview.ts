@@ -113,7 +113,7 @@ const tournamentSample = {
 };
 const body = bodyMatch[1]
   // The preview supplies its own inline script instead of loading the file.
-  .replace(/<script src="(?:renderer|cosmic|expedition|presentation|mixtape-engine|mixtape)\.js"><\/script>/g, "");
+  .replace(/<script src="(?:renderer|cosmic|expedition|presentation|mixtape-engine|mixtape|ghost)\.js"><\/script>/g, "");
 
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Apogee Client Preview</title>
@@ -121,6 +121,7 @@ ${style}
 <style>${cosmicCss}</style>
 <style>${readFileSync(new URL("presentation.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("mixtape.css", RENDERER_DIR), "utf8")}</style>
+<style>${readFileSync(new URL("ghost.css", RENDERER_DIR), "utf8")}</style>
 </head><body data-screen="queue">
 ${body}
 <script id="apogee-snapshot" type="application/json">${snapshot}</script>
@@ -153,6 +154,7 @@ ${rendererJs}
 <script>${readFileSync(new URL("presentation.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("mixtape-engine.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("mixtape.js", RENDERER_DIR), "utf8")}</script>
+<script>${readFileSync(new URL("ghost.js", RENDERER_DIR), "utf8")}</script>
 </body></html>
 `;
 

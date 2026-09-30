@@ -27,6 +27,7 @@ import { windowCoverage, type WindowCoverage } from "../history/coverage.ts";
 import { selectScenarios, type SelectableScenario } from "../match/scenarioSelection.ts";
 import { explainVerdict, settleMatch, type RoundSubmission } from "../match/settle.ts";
 import { boardView, playStreak, syncBoard, type BoardView, type QuestState, type QuestSync } from "../quests/board.ts";
+import { ghostReady } from "../ghost/ghost.ts";
 import { defaultRating, updateRating, winProbability } from "../rating/glicko2.ts";
 import { loadRankTheme, tierForPercentile, type RankTier } from "../ranks/apogeeRanks.ts";
 import { floorsFor, overallGap } from "../consistency/floor.ts";
@@ -483,6 +484,7 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
     // KovaaK's shows and it has to say which of a family's variants it means.
     labelFor: variantLabel,
     ranked: options.quests?.ranked ?? false,
+    ghostReady: ghostReady(history, now),
   });
   options.quests?.onSync?.(questSync);
   const quests = boardView(questSync.state, history, now);

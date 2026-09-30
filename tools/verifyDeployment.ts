@@ -566,6 +566,10 @@ async function main(): Promise<void> {
     "list-tournaments",
     "tournament-action",
     "play-fixture",
+    // A ghost card is minted from a player's own verified runs and read by code; neither
+    // means anything without knowing who is asking.
+    "post-ghost",
+    "ghost-card",
   ];
   for (const name of authedFunctions) {
     const res = await fetch(`${fnBase}/${name}`, {
@@ -641,6 +645,19 @@ async function main(): Promise<void> {
     limitsAnon.status !== 200,
     `HTTP ${limitsAnon.status}`,
   );
+
+  // ---- ghost cards ----------------------------------------------------------------
+  console.log("\n── ghost cards ──────────────────────────────────");
+
+  // Written by post-ghost and read by ghost-card under the service role only. A client
+  // that could read the table could enumerate every code; one that could write it could
+  // mint a card with no runs behind it.
+  const ghostsSecret = await rest("ghost_results?select=code&limit=1", SECRET!);
+  check("the ghost_results table exists", ghostsSecret.status === 200, `HTTP ${ghostsSecret.status}`);
+  const ghostsAnon = await rest("ghost_results?select=code&limit=1", ANON!);
+  // Refused outright, not an empty 200: with the grants revoked PostgREST answers a
+  // permission error, and an empty list could only mean the table is empty today.
+  check("clients CANNOT read ghost cards directly", ghostsAnon.status !== 200, `HTTP ${ghostsAnon.status}`);
 
   console.log();
   if (failures > 0) {

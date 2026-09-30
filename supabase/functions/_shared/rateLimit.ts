@@ -126,6 +126,18 @@ export const LIMITS: Record<string, Limit> = {
    * has at most one fixture open at a time.
    */
   "play-fixture": { max: 20, windowSeconds: 300 },
+
+  /**
+   * 10 per 5 minutes, send-duel's number and for a like reason: each call parses and
+   * verifies three CSVs, may ask KovaaK's about each, and reads three scenarios of
+   * history. A ghost match takes several minutes to play, so nobody honest posts more
+   * than one card in five, and a retry after a refusal still has room. Reasoned rather
+   * than measured: there are no ghost cards yet.
+   */
+  "post-ghost": { max: 10, windowSeconds: 300 },
+
+  /** 60 per 5 minutes: a read by code off a unique index, the price of list-duels. */
+  "ghost-card": { max: 60, windowSeconds: 300 },
 };
 
 /**
