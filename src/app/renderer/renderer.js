@@ -1204,6 +1204,14 @@ function renderClimb(data) {
   }
 
   box.hidden = false;
+  // Two ladders share one set of names: the tier above is a population percentile, this
+  // is the benchmark rank the energy earns. Unlabelled, the card read "Current rank
+  // Lunar" over "Next benchmark rank Lunar, 93% there" on the committed snapshot, which
+  // says the player is climbing towards where they already are. Naming the rank being
+  // climbed from makes it two facts rather than one contradiction; the Ranks screen uses
+  // the same two names for the same two panels.
+  const from = data.player.benchmarkRank;
+  $("heroClimbFrom").textContent = from ? "Benchmark rank " + from + " →" : "Next benchmark rank";
   $("heroClimbTo").textContent = next;
   $("heroClimbTo").style.color = rankInk(data, next);
   $("heroClimbPct").textContent = Math.round(at * 100) + "% there";
