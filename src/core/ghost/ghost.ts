@@ -469,10 +469,23 @@ export function availableKinds(history: Map<string, GhostHistory>, now: Date): R
   return out;
 }
 
-/** Any ghost at all today: what decides whether a beat-a-ghost quest is honest to issue. */
+/**
+ * Any ghost at all today: what decides whether a beat-a-ghost quest is honest to issue.
+ *
+ * Asked on every snapshot rebuild, so it stops at the third eligible scenario instead of
+ * building every candidate. Month-ago's cutoff is earlier than last week's, so any
+ * scenario with a month-old session also has a week-old one: last_week is the only kind
+ * that needs asking, and its median and best share one session.
+ */
 export function ghostReady(history: Map<string, GhostHistory>, now: Date): boolean {
   const frozenAt = startOfLocalDay(now);
-  return GHOST_KINDS.some((k) => ghostCandidates(history, frozenAt, k).length >= GHOST_ROUNDS);
+  let found = 0;
+  for (const h of history.values()) {
+    if (h.runs.length < MIN_RUNS_FOR_BASELINE) continue;
+    if (ghostCandidatesBy(new Map([[h.scenario, h]]), frozenAt, definitionOf("last_week")).length === 0) continue;
+    if (++found >= GHOST_ROUNDS) return true;
+  }
+  return false;
 }
 
 /**

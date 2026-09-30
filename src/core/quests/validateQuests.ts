@@ -30,10 +30,12 @@ import {
   type BenchmarkRegistryEntry,
 } from "./evxlLink.ts";
 import {
+  emptyQuestState,
   issueDaily,
   issueWeekly,
   measure,
   playStreak,
+  recordGhost,
   recordMatch,
   startOfDay,
   startOfWeek,
@@ -400,7 +402,7 @@ if (history.size === 0) {
     const progress = measure(q, at(done.h, now), done.matches);
     check(`${q.kind.padEnd(16)} completes when done`, progress >= q.target, `${progress}/${q.target}  ${q.title}`);
   }
-  console.log(`       ${seen.size} of 22 kinds exercised`);
+  console.log(`       ${seen.size} of 23 kinds exercised`);
   check("most kinds were issued at least once", seen.size >= 16, [...seen.keys()].join(", "));
 
   // The whole loop, on today's board: finish one quest, and the board keeps it and pays it.
@@ -416,6 +418,70 @@ if (history.size === 0) {
   check("the finished quest is still on the board", kept !== undefined, target.title);
   check("and was paid", kept?.completedAt !== null && paid.xpAwarded >= target.xp, `+${paid.xpAwarded} XP`);
   check("and is not paid twice", syncBoard(paid.state, ctxAt(played.h, now)).xpAwarded === 0);
+
+  // -------------------------------------------------------------------------
+  console.log("\n── a ghost win is not a ranked win ──────────────");
+
+  // A ghost match has nobody on the other side, so its win must never reach the quests
+  // that count wins against people. It goes into `ghosts`, never `matches`, and these
+  // measure the three quests that could be confused with each other on the same records.
+  {
+    const since = startOfDay(now);
+    const asQuest = (kind: IssuedQuest["kind"], unit: IssuedQuest["unit"]): IssuedQuest => ({
+      id: kind, slot: "variety", kind, title: kind, detail: kind, xp: 1, target: 1, unit, params: {},
+      since: since.toISOString(), until: new Date(since.getTime() + (kind === "weekly_wins" ? 7 : 1) * DAY_MS).toISOString(),
+      progress: 0, completedAt: null,
+    });
+    const beat = asQuest("beat_ghost", "ghosts");
+    const rankedPlay = asQuest("ranked_play", "matches");
+    const weeklyWins = asQuest("weekly_wins", "wins");
+    const at = new Date(since.getTime() + 3_600_000).toISOString();
+    const ctx = ctxAt(history, now);
+    const measured = (s: ReturnType<typeof emptyQuestState>, q: IssuedQuest) => measure(q, ctx, s.matches, s.ghosts);
+
+    const ghostWin = recordGhost(emptyQuestState(), { id: "g1", at, kind: "last_week", verdict: "win" });
+    check("recording a ghost win adds nothing to the settled-matches list", ghostWin.matches.length === 0 && ghostWin.ghosts.length === 1);
+    check("and leaves ranked_play where it was", measured(ghostWin, rankedPlay) === 0, `${measured(ghostWin, rankedPlay)}`);
+    check("and weekly_wins", measured(ghostWin, weeklyWins) === 0, `${measured(ghostWin, weeklyWins)}`);
+    check("beat_ghost completes on it", measured(ghostWin, beat) >= 1, `${measured(ghostWin, beat)}`);
+    check("the same ghost result recorded twice counts once",
+      measure(beat, ctx, [], recordGhost(ghostWin, { id: "g1", at, kind: "last_week", verdict: "win" }).ghosts) === 1);
+
+    for (const verdict of ["loss", "draw", "void"] as const) {
+      const s = recordGhost(emptyQuestState(), { id: `g-${verdict}`, at, kind: "last_week", verdict });
+      check(`beat_ghost does not complete on a ghost ${verdict}`, measured(s, beat) === 0);
+    }
+    const rankedWin = recordMatch(emptyQuestState(), { id: "m1", at, verdict: "win", seeding: false, category: null });
+    check("nor on a ranked win, which weekly_wins does count", measured(rankedWin, beat) === 0 && measured(rankedWin, weeklyWins) === 1);
+    const yesterday = recordGhost(emptyQuestState(), { id: "g0", at: new Date(since.getTime() - 3_600_000).toISOString(), kind: "last_week", verdict: "win" });
+    check("nor on a ghost win from before the quest's day", measured(yesterday, beat) === 0);
+
+    // Issued only when the library can host a ghost: a quest that cannot be done is a lie.
+    // Signed out here, because that is the board it was added for: the one match-shaped
+    // quest a player with no account can have.
+    let withGhost = 0;
+    let withoutGhost = 0;
+    let rankedSignedOut = 0;
+    for (let d = 0; d < 28; d++) {
+      const day = new Date(startOfDay(now).getTime() - d * DAY_MS);
+      const on = issueDaily({ ...simAt(history, day, false), ghostReady: true }, day, []);
+      const off = issueDaily(simAt(history, day, false), day, []);
+      if ([...on.daily, ...on.reserve].some((q) => q.kind === "beat_ghost")) withGhost++;
+      if ([...off.daily, ...off.reserve].some((q) => q.kind === "beat_ghost")) withoutGhost++;
+      if ([...on.daily, ...on.reserve].some((q) => q.kind === "ranked_play")) rankedSignedOut++;
+    }
+    check("a signed-out board draws beat_ghost when a ghost exists", withGhost > 0, `${withGhost} of 28 days`);
+    check("and never when none does", withoutGhost === 0, `${withoutGhost} of 28 days`);
+    check("while ranked_play still needs a sign-in", rankedSignedOut === 0, `${rankedSignedOut} of 28 days`);
+
+    // Paid through the ordinary sync, once.
+    const ghostCtx = { ...ctxAt(history, now), ghostReady: true };
+    const board = syncBoard(null, ghostCtx).state;
+    const forced = { ...board, daily: [...board.daily.filter((q) => q.kind !== "beat_ghost"), beat] };
+    const paidOnce = syncBoard(recordGhost(forced, { id: "g2", at, kind: "month_ago", verdict: "win" }), ghostCtx);
+    check("the board pays beat_ghost when a ghost win is recorded", paidOnce.newlyCompleted.some((q) => q.kind === "beat_ghost"));
+    check("and not twice", !syncBoard(paidOnce.state, ghostCtx).newlyCompleted.some((q) => q.kind === "beat_ghost"));
+  }
 
   // -------------------------------------------------------------------------
   console.log("\n── the board varies from day to day ─────────────");

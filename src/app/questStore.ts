@@ -45,7 +45,10 @@ export function loadQuestState(): QuestState {
       return emptyQuestState(totalXp);
     }
 
-    return { ...emptyQuestState(totalXp), ...parsed, totalXp } as QuestState;
+    // `ghosts` arrived after version 2 did; a file from before it has none, and a
+    // hand-edited one with something else there loses only its ghost results.
+    const ghosts = Array.isArray(parsed.ghosts) ? parsed.ghosts : [];
+    return { ...emptyQuestState(totalXp), ...parsed, ghosts, totalXp } as QuestState;
   } catch {
     // A corrupt file costs the day's board, not the app.
     return emptyQuestState();

@@ -40,6 +40,7 @@ import {
   GHOST_KINDS,
   GHOST_START_ALLOWANCE_MS,
   ghostCandidatesBy,
+  ghostReady,
   ghostStreak,
   inTen,
   judge,
@@ -246,6 +247,9 @@ for (const k of GHOST_KINDS) {
   console.log(`       ${k.padEnd(15)} ${a.available ? "available" : "not available"}  ${a.scenarios} scenarios, latest session ${a.sessionDay ?? "-"}${a.reason ? `  (${a.reason})` : ""}`);
 }
 check("a last_week ghost is available on this folder", avail.last_week.available);
+check("ghostReady, the quest board's cheap question, agrees with the full answer",
+  ghostReady(history, now) === GHOST_KINDS.some((k) => avail[k].available));
+check("and says no to an empty library", ghostReady(new Map(), now) === false);
 
 const drawn = drawGhostMatch(history, now, "last_week", 0);
 const again = drawGhostMatch(history, new Date(now.getTime() + 3_600_000), "last_week", 0);
