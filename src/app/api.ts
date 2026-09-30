@@ -863,12 +863,15 @@ export interface GhostCard {
   verdict: "win" | "loss" | "draw";
   margin: number;
   liveTier: string;
+  ghostFromUploadedHistory: true;
+  streak: number;
   createdAt: string;
   rounds: {
     scenario: string;
     live: number;
     ghost: number;
     baseline: number;
+    pb: number;
     ghostDay: string;
     gap: number;
   }[];
