@@ -374,6 +374,37 @@ history and says nothing about a player with three weeks of it; `availableKinds`
 plainly when there is no ghost. Whether racing oneself stays fun past the first week is a
 playtest question the corpus cannot answer.
 
+### Where the build departs from this spec
+
+Each of these is argued at the code it lives in; this is the list.
+
+- **Frozen at local midnight, not at the click.** Eligibility, ghost and baseline are all
+  read as of the start of the draw's local day (`drawGhostMatch`), so a draw is a pure
+  function of (history before today, day, kind, ordinal). Warming up before pressing Race
+  cannot change the three or move the bar, and it is the frame the win rates were replayed
+  in. The ordinal counts matches *started* today, so discarding an unstarted draw brings
+  back the same three.
+- **A run counts from when it began.** `applyRun` refuses a run whose derived start
+  (filename end minus duration) is more than 2 s before Start, not only one that ended
+  before it. The clock expires a match at the deadline plus ranked's 90 s end grace.
+- **Tenths, not quarters**, on the chooser; see the note under the table above.
+- **The streak is days with a win**, as specified, so a loss, an abandon and a void all
+  add nothing. "Abandoning is a loss" is enforced as the *record*: an abandon after Start
+  is stored as a loss (never a void, never nothing), pays no quest, and `validate:ghost`
+  asserts that. A void from an abandoned *run* is kept locally as "No result"; only the
+  server refuses to store one.
+- **Bars are drawn on a baseline-centred scale** (±25%), computed in `viewOf`; scaled to
+  raw scores a 4% win looked like a tie.
+- **`ghost_results` has two more columns**: `pbs` (the card's distance to best) and
+  `tz_offset_minutes` (so the card's streak counts the poster's local days), plus check
+  constraints on the arrays' lengths and on the code's alphabet.
+- **The server does not replay the draw.** Its copy of the library is whatever was
+  uploaded, so a replay would refuse honest players whose upload lags; it checks each
+  scenario has a ghost of the claimed kind in uploaded history, and requires the three
+  runs to have been played as one sitting on the ranked idle clock.
+- **Cut:** Ghost links (follow-up 1) and a card renderer. Share mints a code and shows it
+  on the result screen once post-ghost is deployed; there is no image yet.
+
 ## Video beats
 
 1. **Cold open, the empty ladder** (2 s): the seeding-match result, "Nothing was rated:
