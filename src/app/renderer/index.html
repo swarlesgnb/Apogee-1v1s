@@ -353,6 +353,9 @@
     border: 1px solid var(--rule); border-radius: var(--r);
     padding: 3px 10px; white-space: nowrap;
   }
+  /* The rail shows before there is a snapshot to fill it, so sign-in has somewhere to
+     be; an unfilled streak was a bordered oval with nothing in it. */
+  .streak:empty { display: none; }
 
   /* Small, quiet, and always there. Policies that can only be found by going to the
      repository are policies the people they are about will never read. */
@@ -1627,7 +1630,7 @@
   .draw-rows { display: grid; }
   .draw-row {
     display: grid;
-    grid-template-columns: minmax(0, 40ch) minmax(0, 1fr) 108px;
+    grid-template-columns: minmax(0, 40ch) minmax(0, 1fr) 108px 64px;
     gap: var(--s4); align-items: center;
     padding: var(--s3) 0; border-top: 1px solid var(--rule);
   }
@@ -1659,6 +1662,20 @@
   }
   .draw-row.short .base { color: var(--warn); }
   .draw-row.none .base { color: var(--ink-dim); }
+  .draw-row .scen-play {
+    justify-self: end; font: inherit; font-size: var(--t-sm); font-weight: 560;
+    color: var(--ink); background: var(--control);
+    border: 1px solid var(--rule-2); border-radius: var(--r);
+    padding: 3px 12px; cursor: pointer;
+  }
+  .draw-row .scen-play:hover:not(:disabled) { border-color: var(--rule-3); }
+  .pool-note .pool-go {
+    display: inline; min-height: 0; line-height: inherit;
+    margin-left: var(--s2); padding: 0; font: inherit; font-weight: 600;
+    color: var(--ink); background: transparent; border: 0;
+    text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+  }
+  .pool-note .pool-go:hover { color: var(--brand); }
   .draw-cat {
     font-family: var(--mono); font-size: var(--t-2xs); font-weight: 600;
     letter-spacing: .12em; text-transform: uppercase; color: var(--ink-dim);
@@ -1674,7 +1691,7 @@
   .draw-legend b { color: var(--ink-mid); font-weight: 600; }
 
   @media (max-width: 860px) {
-    .draw-row { grid-template-columns: minmax(0, 1fr) 100px; gap: var(--s2) var(--s3); }
+    .draw-row { grid-template-columns: minmax(0, 1fr) 100px 64px; gap: var(--s2) var(--s3); }
     .draw-row .meter { grid-column: 1 / -1; grid-row: 2; }
   }
 
@@ -2404,6 +2421,20 @@
   .empty button.secondary {
     color: var(--ink); background: transparent; border: 1px solid var(--rule);
   }
+  .empty-meanwhile {
+    margin-top: var(--s6); padding-top: var(--s4); border-top: 1px solid var(--rule);
+    font-size: var(--t-sm); color: var(--ink-dim);
+  }
+  .empty-meanwhile p { margin: 0; max-width: 58ch; line-height: 1.5; }
+  .empty-meanwhile p.nudge { color: var(--ink); }
+  .empty-routes { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); }
+  .empty .empty-route {
+    margin-top: var(--s2); padding: var(--s1) 0; background: transparent; border: 0;
+    color: var(--ink-mid); font-family: var(--font); font-size: var(--t-sm);
+    font-weight: 500; letter-spacing: 0; text-transform: none;
+  }
+  .empty .empty-route:hover { color: var(--brand); filter: none; }
+  .dot.idle { background: var(--ink-dim); }
 
   .footnote {
     margin: 8px 0 0; font-size: var(--t-sm); color: var(--ink-dim);
@@ -3353,11 +3384,11 @@
                   <span class="badge" id="heroBadge"></span>
                 </button>
                 <div class="hero-id">
-                  <div class="hero-kicker">Current rank</div>
+                  <div class="hero-kicker">Apogee ladder</div>
                   <div class="name" id="heroName"></div>
                   <div class="climb" id="heroClimb" hidden>
                     <div class="climb-head">
-                      <span class="climb-k">Next benchmark rank</span>
+                      <span class="climb-k" id="heroClimbFrom">Next benchmark rank</span>
                       <span class="climb-to" id="heroClimbTo"></span>
                       <span class="climb-pct" id="heroClimbPct"></span>
                     </div>
@@ -3810,8 +3841,8 @@
             <div class="screen-head">
               <h1 data-copy="quests.title">Quests</h1>
               <p data-copy="quests.lede">
-                Three for today and one for the week, drawn from where you stood when
-                each began. Only runs played since count, so a quest stays yours until
+                A board for today and one quest for the week, drawn from where you stood
+                when each began. Only runs played since count, so a quest stays yours until
                 it is done.
               </p>
             </div>
@@ -4238,6 +4269,16 @@
               Picking the Steam or FPSAimTrainer folder also works; Apogee looks inside it.</p>
             <p>A fresh KovaaK's install has no stats until its first run is played.</p>
           </details>
+          <!-- Below the one thing to do, and quieter than it. The rail greys out every tab
+               but these two, and pressing a grey one only moved focus to the button above,
+               so nothing on the page said the two lit tabs were the ones that already work. -->
+          <div class="empty-meanwhile" id="emptyMeanwhile">
+            <p id="emptyLocked">The queue, Season and ranks open once your runs are read. These work now:</p>
+            <div class="empty-routes">
+              <button type="button" class="empty-route" data-arcade-route="expedition">First Light expedition <span aria-hidden="true">→</span></button>
+              <button type="button" class="empty-route" data-arcade-route="mixtape">Make a mixtape <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
         </div>
 
       </div>

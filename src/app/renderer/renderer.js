@@ -887,7 +887,7 @@ function prepareScrollRegions() {
 
 function setStatus(kind, text, path) {
   const dot = $("statusDot");
-  dot.className = "dot" + (kind === "scanning" ? " scanning" : kind === "bad" ? " bad" : "");
+  dot.className = "dot" + (kind === "scanning" ? " scanning" : kind === "bad" ? " bad" : kind === "idle" ? " idle" : "");
   $("statusText").textContent = text;
   // Clipped in the bar, whole inside the popover. The end of a stats path is the part
   // worth reading; the beginning is C:\Program Files (x86)\Steam\steamapps every time.
@@ -1113,7 +1113,12 @@ function render(data) {
   $("myTier").textContent = tierName;
   $("myTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
   paintRating();
-  $("myStreak").textContent = data.player.streak + "-day streak";
+  // A streak counts from yesterday, so zero means nothing yesterday or today. "0-day
+  // streak" was the first thing under a new player's name; the fact worth saying is how
+  // to start one.
+  $("myStreak").textContent = data.player.streak > 0
+    ? data.player.streak + "-day streak"
+    : "Start a streak today";
 
   $("heroBadge").innerHTML = badge(me.tier, "hero");
   document.querySelector(".rank-showcase").dataset.material = String(me.tier.id || "tier-1");
@@ -1204,6 +1209,14 @@ function renderClimb(data) {
   }
 
   box.hidden = false;
+  // Two ladders share one set of names: the tier above is a population percentile, this
+  // is the benchmark rank the energy earns. Unlabelled, the card read "Current rank
+  // Lunar" over "Next benchmark rank Lunar, 93% there" on the committed snapshot, which
+  // says the player is climbing towards where they already are. Naming the rank being
+  // climbed from makes it two facts rather than one contradiction; the Ranks screen uses
+  // the same two names for the same two panels.
+  const from = data.player.benchmarkRank;
+  $("heroClimbFrom").textContent = from ? "Benchmark rank " + from + " →" : "Next benchmark rank";
   $("heroClimbTo").textContent = next;
   $("heroClimbTo").style.color = rankInk(data, next);
   $("heroClimbPct").textContent = Math.round(at * 100) + "% there";
@@ -1330,7 +1343,10 @@ function renderDraw(data) {
     who.className = "draw-name";
     who.append(nm, sk);
 
-    el.append(who, meter, base);
+    // Every row opens its scenario, the way the match rows do. The note by the button
+    // told a new player to "play a few runs on those first", and this list was the only
+    // place that named them, with nothing in it to press.
+    el.append(who, meter, base, playButton(r.scenario) ?? document.createElement("span"));
     host.append(el);
   }
 
@@ -1360,7 +1376,10 @@ function needsFor(data, scenario) {
 function renderPool(data) {
   renderDraw(data);
   const btn = $("queueBtn");
-  if (btn && !btn.classList.contains("working") && !btn.classList.contains("held")) {
+  // Signed out, resetCommit owns the line: repainting it here put "matched on rating"
+  // beside a button that signs in rather than queues.
+  if (btn && !btn.classList.contains("working") && !btn.classList.contains("held") &&
+      (HOST !== "electron" || signedIn)) {
     $("queueSub").textContent = commitSub(data);
     $("queueMeta").textContent = "matched on rating";
   }
@@ -1405,6 +1424,21 @@ function renderPool(data) {
     `${short.length < relevant.length ? ` (short in ${esc(short.map((c) => c.category).join(", "))})` : ""}. ` +
     `A scenario without a baseline is scored against an estimate, which halves the ` +
     `match's weight and can void it. Play a few runs on those first.`;
+
+  // "Those" were named only in the folded Scenario pool panel at the foot of the page, so
+  // the sentence pointed at a list nobody could see from here.
+  const draw = $("drawPanel");
+  if (draw && !draw.hidden) {
+    const go = document.createElement("button");
+    go.type = "button";
+    go.className = "pool-go";
+    go.textContent = "Show which";
+    go.addEventListener("click", () => {
+      draw.open = true;
+      draw.scrollIntoView({ block: "start", behavior: reduceMotion.matches ? "auto" : "smooth" });
+    });
+    note.append(go);
+  }
 }
 
 /**
@@ -7535,6 +7569,24 @@ function renderNoResultYet() {
     "can be matched.";
   settled($("roundsBody"));
   $("roundsBody").textContent = "";
+  // A table of headers over no rows looked like a result that failed to load.
+  const table = $("roundsBody").closest?.(".rounds-wrap");
+  if (table) table.hidden = true;
+
+  // This is the tab a new player opens to see what a match is, and it ended on a
+  // sentence. The result row below is where "Queue again" lives once there is a result,
+  // so the way back to the queue sits in the same place before there is one.
+  const box = $("rematch");
+  const go = $("queueAgainBtn");
+  if (box && go && !activeMatch) {
+    box.hidden = false;
+    $("rematchBtn").hidden = true;
+    $("rematchNote").textContent = "Your result lands here as soon as the third run is read.";
+    go.hidden = false;
+    go.disabled = false;
+    go.textContent = "Go to the queue";
+    go.onclick = () => openScreen("queue");
+  }
 }
 
 /**
@@ -7739,6 +7791,8 @@ function renderSettled(s) {
   const body = $("roundsBody");
   settled(body);
   body.textContent = "";
+  const table = body.closest?.(".rounds-wrap");
+  if (table) table.hidden = false;
   // The server does not send the opponent's raw scores, so that column was a dash on
   // every real result. Their improvement, which decides the round, is still shown.
   body.closest?.("table")?.classList.add("no-them");
@@ -8085,7 +8139,8 @@ function renderQuests(data) {
     bonus.classList.toggle("earned", board.bonus.earned);
     bonus.innerHTML = board.bonus.earned
       ? "Board cleared · <b>+" + num(board.bonus.xp) + " XP</b> on a " + num(board.bonus.streak) + "-day streak"
-      : "Clear all three for <b>+" + num(board.bonus.xp) + " XP</b>" +
+      // Not a number: the board went from three to five, and a small pool can issue fewer.
+      : "Clear the board for <b>+" + num(board.bonus.xp) + " XP</b>" +
         (board.bonus.streak > 1 ? " on a " + num(board.bonus.streak) + "-day streak" : "") +
         " · " + done + " of " + board.daily.length + " done";
   }
@@ -9387,6 +9442,8 @@ function restoreScreen() {
 
 /** Screens that work before any stats are read. */
 const STANDALONE_SCREENS = new Set(["mixtape", "expedition"]);
+/** Set while a locked tab sends the player back to the folder card, which is behind Queue. */
+let showingFolderCard = false;
 
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.id ||= "nav-" + tab.dataset.screen;
@@ -9401,7 +9458,25 @@ document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => {
     // Before any stats are read, the screens that draw from them are empty. Nine tabs
     // used to open onto a blank page; they point back at the one thing to do instead.
-    if (document.body.classList.contains("awaiting-data") && !STANDALONE_SCREENS.has(tab.dataset.screen)) {
+    if (document.body.classList.contains("awaiting-data") && !STANDALONE_SCREENS.has(tab.dataset.screen) &&
+        !showingFolderCard) {
+      // Moving focus alone said nothing, and from Mixtape or Expedition it moved focus to
+      // a button that was not on screen, so the press looked dead. Name what was pressed
+      // and bring the folder card back into view.
+      const locked = $("emptyLocked");
+      const label = tab.querySelector(".tab-label");
+      if (locked && label) {
+        locked.textContent = label.textContent.trim() + " opens once your runs are read. These work now:";
+        locked.classList.add("nudge");
+      }
+      if (STANDALONE_SCREENS.has(document.body.dataset.screen)) {
+        showingFolderCard = true;
+        try {
+          document.querySelector('.tab[data-screen="queue"]').click();
+        } finally {
+          showingFolderCard = false;
+        }
+      }
       const choose = $("emptyChoose");
       if (choose) choose.focus();
       return;
@@ -10845,9 +10920,17 @@ function renderTournaments(list) {
   const side = tnEl("div");
 
   if (!list) {
-    main.append(HOST === "electron" && signedIn
+    const empty = HOST === "electron" && signedIn
       ? tnEmpty("Couldn't load tournaments", "The server did not answer. They reload on their own while this screen is open.")
-      : tnEmpty(HOST === "electron" ? "Sign in to play" : "Loading", "Sign in to see and join tournaments."));
+      : tnEmpty(HOST === "electron" ? "Sign in to play" : "Loading", "Sign in to see and join tournaments.");
+    // "Sign in to play" with nothing to press, and the only sign-in button at the foot of
+    // the rail. The same button, so the two cannot behave differently.
+    if (HOST === "electron" && !signedIn && $("btnSignIn") && !$("btnSignIn").disabled) {
+      const signIn = tnButton("Sign in with Steam", "primary", () => $("btnSignIn").click());
+      signIn.style.marginTop = "16px";
+      empty.append(document.createElement("br"), signIn);
+    }
+    main.append(empty);
   } else {
     const live = (t) => t.phase === "groups" || t.phase === "playoffs";
     const mine = (t) => t.entered || t.hostedByYou;
@@ -11934,8 +12017,14 @@ if (HOST === "electron") {
     renderEligibility();
     renderSettled(settled);
     if (settled && settled.tournament) void tnRefresh();
-    playSound(settled && settled.verdict === "win" ? "victory"
-      : settled && settled.verdict === "draw" ? "draw" : "defeat");
+    // Only a loss sounds like one. A seeding set has a null verdict and fell through to
+    // "defeat", so while the population is zero every player's first result - three runs
+    // recorded, nothing lost - played the losing sting. A void or a first tournament leg
+    // has no loser either.
+    const verdict = settled ? settled.verdict : null;
+    playSound(verdict === "win" ? "victory"
+      : verdict === "draw" || verdict === "void" ? "draw"
+      : verdict === "loss" ? "defeat" : "ok");
 
     // Jump to the result, because that is the payoff and nobody should have to hunt
     // for it after finishing three scenarios.
@@ -12281,6 +12370,13 @@ if (HOST === "electron") {
     if (state.snapshot) {
       render(state.snapshot);
       setStatus("ok", "Watching", currentPath);
+    } else if (state.lastError && !state.statsDir) {
+      // No folder is where a first launch starts whenever detection misses, not a fault:
+      // the card below already says so and holds the button. The same sentence in a red
+      // banner over it, an error sound and a red "Problem" dot made the very first screen
+      // read as a crash. A folder that exists and fails to read still takes the path below.
+      setStatus("idle", "No folder yet", "");
+      paintFolderMissing();
     } else {
       setStatus(state.lastError ? "bad" : "scanning", state.lastError ? "Problem" : "Scanning…", currentPath);
       if (state.lastError) {

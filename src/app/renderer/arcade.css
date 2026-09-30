@@ -446,3 +446,15 @@ body[data-queue="working"] .queue-stage { border-top-color: var(--brand); }
 #screen-scenarios table.scen td, #screen-scenarios table.scen th { padding-inline: 10px; }
 #screen-seasonview .pool-sub-head[hidden] { display: none; }
 #screen-seasonview .pbody > .rank-lede { max-width: 96ch; margin-block: 0 8px; }
+
+/* Getting started goes above the queue it gates, as index.html has always said. Pinning the
+   stage and the rank card to row 2 above left the checklist to auto-placement, which put it
+   in row 3: under the category grid, below the fold at 1280x820, so a new player met
+   "Sign in to queue" before the three steps that explain it. Row 2 only while it is on
+   screen; a hidden checklist leaves the rows as they were rather than an empty gap. */
+#screen-queue:has(> .setup:not([hidden])) > .setup { grid-row: 2; grid-column: 1 / -1; }
+#screen-queue:has(> .setup:not([hidden])) > .queue-stage,
+#screen-queue:has(> .setup:not([hidden])) > .rank-showcase { grid-row: 3; }
+@media (max-width: 1100px) {
+  #screen-queue:has(> .setup:not([hidden])) > .rank-showcase { grid-row: 4; }
+}
