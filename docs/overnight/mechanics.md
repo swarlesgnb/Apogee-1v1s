@@ -94,12 +94,17 @@ since verified PBs live server-side); the live side wins when its mean delta is 
 
 | ghost, per scenario | matches possible | live side wins | margin p10 / p50 / p90 |
 |---|---|---|---|
-| median of the last session at least 30 days earlier | 173 | 74.6% | −4.8% / +3.1% / +12.6% |
-| **median of the last session at least 7 days earlier** | **206** | **55.3%** | −5.2% / +0.5% / +7.3% |
-| best of the last session at least 7 days earlier | 206 | 47.6% | −6.8% / −0.7% / +6.5% |
-| trailing 7-day median | 199 | 53.8% | −5.1% / +0.1% / +5.1% |
-| best of the last session before today | 211 | 40.3% | −8.6% / −1.2% / +5.0% |
-| best ever (PB) | 211 | 3.3% | −15.7% / −8.5% / −2.6% |
+| median of the last session at least 30 days earlier | 173 | 74.6% | −2.9% / +3.5% / +12.9% |
+| **median of the last session at least 7 days earlier** | **206** | **58.3%** | −6.1% / +1.2% / +8.5% |
+| best of the last session at least 7 days earlier | 206 | 49.0% | −8.3% / −0.0% / +8.0% |
+| trailing 7-day median | 199 | 51.3% | −5.6% / +0.1% / +5.8% |
+| best of the last session before today | 211 | 33.2% | −8.4% / −1.7% / +5.5% |
+| best ever (PB) | 211 | 2.4% | −15.2% / −8.6% / −3.1% |
+
+*Re-derived by `npm run validate:ghost`, which replays each day through the app's own
+seeded draw and `settleMatch` (a draw is not a win). The first draft of this table came
+from the appendix script, whose shuffle and tie handling differ: 55.3%, 47.6%, 53.8%,
+40.3% and 3.3% in the rows above. No decision below changes.*
 
 What that decides:
 
@@ -113,8 +118,8 @@ What that decides:
   | ghost | question it answers | measured win rate | when it is offered |
   |---|---|---|---|
   | `month_ago` | "have I improved?" | 74.6% | default for the first ghost match an install plays, and whenever last week is unavailable |
-  | `last_week` | "am I still improving?" | 55.3% | default after the first |
-  | `last_week_best` | "can I beat my good day?" | 47.6% | chosen explicitly |
+  | `last_week` | "am I still improving?" | 58.3% | default after the first |
+  | `last_week_best` | "can I beat my good day?" | 49.0% | chosen explicitly |
 
   The first match is deliberately the one most people win: it is the hook, and the video.
 
@@ -172,8 +177,9 @@ output if they differ.
    "Nobody in the pool yet. Race last week's you on these three while it fills." Available
    signed out, unlike the ranked queue.
 2. **Ghost chooser.** Three cards, `month_ago`, `last_week`, `last_week_best`, each with the
-   date of the session it would draw from and the measured win rate as "most people win
-   this about N in 4". Unavailable kinds show why ("no session 30+ days ago on enough
+   date of the session it would draw from and the measured win rate as "about N in 10
+   won this in testing" (tenths, since in quarters `last_week` and `last_week_best` both
+   read "2 in 4"). Unavailable kinds show why ("no session 30+ days ago on enough
    scenarios"). One primary button: **Race**.
 3. **Pre-match.** The three scenarios, the ghost's score and the date behind each, the
    frozen baseline, and the PB as context. **Start** starts the clock and opens scenario 1

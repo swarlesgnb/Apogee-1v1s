@@ -1,0 +1,733 @@
+/**
+ * Ghost Mode: a ranked-format match against the player's own past runs.
+ *
+ * The ladder needs a second player and, at launch, there is not one (PLAN.md §15). A ghost
+ * match needs nobody: three scenarios from the player's own KovaaK's library, each raced
+ * against a score frozen from an earlier session of theirs, scored the way a ranked match
+ * is. It moves a quest and a streak and never a rating (docs/overnight/mechanics.md).
+ *
+ * Why the library and not the season pool: the pool is Apogee's own scenarios, which
+ * nobody outside the project has played, so a pool-only ghost has nothing to be built
+ * from. `validateGhost.ts` re-derives that on every run rather than trusting it.
+ *
+ * Pure: no `node:fs`, no clock of its own. Every function takes `now` or a timestamp, so
+ * the Edge Function can import it the way `refresh-baselines` imports baseline.ts, and
+ * the validator can replay two hundred past days through the same code the app runs.
+ *
+ * Time. Everything local is a Date built from a KovaaK's filename by `new Date(y, m, ...)`
+ * on the player's own machine, which is the correct instant there, and a "session" is
+ * one local calendar day read with the local getters. The server is different: its
+ * runtime is UTC, so it shifts each stored instant by the player's offset before calling
+ * in here (see supabase/functions/post-ghost).
+ */
+
+import { baselineFromScores, MIN_RUNS_FOR_BASELINE } from "../history/baseline.ts";
+import { seededRandom } from "../match/scenarioSelection.ts";
+import { settleMatch, type MatchVerdict, type RoundSubmission } from "../match/settle.ts";
+import { dayKey } from "../quests/progression.ts";
+
+// ---------------------------------------------------------------------------
+// shapes
+// ---------------------------------------------------------------------------
+
+export type GhostKind = "month_ago" | "last_week" | "last_week_best";
+
+export const GHOST_KINDS: readonly GhostKind[] = ["month_ago", "last_week", "last_week_best"];
+
+export function isGhostKind(value: unknown): value is GhostKind {
+  return typeof value === "string" && (GHOST_KINDS as readonly string[]).includes(value);
+}
+
+/** Structurally a `ScenarioHistory`, minus what this module does not read. */
+export interface GhostHistory {
+  scenario: string;
+  /** Oldest first is how history.ts stores them; nothing here relies on it. */
+  runs: { score: number; playedAt: Date | null }[];
+}
+
+/** A run that landed during a match, as main hands it over. */
+export interface IncomingRun {
+  scenario: string;
+  score: number;
+  /** When the run ended: the filename's wall clock, as an epoch on this machine. */
+  at: number;
+  /**
+   * Seconds of play, `runDurationSeconds` over one parse: the start and the end have to
+   * be read in the same frame (CLAUDE.md, "Timestamps are the sharp edge"). Null when it
+   * cannot be derived.
+   */
+  durationSeconds: number | null;
+  /** `isAbandonedRun` over that duration and the scenario's known length. */
+  abandoned: boolean;
+}
+
+export interface LiveRun {
+  score: number;
+  at: number;
+  abandoned: boolean;
+}
+
+export interface GhostRound {
+  scenario: string;
+  /** The score to beat, frozen when the match was drawn. */
+  ghost: number;
+  /** Local calendar day of the session the ghost came from, YYYY-MM-DD. */
+  sessionDay: string;
+  /** Runs in that session, so "median of 1" can be told from "median of 20". */
+  sessionRuns: number;
+  /** Both sides are measured against this, frozen with the ghost. */
+  baseline: number;
+  /** Best score before the match: context on the result, never the thing to beat. */
+  pb: number;
+  live: LiveRun | null;
+}
+
+export type GhostEnd = "complete" | "abandoned" | "expired";
+
+export interface GhostResultRound {
+  scenario: string;
+  live: number | null;
+  ghost: number;
+  baseline: number;
+  pb: number;
+  sessionDay: string;
+  /** (live - baseline) / baseline, null for a round not played or not counted. */
+  delta: number | null;
+  /** (ghost - baseline) / baseline. */
+  ghostDelta: number;
+  /** (live - ghost) / baseline: the round's verdict in one number. */
+  gap: number | null;
+  abandoned: boolean;
+}
+
+export interface GhostResult {
+  /** 'void' only when every round landed and settleMatch voided it (an abandoned run). */
+  verdict: MatchVerdict;
+  end: GhostEnd;
+  /** Mean of the counted gaps. Null when nothing counted. */
+  margin: number | null;
+  rounds: GhostResultRound[];
+  /** When it ended, epoch ms. */
+  at: number;
+  /** A sentence for the result screen, in the player's terms. */
+  explanation: string;
+}
+
+export interface GhostMatch {
+  /** `${day}:${kind}:${ordinal}`: the seed, and a stable id for the quest board. */
+  id: string;
+  kind: GhostKind;
+  /** Local day the draw was made on. */
+  day: string;
+  ordinal: number;
+  drawnAt: number;
+  startedAt: number | null;
+  /** Epoch ms after which no run is taken. Null until Start. */
+  deadline: number | null;
+  rounds: GhostRound[];
+  result: GhostResult | null;
+}
+
+export type RunRefusal =
+  | "not-started"
+  | "finished"
+  | "unrelated"
+  | "before-start"
+  | "already-counted"
+  | "late";
+
+export type ApplyOutcome =
+  | { accepted: true; match: GhostMatch; round: number }
+  | { accepted: false; match: GhostMatch; reason: RunRefusal };
+
+// ---------------------------------------------------------------------------
+// tuning
+// ---------------------------------------------------------------------------
+
+/**
+ * The ranked clock, copied rather than imported: `supabase/functions/_shared/apogee.ts`
+ * holds `IDLE_ALLOWANCE_MS` (3 min) and `INITIAL_TTL_MS` (idle + 5 min launch allowance),
+ * and that module imports Deno-only specifiers the client cannot load. The mode exists to
+ * rehearse the ranked format, so if those change these change with them; a lenient clock
+ * here would rehearse the wrong thing.
+ */
+export const GHOST_IDLE_ALLOWANCE_MS = 3 * 60_000;
+export const GHOST_START_ALLOWANCE_MS = GHOST_IDLE_ALLOWANCE_MS + 5 * 60_000;
+
+/**
+ * After the deadline, how long a run already under way may take to land.
+ *
+ * `WINDOW_END_GRACE_MS` in submit-run, for the same reason: a filename carries when a run
+ * *ended*, so a 60-second scenario begun ten seconds before the deadline lands fifty
+ * after it. Ranked's rule is that the last run must be started in time, and so is this.
+ */
+export const GHOST_END_GRACE_MS = 90_000;
+
+/**
+ * How far a run's derived start may sit before Start and still count.
+ *
+ * The derived start is the filename's end (whole seconds) minus a duration built from
+ * `Challenge Start:` (milliseconds) against that same whole-second end, so it can read up
+ * to a second early for a run begun exactly on the click. Two seconds covers that and
+ * nothing a player could use: nobody finishes a scenario in the two seconds before Start.
+ */
+export const GHOST_START_SLACK_MS = 2_000;
+
+/** Draws prefer scenarios the player still plays: touched within this many days. */
+export const GHOST_RECENT_DAYS = 90;
+
+/** Scenarios in a match. The ranked format's three (PLAN.md §3). */
+export const GHOST_ROUNDS = 3;
+
+const KINDS: Record<GhostKind, { daysBack: number; pick: "median" | "best" }> = {
+  month_ago: { daysBack: 30, pick: "median" },
+  last_week: { daysBack: 7, pick: "median" },
+  last_week_best: { daysBack: 7, pick: "best" },
+};
+
+/**
+ * How often the live side won when each kind was replayed over the 14,150-run corpus
+ * (`npm run validate:ghost`, which fails if a replay drifts more than five points from
+ * these or lands on a different "N in 10"). The live side there was the *first* run of a
+ * day, colder than a run played on purpose after Start, so real rates sit above these.
+ *
+ * The design quoted 55.3% and 47.6% for the two week-old kinds from a one-off script that
+ * shuffled with its own generator; replayed through the app's seeded draw and settleMatch
+ * (draws are not wins) they come out as below, and these are the ones the app runs.
+ */
+export const MEASURED_WIN_RATE: Record<GhostKind, number> = {
+  month_ago: 0.746,
+  last_week: 0.583,
+  last_week_best: 0.49,
+};
+
+/**
+ * The chooser's "about N in 10".
+ *
+ * Tenths rather than the quarters first drafted: in quarters the default and the hard
+ * ghost both round to "2 in 4", and a chooser that says the same thing about both has not
+ * told the player which one is harder.
+ */
+export function inTen(rate: number): number {
+  return Math.round(rate * 10);
+}
+
+// ---------------------------------------------------------------------------
+// time
+// ---------------------------------------------------------------------------
+
+export function startOfLocalDay(date: Date): Date {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+/** Local midnight `n` calendar days before `date`'s. Calendar arithmetic, so DST cannot shift it. */
+export function daysBefore(date: Date, n: number): Date {
+  const d = startOfLocalDay(date);
+  d.setDate(d.getDate() - n);
+  return d;
+}
+
+// ---------------------------------------------------------------------------
+// the ghost
+// ---------------------------------------------------------------------------
+
+function median(values: number[]): number {
+  const s = [...values].sort((a, b) => a - b);
+  const m = s.length >> 1;
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}
+
+export interface GhostScore {
+  score: number;
+  sessionDay: string;
+  sessionRuns: number;
+}
+
+/**
+ * The past self for one scenario: the median (or best) of the runs on the most recent
+ * local day that ended at least `daysBack` whole days before `start`'s day began.
+ *
+ * A session is one local calendar day. "Last week" is therefore the last day played
+ * before the same weekday a week ago, which is the definition the chooser's win rates
+ * were measured on.
+ */
+export function ghostScore(
+  runs: { score: number; playedAt: Date | null }[],
+  start: Date,
+  kind: GhostKind,
+): GhostScore | null {
+  const { daysBack, pick } = KINDS[kind];
+  const cutoff = daysBefore(start, daysBack).getTime();
+
+  let latest: Date | null = null;
+  for (const r of runs) {
+    if (!r.playedAt || !Number.isFinite(r.score)) continue;
+    const t = r.playedAt.getTime();
+    if (t < cutoff && (!latest || t > latest.getTime())) latest = r.playedAt;
+  }
+  if (!latest) return null;
+
+  const day = dayKey(latest);
+  const session = runs
+    .filter((r) => r.playedAt && r.playedAt.getTime() < cutoff && dayKey(r.playedAt) === day && Number.isFinite(r.score))
+    .map((r) => r.score);
+  if (session.length === 0) return null;
+
+  return {
+    score: pick === "best" ? Math.max(...session) : median(session),
+    sessionDay: day,
+    sessionRuns: session.length,
+  };
+}
+
+export interface GhostCandidate extends Omit<GhostRound, "live"> {
+  /** Last run before the draw, epoch ms, for the recent-first preference. */
+  lastPlayed: number;
+}
+
+/** Any "past self" definition, so the validator can replay the rejected ones through the same path. */
+export type GhostDefinition = (
+  runs: { score: number; playedAt: Date | null }[],
+  start: Date,
+) => GhostScore | null;
+
+export function definitionOf(kind: GhostKind): GhostDefinition {
+  return (runs, start) => ghostScore(runs, start, kind);
+}
+
+/**
+ * Every scenario a match could be drawn from at `start`, each with its ghost and baseline
+ * frozen.
+ *
+ * Eligible means `MIN_RUNS_FOR_BASELINE` runs before `start`, a positive baseline (a
+ * scenario scored at or below zero has no delta to take), and a ghost session for the
+ * kind. The baseline is `baselineFromScores` over runs before `start` with no PB floor:
+ * the verified PB lives on the server, and against a ghost both sides share the baseline,
+ * so the floor would move both by the same amount and change no verdict.
+ *
+ * Sorted by name, because Map order is readdir order and the seeded draw has to see the
+ * same list on every machine.
+ */
+export function ghostCandidatesBy(
+  history: Map<string, GhostHistory>,
+  start: Date,
+  define: GhostDefinition,
+): GhostCandidate[] {
+  const t = start.getTime();
+  const out: GhostCandidate[] = [];
+
+  for (const [name, h] of history) {
+    const before = h.runs.filter((r) => r.playedAt && r.playedAt.getTime() < t && Number.isFinite(r.score));
+    if (before.length < MIN_RUNS_FOR_BASELINE) continue;
+
+    const baseline = baselineFromScores(name, before.map((r) => r.score)).value;
+    if (!(baseline > 0)) continue;
+
+    const ghost = define(before, start);
+    if (!ghost) continue;
+
+    out.push({
+      scenario: name,
+      ghost: ghost.score,
+      sessionDay: ghost.sessionDay,
+      sessionRuns: ghost.sessionRuns,
+      baseline,
+      pb: Math.max(...before.map((r) => r.score)),
+      lastPlayed: Math.max(...before.map((r) => r.playedAt!.getTime())),
+    });
+  }
+
+  return out.sort((a, b) => (a.scenario < b.scenario ? -1 : a.scenario > b.scenario ? 1 : 0));
+}
+
+export function ghostCandidates(history: Map<string, GhostHistory>, start: Date, kind: GhostKind): GhostCandidate[] {
+  return ghostCandidatesBy(history, start, definitionOf(kind));
+}
+
+/** Fisher-Yates over a seeded stream, so the draw is reproducible. */
+function shuffle<T>(items: T[], random: () => number): T[] {
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+export function drawSeed(day: string, kind: string, ordinal: number): string {
+  return `${day}:${kind}:${ordinal}`;
+}
+
+/**
+ * Three of the candidates, recently played first.
+ *
+ * Two buckets shuffled from one stream and concatenated, the shape `selectScenarios` uses
+ * for fresh and stale: a player with three scenarios touched in the last 90 days races
+ * those, and one with fewer still gets a match from the rest rather than none.
+ */
+export function pickRounds(candidates: GhostCandidate[], at: Date, seed: string): GhostCandidate[] {
+  if (candidates.length < GHOST_ROUNDS) return [];
+  const random = seededRandom(seed);
+  const recentFrom = daysBefore(at, GHOST_RECENT_DAYS).getTime();
+  const recent = shuffle(candidates.filter((c) => c.lastPlayed >= recentFrom), random);
+  const rest = shuffle(candidates.filter((c) => c.lastPlayed < recentFrom), random);
+  return [...recent, ...rest].slice(0, GHOST_ROUNDS);
+}
+
+/**
+ * Draw a match.
+ *
+ * Everything is frozen as of local midnight on the draw's day, not the moment of the
+ * click: the eligible scenarios, each ghost and each baseline. That makes a draw a pure
+ * function of (history before today, day, kind, ordinal), so restarting the app, warming
+ * up first, or discarding an unstarted draw all bring back the same three, and a run
+ * played during the match cannot move the bar it is measured against. It is also the
+ * frame the win rates in MEASURED_WIN_RATE were replayed in.
+ *
+ * `ordinal` counts matches *started* today, so the only way to a different three is to
+ * start this one and finish or abandon it, and abandoning is a loss.
+ */
+export function drawGhostMatch(
+  history: Map<string, GhostHistory>,
+  now: Date,
+  kind: GhostKind,
+  ordinal: number,
+): GhostMatch | null {
+  const day = dayKey(now);
+  const frozenAt = startOfLocalDay(now);
+  const seed = drawSeed(day, kind, ordinal);
+  const picked = pickRounds(ghostCandidates(history, frozenAt, kind), frozenAt, seed);
+  if (picked.length < GHOST_ROUNDS) return null;
+
+  return {
+    id: seed,
+    kind,
+    day,
+    ordinal,
+    drawnAt: now.getTime(),
+    startedAt: null,
+    deadline: null,
+    rounds: picked.map(({ lastPlayed: _lastPlayed, ...round }) => ({ ...round, live: null })),
+    result: null,
+  };
+}
+
+/** Same three, same ghosts, a fresh clock: what Rematch asks for. */
+export function rematchOf(match: GhostMatch, now: Date, ordinal: number): GhostMatch {
+  return {
+    ...match,
+    id: `${drawSeed(dayKey(now), match.kind, ordinal)}:rematch`,
+    day: dayKey(now),
+    ordinal,
+    drawnAt: now.getTime(),
+    startedAt: null,
+    deadline: null,
+    rounds: match.rounds.map((r) => ({ ...r, live: null })),
+    result: null,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// availability
+// ---------------------------------------------------------------------------
+
+export interface KindAvailability {
+  kind: GhostKind;
+  available: boolean;
+  /** Scenarios a match of this kind could be drawn from today. */
+  scenarios: number;
+  /** The most recent session day any of them would draw from. */
+  sessionDay: string | null;
+  /** Why not, in the player's terms, when it is not available. */
+  reason: string | null;
+}
+
+function unavailableReason(kind: GhostKind, scenarios: number): string {
+  const when = kind === "month_ago" ? "30 or more days ago" : "7 or more days ago";
+  return scenarios === 0
+    ? `No scenario has a session ${when} and ${MIN_RUNS_FOR_BASELINE} runs of history.`
+    : `Only ${scenarios} scenario${scenarios === 1 ? " has" : "s have"} a session ${when}; a match needs ${GHOST_ROUNDS}.`;
+}
+
+export function availableKinds(history: Map<string, GhostHistory>, now: Date): Record<GhostKind, KindAvailability> {
+  const frozenAt = startOfLocalDay(now);
+  const out = {} as Record<GhostKind, KindAvailability>;
+  for (const kind of GHOST_KINDS) {
+    const c = ghostCandidates(history, frozenAt, kind);
+    const days = c.map((x) => x.sessionDay).sort();
+    const available = c.length >= GHOST_ROUNDS;
+    out[kind] = {
+      kind,
+      available,
+      scenarios: c.length,
+      sessionDay: days.length ? days[days.length - 1] : null,
+      reason: available ? null : unavailableReason(kind, c.length),
+    };
+  }
+  return out;
+}
+
+/** Any ghost at all today: what decides whether a beat-a-ghost quest is honest to issue. */
+export function ghostReady(history: Map<string, GhostHistory>, now: Date): boolean {
+  const frozenAt = startOfLocalDay(now);
+  return GHOST_KINDS.some((k) => ghostCandidates(history, frozenAt, k).length >= GHOST_ROUNDS);
+}
+
+/**
+ * The kind the chooser selects first.
+ *
+ * `month_ago` for an install's first ghost match, because it is the one most players win
+ * (MEASURED_WIN_RATE) and the first match is the hook. `last_week` after that, and
+ * `month_ago` again whenever last week has no ghost to offer.
+ */
+export function defaultKind(available: Record<GhostKind, KindAvailability>, playedBefore: boolean): GhostKind | null {
+  const order: GhostKind[] = playedBefore
+    ? ["last_week", "month_ago", "last_week_best"]
+    : ["month_ago", "last_week", "last_week_best"];
+  return order.find((k) => available[k].available) ?? null;
+}
+
+// ---------------------------------------------------------------------------
+// playing it
+// ---------------------------------------------------------------------------
+
+export function startMatch(match: GhostMatch, now: number): GhostMatch {
+  if (match.startedAt !== null || match.result) return match;
+  return { ...match, startedAt: now, deadline: now + GHOST_START_ALLOWANCE_MS };
+}
+
+/**
+ * Offer a landed run to the match. Never mutates; returns the new state and, when the run
+ * does not count, which rule refused it.
+ *
+ * The first run on each scenario after Start counts, in any order, the way a ranked match
+ * counts one attempt (PLAN.md §3). A later run on the same scenario is practice. A run on
+ * a scenario outside the three is none of this match's business.
+ */
+export function applyRun(match: GhostMatch, run: IncomingRun): ApplyOutcome {
+  if (match.result) return { accepted: false, match, reason: "finished" };
+  if (match.startedAt === null || match.deadline === null) return { accepted: false, match, reason: "not-started" };
+
+  const index = match.rounds.findIndex((r) => r.scenario === run.scenario);
+  if (index < 0) return { accepted: false, match, reason: "unrelated" };
+
+  // Judged on when the run *began*, where the duration says: a run already under way when
+  // Start was pressed was begun knowing nothing was at stake.
+  const began = run.durationSeconds !== null ? run.at - run.durationSeconds * 1000 : run.at;
+  if (began < match.startedAt - GHOST_START_SLACK_MS) return { accepted: false, match, reason: "before-start" };
+
+  if (match.rounds[index].live) return { accepted: false, match, reason: "already-counted" };
+
+  if (run.at > match.deadline + GHOST_END_GRACE_MS) return { accepted: false, match, reason: "late" };
+
+  const rounds = match.rounds.map((r, i) =>
+    i === index ? { ...r, live: { score: run.score, at: run.at, abandoned: run.abandoned } } : r,
+  );
+  // The clock only runs between runs: each landed run buys the next idle allowance, as
+  // `deadlineAfterRun` does for a ranked match.
+  let next: GhostMatch = { ...match, rounds, deadline: run.at + GHOST_IDLE_ALLOWANCE_MS };
+  if (rounds.every((r) => r.live)) next = { ...next, result: judge(next, "complete", run.at) };
+  return { accepted: true, match: next, round: index };
+}
+
+/** The deadline, checked. Main calls it on a timer and on every run; the renderer never does. */
+export function expireIfLate(match: GhostMatch, now: number): GhostMatch {
+  if (match.result || match.deadline === null) return match;
+  if (now <= match.deadline + GHOST_END_GRACE_MS) return match;
+  return { ...match, result: judge(match, "expired", now) };
+}
+
+/**
+ * Give up on a match.
+ *
+ * Before Start it is a discard and records nothing: the draw is seeded, so discarding it
+ * and drawing again brings back the same three. After Start it is a loss, whatever the
+ * score. Each round is revealed as it lands, which is the drama of the mode, and without
+ * this a player two rounds behind would walk away with no result on the record.
+ */
+export function abandonMatch(match: GhostMatch, now: number): GhostMatch | null {
+  if (match.result) return match;
+  if (match.startedAt === null) return null;
+  return { ...match, result: judge(match, "abandoned", now) };
+}
+
+function pct(v: number): string {
+  return `${v >= 0 ? "+" : "−"}${Math.abs(v * 100).toFixed(1)}%`;
+}
+
+export const KIND_NAME: Record<GhostKind, string> = {
+  month_ago: "last month's you",
+  last_week: "last week's you",
+  last_week_best: "last week's best",
+};
+
+/**
+ * Score the match with `settleMatch`, so a ghost result is decided by exactly the rules
+ * that decide a ranked one: both sides are `RoundSubmission`s on the same frozen
+ * baseline, the ghost side's score is the frozen ghost, and void rules, the draw epsilon
+ * and abandoned-run handling come with it. `ratingWeight` is ignored; nothing is rated.
+ *
+ * A match that ended before all three landed is a loss, not a void: `settleMatch` would
+ * call a short side void, and that is exactly the door abandoning must not open.
+ */
+export function judge(match: GhostMatch, end: GhostEnd, at: number): GhostResult {
+  const live: RoundSubmission[] = [];
+  const ghost: RoundSubmission[] = [];
+  match.rounds.forEach((r, i) => {
+    if (!r.live) return;
+    // The tier matters to settleSide only when it is "rejected". Nothing on the local path
+    // is verified, and the core's tier type has no "unverified" (that exists only in the
+    // database enum), so both sides carry the same tier and it decides nothing.
+    const base = { scenarioId: i, scenarioName: r.scenario, baseline: r.baseline, provisional: false, verificationTier: "consistent" as const };
+    live.push({ ...base, score: r.live.score, abandoned: r.live.abandoned });
+    ghost.push({ ...base, score: r.ghost });
+  });
+
+  const settlement = live.length > 0 ? settleMatch({ playerRounds: live, opponentRounds: ghost }) : null;
+  const rounds: GhostResultRound[] = match.rounds.map((r, i) => {
+    const counted = settlement?.player.rounds.find((o) => o.scenarioId === i);
+    const delta = counted?.counted ? counted.delta : null;
+    const ghostDelta = (r.ghost - r.baseline) / r.baseline;
+    return {
+      scenario: r.scenario,
+      live: r.live?.score ?? null,
+      ghost: r.ghost,
+      baseline: r.baseline,
+      pb: r.pb,
+      sessionDay: r.sessionDay,
+      delta,
+      ghostDelta,
+      gap: delta === null ? null : delta - ghostDelta,
+      abandoned: r.live?.abandoned ?? false,
+    };
+  });
+  const gaps = rounds.map((r) => r.gap).filter((g): g is number => g !== null);
+  const margin = gaps.length ? gaps.reduce((a, g) => a + g, 0) / gaps.length : null;
+  const who = KIND_NAME[match.kind];
+
+  if (end !== "complete") {
+    const played = rounds.filter((r) => r.live !== null).length;
+    return {
+      verdict: "loss",
+      end,
+      margin,
+      rounds,
+      at,
+      explanation: end === "abandoned"
+        ? `Abandoned after ${played} of ${GHOST_ROUNDS}. A match left partway is a loss to ${who}.`
+        : `Time ran out after ${played} of ${GHOST_ROUNDS}. The clock is the ranked one: three minutes between runs.`,
+    };
+  }
+
+  const verdict = settlement!.verdict;
+  let explanation: string;
+  if (verdict === "void") explanation = `No result: ${settlement!.voidReason ?? "a round did not count"}.`;
+  else if (verdict === "draw") explanation = `Dead level with ${who}.`;
+  else explanation = `${verdict === "win" ? "Beat" : "Lost to"} ${who} by ${pct(Math.abs(margin ?? 0))}, averaged over three rounds against your own baseline.`;
+
+  return { verdict, end, margin, rounds, at, explanation };
+}
+
+// ---------------------------------------------------------------------------
+// the streak
+// ---------------------------------------------------------------------------
+
+export interface GhostOutcome {
+  at: string;
+  verdict: MatchVerdict;
+}
+
+/**
+ * Consecutive local days with at least one ghost win, ending today or, if today has none
+ * yet, yesterday: a streak is not broken by a day that is still in progress.
+ *
+ * Losses and voids add nothing. An abandoned match is recorded as a loss (`abandonMatch`),
+ * so walking away from one cannot leave the day looking like it was never played.
+ */
+export function ghostStreak(records: GhostOutcome[], now: Date): number {
+  const won = new Set(records.filter((r) => r.verdict === "win").map((r) => dayKey(new Date(r.at))));
+  const cursor = startOfLocalDay(now);
+  if (!won.has(dayKey(cursor))) cursor.setDate(cursor.getDate() - 1);
+  let streak = 0;
+  while (won.has(dayKey(cursor))) {
+    streak++;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+}
+
+// ---------------------------------------------------------------------------
+// what the renderer is sent
+// ---------------------------------------------------------------------------
+
+export interface GhostRoundView {
+  scenario: string;
+  ghost: number;
+  sessionDay: string;
+  sessionRuns: number;
+  baseline: number;
+  pb: number;
+  live: number | null;
+  abandoned: boolean;
+  /** (live - ghost) / baseline, once landed. */
+  gap: number | null;
+  /** 0..1: each bar's length against the larger of the two sides and the baseline. */
+  ghostBar: number;
+  liveBar: number | null;
+}
+
+export interface GhostMatchView {
+  id: string;
+  kind: GhostKind;
+  kindName: string;
+  started: boolean;
+  startedAt: number | null;
+  deadline: number | null;
+  rounds: GhostRoundView[];
+  landed: number;
+  /** Mean gap over the rounds landed so far. */
+  runningMargin: number | null;
+  /** The first round still to play, for the launch button. */
+  next: string | null;
+  result: GhostResult | null;
+}
+
+/**
+ * Everything the screen draws, computed here so the renderer computes nothing: bar
+ * lengths, gaps and the running margin included.
+ */
+export function viewOf(match: GhostMatch): GhostMatchView {
+  const rounds: GhostRoundView[] = match.rounds.map((r) => {
+    const top = Math.max(r.ghost, r.live?.score ?? 0, r.baseline, 1e-9);
+    const gap = r.live && !r.live.abandoned ? (r.live.score - r.ghost) / r.baseline : null;
+    return {
+      scenario: r.scenario,
+      ghost: r.ghost,
+      sessionDay: r.sessionDay,
+      sessionRuns: r.sessionRuns,
+      baseline: r.baseline,
+      pb: r.pb,
+      live: r.live?.score ?? null,
+      abandoned: r.live?.abandoned ?? false,
+      gap,
+      ghostBar: Math.max(0, r.ghost / top),
+      liveBar: r.live ? Math.max(0, r.live.score / top) : null,
+    };
+  });
+  const gaps = rounds.map((r) => r.gap).filter((g): g is number => g !== null);
+  return {
+    id: match.id,
+    kind: match.kind,
+    kindName: KIND_NAME[match.kind],
+    started: match.startedAt !== null,
+    startedAt: match.startedAt,
+    deadline: match.deadline,
+    rounds,
+    landed: match.rounds.filter((r) => r.live).length,
+    runningMargin: gaps.length ? gaps.reduce((a, g) => a + g, 0) / gaps.length : null,
+    next: match.rounds.find((r) => !r.live)?.scenario ?? null,
+    result: match.result,
+  };
+}
