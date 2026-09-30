@@ -135,6 +135,7 @@
           "id": "scenarios", "kind": "app", "seconds": 3.2, "continue": true, "transition": { "type": "cut" },
           "steps": [
             { "at": 0.0, "do": "caption", "index": "02", "text": "Play three", "sub": "Scores read from the game." },
+            { "at": 0.0, "do": "scroll", "selector": "#todoList", "offset": 0.3, "ms": 450 },
             { "at": 0.4, "do": "demo", "name": "land", "index": 0, "tier": "verified" },
             { "at": 1.1, "do": "demo", "name": "land", "index": 1, "tier": "verified" },
             { "at": 1.8, "do": "demo", "name": "land", "index": 2, "tier": "verified" }

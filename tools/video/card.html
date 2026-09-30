@@ -136,7 +136,7 @@ function drawSky(t) {
 const clamp = (v) => Math.max(0, Math.min(1, v));
 const expo = (v) => (v >= 1 ? 1 : 1 - Math.pow(2, -10 * v));
 const words = [...card.querySelectorAll("h1 .w")];
-const top = card.querySelector(".top");
+const topEl = card.querySelector(".top");
 const mark = card.querySelector(".mark path");
 const rule = card.querySelector(".rule");
 const sub = [...card.querySelectorAll(".sub .line")];
@@ -146,7 +146,7 @@ const at = CARD.at || 0.25;
 function apply(t) {
   drawSky(t);
   if (mark) mark.style.strokeDashoffset = String(100 * (1 - expo(clamp((t - at + 0.1) / 1.4))));
-  if (top) { const k = expo(clamp((t - at) / 0.9)); top.style.opacity = k; top.style.transform = `translateY(${(1 - k) * 1.5}vmin)`; }
+  if (topEl) { const k = expo(clamp((t - at) / 0.9)); topEl.style.opacity = k; topEl.style.transform = `translateY(${(1 - k) * 1.5}vmin)`; }
   words.forEach((w, i) => {
     const k = expo(clamp((t - at - 0.25 - i * 0.075) / 0.95));
     w.style.opacity = k;

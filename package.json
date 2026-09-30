@@ -100,7 +100,8 @@
     "recalibrate:season": "tsx tools/recalibrateSeason.ts",
     "workshop:status": "tsx tools/workshopStatus.ts",
     "workshop:previews": "electron tools/workshopPreviews.cjs",
-    "workshop:upload": "tsx tools/workshopUpload.ts"
+    "workshop:upload": "tsx tools/workshopUpload.ts",
+    "video": "node tools/video/make.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",

@@ -24,12 +24,15 @@
     /* A scrollbar is the browser, not the product, and it jitters as the camera pans. */
     * { scrollbar-width: none !important; }
     *::-webkit-scrollbar { display: none !important; }
+    /* Room to scroll the last panel clear of the caption band. In portrait the match list
+       is the last thing on the page and could only reach the bottom third, under the band. */
+    .scroll::after { content: ""; display: block; height: 36vh; }
     /* Hover states would otherwise stick to wherever the pointer last was. */
     html.video-stage { cursor: none !important; }
 
     .vs-caption { position: fixed; left: 0; right: 0; bottom: 0; z-index: 2147483000; pointer-events: none;
       padding: 0 var(--vs-pad) var(--vs-pad); display: flex; align-items: flex-end;
-      background: linear-gradient(to top, rgba(6,8,12,.94) 0, rgba(6,8,12,.82) 38%, rgba(6,8,12,0) 100%);
+      background: linear-gradient(to top, rgba(6,8,12,.97) 0, rgba(6,8,12,.9) 45%, rgba(6,8,12,0) 100%);
       height: var(--vs-band); opacity: 0; transition: opacity .45s cubic-bezier(.2,.7,.2,1); }
     .vs-caption.on { opacity: 1; }
     .vs-caption .vs-inner { display: flex; gap: var(--vs-gap); align-items: baseline;
@@ -151,6 +154,13 @@
     try { return Function("return typeof " + name + " === 'undefined' ? undefined : " + name)(); } catch { return undefined; }
   };
 
+  // renderMatchReadiness() appends "example set" in the preview host, which is the
+  // preview's disclaimer rather than the app's copy; the video carries its own label.
+  const tidyReadiness = () => {
+    const m = document.getElementById("matchReadiness");
+    if (m) m.textContent = m.textContent.replace(/ · example set$/, "");
+  };
+
   let searchTimer = 0;
   const demos = {
     /** The button's searching state, with its orb and ticking clock, as the app draws it. */
@@ -172,6 +182,7 @@
       R("setCommit")("held", "Match in progress", "Play the 3 below in KovaaK’s", "");
       document.getElementById("oppAge").textContent = note || "demo opponent";
       document.getElementById("matchActions").hidden = false;
+      tidyReadiness();
       document.getElementById("matchHint").textContent = "First run on each scenario counts. Scores are read automatically.";
       try { R("startMatchClock")(new Date(Date.now() + 44 * 60e3 + 12e3).toISOString()); } catch {}
     },
@@ -184,6 +195,7 @@
       list[index].tier = tier || "verified";
       R("renderTodo")(false);
       if (list.every((s) => s.done)) R("markAllIn")();
+      tidyReadiness();
     },
     /** Replay the result screen's entrance on the demo match, then label it honestly. */
     result({ provenance }) {
