@@ -7,26 +7,39 @@
  * claim. So this re-derives the whole thing from evidence the server trusts:
  *
  *   - the three live runs arrive as raw CSVs and go through the parse and `verifyRun`
- *     path submit-run uses, stored in `runs` (or, when backfill already put the same file
- *     there, re-verified in place);
+ *     path submit-run uses;
  *   - each ghost and baseline is rebuilt from the caller's stored runs by the same
  *     src/core/ghost code the client runs, frozen at local midnight as the client does;
  *   - the verdict is judged again with `settleMatch` underneath.
  *
- * It writes one table, ghost_results, which nothing in rating, matchmaking or settlement
- * reads. It does not touch ratings, matches, match_sides, baselines or verified_pbs.
+ * ORDER. Everything that can refuse runs before anything is written: parsing,
+ * verification, the one-sitting rule, the card already minted for these runs, the ghosts.
+ * A refused post leaves `runs` exactly as it found it.
  *
- * TIME. `played_at` is a real instant, rebuilt from the filename's wall clock and the
- * client's offset (`playedAtUtc`), after the duration has been taken from the unshifted
- * parse. Session days, though, are the player's local days, and this runtime is UTC, so
- * every instant is shifted back by the offset before the core reads a day from it.
- * Without that a player west of UTC gets a ghost from the wrong evening.
+ * WRITES. One row in ghost_results, and the live runs in `runs`, under the rule in
+ * `planRunWrite` (src/core/ghost/serverRules.ts): a new file is inserted, a history row
+ * no match has claimed is rewritten from this parse, and a row a ranked match already
+ * counted is never written at all. settle-match reads a run's played_at and tier, so a
+ * ghost post able to rewrite them could reorder a rated match's first runs or lift a
+ * rejected run. The only UPDATE on `runs` below carries `.is("match_id", null)`, as
+ * submit-run's claim does; validate:ghost checks this file for exactly that.
  *
- * WHAT IT CANNOT CHECK. The draw. The client draws three scenarios from its whole local
+ * TIME. `played_at` is a real instant, rebuilt from the filename's wall clock in the
+ * player's IANA zone (`wallClockToInstant`), after the duration has been taken from the
+ * unshifted parse. Session days are the player's local days and this runtime is UTC, so
+ * every instant is moved into the player's frame by its own offset in that zone before
+ * the core reads a day from it (src/core/ghost/zone.ts).
+ *
+ * THE FIRST RUN. The posted run on each scenario has to be the first stored,
+ * non-rejected run on it from the sitting's first run on (`laterAttempts`), so an
+ * evening's best cannot be posted as the attempt of record.
+ *
+ * WHAT IT CANNOT CHECK. The draw, and so the kind. The client draws three scenarios from its whole local
  * library with a seed, and the server's copy of that library is whatever was uploaded,
  * so it cannot replay the draw reliably and does not pretend to: it checks that each
  * scenario has a ghost of the kind claimed in the uploaded history, and the card says the
- * ghost came from uploaded history. A modified client could choose which three to share.
+ * ghost came from uploaded history and that the ghost and the three were picked on the
+ * player's PC. A modified client could choose which three to share, and which ghost.
  */
 
 import {
@@ -41,26 +54,31 @@ import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { cardOf, GHOST_ROW_COLUMNS, serverStreak, type GhostResultRow } from "../_shared/ghost.ts";
 
 import { parseStatsFile } from "../../../src/core/stats/parseStatsFile.ts";
-import { isAbandonedRun, playedAtUtc, runDurationSeconds } from "../../../src/core/stats/duration.ts";
+import { isAbandonedRun, runDurationSeconds } from "../../../src/core/stats/duration.ts";
 import { verifyRun } from "../../../src/core/verify/verifyRun.ts";
 import { matchServerRecord, recentScores } from "../../../src/core/verify/kovaaksClient.ts";
 import {
   ghostCandidates,
-  GHOST_END_GRACE_MS,
-  GHOST_IDLE_ALLOWANCE_MS,
   GHOST_ROUNDS,
+  GHOST_START_SLACK_MS,
   isGhostKind,
   judge,
   startOfLocalDay,
   type GhostMatch,
 } from "../../../src/core/ghost/ghost.ts";
+import { fromLocalFrame, isTimeZone, toLocalFrame, wallClockToInstant } from "../../../src/core/ghost/zone.ts";
+import { freezeDay, laterAttempts, lowerTier, planRunWrite, sittingProblem, type StoredRunRow } from "../../../src/core/ghost/serverRules.ts";
 
 interface Body {
   kind: string;
   ordinal?: number;
+  /** The local day the client froze its draw at (GhostMatch.day). */
+  day?: string;
   runs: { filename: string; csv: string; csvSha256?: string }[];
-  /** getTimezoneOffset() on the player's machine; see playedAtUtc. */
+  /** getTimezoneOffset() on the player's machine when it posted. Stored, not computed with. */
   tzOffsetMinutes: number;
+  /** The player's IANA zone, which every instant here is read in; see zone.ts. */
+  timeZone: string;
 }
 
 /**
@@ -74,8 +92,6 @@ const HISTORY_ROWS = 1000;
 /** No 0/O or 1/I/L: a code is read aloud and typed from a screenshot. Matches ghost_code_shape. */
 const CODE_ALPHABET = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
 const CODE_LENGTH = 8;
-
-const TIER_RANK: Record<string, number> = { verified: 3, consistent: 2, suspect: 1, rejected: 0 };
 
 function mintCode(): string {
   const bytes = crypto.getRandomValues(new Uint8Array(CODE_LENGTH));
@@ -102,17 +118,23 @@ Deno.serve(handler(async (req, admin) => {
   // Required here, unlike submit-run's optional offset: every session day on the card
   // depends on it, and there is no older client of this function to stay compatible with.
   if (!Number.isInteger(tz) || Math.abs(tz) > 840) throw new HttpError(400, "tzOffsetMinutes is required");
-  const local = (instant: Date) => new Date(instant.getTime() - tz * 60_000);
+  // Each instant is shifted by its own offset in the player's zone, not by today's: one
+  // offset for a month of history is an hour wrong across a daylight-saving change, which
+  // moves late-evening runs onto the next day's session.
+  if (!isTimeZone(body.timeZone)) throw new HttpError(400, "timeZone must be an IANA zone name");
+  const zone = body.timeZone;
+  const local = (instant: Date) => toLocalFrame(instant.getTime(), zone);
 
-  // ---- the three live runs, verified the way submit-run verifies ------------------
+  // ---- 1. parse and verify all three; nothing is written yet --------------------------
   const live: {
-    runId: string;
     scenario: string;
+    sha: string;
     score: number;
-    tier: string;
+    tier: ReturnType<typeof verifyRun>["tier"];
     endedAt: Date;
     durationSeconds: number | null;
     abandoned: boolean;
+    row: Record<string, unknown>;
   }[] = [];
 
   for (const upload of body.runs) {
@@ -128,7 +150,7 @@ Deno.serve(handler(async (req, admin) => {
     // Duration from the unshifted parse: both ends are local wall-clock readings of the
     // same file, and only in that frame is their difference right.
     const durationSeconds = runDurationSeconds(run.challengeStart, run.playedAt);
-    const corrected = playedAtUtc(upload.filename, tz);
+    const corrected = wallClockToInstant(upload.filename, zone);
     if (!corrected) throw new HttpError(400, `${upload.filename} has no timestamp in its name`);
     run.playedAt = corrected;
 
@@ -169,78 +191,112 @@ Deno.serve(handler(async (req, admin) => {
       throw new HttpError(422, `${run.scenario} failed verification (${outcome.reasons.join("; ")}), so there is no card to make`);
     }
 
-    const row = {
-      player_id: caller.playerId,
-      scenario_name: run.scenario,
-      score: run.score,
-      accuracy: run.accuracy,
-      avg_ttk: run.avgTtk,
-      kills: run.kills,
-      hit_count: run.hitCount,
-      miss_count: run.missCount,
-      played_at: run.playedAt.toISOString(),
-      challenge_start: run.challengeStart,
-      duration_seconds: durationSeconds,
-      hash: run.hash,
-      game_version: run.gameVersion,
-      avg_fps: run.avgFps,
-      resolution: run.resolution,
-      cm360: run.cm360,
-      dpi: run.dpi,
-      fov: run.fov,
-      csv_sha256: digest,
-      verification_tier: outcome.tier,
-      verification_notes: { reasons: outcome.reasons, advisories: outcome.advisories, hardFailures: outcome.report.hardFailures },
-    };
-
-    let { data: stored, error } = await admin.from("runs").insert(row).select("id").maybeSingle();
-    if (error?.code === "23505") {
-      // Already uploaded as history, which the client does the moment a run lands:
-      // re-verified in place. A run already filed against a ranked match keeps that
-      // match; only what this parse can say about the file is rewritten.
-      const again = await admin
-        .from("runs")
-        .update(row)
-        .eq("player_id", caller.playerId)
-        .eq("csv_sha256", digest)
-        .select("id")
-        .maybeSingle();
-      stored = again.data;
-      error = again.error;
-    }
-    if (error || !stored) throw new HttpError(500, error?.message ?? "could not store the run");
-
     live.push({
-      runId: stored.id,
       scenario: run.scenario,
+      sha: digest,
       score: run.score,
       tier: outcome.tier,
       endedAt: run.playedAt,
       durationSeconds,
       abandoned: isAbandonedRun(durationSeconds, scenario?.duration_seconds ?? null),
+      row: {
+        player_id: caller.playerId,
+        scenario_name: run.scenario,
+        score: run.score,
+        accuracy: run.accuracy,
+        avg_ttk: run.avgTtk,
+        kills: run.kills,
+        hit_count: run.hitCount,
+        miss_count: run.missCount,
+        played_at: run.playedAt.toISOString(),
+        challenge_start: run.challengeStart,
+        duration_seconds: durationSeconds,
+        hash: run.hash,
+        game_version: run.gameVersion,
+        avg_fps: run.avgFps,
+        resolution: run.resolution,
+        cm360: run.cm360,
+        dpi: run.dpi,
+        fov: run.fov,
+        csv_sha256: digest,
+        verification_tier: outcome.tier,
+        verification_notes: { reasons: outcome.reasons, advisories: outcome.advisories, hardFailures: outcome.report.hardFailures },
+      },
     });
   }
 
-  if (new Set(live.map((r) => r.scenario)).size !== GHOST_ROUNDS) {
-    throw new HttpError(400, "a ghost match is three different scenarios");
-  }
-
-  // ---- one sitting, on the ranked clock ------------------------------------------
+  // ---- 2. one match, on the ranked clock ------------------------------------------
   // Start was pressed on the client and is not evidence. What the files can prove is
   // that the three were played as one match: each begun within the idle allowance of
   // the one before it ending, as applyRun demands.
   live.sort((a, b) => a.endedAt.getTime() - b.endedAt.getTime());
   const began = (r: (typeof live)[number]) => r.endedAt.getTime() - (r.durationSeconds ?? 0) * 1000;
-  for (let i = 1; i < live.length; i++) {
-    if (began(live[i]) > live[i - 1].endedAt.getTime() + GHOST_IDLE_ALLOWANCE_MS + GHOST_END_GRACE_MS) {
-      throw new HttpError(422, "those three runs were not played as one match: too long between them");
+  const problem = sittingProblem(live.map((r) => ({ scenario: r.scenario, sha: r.sha, began: began(r), ended: r.endedAt.getTime() })));
+  if (problem) throw new HttpError(problem.startsWith("those") ? 422 : 400, problem);
+
+  // ---- 3. what is already stored for these files ------------------------------------
+  const { data: storedRows, error: storedError } = await admin
+    .from("runs")
+    .select("id, match_id, verification_tier, csv_sha256")
+    .eq("player_id", caller.playerId)
+    .in("csv_sha256", live.map((r) => r.sha));
+  if (storedError) throw new HttpError(500, storedError.message);
+  const storedBySha = new Map((storedRows ?? []).map((r) => [r.csv_sha256 as string, r as StoredRunRow]));
+
+  // The same three posted again: the card already minted for them, and no write at all.
+  if (live.every((r) => storedBySha.has(r.sha))) {
+    const ids = live.map((r) => storedBySha.get(r.sha)!.id);
+    const { data: already } = await admin
+      .from("ghost_results")
+      .select(GHOST_ROW_COLUMNS)
+      .eq("player_id", caller.playerId)
+      .eq("live_run_ids", `{${ids.join(",")}}`)
+      .maybeSingle();
+    if (already) {
+      const row = already as GhostResultRow;
+      return json(cardOf(row, caller.displayName, await serverStreak(admin, row)));
     }
   }
 
-  // ---- the ghosts, rebuilt from stored history --------------------------------------
+  // ---- 3b. the first run on each scenario, not the best of the evening --------------
+  // The client counts the first run after Start; the server cannot see Start, so it holds
+  // the posts to the first stored, non-rejected run on each scenario from the sitting's
+  // first run on. Without this any good run from a long session could be posted as the
+  // attempt of record.
+  const sittingStart = began(live[0]);
+  const lastEnd = live[live.length - 1].endedAt.getTime();
+  const { data: sameSitting, error: sittingError } = await admin
+    .from("runs")
+    .select("scenario_name, csv_sha256, played_at, duration_seconds")
+    .eq("player_id", caller.playerId)
+    .in("scenario_name", live.map((r) => r.scenario))
+    .gte("played_at", new Date(sittingStart - GHOST_START_SLACK_MS).toISOString())
+    .lte("played_at", new Date(lastEnd).toISOString())
+    .neq("verification_tier", "rejected");
+  if (sittingError) throw new HttpError(500, sittingError.message);
+  const earlier = laterAttempts(
+    live.map((r) => ({ scenario: r.scenario, sha: r.sha, began: began(r), ended: r.endedAt.getTime() })),
+    (sameSitting ?? []).map((s) => ({
+      scenario: s.scenario_name as string,
+      sha: s.csv_sha256 as string,
+      began: new Date(s.played_at).getTime() - Number(s.duration_seconds ?? 0) * 1000,
+    })),
+  );
+  if (earlier.length) {
+    throw new HttpError(422, `Not the first run of the match on ${earlier.join(", ")}: an earlier run on it is already uploaded.`);
+  }
+
+  // ---- 4. the ghosts, rebuilt from stored history --------------------------------------
+  // Frozen where the client froze it, the start of the day it drew on, so a match drawn
+  // at 23:50 and played at 00:05 is rebuilt against the same midnight it was played
+  // against. Bounded to the first run's day or the one before: an older day would be a
+  // way to choose an easier ghost.
   const startLocal = local(new Date(began(live[0])));
-  const frozenLocal = startOfLocalDay(startLocal);
-  const frozenInstant = new Date(frozenLocal.getTime() + tz * 60_000);
+  const firstRunDay = startOfLocalDay(startLocal).toISOString().slice(0, 10);
+  const day = freezeDay(body.day, firstRunDay);
+  if (!day) throw new HttpError(422, `a match drawn on ${String(body.day)} cannot have been played on ${firstRunDay}`);
+  const frozenLocal = new Date(`${day}T00:00:00Z`);
+  const frozenInstant = fromLocalFrame(frozenLocal.getTime(), zone);
 
   const history = new Map<string, { scenario: string; runs: { score: number; playedAt: Date | null }[] }>();
   for (const r of live) {
@@ -272,7 +328,7 @@ Deno.serve(handler(async (req, admin) => {
   const match: GhostMatch = {
     id: "server",
     kind: body.kind,
-    day: frozenLocal.toISOString().slice(0, 10),
+    day,
     ordinal: Number.isInteger(body.ordinal) ? body.ordinal! : 0,
     drawnAt: frozenLocal.getTime(),
     startedAt: startLocal.getTime(),
@@ -289,8 +345,62 @@ Deno.serve(handler(async (req, admin) => {
     throw new HttpError(422, `No result to share: ${result.explanation}`);
   }
 
-  const liveTier = live.reduce((low, r) => (TIER_RANK[r.tier] < TIER_RANK[low] ? r.tier : low), "verified");
-  const runIds = live.map((r) => r.runId);
+  // ---- 5. the writes, only now ------------------------------------------------------
+  const runIds: string[] = [];
+  let liveTier = "verified";
+  for (const r of live) {
+    let plan = planRunWrite(storedBySha.get(r.sha) ?? null, r.tier);
+    let id: string | null = null;
+    let tier: string = r.tier;
+
+    if (plan.action === "insert") {
+      const inserted = await admin.from("runs").insert(r.row).select("id").maybeSingle();
+      if (inserted.data) id = inserted.data.id;
+      else if (inserted.error?.code === "23505") {
+        // Uploaded between the read above and this insert: plan again against what is there.
+        const { data: now } = await admin
+          .from("runs")
+          .select("id, match_id, verification_tier")
+          .eq("player_id", caller.playerId)
+          .eq("csv_sha256", r.sha)
+          .maybeSingle();
+        plan = planRunWrite((now as StoredRunRow | null) ?? null, r.tier);
+      } else throw new HttpError(500, inserted.error?.message ?? "could not store the run");
+    }
+
+    if (plan.action === "update-unbound") {
+      // `match_id is null` here as well as in the plan: a ranked submission can claim the
+      // row between the read and this write, and then this must write nothing.
+      const updated = await admin
+        .from("runs")
+        .update(r.row)
+        .eq("player_id", caller.playerId)
+        .eq("csv_sha256", r.sha)
+        .is("match_id", null)
+        .select("id")
+        .maybeSingle();
+      if (updated.error) throw new HttpError(500, updated.error.message);
+      if (updated.data) id = updated.data.id;
+      else {
+        const { data: now } = await admin
+          .from("runs")
+          .select("id, match_id, verification_tier")
+          .eq("player_id", caller.playerId)
+          .eq("csv_sha256", r.sha)
+          .maybeSingle();
+        plan = planRunWrite((now as StoredRunRow | null) ?? null, r.tier);
+      }
+    }
+
+    if (plan.action === "keep") {
+      id = plan.id;
+      tier = plan.tier;
+    }
+    if (!id) throw new HttpError(500, "could not store the run");
+    if (tier === "rejected") throw new HttpError(422, `${r.scenario} is stored as rejected, so there is no card to make`);
+    runIds.push(id);
+    liveTier = lowerTier(liveTier, tier);
+  }
 
   const existing = await admin
     .from("ghost_results")
@@ -315,9 +425,11 @@ Deno.serve(handler(async (req, admin) => {
         pbs: result.rounds.map((r) => r.pb),
         ghost_days: result.rounds.map((r) => r.sessionDay),
         tz_offset_minutes: tz,
+        time_zone: zone,
         margin: result.margin,
         verdict: result.verdict,
         live_tier: liveTier,
+        played_at: new Date(lastEnd).toISOString(),
       })
       .select(GHOST_ROW_COLUMNS)
       .maybeSingle();

@@ -64,7 +64,7 @@ const base = (active: GhostMatch | null, extra: Record<string, unknown> = {}) =>
   streak: 3,
   record: { wins: 5, losses: 2, played: 7 },
   notice: null,
-  share: { enabled: false, reason: "Sign in with Steam to share: a card is rebuilt by the server from your verified runs.", card: null, busy: false },
+  share: { enabled: false, reason: "Sign in with Steam to share: the server checks the runs before it makes a card.", card: null, busy: false },
   now: now.getTime() - 90_000,
   ...extra,
 });

@@ -31,6 +31,8 @@ import {
   abandonMatch,
   applyRun,
   availableKinds,
+  bestRoundOf,
+  viewOf,
   definitionOf,
   drawGhostMatch,
   drawSeed,
@@ -39,6 +41,7 @@ import {
   GHOST_IDLE_ALLOWANCE_MS,
   GHOST_KINDS,
   GHOST_START_ALLOWANCE_MS,
+  ghostCandidates,
   ghostCandidatesBy,
   ghostReady,
   ghostStreak,
@@ -54,6 +57,8 @@ import {
   type GhostMatch,
   type IncomingRun,
 } from "./ghost.ts";
+import { freezeDay, laterAttempts, lowerTier, planRunWrite, sittingProblem } from "./serverRules.ts";
+import { fromLocalFrame, isTimeZone, offsetMinutesAt, toLocalFrame, wallClockToInstant } from "./zone.ts";
 
 const DEFAULT_STATS_DIR =
   "E:\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
@@ -211,6 +216,38 @@ const bestRate = rate(results.get(rows[2][0])!);
 check("the three ghosts are ordered easiest to hardest", monthRate > weekRate && weekRate > bestRate,
   `${(100 * monthRate).toFixed(1)}% > ${(100 * weekRate).toFixed(1)}% > ${(100 * bestRate).toFixed(1)}%`);
 
+// The table above draws only from scenarios the player touched that day, because that is
+// where a live side exists. The app draws from every eligible scenario in the library,
+// recently played first, and most of those were not played on any given day, so the
+// app's own draw cannot be replayed whole. This prints how far apart the two are: of the
+// app's real draws on each play day, how many rounds had a live run that day, and the
+// round and match win rates over those that did. It is reported, not held to a band:
+// on the app's draw the full-match sample is a handful of days.
+console.log("\n       the app's own draw, from the whole library:");
+console.log(`       ${"kind".padEnd(15)} draws  rounds played that day   round won   full matches  won`);
+for (const kind of GHOST_KINDS) {
+  let draws = 0, played = 0, roundWins = 0, full = 0, fullWins = 0;
+  for (const d of days) {
+    const picked = pickRounds(ghostCandidates(history, d.start, kind), d.start, drawSeed(dayKey(d.start), kind, 0));
+    if (picked.length < 3) continue;
+    draws++;
+    const landed = picked.filter((c) => d.first.has(c.scenario));
+    played += landed.length;
+    roundWins += landed.filter((c) => d.first.get(c.scenario)! > c.ghost).length;
+    if (landed.length === 3) {
+      full++;
+      const m: GhostMatch = {
+        id: kind, kind, day: dayKey(d.start), ordinal: 0, drawnAt: d.start.getTime(), startedAt: d.start.getTime(), deadline: null,
+        rounds: picked.map(({ lastPlayed: _l, ...r }) => ({ ...r, live: { score: d.first.get(r.scenario)!, at: 0, abandoned: false } })),
+        result: null,
+      };
+      if (judge(m, "complete", d.start.getTime()).verdict === "win") fullWins++;
+    }
+  }
+  const p = (a: number, b: number) => (b ? `${((100 * a) / b).toFixed(1)}%` : "-");
+  console.log(`       ${kind.padEnd(15)} ${String(draws).padStart(5)}  ${String(played).padStart(6)} of ${String(draws * 3).padEnd(5)} (${p(played, draws * 3).padStart(5)})   ${p(roundWins, played).padStart(8)}   ${String(full).padStart(12)}  ${p(fullWins, full)}`);
+}
+
 // ---------------------------------------------------------------------------
 console.log("\n── the season pool cannot host it ───────────────");
 
@@ -252,7 +289,10 @@ check("ghostReady, the quest board's cheap question, agrees with the full answer
 check("and says no to an empty library", ghostReady(new Map(), now) === false);
 
 const drawn = drawGhostMatch(history, now, "last_week", 0);
-const again = drawGhostMatch(history, new Date(now.getTime() + 3_600_000), "last_week", 0);
+// 01:00 and 22:00 of the same local day, not now and an hour later: the latter crossed
+// midnight whenever this ran after 23:00 and failed for a reason that is not a bug.
+const earlyInDay = drawGhostMatch(history, new Date(startOfLocalDay(now).getTime() + 3_600_000), "last_week", 0);
+const again = drawGhostMatch(history, new Date(startOfLocalDay(now).getTime() + 22 * 3_600_000), "last_week", 0);
 check("a match can be drawn", drawn !== null && drawn.rounds.length === 3,
   drawn ? drawn.rounds.map((r) => r.scenario).join(" / ") : "none");
 if (!drawn) {
@@ -260,9 +300,12 @@ if (!drawn) {
   process.exit(1);
 }
 check("the same day, kind and ordinal draw the same three, later in the day too",
-  JSON.stringify(again?.rounds) === JSON.stringify(drawn.rounds));
+  JSON.stringify(again?.rounds) === JSON.stringify(drawn.rounds) && JSON.stringify(earlyInDay?.rounds) === JSON.stringify(drawn.rounds));
 const other = drawGhostMatch(history, now, "last_week", 1);
-check("a different ordinal is a different draw", other !== null && other.id !== drawn.id,
+// The scenarios, not the id: the id carries the ordinal, so comparing ids passed whatever
+// the draw did.
+check("a different ordinal is a different draw",
+  other !== null && JSON.stringify(other.rounds.map((r) => r.scenario)) !== JSON.stringify(drawn.rounds.map((r) => r.scenario)),
   other ? other.rounds.map((r) => r.scenario).join(" / ") : "none");
 check("three different scenarios", new Set(drawn.rounds.map((r) => r.scenario)).size === 3);
 check("every round has a positive ghost and baseline, and a session a week or more back",
@@ -369,11 +412,121 @@ check("which today's abandoned match does not extend",
 check("and a win today does", ghostStreak([...records, { at: new Date(now).toISOString(), verdict: "win" }], now) === 4);
 check("a day with no win breaks it", ghostStreak([records[0], records[2]], now) === 1);
 
+// The card's distance-to-best, computed in main. Equalling a best is not a new one.
+const equalled = { ...win, rounds: win.rounds.map((r, i) => (i === 0 ? { ...r, live: r.pb, gap: 1 } : r)) };
+check("a round that equals the old best is not called a new best",
+  bestRoundOf(equalled)?.newBest === false && bestRoundOf(equalled)?.pbGap === 0);
+const beaten = { ...win, rounds: win.rounds.map((r, i) => (i === 0 ? { ...r, live: r.pb + 1, gap: 1 } : r)) };
+check("one strictly above it is", bestRoundOf(beaten)?.newBest === true);
+check("and the view carries it, so the renderer computes nothing", viewOf({ ...drawn, result: beaten }).best?.newBest === true);
+
 const rematch = rematchOf(walked, now, 1);
 check("a rematch is the same three and the same ghosts on a fresh clock",
   JSON.stringify(rematch.rounds.map((r) => [r.scenario, r.ghost, r.baseline])) ===
     JSON.stringify(drawn.rounds.map((r) => [r.scenario, r.ghost, r.baseline])) &&
     rematch.startedAt === null && rematch.result === null && rematch.rounds.every((r) => r.live === null));
+
+// ---------------------------------------------------------------------------
+console.log("\n── the server never writes a ranked match's runs ─");
+
+// post-ghost cannot run here, so its decisions are held two ways: the pure planner it
+// calls, every branch, and its source, for the filter on the one UPDATE it may issue.
+// validate:schema runs that UPDATE against Postgres on a match-bound row.
+const boundRow = { id: "r1", match_id: "m1", verification_tier: "rejected" };
+const keep = planRunWrite(boundRow, "consistent");
+check("a run a ranked match counted is kept, never written", keep.action === "keep", keep.action);
+check("and keeps its stored tier when that is the weaker", keep.action === "keep" && keep.tier === "rejected");
+const lowered = planRunWrite({ ...boundRow, verification_tier: "verified" }, "suspect");
+check("or takes this parse's tier when that is the weaker", lowered.action === "keep" && lowered.tier === "suspect");
+check("a history row no match claimed is rewritten",
+  planRunWrite({ id: "r2", match_id: null, verification_tier: "suspect" }, "consistent").action === "update-unbound");
+check("a new file is inserted", planRunWrite(null, "consistent").action === "insert");
+check("lowerTier never raises", lowerTier("rejected", "verified") === "rejected" && lowerTier("verified", "consistent") === "consistent");
+
+const postGhost = readFileSync(new URL("../../../supabase/functions/post-ghost/index.ts", import.meta.url), "utf8");
+const updates = [...postGhost.matchAll(/\.from\("runs"\)\s*\.update\(/g)];
+const unguarded = updates.filter((m) => !/\.is\("match_id", null\)/.test(postGhost.slice(m.index!, postGhost.indexOf(";", m.index!))));
+check("post-ghost updates runs somewhere, so the next check has something to look at", updates.length > 0, `${updates.length}`);
+check("and every such update is filtered to match_id is null", unguarded.length === 0, `${unguarded.length} unguarded`);
+const firstWrite = Math.min(...[".insert(", ".update("].map((w) => postGhost.indexOf(w)).filter((i) => i >= 0));
+check("post-ghost refuses a bad sitting before its first write", postGhost.indexOf("sittingProblem(") > 0 && postGhost.indexOf("sittingProblem(") < firstWrite);
+check("and returns an already-minted card before its first write", postGhost.indexOf("The same three posted again") < firstWrite);
+const bad = sittingProblem([
+  { scenario: "a", sha: "1", began: 0, ended: 60_000 },
+  { scenario: "a", sha: "2", began: 70_000, ended: 130_000 },
+  { scenario: "c", sha: "3", began: 140_000, ended: 200_000 },
+]);
+check("two runs on one scenario are not a ghost match", bad !== null, bad ?? "accepted");
+const apart = sittingProblem([
+  { scenario: "a", sha: "1", began: 0, ended: 60_000 },
+  { scenario: "b", sha: "2", began: 70_000, ended: 130_000 },
+  { scenario: "c", sha: "3", began: 130_000 + GHOST_IDLE_ALLOWANCE_MS + GHOST_END_GRACE_MS + 1, ended: 10e6 },
+]);
+check("nor are three with an idle gap longer than the ranked clock allows", apart !== null, apart ?? "accepted");
+check("three different scenarios in one sitting are", sittingProblem([
+  { scenario: "a", sha: "1", began: 0, ended: 60_000 },
+  { scenario: "b", sha: "2", began: 70_000, ended: 130_000 },
+  { scenario: "c", sha: "3", began: 140_000, ended: 200_000 },
+]) === null);
+
+// The first run on each scenario, as the client counts it.
+const sitting = [
+  { scenario: "a", sha: "1", began: 100_000, ended: 160_000 },
+  { scenario: "b", sha: "2", began: 170_000, ended: 230_000 },
+  { scenario: "c", sha: "3", began: 240_000, ended: 300_000 },
+];
+check("a posted run is refused when an earlier run on its scenario is stored from the sitting",
+  laterAttempts(sitting, [{ scenario: "b", sha: "9", began: 120_000 }]).join() === "b");
+check("but not for a run before the sitting, or the posted file itself",
+  laterAttempts(sitting, [{ scenario: "b", sha: "9", began: 50_000 }, { scenario: "a", sha: "1", began: 100_000 }]).length === 0);
+check("post-ghost holds the posts to it before its first write",
+  postGhost.indexOf("laterAttempts(") > 0 && postGhost.indexOf("laterAttempts(") < firstWrite);
+
+// The day the server freezes at: the client's draw day, never older than the day before
+// the first run, which is the 23:50 draw played at 00:05.
+check("the server freezes at the draw's day when the first run is that day", freezeDay("2026-09-30", "2026-09-30") === "2026-09-30");
+check("or the day after it, across midnight", freezeDay("2026-09-29", "2026-09-30") === "2026-09-29");
+check("and refuses a draw two days old", freezeDay("2026-09-28", "2026-09-30") === null);
+check("or one from after the run", freezeDay("2026-10-01", "2026-09-30") === null);
+check("or a shape that is not a day", freezeDay("30/09/2026", "2026-09-30") === null);
+check("an old client that sends no day freezes at the first run's", freezeDay(undefined, "2026-09-30") === "2026-09-30");
+
+// ---------------------------------------------------------------------------
+console.log("\n── the server's clock, across daylight saving ───");
+
+// The server runs in UTC and reads a month of a player's history. Each instant has to be
+// read at its own offset in the player's zone; the 2026 US changes are 8 March 08:00Z and
+// 1 November 07:00Z in Chicago.
+const CHI = "America/Chicago";
+const at = (iso: string) => Date.parse(iso);
+check("Intl knows the zone, and refuses a made-up one", isTimeZone(CHI) && !isTimeZone("Mars/Olympus"));
+check("the offset is standard time before the spring change and daylight after",
+  offsetMinutesAt(at("2026-03-08T07:59:00Z"), CHI) === 360 && offsetMinutesAt(at("2026-03-08T08:00:00Z"), CHI) === 300,
+  `${offsetMinutesAt(at("2026-03-08T07:59:00Z"), CHI)} / ${offsetMinutesAt(at("2026-03-08T08:00:00Z"), CHI)}`);
+check("and back at the autumn change",
+  offsetMinutesAt(at("2026-11-01T06:59:00Z"), CHI) === 300 && offsetMinutesAt(at("2026-11-01T07:00:00Z"), CHI) === 360);
+// A run at 23:30 on 6 March, posted in July: the one-offset shift the first draft made
+// puts it on 7 March, and a ghost session from the wrong evening follows.
+const lateRun = at("2026-03-07T05:30:00Z");
+const julyOffset = offsetMinutesAt(at("2026-07-01T17:00:00Z"), CHI);
+check("a late-evening run before the change reads on its own evening",
+  toLocalFrame(lateRun, CHI).toISOString().slice(0, 10) === "2026-03-06",
+  toLocalFrame(lateRun, CHI).toISOString());
+check("where one summer offset would have moved it to the next day, so the check above can fail",
+  new Date(lateRun - julyOffset * 60_000).toISOString().slice(0, 10) === "2026-03-07");
+const name = (stamp: string) => `Air Voltaic Easy - Challenge - ${stamp} Stats.csv`;
+check("a filename's wall clock is the right instant in winter",
+  wallClockToInstant(name("2026.03.06-23.30.00"), CHI)?.toISOString() === "2026-03-07T05:30:00.000Z",
+  wallClockToInstant(name("2026.03.06-23.30.00"), CHI)?.toISOString());
+check("and in summer", wallClockToInstant(name("2026.07.01-12.00.00"), CHI)?.toISOString() === "2026-07-01T17:00:00.000Z");
+const repeated = wallClockToInstant(name("2026.11.01-01.30.00"), CHI)!.toISOString();
+check("the hour that repeats resolves to its first occurrence, as zone.ts says, on the right local day",
+  repeated === "2026-11-01T06:30:00.000Z" && toLocalFrame(Date.parse(repeated), CHI).toISOString().slice(0, 10) === "2026-11-01",
+  repeated);
+const midnight = Date.UTC(2026, 2, 8);
+check("local midnight on the day of the change maps to the right instant and back",
+  fromLocalFrame(midnight, CHI).toISOString() === "2026-03-08T06:00:00.000Z" &&
+    toLocalFrame(fromLocalFrame(midnight, CHI).getTime(), CHI).getTime() === midnight);
 
 console.log();
 if (failures > 0) {

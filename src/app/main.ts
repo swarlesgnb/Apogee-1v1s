@@ -628,7 +628,10 @@ async function settleActiveMatch(attempt = 0): Promise<string | null> {
     const settled = await settleMatch(match.matchId);
     state.match = null;
     state.submitted.clear();
-    broadcast("apogee:matchSettled", settled);
+    // `sentDuel` rides along because a duel you sent settles exactly like a seeding match
+    // (one side, nobody yet) and the payload cannot tell them apart. Ghost Mode's
+    // "nobody in the pool yet" offer is wrong about somebody you just named.
+    broadcast("apogee:matchSettled", { ...settled, sentDuel: !!match.duel?.to });
     nudge();
     // Ranked quests are measured from results the server settled, never from anything
     // the client worked out. Kept locally because nothing re-sends a settled match.

@@ -94,6 +94,9 @@ app.whenReady().then(async()=>{
   await run(`try{renderSettled(${JSON.stringify(seeding)})}catch(e){console.warn(String(e))};true`);
   await run(`window.__settled.forEach(h=>h(${JSON.stringify(seeding)}));true`);await wait(300);
   assert.ok(await run(`!!document.getElementById('ghostSeedCallout')&&document.getElementById('ghostSeedCallout').checkVisibility()`),'a seeding result offers a ghost');
+  await run(`window.__settled.forEach(h=>h(${JSON.stringify({...seeding,sentDuel:true})}));true`);await wait(200);
+  assert.equal(await run(`!!document.getElementById('ghostSeedCallout')`),false,'a sent duel does not claim the pool is empty');
+  await run(`window.__settled.forEach(h=>h(${JSON.stringify(seeding)}));true`);await wait(300);
   await shot('5-seeding-callout');
   await run(`document.querySelector('#ghostSeedCallout button').click();true`);await wait(300);
   assert.equal(await run(`document.getElementById('screen-ghost').classList.contains('active')`),true,'and the offer opens Ghost Mode');

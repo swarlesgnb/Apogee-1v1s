@@ -27,6 +27,8 @@
   let lastDefault;
   let busy = false;
   let message = '';
+  /** Main's news about the last action ("a new day, so a new draw"), as opposed to a failure. */
+  let note = '';
   let confirmAbandon = false;
   /**
    * A result that arrived with the last lane. The board holds on the live view long enough
@@ -183,8 +185,7 @@
       : r.end === 'expired' ? 'Out of time'
       : r.verdict === 'draw' ? `Dead level with ${kind}`
       : r.verdict === 'win' ? `Beat ${kind}` : `Lost to ${kind}`;
-    const best = r.rounds.filter((x) => Number.isFinite(x.live)).sort((x, y) => (y.gap ?? -9) - (x.gap ?? -9))[0];
-    const pbGap = best && best.pb > 0 ? (best.live - best.pb) / best.pb : null;
+    const best = a.best;
     const share = screen.share || {};
     const card = share.card;
     const streak = screen.streak ?? 0;
@@ -216,10 +217,10 @@
       <div class="gh-after">
         <div class="gh-stat"><strong>${streak}</strong><span>day ghost streak${r.verdict === 'win' ? ' · today counts' : ''}</span></div>
         <div class="gh-stat"><strong>${screen.record.wins}–${screen.record.losses}</strong><span>ghost record</span></div>
-        ${pbGap !== null ? `<div class="gh-stat small"><strong>${pbGap >= 0 ? 'New best' : `${Math.abs(pbGap * 100).toFixed(1)}% off`}</strong><span>your best on ${e(best.scenario)}</span></div>` : ''}
+        ${best ? `<div class="gh-stat small"><strong>${best.newBest ? 'New best' : best.pbGap === 0 ? 'Equals your best' : `${Math.abs(best.pbGap * 100).toFixed(1)}% off`}</strong><span>your best on ${e(best.scenario)}</span></div>` : ''}
         <div class="gh-stat small"><strong>No rating change</strong><span>ghost matches never touch the ladder</span></div>
       </div>
-      ${card ? `<div class="gh-card-share"><small>Share code</small><strong>${e(card.code)}</strong><span>Rebuilt by the server from your verified runs · ${e(card.liveTier)}</span></div>` : ''}
+      ${card ? `<div class="gh-card-share"><small>Share code</small><strong>${e(card.code)}</strong><span>Runs checked by the server: ${e(card.liveTier)}. Ghost rebuilt from your uploaded history. The ghost and the three were picked on your PC.</span></div>` : ''}
       <div class="gh-actions">
         <button type="button" class="gh-primary" data-gh="rematch" ${busy ? 'disabled' : ''}>Rematch <span aria-hidden="true">↻</span></button>
         <button type="button" data-gh="dismiss">New ghost</button>
@@ -239,7 +240,8 @@
     const holding = a?.result && holdResult === a.id;
     if (holding) root.dataset.state = 'live';
     root.innerHTML = (!a ? chooser() : a.result && !holding ? result() : match()) +
-      (message ? `<div class="gh-message" role="alert">${e(message)}</div>` : '');
+      (message ? `<div class="gh-message" role="alert">${e(message)}</div>` : '') +
+      (note && !message ? `<div class="gh-notice" role="status">${e(note)}</div>` : '');
     // Mark the lanes that just revealed as seen once their animation has had its moment.
     if (a) a.rounds.forEach((r, i) => { if (r.live !== null) revealed.set(`${a.id}:${i}`, true); });
     tickClock();
@@ -274,12 +276,13 @@
     if (!bridge?.ghostAction || busy) return;
     busy = true;
     message = '';
+    note = '';
     render();
     try {
       const res = await bridge.ghostAction(action);
       busy = false;
       if (res?.error) message = res.error;
-      else if (res?.note) message = '';
+      note = res?.note && !res?.error ? res.note : '';
       if (res?.view) accept(res.view);
       else render();
     } catch (err) {
@@ -320,7 +323,9 @@
     const panel = document.querySelector('#screen-result .panel');
     if (!panel) return;
     let callout = document.getElementById('ghostSeedCallout');
-    const seeding = s && (s.seeding || s.verdict == null) && !s.tournament;
+    // A duel you sent settles as a one-sided match too; there is somebody, they just have
+    // not played yet, so the empty-pool offer would be untrue.
+    const seeding = s && (s.seeding || s.verdict == null) && !s.tournament && !s.sentDuel;
     if (!seeding) { callout?.remove(); return; }
     if (!callout) {
       callout = document.createElement('div');

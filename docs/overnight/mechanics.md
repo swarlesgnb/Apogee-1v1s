@@ -388,6 +388,13 @@ Each of these is argued at the code it lives in; this is the list.
   (filename end minus duration) is more than 2 s before Start, not only one that ended
   before it. The clock expires a match at the deadline plus ranked's 90 s end grace.
 - **Tenths, not quarters**, on the chooser; see the note under the table above.
+- **The quoted win rates come from a narrower draw than the app's.** The table above
+  draws each day's three from scenarios played that day, since only those have a live
+  side. The app draws from every eligible scenario in the library, and on its real draws
+  only 10.8% (`month_ago`), 17.5% (`last_week`) and 18.1% (`last_week_best`) of rounds had
+  a live run that day. Over those rounds the live side won 60.0%, 55.7% and 48.7% of
+  *rounds*; full matches with all three played number 0, 3 and 2 days, too few to quote.
+  `validate:ghost` prints both, and the chooser's "in testing" is the first.
 - **The streak is days with a win**, as specified, so a loss, an abandon and a void all
   add nothing. "Abandoning is a loss" is enforced as the *record*: an abandon after Start
   is stored as a loss (never a void, never nothing), pays no quest, and `validate:ghost`
@@ -395,13 +402,31 @@ Each of these is argued at the code it lives in; this is the list.
   server refuses to store one.
 - **Bars are drawn on a baseline-centred scale** (±25%), computed in `viewOf`; scaled to
   raw scores a 4% win looked like a tie.
-- **`ghost_results` has two more columns**: `pbs` (the card's distance to best) and
-  `tz_offset_minutes` (so the card's streak counts the poster's local days), plus check
-  constraints on the arrays' lengths and on the code's alphabet.
-- **The server does not replay the draw.** Its copy of the library is whatever was
-  uploaded, so a replay would refuse honest players whose upload lags; it checks each
-  scenario has a ghost of the claimed kind in uploaded history, and requires the three
-  runs to have been played as one sitting on the ranked idle clock.
+- **`ghost_results` has more columns than drafted**: `pbs` (the card's distance to best),
+  `tz_offset_minutes` and `time_zone` (the poster's clock), and `played_at` (below), plus
+  check constraints on the arrays' lengths and on the code's alphabet.
+- **The server does not replay the draw, so it cannot bind the kind either.** Its copy of
+  the library is whatever was uploaded, so a replay would refuse honest players whose
+  upload lags. What it does hold: three different scenarios, played as one sitting on
+  the ranked idle clock; each posted run the first stored, non-rejected run on its
+  scenario from the sitting's first run on (`laterAttempts`), so an evening's best cannot
+  stand in for the attempt of record; each scenario has a ghost of the claimed kind in
+  uploaded history; and the freeze day is the draw's day, no earlier than the day before
+  the first run. The card says what that amounts to: "Runs checked by the server. Ghost
+  rebuilt from your uploaded history. The ghost and the three were picked on your PC."
+  It does not say "verified", which the first draft overclaimed.
+- **The server never writes a run a ranked match counted** (`planRunWrite`); a card on
+  such a run uses its stored id and the lower of the stored and fresh tiers.
+- **Instants on the server are read in the player's IANA zone** at each instant's own
+  offset (`zone.ts`); the zone is stored beside the offset. One ambiguity is left and
+  named: in the hour that repeats when clocks go back, a filename's wall clock names two
+  instants and the file does not say which. The server takes the first. Both fall on the
+  same local day, so no session moves; a run's `played_at` can be an hour early, and no
+  duration is computed from it. `validate:ghost` pins which occurrence is taken.
+- **A run is offered before the clock is checked.** A run that ended inside the end grace
+  but reached the watcher after it still counts, as it would in ranked.
+- **`ghost_results` also stores `played_at`**, the end of the last live run, and the
+  card's streak counts played days, not the day Share was pressed.
 - **Cut:** Ghost links (follow-up 1) and a card renderer. Share mints a code and shows it
   on the result screen once post-ghost is deployed; there is no image yet.
 

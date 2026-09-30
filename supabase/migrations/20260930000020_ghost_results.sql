@@ -32,12 +32,19 @@ create table ghost_results (
   -- were bucketed with it, and the card's streak counts local days with it, because a
   -- player west of UTC who wins at 9pm has won on that evening, not on tomorrow.
   tz_offset_minutes smallint not null check (tz_offset_minutes between -840 and 840),
+  -- The IANA zone the post was read in. The offset alone is one moment's offset, and a
+  -- card's history spans daylight-saving changes; each instant is read in this zone at
+  -- its own offset (src/core/ghost/zone.ts).
+  time_zone      text not null check (length(time_zone) between 1 and 64),
   margin         numeric not null,
   -- 'win' | 'loss' | 'draw'. The enum has no 'void' and does not need one: a voided
   -- ghost match has nothing to share, so post-ghost refuses it rather than storing it.
   verdict        match_result not null,
   -- Lowest tier among the three live runs, so the card can say what it rests on.
   live_tier      verification_tier not null,
+  -- When the last live run ended. The card's streak counts the days matches were
+  -- *played* on; created_at is when Share was pressed, which can be days later.
+  played_at      timestamptz not null,
   created_at     timestamptz not null default now(),
 
   constraint ghost_three check (
@@ -58,7 +65,7 @@ comment on table ghost_results is
   'ghost-card, both under the service role. Moves no rating and is read by nothing '
   'that does.';
 
-create index ghost_results_player_idx on ghost_results (player_id, created_at desc);
+create index ghost_results_player_idx on ghost_results (player_id, played_at desc);
 
 alter table ghost_results enable row level security;
 

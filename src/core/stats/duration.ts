@@ -39,7 +39,7 @@ export const MIN_COMPLETION_FRACTION = 0.9;
 export const MIN_CHECKABLE_SECONDS = 20;
 
 /** `VT Aether Intermediate S5 - Challenge - 2026.08.17-13.01.16 Stats.csv` */
-const FILENAME_STAMP = /(\d{4})\.(\d{2})\.(\d{2})-(\d{2})\.(\d{2})\.(\d{2}) Stats\.csv$/;
+export const FILENAME_STAMP = /(\d{4})\.(\d{2})\.(\d{2})-(\d{2})\.(\d{2})\.(\d{2}) Stats\.csv$/;
 
 /**
  * The instant a run finished, from its filename and the player's UTC offset.
