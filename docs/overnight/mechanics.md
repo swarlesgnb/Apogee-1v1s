@@ -402,9 +402,9 @@ Each of these is argued at the code it lives in; this is the list.
   server refuses to store one.
 - **Bars are drawn on a baseline-centred scale** (±25%), computed in `viewOf`; scaled to
   raw scores a 4% win looked like a tie.
-- **`ghost_results` has two more columns**: `pbs` (the card's distance to best) and
-  `tz_offset_minutes` (so the card's streak counts the poster's local days), plus check
-  constraints on the arrays' lengths and on the code's alphabet.
+- **`ghost_results` has more columns than drafted**: `pbs` (the card's distance to best),
+  `tz_offset_minutes` and `time_zone` (the poster's clock), and `played_at` (below), plus
+  check constraints on the arrays' lengths and on the code's alphabet.
 - **The server does not replay the draw, so it cannot bind the kind either.** Its copy of
   the library is whatever was uploaded, so a replay would refuse honest players whose
   upload lags. What it does hold: three different scenarios, played as one sitting on
@@ -418,7 +418,15 @@ Each of these is argued at the code it lives in; this is the list.
 - **The server never writes a run a ranked match counted** (`planRunWrite`); a card on
   such a run uses its stored id and the lower of the stored and fresh tiers.
 - **Instants on the server are read in the player's IANA zone** at each instant's own
-  offset (`zone.ts`); the zone is stored beside the offset.
+  offset (`zone.ts`); the zone is stored beside the offset. One ambiguity is left and
+  named: in the hour that repeats when clocks go back, a filename's wall clock names two
+  instants and the file does not say which. The server takes the first. Both fall on the
+  same local day, so no session moves; a run's `played_at` can be an hour early, and no
+  duration is computed from it. `validate:ghost` pins which occurrence is taken.
+- **A run is offered before the clock is checked.** A run that ended inside the end grace
+  but reached the watcher after it still counts, as it would in ranked.
+- **`ghost_results` also stores `played_at`**, the end of the last live run, and the
+  card's streak counts played days, not the day Share was pressed.
 - **Cut:** Ghost links (follow-up 1) and a card renderer. Share mints a code and shows it
   on the result screen once post-ghost is deployed; there is no image yet.
 
