@@ -2421,6 +2421,20 @@
   .empty button.secondary {
     color: var(--ink); background: transparent; border: 1px solid var(--rule);
   }
+  .empty-meanwhile {
+    margin-top: var(--s6); padding-top: var(--s4); border-top: 1px solid var(--rule);
+    font-size: var(--t-sm); color: var(--ink-dim);
+  }
+  .empty-meanwhile p { margin: 0; max-width: 58ch; line-height: 1.5; }
+  .empty-meanwhile p.nudge { color: var(--ink); }
+  .empty-routes { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s5); }
+  .empty .empty-route {
+    margin-top: var(--s2); padding: var(--s1) 0; background: transparent; border: 0;
+    color: var(--ink-mid); font-family: var(--font); font-size: var(--t-sm);
+    font-weight: 500; letter-spacing: 0; text-transform: none;
+  }
+  .empty .empty-route:hover { color: var(--brand); filter: none; }
+  .dot.idle { background: var(--ink-dim); }
 
   .footnote {
     margin: 8px 0 0; font-size: var(--t-sm); color: var(--ink-dim);
@@ -4255,6 +4269,16 @@
               Picking the Steam or FPSAimTrainer folder also works; Apogee looks inside it.</p>
             <p>A fresh KovaaK's install has no stats until its first run is played.</p>
           </details>
+          <!-- Below the one thing to do, and quieter than it. The rail greys out every tab
+               but these two, and pressing a grey one only moved focus to the button above,
+               so nothing on the page said the two lit tabs were the ones that already work. -->
+          <div class="empty-meanwhile" id="emptyMeanwhile">
+            <p id="emptyLocked">The queue, Season and ranks open once your runs are read. These work now:</p>
+            <div class="empty-routes">
+              <button type="button" class="empty-route" data-arcade-route="expedition">First Light expedition <span aria-hidden="true">→</span></button>
+              <button type="button" class="empty-route" data-arcade-route="mixtape">Make a mixtape <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
         </div>
 
       </div>

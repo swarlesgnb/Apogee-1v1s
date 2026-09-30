@@ -887,7 +887,7 @@ function prepareScrollRegions() {
 
 function setStatus(kind, text, path) {
   const dot = $("statusDot");
-  dot.className = "dot" + (kind === "scanning" ? " scanning" : kind === "bad" ? " bad" : "");
+  dot.className = "dot" + (kind === "scanning" ? " scanning" : kind === "bad" ? " bad" : kind === "idle" ? " idle" : "");
   $("statusText").textContent = text;
   // Clipped in the bar, whole inside the popover. The end of a stats path is the part
   // worth reading; the beginning is C:\Program Files (x86)\Steam\steamapps every time.
@@ -9442,6 +9442,8 @@ function restoreScreen() {
 
 /** Screens that work before any stats are read. */
 const STANDALONE_SCREENS = new Set(["mixtape", "expedition"]);
+/** Set while a locked tab sends the player back to the folder card, which is behind Queue. */
+let showingFolderCard = false;
 
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.id ||= "nav-" + tab.dataset.screen;
@@ -9456,7 +9458,25 @@ document.querySelectorAll(".tab").forEach((tab) => {
   tab.addEventListener("click", () => {
     // Before any stats are read, the screens that draw from them are empty. Nine tabs
     // used to open onto a blank page; they point back at the one thing to do instead.
-    if (document.body.classList.contains("awaiting-data") && !STANDALONE_SCREENS.has(tab.dataset.screen)) {
+    if (document.body.classList.contains("awaiting-data") && !STANDALONE_SCREENS.has(tab.dataset.screen) &&
+        !showingFolderCard) {
+      // Moving focus alone said nothing, and from Mixtape or Expedition it moved focus to
+      // a button that was not on screen, so the press looked dead. Name what was pressed
+      // and bring the folder card back into view.
+      const locked = $("emptyLocked");
+      const label = tab.querySelector(".tab-label");
+      if (locked && label) {
+        locked.textContent = label.textContent.trim() + " opens once your runs are read. These work now:";
+        locked.classList.add("nudge");
+      }
+      if (STANDALONE_SCREENS.has(document.body.dataset.screen)) {
+        showingFolderCard = true;
+        try {
+          document.querySelector('.tab[data-screen="queue"]').click();
+        } finally {
+          showingFolderCard = false;
+        }
+      }
       const choose = $("emptyChoose");
       if (choose) choose.focus();
       return;
@@ -12350,6 +12370,13 @@ if (HOST === "electron") {
     if (state.snapshot) {
       render(state.snapshot);
       setStatus("ok", "Watching", currentPath);
+    } else if (state.lastError && !state.statsDir) {
+      // No folder is where a first launch starts whenever detection misses, not a fault:
+      // the card below already says so and holds the button. The same sentence in a red
+      // banner over it, an error sound and a red "Problem" dot made the very first screen
+      // read as a crash. A folder that exists and fails to read still takes the path below.
+      setStatus("idle", "No folder yet", "");
+      paintFolderMissing();
     } else {
       setStatus(state.lastError ? "bad" : "scanning", state.lastError ? "Problem" : "Scanning…", currentPath);
       if (state.lastError) {
