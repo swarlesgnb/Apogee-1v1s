@@ -11960,8 +11960,14 @@ if (HOST === "electron") {
     renderEligibility();
     renderSettled(settled);
     if (settled && settled.tournament) void tnRefresh();
-    playSound(settled && settled.verdict === "win" ? "victory"
-      : settled && settled.verdict === "draw" ? "draw" : "defeat");
+    // Only a loss sounds like one. A seeding set has a null verdict and fell through to
+    // "defeat", so while the population is zero every player's first result - three runs
+    // recorded, nothing lost - played the losing sting. A void or a first tournament leg
+    // has no loser either.
+    const verdict = settled ? settled.verdict : null;
+    playSound(verdict === "win" ? "victory"
+      : verdict === "draw" || verdict === "void" ? "draw"
+      : verdict === "loss" ? "defeat" : "ok");
 
     // Jump to the result, because that is the payoff and nobody should have to hunt
     // for it after finishing three scenarios.
