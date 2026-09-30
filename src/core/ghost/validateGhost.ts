@@ -54,7 +54,7 @@ import {
   type GhostMatch,
   type IncomingRun,
 } from "./ghost.ts";
-import { lowerTier, planRunWrite, sittingProblem } from "./serverRules.ts";
+import { freezeDay, lowerTier, planRunWrite, sittingProblem } from "./serverRules.ts";
 
 const DEFAULT_STATS_DIR =
   "E:\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
@@ -418,6 +418,15 @@ check("three different scenarios in one sitting are", sittingProblem([
   { scenario: "b", sha: "2", began: 70_000, ended: 130_000 },
   { scenario: "c", sha: "3", began: 140_000, ended: 200_000 },
 ]) === null);
+
+// The day the server freezes at: the client's draw day, never older than the day before
+// the first run, which is the 23:50 draw played at 00:05.
+check("the server freezes at the draw's day when the first run is that day", freezeDay("2026-09-30", "2026-09-30") === "2026-09-30");
+check("or the day after it, across midnight", freezeDay("2026-09-29", "2026-09-30") === "2026-09-29");
+check("and refuses a draw two days old", freezeDay("2026-09-28", "2026-09-30") === null);
+check("or one from after the run", freezeDay("2026-10-01", "2026-09-30") === null);
+check("or a shape that is not a day", freezeDay("30/09/2026", "2026-09-30") === null);
+check("an old client that sends no day freezes at the first run's", freezeDay(undefined, "2026-09-30") === "2026-09-30");
 
 console.log();
 if (failures > 0) {

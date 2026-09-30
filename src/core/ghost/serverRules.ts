@@ -61,3 +61,20 @@ export function sittingProblem(runs: SittingRun[]): string | null {
   }
   return null;
 }
+
+/**
+ * The local day to freeze ghosts and baselines at: the day the client drew on, as long as
+ * that is the first run's local day or the one before (a match started at 23:58 and
+ * played after midnight). Anything earlier is refused, since freezing at an old day is a
+ * way to pick an easier ghost.
+ *
+ * @param claimed YYYY-MM-DD from the client, or undefined.
+ * @param firstRunDay YYYY-MM-DD of the sitting's first run, in the player's zone.
+ */
+export function freezeDay(claimed: unknown, firstRunDay: string): string | null {
+  if (claimed === undefined || claimed === null) return firstRunDay;
+  if (typeof claimed !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(claimed)) return null;
+  const day = (s: string) => Date.UTC(+s.slice(0, 4), +s.slice(5, 7) - 1, +s.slice(8, 10));
+  const gap = (day(firstRunDay) - day(claimed)) / 86_400_000;
+  return gap === 0 || gap === 1 ? claimed : null;
+}

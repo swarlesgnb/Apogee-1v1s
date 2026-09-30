@@ -394,15 +394,44 @@ export class GhostService {
         if (!s.active) return fail("There is no match to rematch.");
         const today = dayKey(now);
         const ordinal = s.started.day === today ? s.started.count : 0;
-        s.active = rematchOf(s.active, now, ordinal);
+        // Same three and same ghosts only on the day they were frozen for. A day later the
+        // frozen baseline is a day stale and the server, which freezes at the match's day,
+        // would rebuild a different match from the same runs; a fresh draw of the same kind
+        // is what a rematch means by then.
+        if (s.active.day === today) s.active = rematchOf(s.active, now, ordinal);
+        else {
+          const fresh = drawGhostMatch(this.history(), now, s.active.kind, ordinal);
+          if (!fresh) return fail(this.kinds(now)[s.active.kind].reason ?? "No ghost to race today.");
+          s.active = fresh;
+          this.notice = "A new day, so a new draw: the ghosts are frozen at midnight.";
+        }
         s.files = {};
         this.notice = null;
         break;
       }
       case "start": {
         if (!s.active || s.active.result || s.active.startedAt !== null) return fail("Draw a match first.");
-        s.active = startMatch(s.active, now.getTime());
         const today = dayKey(now);
+        // A draw left open past midnight (drawn at 23:50, started at 00:05) is redrawn for
+        // today before the clock starts. Its ghosts and baselines were frozen at the start
+        // of the day it was drawn on, and the match has to be played on the day it was
+        // frozen for, or the server rebuilds it against a different midnight.
+        if (s.active.day !== today) {
+          const fresh = drawGhostMatch(this.history(), now, s.active.kind, s.started.day === today ? s.started.count : 0);
+          if (!fresh) {
+            const kind = s.active.kind;
+            s.active = null;
+            this.save();
+            this.publish();
+            return fail(this.kinds(now)[kind].reason ?? "No ghost to race today.");
+          }
+          s.active = fresh;
+          s.files = {};
+          this.save();
+          this.publish();
+          return { view: this.view(), note: "A new day, so a new draw: check the three and press Start again." };
+        }
+        s.active = startMatch(s.active, now.getTime());
         s.started = { day: today, count: (s.started.day === today ? s.started.count : 0) + 1 };
         this.armClock();
         this.save();
@@ -463,7 +492,7 @@ export class GhostService {
     this.shareBusy = true;
     this.publish();
     try {
-      const card = await postGhost(dir, files, s.active.kind, s.active.ordinal);
+      const card = await postGhost(dir, files, s.active.kind, s.active.ordinal, s.active.day);
       this.card = { resultId: s.active.id, card };
       return { view: this.view() };
     } catch (err) {

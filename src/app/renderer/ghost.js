@@ -27,6 +27,8 @@
   let lastDefault;
   let busy = false;
   let message = '';
+  /** Main's news about the last action ("a new day, so a new draw"), as opposed to a failure. */
+  let note = '';
   let confirmAbandon = false;
   /**
    * A result that arrived with the last lane. The board holds on the live view long enough
@@ -239,7 +241,8 @@
     const holding = a?.result && holdResult === a.id;
     if (holding) root.dataset.state = 'live';
     root.innerHTML = (!a ? chooser() : a.result && !holding ? result() : match()) +
-      (message ? `<div class="gh-message" role="alert">${e(message)}</div>` : '');
+      (message ? `<div class="gh-message" role="alert">${e(message)}</div>` : '') +
+      (note && !message ? `<div class="gh-notice" role="status">${e(note)}</div>` : '');
     // Mark the lanes that just revealed as seen once their animation has had its moment.
     if (a) a.rounds.forEach((r, i) => { if (r.live !== null) revealed.set(`${a.id}:${i}`, true); });
     tickClock();
@@ -274,12 +277,13 @@
     if (!bridge?.ghostAction || busy) return;
     busy = true;
     message = '';
+    note = '';
     render();
     try {
       const res = await bridge.ghostAction(action);
       busy = false;
       if (res?.error) message = res.error;
-      else if (res?.note) message = '';
+      note = res?.note && !res?.error ? res.note : '';
       if (res?.view) accept(res.view);
       else render();
     } catch (err) {

@@ -59,11 +59,13 @@ import {
   startOfLocalDay,
   type GhostMatch,
 } from "../../../src/core/ghost/ghost.ts";
-import { lowerTier, planRunWrite, sittingProblem, type StoredRunRow } from "../../../src/core/ghost/serverRules.ts";
+import { freezeDay, lowerTier, planRunWrite, sittingProblem, type StoredRunRow } from "../../../src/core/ghost/serverRules.ts";
 
 interface Body {
   kind: string;
   ordinal?: number;
+  /** The local day the client froze its draw at (GhostMatch.day). */
+  day?: string;
   runs: { filename: string; csv: string; csvSha256?: string }[];
   /** getTimezoneOffset() on the player's machine; see playedAtUtc. */
   tzOffsetMinutes: number;
@@ -242,8 +244,15 @@ Deno.serve(handler(async (req, admin) => {
   }
 
   // ---- 4. the ghosts, rebuilt from stored history --------------------------------------
+  // Frozen where the client froze it, the start of the day it drew on, so a match drawn
+  // at 23:50 and played at 00:05 is rebuilt against the same midnight it was played
+  // against. Bounded to the first run's day or the one before: an older day would be a
+  // way to choose an easier ghost.
   const startLocal = local(new Date(began(live[0])));
-  const frozenLocal = startOfLocalDay(startLocal);
+  const firstRunDay = startOfLocalDay(startLocal).toISOString().slice(0, 10);
+  const day = freezeDay(body.day, firstRunDay);
+  if (!day) throw new HttpError(422, `a match drawn on ${String(body.day)} cannot have been played on ${firstRunDay}`);
+  const frozenLocal = new Date(`${day}T00:00:00Z`);
   const frozenInstant = new Date(frozenLocal.getTime() + tz * 60_000);
 
   const history = new Map<string, { scenario: string; runs: { score: number; playedAt: Date | null }[] }>();
@@ -276,7 +285,7 @@ Deno.serve(handler(async (req, admin) => {
   const match: GhostMatch = {
     id: "server",
     kind: body.kind,
-    day: frozenLocal.toISOString().slice(0, 10),
+    day,
     ordinal: Number.isInteger(body.ordinal) ? body.ordinal! : 0,
     drawnAt: frozenLocal.getTime(),
     startedAt: startLocal.getTime(),
