@@ -254,7 +254,10 @@ check("ghostReady, the quest board's cheap question, agrees with the full answer
 check("and says no to an empty library", ghostReady(new Map(), now) === false);
 
 const drawn = drawGhostMatch(history, now, "last_week", 0);
-const again = drawGhostMatch(history, new Date(now.getTime() + 3_600_000), "last_week", 0);
+// 01:00 and 22:00 of the same local day, not now and an hour later: the latter crossed
+// midnight whenever this ran after 23:00 and failed for a reason that is not a bug.
+const earlyInDay = drawGhostMatch(history, new Date(startOfLocalDay(now).getTime() + 3_600_000), "last_week", 0);
+const again = drawGhostMatch(history, new Date(startOfLocalDay(now).getTime() + 22 * 3_600_000), "last_week", 0);
 check("a match can be drawn", drawn !== null && drawn.rounds.length === 3,
   drawn ? drawn.rounds.map((r) => r.scenario).join(" / ") : "none");
 if (!drawn) {
@@ -262,7 +265,7 @@ if (!drawn) {
   process.exit(1);
 }
 check("the same day, kind and ordinal draw the same three, later in the day too",
-  JSON.stringify(again?.rounds) === JSON.stringify(drawn.rounds));
+  JSON.stringify(again?.rounds) === JSON.stringify(drawn.rounds) && JSON.stringify(earlyInDay?.rounds) === JSON.stringify(drawn.rounds));
 const other = drawGhostMatch(history, now, "last_week", 1);
 check("a different ordinal is a different draw", other !== null && other.id !== drawn.id,
   other ? other.rounds.map((r) => r.scenario).join(" / ") : "none");
