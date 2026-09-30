@@ -54,7 +54,7 @@ import {
   type GhostMatch,
   type IncomingRun,
 } from "./ghost.ts";
-import { freezeDay, lowerTier, planRunWrite, sittingProblem } from "./serverRules.ts";
+import { freezeDay, laterAttempts, lowerTier, planRunWrite, sittingProblem } from "./serverRules.ts";
 import { fromLocalFrame, isTimeZone, offsetMinutesAt, toLocalFrame, wallClockToInstant } from "./zone.ts";
 
 const DEFAULT_STATS_DIR =
@@ -419,6 +419,19 @@ check("three different scenarios in one sitting are", sittingProblem([
   { scenario: "b", sha: "2", began: 70_000, ended: 130_000 },
   { scenario: "c", sha: "3", began: 140_000, ended: 200_000 },
 ]) === null);
+
+// The first run on each scenario, as the client counts it.
+const sitting = [
+  { scenario: "a", sha: "1", began: 100_000, ended: 160_000 },
+  { scenario: "b", sha: "2", began: 170_000, ended: 230_000 },
+  { scenario: "c", sha: "3", began: 240_000, ended: 300_000 },
+];
+check("a posted run is refused when an earlier run on its scenario is stored from the sitting",
+  laterAttempts(sitting, [{ scenario: "b", sha: "9", began: 120_000 }]).join() === "b");
+check("but not for a run before the sitting, or the posted file itself",
+  laterAttempts(sitting, [{ scenario: "b", sha: "9", began: 50_000 }, { scenario: "a", sha: "1", began: 100_000 }]).length === 0);
+check("post-ghost holds the posts to it before its first write",
+  postGhost.indexOf("laterAttempts(") > 0 && postGhost.indexOf("laterAttempts(") < firstWrite);
 
 // The day the server freezes at: the client's draw day, never older than the day before
 // the first run, which is the 23:50 draw played at 00:05.

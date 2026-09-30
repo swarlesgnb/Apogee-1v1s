@@ -7,7 +7,7 @@
  */
 
 import type { VerificationTier } from "../verify/verifyRun.ts";
-import { GHOST_END_GRACE_MS, GHOST_IDLE_ALLOWANCE_MS, GHOST_ROUNDS } from "./ghost.ts";
+import { GHOST_END_GRACE_MS, GHOST_IDLE_ALLOWANCE_MS, GHOST_ROUNDS, GHOST_START_SLACK_MS } from "./ghost.ts";
 
 const TIER_RANK: Record<string, number> = { verified: 3, consistent: 2, unverified: 1, suspect: 1, rejected: 0 };
 
@@ -60,6 +60,25 @@ export function sittingProblem(runs: SittingRun[]): string | null {
     }
   }
   return null;
+}
+
+/**
+ * The first run on each scenario counts, as it does on the client (`applyRun`). The
+ * server cannot see Start, so it holds the posted runs to the nearest thing it can: no
+ * other stored, non-rejected run on the same scenario began between the sitting's first
+ * run and this one. Without it, any good run from a long evening could be posted as the
+ * attempt of record.
+ *
+ * @param stored runs already in `runs` on these scenarios, from the sitting's start on.
+ */
+export function laterAttempts(
+  runs: SittingRun[],
+  stored: { scenario: string; sha: string; began: number }[],
+): string[] {
+  const start = Math.min(...runs.map((r) => r.began)) - GHOST_START_SLACK_MS;
+  return runs
+    .filter((r) => stored.some((s) => s.scenario === r.scenario && s.sha !== r.sha && s.began >= start && s.began < r.began))
+    .map((r) => r.scenario);
 }
 
 /**

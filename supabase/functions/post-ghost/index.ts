@@ -30,11 +30,16 @@
  * every instant is moved into the player's frame by its own offset in that zone before
  * the core reads a day from it (src/core/ghost/zone.ts).
  *
- * WHAT IT CANNOT CHECK. The draw. The client draws three scenarios from its whole local
+ * THE FIRST RUN. The posted run on each scenario has to be the first stored,
+ * non-rejected run on it from the sitting's first run on (`laterAttempts`), so an
+ * evening's best cannot be posted as the attempt of record.
+ *
+ * WHAT IT CANNOT CHECK. The draw, and so the kind. The client draws three scenarios from its whole local
  * library with a seed, and the server's copy of that library is whatever was uploaded,
  * so it cannot replay the draw reliably and does not pretend to: it checks that each
  * scenario has a ghost of the kind claimed in the uploaded history, and the card says the
- * ghost came from uploaded history. A modified client could choose which three to share.
+ * ghost came from uploaded history and that the ghost and the three were picked on the
+ * player's PC. A modified client could choose which three to share, and which ghost.
  */
 
 import {
@@ -55,13 +60,14 @@ import { matchServerRecord, recentScores } from "../../../src/core/verify/kovaak
 import {
   ghostCandidates,
   GHOST_ROUNDS,
+  GHOST_START_SLACK_MS,
   isGhostKind,
   judge,
   startOfLocalDay,
   type GhostMatch,
 } from "../../../src/core/ghost/ghost.ts";
 import { fromLocalFrame, isTimeZone, toLocalFrame, wallClockToInstant } from "../../../src/core/ghost/zone.ts";
-import { freezeDay, lowerTier, planRunWrite, sittingProblem, type StoredRunRow } from "../../../src/core/ghost/serverRules.ts";
+import { freezeDay, laterAttempts, lowerTier, planRunWrite, sittingProblem, type StoredRunRow } from "../../../src/core/ghost/serverRules.ts";
 
 interface Body {
   kind: string;
@@ -250,6 +256,34 @@ Deno.serve(handler(async (req, admin) => {
       const row = already as GhostResultRow;
       return json(cardOf(row, caller.displayName, await serverStreak(admin, row)));
     }
+  }
+
+  // ---- 3b. the first run on each scenario, not the best of the evening --------------
+  // The client counts the first run after Start; the server cannot see Start, so it holds
+  // the posts to the first stored, non-rejected run on each scenario from the sitting's
+  // first run on. Without this any good run from a long session could be posted as the
+  // attempt of record.
+  const sittingStart = began(live[0]);
+  const lastEnd = live[live.length - 1].endedAt.getTime();
+  const { data: sameSitting, error: sittingError } = await admin
+    .from("runs")
+    .select("scenario_name, csv_sha256, played_at, duration_seconds")
+    .eq("player_id", caller.playerId)
+    .in("scenario_name", live.map((r) => r.scenario))
+    .gte("played_at", new Date(sittingStart - GHOST_START_SLACK_MS).toISOString())
+    .lte("played_at", new Date(lastEnd).toISOString())
+    .neq("verification_tier", "rejected");
+  if (sittingError) throw new HttpError(500, sittingError.message);
+  const earlier = laterAttempts(
+    live.map((r) => ({ scenario: r.scenario, sha: r.sha, began: began(r), ended: r.endedAt.getTime() })),
+    (sameSitting ?? []).map((s) => ({
+      scenario: s.scenario_name as string,
+      sha: s.csv_sha256 as string,
+      began: new Date(s.played_at).getTime() - Number(s.duration_seconds ?? 0) * 1000,
+    })),
+  );
+  if (earlier.length) {
+    throw new HttpError(422, `Not the first run of the match on ${earlier.join(", ")}: an earlier run on it is already uploaded.`);
   }
 
   // ---- 4. the ghosts, rebuilt from stored history --------------------------------------

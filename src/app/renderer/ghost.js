@@ -221,7 +221,7 @@
         ${pbGap !== null ? `<div class="gh-stat small"><strong>${pbGap >= 0 ? 'New best' : `${Math.abs(pbGap * 100).toFixed(1)}% off`}</strong><span>your best on ${e(best.scenario)}</span></div>` : ''}
         <div class="gh-stat small"><strong>No rating change</strong><span>ghost matches never touch the ladder</span></div>
       </div>
-      ${card ? `<div class="gh-card-share"><small>Share code</small><strong>${e(card.code)}</strong><span>Rebuilt by the server from your verified runs · ${e(card.liveTier)}</span></div>` : ''}
+      ${card ? `<div class="gh-card-share"><small>Share code</small><strong>${e(card.code)}</strong><span>Runs checked by the server: ${e(card.liveTier)}. Ghost rebuilt from your uploaded history. The ghost and the three were picked on your PC.</span></div>` : ''}
       <div class="gh-actions">
         <button type="button" class="gh-primary" data-gh="rematch" ${busy ? 'disabled' : ''}>Rematch <span aria-hidden="true">↻</span></button>
         <button type="button" data-gh="dismiss">New ghost</button>

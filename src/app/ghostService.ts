@@ -333,7 +333,7 @@ export class GhostService {
     let shareReason: string | null = null;
     if (!last || !s.active?.result || s.active.id !== last.id) shareReason = "Finish a match to share it.";
     else if (last.verdict === "void") shareReason = "A match with no result has nothing to share.";
-    else if (!this.deps.signedIn()) shareReason = "Sign in with Steam to share: a card is rebuilt by the server from your verified runs.";
+    else if (!this.deps.signedIn()) shareReason = "Sign in with Steam to share: the server checks the runs before it makes a card.";
     else if (this.shareBlocked) shareReason = this.shareBlocked;
     else if (Object.keys(s.files).length < 3) shareReason = "The stats files behind this match are not all known, so it cannot be verified.";
 

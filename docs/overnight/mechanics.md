@@ -398,10 +398,20 @@ Each of these is argued at the code it lives in; this is the list.
 - **`ghost_results` has two more columns**: `pbs` (the card's distance to best) and
   `tz_offset_minutes` (so the card's streak counts the poster's local days), plus check
   constraints on the arrays' lengths and on the code's alphabet.
-- **The server does not replay the draw.** Its copy of the library is whatever was
-  uploaded, so a replay would refuse honest players whose upload lags; it checks each
-  scenario has a ghost of the claimed kind in uploaded history, and requires the three
-  runs to have been played as one sitting on the ranked idle clock.
+- **The server does not replay the draw, so it cannot bind the kind either.** Its copy of
+  the library is whatever was uploaded, so a replay would refuse honest players whose
+  upload lags. What it does hold: three different scenarios, played as one sitting on
+  the ranked idle clock; each posted run the first stored, non-rejected run on its
+  scenario from the sitting's first run on (`laterAttempts`), so an evening's best cannot
+  stand in for the attempt of record; each scenario has a ghost of the claimed kind in
+  uploaded history; and the freeze day is the draw's day, no earlier than the day before
+  the first run. The card says what that amounts to: "Runs checked by the server. Ghost
+  rebuilt from your uploaded history. The ghost and the three were picked on your PC."
+  It does not say "verified", which the first draft overclaimed.
+- **The server never writes a run a ranked match counted** (`planRunWrite`); a card on
+  such a run uses its stored id and the lower of the stored and fresh tiers.
+- **Instants on the server are read in the player's IANA zone** at each instant's own
+  offset (`zone.ts`); the zone is stored beside the offset.
 - **Cut:** Ghost links (follow-up 1) and a card renderer. Share mints a code and shows it
   on the result screen once post-ghost is deployed; there is no image yet.
 
