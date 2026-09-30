@@ -1376,7 +1376,10 @@ function needsFor(data, scenario) {
 function renderPool(data) {
   renderDraw(data);
   const btn = $("queueBtn");
-  if (btn && !btn.classList.contains("working") && !btn.classList.contains("held")) {
+  // Signed out, resetCommit owns the line: repainting it here put "matched on rating"
+  // beside a button that signs in rather than queues.
+  if (btn && !btn.classList.contains("working") && !btn.classList.contains("held") &&
+      (HOST !== "electron" || signedIn)) {
     $("queueSub").textContent = commitSub(data);
     $("queueMeta").textContent = "matched on rating";
   }
