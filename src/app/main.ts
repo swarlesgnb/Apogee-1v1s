@@ -988,6 +988,26 @@ function runSmokeTest(): void {
           : "MISSING"
       }`,
     );
+    // Ghost Mode round trip: the bridge answers, main builds the screen, and the page drew
+    // it. A missing handler here is the "No handler registered" of a stale bundle, which
+    // is the failure CLAUDE.md warns makes every button do nothing.
+    const ghostProbe = await probe.webContents.executeJavaScript(`(async () => {
+      if (typeof window.apogee?.ghost !== "function") return { bridged: false };
+      const screen = await window.apogee.ghost();
+      await new Promise((r) => setTimeout(r, 100));
+      return {
+        bridged: true,
+        error: screen?.error ?? null,
+        kinds: Array.isArray(screen?.kinds) ? screen.kinds.map((k) => k.kind + (k.available ? "+" : "-")).join(" ") : null,
+        tab: !!document.querySelector('.tab[data-screen="ghost"]'),
+        drawn: (document.getElementById("ghostRoot")?.textContent ?? "").includes("Race your past self"),
+      };
+    })()`);
+    if (!ghostProbe.bridged) problems.push("Ghost Mode is not on the preload bridge");
+    else if (ghostProbe.error) problems.push(`Ghost Mode's screen failed: ${ghostProbe.error}`);
+    else if (!ghostProbe.kinds || ghostProbe.kinds.split(" ").length !== 3) problems.push("Ghost Mode did not offer three ghosts");
+    else if (!ghostProbe.tab || !ghostProbe.drawn) problems.push("Ghost Mode's tab or screen is missing from the page");
+    console.log(`ghost mode   : ${ghostProbe.bridged ? ghostProbe.kinds ?? "no screen" : "MISSING"}`);
     console.log(`session      : ${state.session ? state.session.displayName : "signed out"}`);
 
     // The renderer's failure surface, proved rather than assumed. An unhandled rejection
