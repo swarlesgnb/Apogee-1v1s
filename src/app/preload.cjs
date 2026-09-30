@@ -26,6 +26,10 @@ contextBridge.exposeInMainWorld("apogee", {
   expedition: () => ipcRenderer.invoke("apogee:expedition"),
   expeditionAction: (action) => ipcRenderer.invoke("apogee:expeditionAction", action),
   onExpedition: (handler) => subscribe("apogee:expedition", handler),
+  /** Ghost Mode: the screen as main computed it, an action, and pushes when a run lands. */
+  ghost: () => ipcRenderer.invoke("apogee:ghost"),
+  ghostAction: (action) => ipcRenderer.invoke("apogee:ghostAction", action),
+  onGhost: (handler) => subscribe("apogee:ghost", handler),
 
   /**
    * Start Steam sign-in. Opens the system browser and resolves once a session exists.

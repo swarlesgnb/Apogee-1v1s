@@ -850,3 +850,68 @@ export async function isAdmin(): Promise<boolean> {
 
   return !error && !!data;
 }
+
+// ---------------------------------------------------------------------------
+// ghost cards
+// ---------------------------------------------------------------------------
+
+/** What post-ghost and ghost-card answer with: a card the server rebuilt from stored runs. */
+export interface GhostCard {
+  code: string;
+  kind: "month_ago" | "last_week" | "last_week_best";
+  displayName: string;
+  verdict: "win" | "loss" | "draw";
+  margin: number;
+  liveTier: string;
+  createdAt: string;
+  rounds: {
+    scenario: string;
+    live: number;
+    ghost: number;
+    baseline: number;
+    ghostDay: string;
+    gap: number;
+  }[];
+}
+
+/**
+ * True when a call failed because the function is not deployed, as opposed to refusing.
+ *
+ * Supabase's gateway answers an unknown function with a 404 before any code runs, and the
+ * ghost functions ship undeployed, so "not live yet" has to be told apart from "the
+ * server said no" and said plainly rather than as an error. The functions' own refusals
+ * are 400, 403, 409 and 429; neither ghost function answers 404 on purpose except
+ * ghost-card for an unknown code, whose message names the code.
+ */
+export function isNotDeployed(err: unknown): boolean {
+  return err instanceof ApiError && err.status === 404 && !/no ghost card/i.test(err.message);
+}
+
+/**
+ * Ask the server for a card of a finished ghost match.
+ *
+ * The raw files go up, not the local result: the server re-verifies each run the way
+ * submit-run does and rebuilds the ghost and baseline from the caller's stored history,
+ * so the card is the server's claim and never this client's.
+ */
+export async function postGhost(
+  statsDir: string,
+  filenames: string[],
+  kind: string,
+  ordinal: number,
+): Promise<GhostCard> {
+  const runs = await Promise.all(filenames.map(async (filename) => {
+    const csv = readFileSync(join(statsDir, filename), "utf8");
+    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(csv));
+    const csvSha256 = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+    return { filename, csv, csvSha256 };
+  }));
+  // Same reason as submitRun: only this machine knows what instant the filename's digits
+  // mean, and the server buckets the ghost's session days by it.
+  const tzOffsetMinutes = new Date().getTimezoneOffset();
+  return callFunction<GhostCard>("post-ghost", { kind, ordinal, runs, tzOffsetMinutes });
+}
+
+export function fetchGhostCard(code: string): Promise<GhostCard> {
+  return callFunction<GhostCard>("ghost-card", { code });
+}

@@ -42,10 +42,16 @@ export interface GhostStoreState {
   started: { day: string; count: number };
   /** Ghost matches this install has finished, for the chooser's first-match default. */
   finished: number;
+  /**
+   * The stats file behind each counted round of `active`, by scenario. Kept for Share,
+   * which sends the raw files up for the server to re-verify; the match itself stores
+   * only scores, which is all the local verdict needs.
+   */
+  files: Record<string, string>;
 }
 
 export function emptyGhostState(): GhostStoreState {
-  return { version: 1, active: null, results: [], winDays: [], started: { day: "", count: 0 }, finished: 0 };
+  return { version: 1, active: null, results: [], winDays: [], started: { day: "", count: 0 }, finished: 0, files: {} };
 }
 
 function storePath(): string {
@@ -73,7 +79,7 @@ export function loadGhostState(): GhostStoreState {
     if (!existsSync(candidate)) continue;
     try {
       const parsed = JSON.parse(readFileSync(candidate, "utf8"));
-      if (valid(parsed)) return parsed;
+      if (valid(parsed)) return { ...parsed, files: isObject(parsed.files) ? parsed.files : {} };
     } catch {
       // Try the previous good write next.
     }

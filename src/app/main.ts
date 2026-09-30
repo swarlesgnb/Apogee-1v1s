@@ -18,7 +18,8 @@ import { createHash } from "node:crypto";
 
 import { dataFile, setDataDir, sourceDataDir } from "../core/dataDir.ts";
 import { levelFor } from "../core/quests/progression.ts";
-import { recordMatch, rerollQuest, type QuestState, type QuestSync } from "../core/quests/board.ts";
+import { recordGhost, recordMatch, rerollQuest, type QuestState, type QuestSync } from "../core/quests/board.ts";
+import { GhostService } from "./ghostService.ts";
 import {
   installCrashHandlers,
   attachRendererLogging,
@@ -185,6 +186,31 @@ function expedition(): ExpeditionService {
   return expeditionService ??= new ExpeditionService(app.getPath("userData"));
 }
 
+/**
+ * Ghost Mode (ghostService.ts). Local-first: it needs a stats folder and nothing else, so
+ * it works signed out, offline and on an empty ladder.
+ */
+const ghost = new GhostService({
+  statsDir: () => state.statsDir,
+  signedIn: () => state.session !== null,
+  broadcast: (screen) => broadcast("apogee:ghost", screen),
+  onFinished: (result) => {
+    // Into the quest board's ghost list, never its settled matches: a ghost win is a win
+    // nobody else took part in, and the ranked-wins quests count matches. The rebuild
+    // then measures the board and fires apogee:questComplete the way a match does.
+    state.quests = recordGhost(state.quests ?? loadQuestState(), {
+      id: result.id,
+      at: new Date(result.at).toISOString(),
+      kind: result.kind,
+      verdict: result.verdict,
+    });
+    saveQuestState(state.quests);
+    nudge();
+    scheduleRebuild("ghost match finished");
+  },
+  launch: (scenario) => launchKovaaks(scenario),
+});
+
 /** Show a neutral message, and keep it for a window that has not loaded yet. */
 function notify(message: string | null): void {
   state.notice = message;
@@ -304,6 +330,14 @@ function startWatching(dir: string): void {
         file,
       });
 
+      // A ghost match in progress takes the first run on each of its scenarios. Its own
+      // try: a ghost failure must not cost a ranked submission below.
+      try {
+        ghost.onRun(run, file);
+      } catch (err) {
+        console.error("ghost run failed:", err);
+      }
+
       // If this scenario belongs to the active match, send it for verification without
       // being asked. Making the player click "submit" after every run would undo the
       // entire point of watching the folder.
@@ -323,6 +357,11 @@ function startWatching(dir: string): void {
   });
 
   rebuild("initial scan");
+  try {
+    ghost.catchUp();
+  } catch (err) {
+    console.error("ghost catch-up failed:", err);
+  }
   installScenarioFiles(dir);
   refreshInstalledPlaylists(dir);
 }
@@ -2124,6 +2163,21 @@ ipcMain.handle("apogee:expeditionAction", async (_e, action: unknown) => {
   } catch (e) { return { error: e instanceof Error ? e.message : String(e) }; }
 });
 
+ipcMain.handle("apogee:ghost", () => {
+  try {
+    return ghost.view();
+  } catch (err) {
+    return { error: friendlyError(err) };
+  }
+});
+ipcMain.handle("apogee:ghostAction", async (_e, action: unknown) => {
+  try {
+    return await ghost.action(action);
+  } catch (err) {
+    return { error: friendlyError(err) };
+  }
+});
+
 // ---------------------------------------------------------------------------
 // Steam sign-in
 //
@@ -3734,8 +3788,13 @@ ipcMain.handle("apogee:launchScenario", async (_e, { scenario } = {} as any) => 
     }
   })();
 
-  if (!inMatch && !inSeason) {
-    return { error: "that scenario is not in this match or this season" };
+  // A ghost match is drawn from the player's own library, so its scenarios are almost
+  // never in the season. Read from the main-side match, like inMatch, never from anything
+  // the renderer sent.
+  const inGhost = ghost.scenarios().has(scenario);
+
+  if (!inMatch && !inSeason && !inGhost) {
+    return { error: "that scenario is not in this match, this season or this ghost match" };
   }
 
   const launched = await launchKovaaks(scenario);
