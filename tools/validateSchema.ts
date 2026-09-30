@@ -1287,6 +1287,7 @@ async function main(): Promise<void> {
       margin: `0.012`,
       verdict: `'win'`,
       live_tier: `'consistent'`,
+      played_at: `'2026-09-30T02:00:00Z'`,
       ...over,
     };
     return db.query<{ live_run_ids: string[] }>(

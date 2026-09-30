@@ -429,6 +429,7 @@ Deno.serve(handler(async (req, admin) => {
         margin: result.margin,
         verdict: result.verdict,
         live_tier: liveTier,
+        played_at: new Date(lastEnd).toISOString(),
       })
       .select(GHOST_ROW_COLUMNS)
       .maybeSingle();

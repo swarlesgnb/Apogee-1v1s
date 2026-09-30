@@ -42,6 +42,9 @@ create table ghost_results (
   verdict        match_result not null,
   -- Lowest tier among the three live runs, so the card can say what it rests on.
   live_tier      verification_tier not null,
+  -- When the last live run ended. The card's streak counts the days matches were
+  -- *played* on; created_at is when Share was pressed, which can be days later.
+  played_at      timestamptz not null,
   created_at     timestamptz not null default now(),
 
   constraint ghost_three check (
@@ -62,7 +65,7 @@ comment on table ghost_results is
   'ghost-card, both under the service role. Moves no rating and is read by nothing '
   'that does.';
 
-create index ghost_results_player_idx on ghost_results (player_id, created_at desc);
+create index ghost_results_player_idx on ghost_results (player_id, played_at desc);
 
 alter table ghost_results enable row level security;
 
