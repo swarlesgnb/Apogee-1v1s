@@ -193,7 +193,13 @@ for (const file of [...cuts.map((c) => shots.cuts[c].out), "apogee-readme.gif"].
   const review = join(cache, "review", file.split(/[\\/]/).pop().replace(/\.\w+$/, ""));
   rmSync(review, { recursive: true, force: true });
   mkdirSync(review, { recursive: true });
-  run("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-i", file, "-vf", "fps=1/2", join(review, "t%02d.png")], "review frames");
+  // From 1 s in to just before the 0.6 s fade out: the first and last frames are black by
+  // design, and a review set that always opens and closes on black teaches the reviewer
+  // to skim past a black frame.
+  const duration = Number(p.format.duration);
+  for (let t = 1, n = 1; t < duration - 0.7; t += 2, n++) {
+    run("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-ss", t.toFixed(2), "-i", file, "-frames:v", "1", join(review, `t${String(n).padStart(2, "0")}-${t}s.png`)], "review frames");
+  }
 }
 console.log(`\nreview frames in ${join(cache, "review").slice(root.length + 1)}`);
 

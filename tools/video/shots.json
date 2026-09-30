@@ -66,8 +66,7 @@
           "steps": [
             { "at": 0.05, "do": "demo", "name": "result", "provenance": "Demo match · illustrative opponent" },
             { "at": 0.3, "do": "caption", "index": "03", "text": "Beat your own baseline", "sub": "Each round goes to the bigger improvement, not the bigger score." },
-            { "at": 3.0, "do": "scroll", "selector": "#debriefRounds", "offset": 0.06, "ms": 1400 },
-            { "at": 4.9, "do": "scroll", "selector": "#roundsBody", "offset": 0.22, "ms": 1300 }
+            { "at": 3.0, "do": "scroll", "selector": "#explain", "offset": 0.01, "ms": 1600 }
           ]
         },
         {
@@ -116,7 +115,7 @@
             { "at": 2.1, "do": "click", "selector": "[data-gh=\"draw\"]", "ms": 650 },
             { "at": 3.5, "do": "click", "selector": "[data-gh=\"start\"]", "ms": 650 },
             { "at": 4.3, "do": "hidePointer" },
-            { "at": 4.3, "do": "scroll", "selector": ".gh-board", "offset": 0.03, "ms": 700 },
+            { "at": 4.3, "do": "scroll", "selector": ".gh-board", "offset": 0, "ms": 700 },
             { "at": 4.4, "do": "caption", "index": "05", "text": "Three, two, one", "sub": "Each run is read as it lands. Then the ghost's score is revealed." },
             { "at": 4.8, "do": "demo", "name": "ghost", "screen": "one" },
             { "at": 7.7, "do": "demo", "name": "ghost", "screen": "two" },
@@ -190,30 +189,30 @@
       "transition": { "type": "fade", "seconds": 0.4 },
       "scenes": [
         {
-          "id": "ghost-title", "kind": "card", "seconds": 2.8,
-          "card": { "lockup": "horizontal", "title": ["Nobody online?", "Race *your ghost*."], "sub": ["Your own KovaaK's runs,", "from a month ago."] }
+          "id": "ghost-title", "kind": "card", "seconds": 2.4,
+          "card": { "at": 0.1, "lockup": "horizontal", "title": ["Nobody online?", "Race *your ghost*."], "sub": ["Your own KovaaK's runs,", "from a month ago."] }
         },
         {
-          "id": "race", "kind": "app", "seconds": 10.8,
+          "id": "race", "kind": "app", "seconds": 10.4,
           "setup": [{ "do": "screen", "screen": "ghost" }, { "do": "scroll", "selector": ".gh-cards", "offset": 0.02, "ms": 1 }],
           "steps": [
             { "at": 0.0, "do": "caption", "index": "01", "text": "Pick your ghost", "sub": "Who you were a month ago." },
-            { "at": 0.2, "do": "click", "selector": ".gh-card[data-kind=\"month_ago\"]", "ms": 500 },
-            { "at": 1.0, "do": "click", "selector": "[data-gh=\"draw\"]", "ms": 400 },
-            { "at": 1.7, "do": "hidePointer" },
-            { "at": 1.7, "do": "demo", "name": "ghost", "screen": "started" },
-            { "at": 1.75, "do": "scroll", "selector": ".gh-board", "offset": 0.02, "ms": 450 },
-            { "at": 1.8, "do": "caption", "index": "02", "text": "Three, two, one", "sub": "Each run revealed as it lands." },
-            { "at": 2.2, "do": "demo", "name": "ghost", "screen": "one" },
-            { "at": 4.7, "do": "demo", "name": "ghost", "screen": "two" },
-            { "at": 7.2, "do": "demo", "name": "ghost", "screen": "result" },
-            { "at": 7.25, "do": "caption", "index": "03", "text": "Last lane decides", "sub": "Unrated. Streak, not rank." },
-            { "at": 9.85, "do": "scroll", "selector": ".gh-result", "offset": 0.02, "ms": 450 }
+            { "at": 0.2, "do": "click", "selector": ".gh-card[data-kind=\"month_ago\"]", "ms": 450 },
+            { "at": 0.9, "do": "click", "selector": "[data-gh=\"draw\"]", "ms": 350 },
+            { "at": 1.5, "do": "hidePointer" },
+            { "at": 1.5, "do": "demo", "name": "ghost", "screen": "started" },
+            { "at": 1.55, "do": "scroll", "selector": ".gh-board", "offset": 0.1, "ms": 400 },
+            { "at": 1.55, "do": "caption", "index": "02", "text": "Three, two, one", "sub": "Each run revealed as it lands." },
+            { "at": 1.8, "do": "demo", "name": "ghost", "screen": "one" },
+            { "at": 3.9, "do": "demo", "name": "ghost", "screen": "two" },
+            { "at": 6.0, "do": "demo", "name": "ghost", "screen": "result" },
+            { "at": 6.05, "do": "caption", "index": "03", "text": "Last lane decides", "sub": "Unrated. Streak, not rank." },
+            { "at": 8.65, "do": "scroll", "selector": ".gh-result", "offset": 0.02, "ms": 400 }
           ]
         },
         {
-          "id": "close", "kind": "card", "seconds": 2.2,
-          "card": { "layout": "center", "lockup": "stacked", "title": [], "rule": false, "sub": [], "foot": ["Free for Windows"] }
+          "id": "close", "kind": "card", "seconds": 3.0,
+          "card": { "at": 0.05, "layout": "center", "lockup": "stacked", "title": [], "rule": false, "sub": [], "foot": ["Free for Windows"] }
         }
       ]
     }

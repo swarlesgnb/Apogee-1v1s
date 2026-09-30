@@ -31,7 +31,7 @@
     html.video-stage { cursor: none !important; }
 
     /* Opaque over everything the caption's text can sit on, then a short fade. The first
-       cut was a gradient that was already 10% see-through at the text's height, and the
+       cut was a gradient 5 to 10% see-through where the text sits, and the
        sidebar's rank, rating and streak read through behind "03" in the result shot. */
     .vs-caption { position: fixed; left: 0; right: 0; bottom: 0; z-index: 2147483000; pointer-events: none;
       padding: 0 var(--vs-pad) var(--vs-pad); display: flex; align-items: flex-end;
