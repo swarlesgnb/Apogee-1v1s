@@ -26,6 +26,7 @@
     "validate:playlist": "tsx src/core/match/validatePlaylist.ts",
     "validate:quests": "tsx src/core/quests/validateQuests.ts",
     "validate:ghost": "tsx src/core/ghost/validateGhost.ts",
+    "validate:ghost-ui": "npm run build:cosmic && tsx tools/buildUiPreview.ts && tsx tools/ghostUiFixture.ts && electron tools/ghostUi.cjs",
     "build:score-models": "tsx src/core/verify/buildScoreModels.ts",
     "build:durations": "tsx src/core/verify/buildDurations.ts",
     "build:subskills": "tsx tools/deriveSubskills.ts",

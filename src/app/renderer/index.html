@@ -3043,6 +3043,7 @@
 <link rel="stylesheet" href="cosmic.css">
 <link rel="stylesheet" href="presentation.css">
 <link rel="stylesheet" href="mixtape.css">
+<link rel="stylesheet" href="ghost.css">
 </head>
 <body data-screen="queue">
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -3084,6 +3085,10 @@
       <button class="tab" role="tab" aria-selected="false" data-screen="mixtape">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M5 12a7 7 0 0 1 7-7m0 14a7 7 0 0 0 7-7"/></svg>
         <span class="tab-key"></span><span class="tab-label">Mixtape</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="ghost">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V10a7 7 0 0 1 14 0v11l-2.3-1.8L14.3 21 12 19.2 9.7 21l-2.4-1.8Z"/><path d="M9.5 10.5h.01M14.5 10.5h.01"/></svg>
+        <span class="tab-key"></span><span class="tab-label">Ghost</span>
       </button>
       <button class="tab" role="tab" aria-selected="false" data-screen="expedition">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><path d="M12 2 22 12 12 22 2 12Z M12 6v12M6 12h12"/><circle cx="12" cy="12" r="3"/></svg>
@@ -3319,6 +3324,7 @@
 
         <div id="app" hidden>
           <section class="screen" id="screen-mixtape"><div id="mixtapeRoot"></div></section>
+          <section class="screen" id="screen-ghost"><div id="ghostRoot"></div></section>
 
           <!-- ------------------------------------------------ play -->
           <section class="screen active" id="screen-queue">
@@ -3328,7 +3334,7 @@
                 <h1 data-copy="queue.title">Ranked 1v1</h1>
                 <p data-copy="queue.lede">3 scenarios, one opponent. Each round goes to whoever beats their own baseline by more.</p>
               </div>
-              <div class="arcade-hero-links"><button type="button" class="exp-home" id="expeditionHome" data-arcade-route="expedition"><span class="exp-home-symbol" aria-hidden="true">✦</span><span><small>SOLO PRACTICE</small><strong id="expeditionHomeTitle">First Light expedition</strong><span id="expeditionHomeDetail">Solo. Six planets, one per aim category.</span></span><b>Continue →</b></button><button type="button" class="mixtape-entry" data-arcade-route="mixtape">Make a mixtape <span aria-hidden="true">↗</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button></div>
+              <div class="arcade-hero-links"><button type="button" class="exp-home" id="expeditionHome" data-arcade-route="expedition"><span class="exp-home-symbol" aria-hidden="true">✦</span><span><small>SOLO PRACTICE</small><strong id="expeditionHomeTitle">First Light expedition</strong><span id="expeditionHomeDetail">Solo. Six planets, one per aim category.</span></span><b>Continue →</b></button><button type="button" class="mixtape-entry" data-arcade-route="mixtape">Make a mixtape <span aria-hidden="true">↗</span></button><button type="button" data-arcade-route="tournaments">Tournaments <span aria-hidden="true">→</span></button><button type="button" class="ghost-entry" data-arcade-route="ghost">Race your ghost <span aria-hidden="true">→</span></button></div>
             </div>
 
             <!-- Getting started. Above everything on the screen it gates, and gone for good
@@ -4294,5 +4300,6 @@
 <script src="presentation.js"></script>
 <script src="mixtape-engine.js"></script>
 <script src="mixtape.js"></script>
+<script src="ghost.js"></script>
 </body>
 </html>

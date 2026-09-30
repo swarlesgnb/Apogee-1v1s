@@ -3794,7 +3794,9 @@ ipcMain.handle("apogee:launchScenario", async (_e, { scenario } = {} as any) => 
   const inGhost = ghost.scenarios().has(scenario);
 
   if (!inMatch && !inSeason && !inGhost) {
-    return { error: "that scenario is not in this match, this season or this ghost match" };
+    // Wording kept: mixtape.js matches "not in this match or this season" to explain a
+    // scenario that left the pool.
+    return { error: "that scenario is not in this match or this season" };
   }
 
   const launched = await launchKovaaks(scenario);

@@ -686,9 +686,22 @@ export interface GhostRoundView {
   abandoned: boolean;
   /** (live - ghost) / baseline, once landed. */
   gap: number | null;
-  /** 0..1: each bar's length against the larger of the two sides and the baseline. */
+  /**
+   * 0..1 on a scale centred on the baseline (BAR_BASELINE), BAR_SPAN either side. Scaled
+   * against the raw scores instead, every bar filled to within a few percent of the end
+   * and a 4% win looked like a tie, which is the one thing the board exists to show.
+   */
   ghostBar: number;
   liveBar: number | null;
+}
+
+/** Where the baseline sits on a lane's bar, and how far either side of it the bar reaches. */
+export const BAR_BASELINE = 0.5;
+export const BAR_SPAN = 0.25;
+
+function barOf(score: number, baseline: number): number {
+  const delta = (score - baseline) / baseline;
+  return Math.min(1, Math.max(0.02, BAR_BASELINE + (delta / BAR_SPAN) * BAR_BASELINE));
 }
 
 export interface GhostMatchView {
@@ -713,7 +726,6 @@ export interface GhostMatchView {
  */
 export function viewOf(match: GhostMatch): GhostMatchView {
   const rounds: GhostRoundView[] = match.rounds.map((r) => {
-    const top = Math.max(r.ghost, r.live?.score ?? 0, r.baseline, 1e-9);
     const gap = r.live && !r.live.abandoned ? (r.live.score - r.ghost) / r.baseline : null;
     return {
       scenario: r.scenario,
@@ -725,8 +737,8 @@ export function viewOf(match: GhostMatch): GhostMatchView {
       live: r.live?.score ?? null,
       abandoned: r.live?.abandoned ?? false,
       gap,
-      ghostBar: Math.max(0, r.ghost / top),
-      liveBar: r.live ? Math.max(0, r.live.score / top) : null,
+      ghostBar: barOf(r.ghost, r.baseline),
+      liveBar: r.live ? barOf(r.live.score, r.baseline) : null,
     };
   });
   const gaps = rounds.map((r) => r.gap).filter((g): g is number => g !== null);
