@@ -324,7 +324,9 @@
     const panel = document.querySelector('#screen-result .panel');
     if (!panel) return;
     let callout = document.getElementById('ghostSeedCallout');
-    const seeding = s && (s.seeding || s.verdict == null) && !s.tournament;
+    // A duel you sent settles as a one-sided match too; there is somebody, they just have
+    // not played yet, so the empty-pool offer would be untrue.
+    const seeding = s && (s.seeding || s.verdict == null) && !s.tournament && !s.sentDuel;
     if (!seeding) { callout?.remove(); return; }
     if (!callout) {
       callout = document.createElement('div');
