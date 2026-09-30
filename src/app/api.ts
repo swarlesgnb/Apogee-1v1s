@@ -913,8 +913,11 @@ export async function postGhost(
   }));
   // Same reason as submitRun: only this machine knows what instant the filename's digits
   // mean, and the server buckets the ghost's session days by it.
+  // The zone as well as today's offset: the server reads a month of history, and one
+  // offset is an hour wrong for every run across a daylight-saving change.
   const tzOffsetMinutes = new Date().getTimezoneOffset();
-  return callFunction<GhostCard>("post-ghost", { kind, ordinal, day, runs, tzOffsetMinutes });
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return callFunction<GhostCard>("post-ghost", { kind, ordinal, day, runs, tzOffsetMinutes, timeZone });
 }
 
 export function fetchGhostCard(code: string): Promise<GhostCard> {

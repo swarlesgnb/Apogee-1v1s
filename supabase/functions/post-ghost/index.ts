@@ -24,10 +24,11 @@
  * rejected run. The only UPDATE on `runs` below carries `.is("match_id", null)`, as
  * submit-run's claim does; validate:ghost checks this file for exactly that.
  *
- * TIME. `played_at` is a real instant, rebuilt from the filename's wall clock and the
- * client's offset (`playedAtUtc`), after the duration has been taken from the unshifted
- * parse. Session days, though, are the player's local days, and this runtime is UTC, so
- * every instant is shifted back by the offset before the core reads a day from it.
+ * TIME. `played_at` is a real instant, rebuilt from the filename's wall clock in the
+ * player's IANA zone (`wallClockToInstant`), after the duration has been taken from the
+ * unshifted parse. Session days are the player's local days and this runtime is UTC, so
+ * every instant is moved into the player's frame by its own offset in that zone before
+ * the core reads a day from it (src/core/ghost/zone.ts).
  *
  * WHAT IT CANNOT CHECK. The draw. The client draws three scenarios from its whole local
  * library with a seed, and the server's copy of that library is whatever was uploaded,
@@ -48,7 +49,7 @@ import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { cardOf, GHOST_ROW_COLUMNS, serverStreak, type GhostResultRow } from "../_shared/ghost.ts";
 
 import { parseStatsFile } from "../../../src/core/stats/parseStatsFile.ts";
-import { isAbandonedRun, playedAtUtc, runDurationSeconds } from "../../../src/core/stats/duration.ts";
+import { isAbandonedRun, runDurationSeconds } from "../../../src/core/stats/duration.ts";
 import { verifyRun } from "../../../src/core/verify/verifyRun.ts";
 import { matchServerRecord, recentScores } from "../../../src/core/verify/kovaaksClient.ts";
 import {
@@ -59,6 +60,7 @@ import {
   startOfLocalDay,
   type GhostMatch,
 } from "../../../src/core/ghost/ghost.ts";
+import { fromLocalFrame, isTimeZone, toLocalFrame, wallClockToInstant } from "../../../src/core/ghost/zone.ts";
 import { freezeDay, lowerTier, planRunWrite, sittingProblem, type StoredRunRow } from "../../../src/core/ghost/serverRules.ts";
 
 interface Body {
@@ -67,8 +69,10 @@ interface Body {
   /** The local day the client froze its draw at (GhostMatch.day). */
   day?: string;
   runs: { filename: string; csv: string; csvSha256?: string }[];
-  /** getTimezoneOffset() on the player's machine; see playedAtUtc. */
+  /** getTimezoneOffset() on the player's machine when it posted. Stored, not computed with. */
   tzOffsetMinutes: number;
+  /** The player's IANA zone, which every instant here is read in; see zone.ts. */
+  timeZone: string;
 }
 
 /**
@@ -108,7 +112,12 @@ Deno.serve(handler(async (req, admin) => {
   // Required here, unlike submit-run's optional offset: every session day on the card
   // depends on it, and there is no older client of this function to stay compatible with.
   if (!Number.isInteger(tz) || Math.abs(tz) > 840) throw new HttpError(400, "tzOffsetMinutes is required");
-  const local = (instant: Date) => new Date(instant.getTime() - tz * 60_000);
+  // Each instant is shifted by its own offset in the player's zone, not by today's: one
+  // offset for a month of history is an hour wrong across a daylight-saving change, which
+  // moves late-evening runs onto the next day's session.
+  if (!isTimeZone(body.timeZone)) throw new HttpError(400, "timeZone must be an IANA zone name");
+  const zone = body.timeZone;
+  const local = (instant: Date) => toLocalFrame(instant.getTime(), zone);
 
   // ---- 1. parse and verify all three; nothing is written yet --------------------------
   const live: {
@@ -135,7 +144,7 @@ Deno.serve(handler(async (req, admin) => {
     // Duration from the unshifted parse: both ends are local wall-clock readings of the
     // same file, and only in that frame is their difference right.
     const durationSeconds = runDurationSeconds(run.challengeStart, run.playedAt);
-    const corrected = playedAtUtc(upload.filename, tz);
+    const corrected = wallClockToInstant(upload.filename, zone);
     if (!corrected) throw new HttpError(400, `${upload.filename} has no timestamp in its name`);
     run.playedAt = corrected;
 
@@ -253,7 +262,7 @@ Deno.serve(handler(async (req, admin) => {
   const day = freezeDay(body.day, firstRunDay);
   if (!day) throw new HttpError(422, `a match drawn on ${String(body.day)} cannot have been played on ${firstRunDay}`);
   const frozenLocal = new Date(`${day}T00:00:00Z`);
-  const frozenInstant = new Date(frozenLocal.getTime() + tz * 60_000);
+  const frozenInstant = fromLocalFrame(frozenLocal.getTime(), zone);
 
   const history = new Map<string, { scenario: string; runs: { score: number; playedAt: Date | null }[] }>();
   for (const r of live) {
@@ -382,6 +391,7 @@ Deno.serve(handler(async (req, admin) => {
         pbs: result.rounds.map((r) => r.pb),
         ghost_days: result.rounds.map((r) => r.sessionDay),
         tz_offset_minutes: tz,
+        time_zone: zone,
         margin: result.margin,
         verdict: result.verdict,
         live_tier: liveTier,

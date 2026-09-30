@@ -1283,6 +1283,7 @@ async function main(): Promise<void> {
       pbs: `'{120,230,330}'`,
       ghost_days: `'{2026-09-20,2026-09-22,2026-08-14}'`,
       tz_offset_minutes: `360`,
+      time_zone: `'America/Chicago'`,
       margin: `0.012`,
       verdict: `'win'`,
       live_tier: `'consistent'`,

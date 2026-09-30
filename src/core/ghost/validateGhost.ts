@@ -55,6 +55,7 @@ import {
   type IncomingRun,
 } from "./ghost.ts";
 import { freezeDay, lowerTier, planRunWrite, sittingProblem } from "./serverRules.ts";
+import { fromLocalFrame, isTimeZone, offsetMinutesAt, toLocalFrame, wallClockToInstant } from "./zone.ts";
 
 const DEFAULT_STATS_DIR =
   "E:\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
@@ -427,6 +428,43 @@ check("and refuses a draw two days old", freezeDay("2026-09-28", "2026-09-30") =
 check("or one from after the run", freezeDay("2026-10-01", "2026-09-30") === null);
 check("or a shape that is not a day", freezeDay("30/09/2026", "2026-09-30") === null);
 check("an old client that sends no day freezes at the first run's", freezeDay(undefined, "2026-09-30") === "2026-09-30");
+
+// ---------------------------------------------------------------------------
+console.log("\n── the server's clock, across daylight saving ───");
+
+// The server runs in UTC and reads a month of a player's history. Each instant has to be
+// read at its own offset in the player's zone; the 2026 US changes are 8 March 08:00Z and
+// 1 November 07:00Z in Chicago.
+const CHI = "America/Chicago";
+const at = (iso: string) => Date.parse(iso);
+check("Intl knows the zone, and refuses a made-up one", isTimeZone(CHI) && !isTimeZone("Mars/Olympus"));
+check("the offset is standard time before the spring change and daylight after",
+  offsetMinutesAt(at("2026-03-08T07:59:00Z"), CHI) === 360 && offsetMinutesAt(at("2026-03-08T08:00:00Z"), CHI) === 300,
+  `${offsetMinutesAt(at("2026-03-08T07:59:00Z"), CHI)} / ${offsetMinutesAt(at("2026-03-08T08:00:00Z"), CHI)}`);
+check("and back at the autumn change",
+  offsetMinutesAt(at("2026-11-01T06:59:00Z"), CHI) === 300 && offsetMinutesAt(at("2026-11-01T07:00:00Z"), CHI) === 360);
+// A run at 23:30 on 6 March, posted in July: the one-offset shift the first draft made
+// puts it on 7 March, and a ghost session from the wrong evening follows.
+const lateRun = at("2026-03-07T05:30:00Z");
+const julyOffset = offsetMinutesAt(at("2026-07-01T17:00:00Z"), CHI);
+check("a late-evening run before the change reads on its own evening",
+  toLocalFrame(lateRun, CHI).toISOString().slice(0, 10) === "2026-03-06",
+  toLocalFrame(lateRun, CHI).toISOString());
+check("where one summer offset would have moved it to the next day, so the check above can fail",
+  new Date(lateRun - julyOffset * 60_000).toISOString().slice(0, 10) === "2026-03-07");
+const name = (stamp: string) => `Air Voltaic Easy - Challenge - ${stamp} Stats.csv`;
+check("a filename's wall clock is the right instant in winter",
+  wallClockToInstant(name("2026.03.06-23.30.00"), CHI)?.toISOString() === "2026-03-07T05:30:00.000Z",
+  wallClockToInstant(name("2026.03.06-23.30.00"), CHI)?.toISOString());
+check("and in summer", wallClockToInstant(name("2026.07.01-12.00.00"), CHI)?.toISOString() === "2026-07-01T17:00:00.000Z");
+const repeated = wallClockToInstant(name("2026.11.01-01.30.00"), CHI)!.toISOString();
+check("the hour that repeats resolves to its first occurrence, as zone.ts says, on the right local day",
+  repeated === "2026-11-01T06:30:00.000Z" && toLocalFrame(Date.parse(repeated), CHI).toISOString().slice(0, 10) === "2026-11-01",
+  repeated);
+const midnight = Date.UTC(2026, 2, 8);
+check("local midnight on the day of the change maps to the right instant and back",
+  fromLocalFrame(midnight, CHI).toISOString() === "2026-03-08T06:00:00.000Z" &&
+    toLocalFrame(fromLocalFrame(midnight, CHI).getTime(), CHI).getTime() === midnight);
 
 console.log();
 if (failures > 0) {

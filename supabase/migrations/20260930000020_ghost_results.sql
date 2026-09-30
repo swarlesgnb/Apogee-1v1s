@@ -32,6 +32,10 @@ create table ghost_results (
   -- were bucketed with it, and the card's streak counts local days with it, because a
   -- player west of UTC who wins at 9pm has won on that evening, not on tomorrow.
   tz_offset_minutes smallint not null check (tz_offset_minutes between -840 and 840),
+  -- The IANA zone the post was read in. The offset alone is one moment's offset, and a
+  -- card's history spans daylight-saving changes; each instant is read in this zone at
+  -- its own offset (src/core/ghost/zone.ts).
+  time_zone      text not null check (length(time_zone) between 1 and 64),
   margin         numeric not null,
   -- 'win' | 'loss' | 'draw'. The enum has no 'void' and does not need one: a voided
   -- ghost match has nothing to share, so post-ghost refuses it rather than storing it.
