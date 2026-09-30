@@ -388,6 +388,13 @@ Each of these is argued at the code it lives in; this is the list.
   (filename end minus duration) is more than 2 s before Start, not only one that ended
   before it. The clock expires a match at the deadline plus ranked's 90 s end grace.
 - **Tenths, not quarters**, on the chooser; see the note under the table above.
+- **The quoted win rates come from a narrower draw than the app's.** The table above
+  draws each day's three from scenarios played that day, since only those have a live
+  side. The app draws from every eligible scenario in the library, and on its real draws
+  only 10.8% (`month_ago`), 17.5% (`last_week`) and 18.1% (`last_week_best`) of rounds had
+  a live run that day. Over those rounds the live side won 60.0%, 55.7% and 48.7% of
+  *rounds*; full matches with all three played number 0, 3 and 2 days, too few to quote.
+  `validate:ghost` prints both, and the chooser's "in testing" is the first.
 - **The streak is days with a win**, as specified, so a loss, an abandon and a void all
   add nothing. "Abandoning is a loss" is enforced as the *record*: an abandon after Start
   is stored as a loss (never a void, never nothing), pays no quest, and `validate:ghost`

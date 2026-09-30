@@ -39,6 +39,7 @@ import {
   GHOST_IDLE_ALLOWANCE_MS,
   GHOST_KINDS,
   GHOST_START_ALLOWANCE_MS,
+  ghostCandidates,
   ghostCandidatesBy,
   ghostReady,
   ghostStreak,
@@ -212,6 +213,38 @@ const weekRate = rate(results.get(rows[1][0])!);
 const bestRate = rate(results.get(rows[2][0])!);
 check("the three ghosts are ordered easiest to hardest", monthRate > weekRate && weekRate > bestRate,
   `${(100 * monthRate).toFixed(1)}% > ${(100 * weekRate).toFixed(1)}% > ${(100 * bestRate).toFixed(1)}%`);
+
+// The table above draws only from scenarios the player touched that day, because that is
+// where a live side exists. The app draws from every eligible scenario in the library,
+// recently played first, and most of those were not played on any given day, so the
+// app's own draw cannot be replayed whole. This prints how far apart the two are: of the
+// app's real draws on each play day, how many rounds had a live run that day, and the
+// round and match win rates over those that did. It is reported, not held to a band:
+// on the app's draw the full-match sample is a handful of days.
+console.log("\n       the app's own draw, from the whole library:");
+console.log(`       ${"kind".padEnd(15)} draws  rounds played that day   round won   full matches  won`);
+for (const kind of GHOST_KINDS) {
+  let draws = 0, played = 0, roundWins = 0, full = 0, fullWins = 0;
+  for (const d of days) {
+    const picked = pickRounds(ghostCandidates(history, d.start, kind), d.start, drawSeed(dayKey(d.start), kind, 0));
+    if (picked.length < 3) continue;
+    draws++;
+    const landed = picked.filter((c) => d.first.has(c.scenario));
+    played += landed.length;
+    roundWins += landed.filter((c) => d.first.get(c.scenario)! > c.ghost).length;
+    if (landed.length === 3) {
+      full++;
+      const m: GhostMatch = {
+        id: kind, kind, day: dayKey(d.start), ordinal: 0, drawnAt: d.start.getTime(), startedAt: d.start.getTime(), deadline: null,
+        rounds: picked.map(({ lastPlayed: _l, ...r }) => ({ ...r, live: { score: d.first.get(r.scenario)!, at: 0, abandoned: false } })),
+        result: null,
+      };
+      if (judge(m, "complete", d.start.getTime()).verdict === "win") fullWins++;
+    }
+  }
+  const p = (a: number, b: number) => (b ? `${((100 * a) / b).toFixed(1)}%` : "-");
+  console.log(`       ${kind.padEnd(15)} ${String(draws).padStart(5)}  ${String(played).padStart(6)} of ${String(draws * 3).padEnd(5)} (${p(played, draws * 3).padStart(5)})   ${p(roundWins, played).padStart(8)}   ${String(full).padStart(12)}  ${p(fullWins, full)}`);
+}
 
 // ---------------------------------------------------------------------------
 console.log("\n── the season pool cannot host it ───────────────");

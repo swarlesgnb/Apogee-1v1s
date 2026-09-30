@@ -189,7 +189,17 @@ const KINDS: Record<GhostKind, { daysBack: number; pick: "median" | "best" }> = 
  * How often the live side won when each kind was replayed over the 14,150-run corpus
  * (`npm run validate:ghost`, which fails if a replay drifts more than five points from
  * these or lands on a different "N in 10"). The live side there was the *first* run of a
- * day, colder than a run played on purpose after Start, so real rates sit above these.
+ * day, colder than a run played on purpose after Start.
+ *
+ * What these are replayed on is narrower than what the app draws from. A live side only
+ * exists where the player played that day, so each day's three are drawn from the
+ * scenarios touched that day, which skews toward what the player was practising. The app
+ * draws from every eligible scenario in the library, recently played first, and that draw
+ * cannot be replayed whole: on its real draws only 11-18% of rounds had a live run that
+ * day. Over those rounds the live side won 60.0%, 55.7% and 48.7% of rounds for the three
+ * kinds (validate:ghost prints both), the same order and a similar spread, but a
+ * different quantity from the match rates here, and nothing guarantees the app's rates
+ * equal these.
  *
  * The design quoted 55.3% and 47.6% for the two week-old kinds from a one-off script that
  * shuffled with its own generator; replayed through the app's seeded draw and settleMatch
