@@ -52,6 +52,9 @@ import {
   type StoredGhostResult,
 } from "./ghostStore.ts";
 
+/** How long Share stays off after the server said it is not deployed, before it asks again. */
+const SHARE_RETRY_MS = 10 * 60_000;
+
 /** How often the clock is checked while a match runs. Only decides how late "time ran out" appears. */
 const CLOCK_TICK_MS = 5_000;
 
@@ -136,7 +139,12 @@ export class GhostService {
   private timer: NodeJS.Timeout | null = null;
   private durations: Map<string, number | null> | null = null;
   private availability: { key: string; value: Record<GhostKind, KindAvailability> } | null = null;
-  private shareBlocked: string | null = null;
+  /**
+   * Set when post-ghost answered as not deployed. Cleared by the next finished match and
+   * after SHARE_RETRY_MS, because the functions ship undeployed and are deployed later,
+   * and a flag that never cleared kept Share off for as long as the app stayed open.
+   */
+  private shareBlocked: { reason: string; until: number } | null = null;
   private shareBusy = false;
   private card: { resultId: string; card: GhostCard } | null = null;
 
@@ -309,6 +317,7 @@ export class GhostService {
     const stored: StoredGhostResult = { ...match.result, id: match.id, kind: match.kind, streak };
     s.results = [...s.results, stored];
     this.notice = null;
+    this.shareBlocked = null;
     this.armClock();
     this.deps.onFinished(stored);
   }
@@ -334,7 +343,7 @@ export class GhostService {
     if (!last || !s.active?.result || s.active.id !== last.id) shareReason = "Finish a match to share it.";
     else if (last.verdict === "void") shareReason = "A match with no result has nothing to share.";
     else if (!this.deps.signedIn()) shareReason = "Sign in with Steam to share: the server checks the runs before it makes a card.";
-    else if (this.shareBlocked) shareReason = this.shareBlocked;
+    else if (this.shareBlocked && Date.now() < this.shareBlocked.until) shareReason = this.shareBlocked.reason;
     else if (Object.keys(s.files).length < 3) shareReason = "The stats files behind this match are not all known, so it cannot be verified.";
 
     return {
@@ -497,7 +506,7 @@ export class GhostService {
       return { view: this.view() };
     } catch (err) {
       if (isNotDeployed(err)) {
-        this.shareBlocked = "Sharing is not live on the server yet. Your result is saved here.";
+        this.shareBlocked = { reason: "Sharing is not live on the server yet. Your result is saved here.", until: Date.now() + SHARE_RETRY_MS };
         return { view: this.view() };
       }
       return { view: this.view(), error: friendlyError(err) };
