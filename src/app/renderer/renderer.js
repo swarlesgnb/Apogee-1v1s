@@ -7561,6 +7561,24 @@ function renderNoResultYet() {
     "can be matched.";
   settled($("roundsBody"));
   $("roundsBody").textContent = "";
+  // A table of headers over no rows looked like a result that failed to load.
+  const table = $("roundsBody").closest?.(".rounds-wrap");
+  if (table) table.hidden = true;
+
+  // This is the tab a new player opens to see what a match is, and it ended on a
+  // sentence. The result row below is where "Queue again" lives once there is a result,
+  // so the way back to the queue sits in the same place before there is one.
+  const box = $("rematch");
+  const go = $("queueAgainBtn");
+  if (box && go && !activeMatch) {
+    box.hidden = false;
+    $("rematchBtn").hidden = true;
+    $("rematchNote").textContent = "Your result lands here as soon as the third run is read.";
+    go.hidden = false;
+    go.disabled = false;
+    go.textContent = "Go to the queue";
+    go.onclick = () => openScreen("queue");
+  }
 }
 
 /**
@@ -7765,6 +7783,8 @@ function renderSettled(s) {
   const body = $("roundsBody");
   settled(body);
   body.textContent = "";
+  const table = body.closest?.(".rounds-wrap");
+  if (table) table.hidden = false;
   // The server does not send the opponent's raw scores, so that column was a dash on
   // every real result. Their improvement, which decides the round, is still shown.
   body.closest?.("table")?.classList.add("no-them");
