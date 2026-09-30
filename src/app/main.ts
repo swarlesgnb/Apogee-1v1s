@@ -20,6 +20,7 @@ import { dataFile, setDataDir, sourceDataDir } from "../core/dataDir.ts";
 import { levelFor } from "../core/quests/progression.ts";
 import { recordGhost, recordMatch, rerollQuest, type QuestState, type QuestSync } from "../core/quests/board.ts";
 import { GhostService } from "./ghostService.ts";
+import { ShareCards } from "./shareCard.ts";
 import {
   installCrashHandlers,
   attachRendererLogging,
@@ -209,6 +210,31 @@ const ghost = new GhostService({
     scheduleRebuild("ghost match finished");
   },
   launch: (scenario) => launchKovaaks(scenario),
+});
+
+/**
+ * Share cards (shareCard.ts), drawn from main's own record of a result: the settlement as
+ * it arrived, or the ghost result as booked. The renderer names a card and a shape, never
+ * a figure.
+ */
+const shareCards = new ShareCards({
+  rendererDir: join(here, "renderer"),
+  fontsDir: join(here, "fonts"),
+  context: () => {
+    const snap = state.snapshot;
+    // The season rank from the player's own scores, the one the Ranks screen shows. The
+    // snapshot's apogee rating and percentile are placeholders until the ladder has a
+    // population, so they never reach a card.
+    const rankName = snap?.player.benchmarkRank ?? null;
+    const tier = rankName ? snap?.theme.find((t) => t.name === rankName) ?? null : null;
+    return {
+      playerName: state.session?.displayName || "You",
+      season: snap?.benchmark.name || "Apogee",
+      tier: tier ? { id: tier.id, name: tier.name, color: tier.color } : null,
+    };
+  },
+  ghost: () => ghost.shareRecord(),
+  window: () => window,
 });
 
 /** Show a neutral message, and keep it for a window that has not loaded yet. */
@@ -628,6 +654,7 @@ async function settleActiveMatch(attempt = 0): Promise<string | null> {
     const settled = await settleMatch(match.matchId);
     state.match = null;
     state.submitted.clear();
+    shareCards.recordSettled(settled, !!match.duel?.to);
     // `sentDuel` rides along because a duel you sent settles exactly like a seeding match
     // (one side, nobody yet) and the payload cannot tell them apart. Ghost Mode's
     // "nobody in the pool yet" offer is wrong about somebody you just named.
@@ -2198,6 +2225,16 @@ ipcMain.handle("apogee:ghostAction", async (_e, action: unknown) => {
     return await ghost.action(action);
   } catch (err) {
     return { error: friendlyError(err) };
+  }
+});
+
+// { source: "match" | "ghost", layout, action: "preview" | "copy" | "save" } and nothing
+// else: the card is drawn from main's record, so there is no figure for the renderer to send.
+ipcMain.handle("apogee:shareCard", async (_e, request: unknown) => {
+  try {
+    return await shareCards.handle(request);
+  } catch (err) {
+    return { ok: false, error: friendlyError(err) };
   }
 });
 

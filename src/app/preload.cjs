@@ -30,6 +30,12 @@ contextBridge.exposeInMainWorld("apogee", {
   ghost: () => ipcRenderer.invoke("apogee:ghost"),
   ghostAction: (action) => ipcRenderer.invoke("apogee:ghostAction", action),
   onGhost: (handler) => subscribe("apogee:ghost", handler),
+  /**
+   * A share card of the result on screen. Which card, which shape and what to do with it
+   * are the only things that cross: the figures are main's record, never the renderer's.
+   * Resolves { ok, png?, fileName, savedTo?, copied? } or { ok: false, error }.
+   */
+  shareCard: (source, layout, action) => ipcRenderer.invoke("apogee:shareCard", { source, layout, action }),
 
   /**
    * Start Steam sign-in. Opens the system browser and resolves once a session exists.

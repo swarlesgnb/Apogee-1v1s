@@ -39,6 +39,7 @@ import {
   type RunRefusal,
 } from "../core/ghost/ghost.ts";
 import { scanStatsFolder } from "../core/history/history.ts";
+import type { GhostRecord } from "../core/brand/shareInput.ts";
 import { dayKey } from "../core/quests/progression.ts";
 import { isAbandonedRun, runDurationSeconds } from "../core/stats/duration.ts";
 import { readStatsFolder } from "../core/stats/folderCache.ts";
@@ -375,6 +376,37 @@ export class GhostService {
 
   publish(): void {
     this.deps.broadcast(this.view());
+  }
+
+  /**
+   * The result on the result screen, as booked, for the share card (src/app/shareCard.ts).
+   * Only while it is the one on screen: a card for a result the player has moved on from
+   * would be a card for something they can no longer see. The code rides along once
+   * post-ghost has minted one, so the card carries it; before that, and while post-ghost
+   * is not deployed, it is null and the card leaves the slot out.
+   */
+  shareRecord(): GhostRecord | null {
+    const s = this.store();
+    const last = s.results.at(-1);
+    if (!last || !s.active?.result || s.active.id !== last.id) return null;
+    return {
+      id: last.id,
+      verdict: last.verdict,
+      end: last.end,
+      margin: last.margin,
+      at: last.at,
+      rounds: last.rounds.map((r) => ({
+        scenario: r.scenario,
+        live: r.live,
+        ghost: r.ghost,
+        baseline: r.baseline,
+        delta: r.delta,
+        ghostDelta: r.ghostDelta,
+        abandoned: r.abandoned,
+      })),
+      against: KIND_NAME[last.kind],
+      code: this.card && this.card.resultId === last.id ? this.card.card.code : null,
+    };
   }
 
   async action(raw: unknown): Promise<{ view: GhostScreen; error?: string; note?: string }> {

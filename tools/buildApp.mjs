@@ -99,6 +99,11 @@ export function copyStatic() {
   cpSync(join(root, "src", "app", "renderer"), join(outDir, "renderer"), { recursive: true });
   cpSync(join(root, "src", "app", "preload.cjs"), join(outDir, "preload.cjs"));
 
+  // The share card's faces (src/app/shareCard.ts). Embedded into every card rather than
+  // left to the system, so text is measured and fitted in the faces it is drawn in; the
+  // licences travel with them because the OFL asks that they do.
+  cpSync(join(root, "assets", "brand", "fonts"), join(outDir, "fonts"), { recursive: true });
+
   // Reference data the main process reads at runtime. data/season-1 is authoring material
   // - the scenario corpus, the difficulty model, the anchors - that nothing at runtime
   // reads, except its scenarios: every Season 1 scenario is Apogee's own, exists nowhere

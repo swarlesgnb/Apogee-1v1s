@@ -2,10 +2,11 @@
  * The shareable result card: one match or rank result as a picture somebody can post.
  *
  * A pure function from a result to SVG markup, with no Node or DOM imports, so the same
- * drawing can come out of a tool (tools/brand/renderShareCard.ts rasterises it in an
- * offscreen Electron window) or, later, out of the client, which already has the result
- * in hand when the settle screen opens. Two layouts: 1200x675 is what X, Discord and
- * Reddit crop a link preview to (16:9), and 1080x1920 is a phone story.
+ * drawing comes out of a tool (tools/brand/renderShareCard.ts rasterises it in an
+ * offscreen Electron window) and out of the client, whose main process draws it from its
+ * own record of a settled match or a ghost result (src/app/shareCard.ts). Two layouts:
+ * 1200x675 is what X, Discord and Reddit crop a link preview to (16:9), and 1080x1920 is
+ * a phone story.
  *
  * What it will not do is leave anything out that the result screen shows. PLAN.md §15
  * lists "I scored more and lost" as a risk whose answer is to show raw scores, baselines
@@ -32,6 +33,11 @@ export interface CardTier {
 }
 
 export interface CardSide {
+  /**
+   * Null with a delta present is a side whose raw numbers were never sent: settle-match
+   * returns only the opponent's improvement, which is all a round is decided on. The card
+   * says so in words rather than printing a dash where a score belongs.
+   */
   score: number | null;
   baseline: number | null;
   /** Fractional gain over baseline: 0.031 is +3.1%. */
@@ -43,10 +49,17 @@ export interface CardRound {
   you: CardSide;
   /** Absent for a seeding match, which has no second side yet. */
   them?: CardSide | null;
+  /**
+   * Set when the round did not count, as the short word the round column prints ("Excluded",
+   * "Left early"). Overrides the deltas, the way roundPresentation() checks `counted` first.
+   */
+  excluded?: string | null;
 }
 
 export interface ShareCardInput {
-  kind: "match" | "rank";
+  kind: "match" | "rank" | "ghost";
+  /** What kind of match, in place of "Ranked match" or "Seeding match": a tournament leg, a duel. */
+  mode?: string | null;
   season: string;
   category?: string | null;
   player: {
@@ -68,6 +81,12 @@ export interface ShareCardInput {
   duelCode?: string | null;
   /** ISO date; printed as a plain date so no timezone is implied. */
   playedAt?: string | null;
+  /**
+   * Ghost cards: the past self raced, as the ghost screen names it ("last month's you"),
+   * the mean gap, and how the match ended. The ghost is `opponent` as well, so every
+   * round prints both sides exactly as a ranked one does.
+   */
+  ghost?: { against: string; margin: number | null; end: "complete" | "abandoned" | "expired" } | null;
 }
 
 export type CardLayout = "landscape" | "portrait";
@@ -90,6 +109,8 @@ export interface ShareCardOptions {
   emblem: (tier: CardTier, ink: string) => string;
   /** @font-face rules for the faces below, inlined so the SVG stands on its own. */
   fontCss?: string;
+  /** Ghost Mode's tint (`--gh` in ghost.css) for the ghost mark; the brand colour when absent. */
+  ghostTint?: string | null;
 }
 
 export const FONT_DISPLAY = "'Apogee Display', Bahnschrift, 'Segoe UI', sans-serif";
@@ -135,7 +156,8 @@ export function roundDigits(r: CardRound): number {
  * The round's result from the deltas alone, with the labels the client's
  * roundPresentation() uses: a round with no opponent side is recorded, not won.
  */
-export function roundOutcome(r: CardRound): "won" | "lost" | "draw" | "recorded" | "unavailable" {
+export function roundOutcome(r: CardRound): "won" | "lost" | "draw" | "recorded" | "unavailable" | "excluded" {
+  if (r.excluded) return "excluded";
   const a = r.you.delta;
   const b = r.them?.delta;
   if (a == null || !Number.isFinite(a)) return "unavailable";
@@ -146,7 +168,13 @@ export function roundOutcome(r: CardRound): "won" | "lost" | "draw" | "recorded"
   return a > b ? "won" : "lost";
 }
 
-const OUTCOME_LABEL = { won: "Won", lost: "Lost", draw: "Draw", recorded: "Recorded", unavailable: "Unavailable" } as const;
+const OUTCOME_LABEL = { won: "Won", lost: "Lost", draw: "Draw", recorded: "Recorded", unavailable: "Unavailable", excluded: "Excluded" } as const;
+
+/** The word a round's column prints: an excluded round says why in its own short word. */
+export function outcomeLabel(r: CardRound): string {
+  const o = roundOutcome(r);
+  return o === "excluded" ? (r.excluded as string) : OUTCOME_LABEL[o];
+}
 
 function deltaColour(p: BrandPalette, d: number | null | undefined): string {
   if (d == null || !Number.isFinite(d) || Math.abs(d) < 5e-4) return p.inkMid;
@@ -157,8 +185,12 @@ function outcomeColour(p: BrandPalette, o: ReturnType<typeof roundOutcome>): str
   return o === "won" ? p.up : o === "lost" ? p.down : p.inkMid;
 }
 
-function headline(input: ShareCardInput): string {
+export function headline(input: ShareCardInput): string {
   if (input.kind === "rank") return input.promotion?.to.name ?? input.player.tier?.name ?? "Unranked";
+  // The ghost screen's own words for a match that did not run its course: both are losses,
+  // and "Defeat" over a match walked away from would claim a race that never finished.
+  if (input.kind === "ghost" && input.ghost?.end === "abandoned") return "Abandoned";
+  if (input.kind === "ghost" && input.ghost?.end === "expired") return "Out of time";
   if (input.verdict === "win") return "Victory";
   if (input.verdict === "loss") return "Defeat";
   if (input.verdict === "draw") return "Draw";
@@ -172,8 +204,51 @@ function kicker(input: ShareCardInput): string {
     const from = input.promotion?.from;
     return from ? `Promoted from ${from.name}` : "Placements complete";
   }
-  const what = input.verdict ? "Ranked match" : input.duelCode ? "Open duel" : "Seeding match";
+  if (input.kind === "ghost") return [input.mode ?? "Ghost match", "unrated"].join(" · ");
+  const what = input.mode ?? (input.verdict ? "Ranked match" : input.duelCode ? "Open duel" : "Seeding match");
   return [what, input.category].filter(Boolean).join(" · ");
+}
+
+/** The figures line under the names: the match score, or a ghost's margin. */
+function scoreLine(input: ShareCardInput): string {
+  if (input.kind === "ghost") {
+    const m = input.ghost?.margin;
+    return m == null || !Number.isFinite(m) ? "" : `Margin ${fmtDelta(m)}`;
+  }
+  const ms = input.matchScore;
+  return ms ? `Match ${fmtDelta(ms.you)} vs ${fmtDelta(ms.them)}` : "";
+}
+
+/**
+ * A set with nobody on the other side yet still has a match score: the mean gain over the
+ * player's own baselines, which the settle screen prints as "+1.2% against your own
+ * baselines". Without it a seeding card had a name and then nothing.
+ */
+function setLine(input: ShareCardInput): string {
+  const you = input.matchScore?.you;
+  if (input.kind !== "match" || input.opponent || you == null || !Number.isFinite(you)) return "";
+  return `Set ${fmtDelta(you)} over own baselines`;
+}
+
+function ruleLine(input: ShareCardInput): string {
+  if (input.kind === "ghost") return "Raw scores from KovaaK's stats. The ghost is a past session, on the same baseline.";
+  return input.rounds.some((r) => r.them)
+    ? "Raw scores from KovaaK's stats. A round goes to whoever beat their own baseline by more."
+    : "Raw scores from KovaaK's stats, against the player's own baseline.";
+}
+
+/** What a friend types to answer the card: a duel, or (for a ghost) a race against this one. */
+function codeLabel(input: ShareCardInput): string {
+  return input.kind === "ghost" ? "Ghost code" : "Duel code";
+}
+
+/** Ghost Mode's mark, from ghost.js, in a 32-unit box. The eyes are cut out in the ground. */
+function ghostMark(tint: string, ground: string): string {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M7 28V14a9 9 0 0 1 18 0v14l-3-2.5-3 2.5-3-2.5-3 2.5-3-2.5Z" fill="${tint}"/><circle cx="12.5" cy="14" r="1.6" fill="${ground}"/><circle cx="19.5" cy="14" r="1.6" fill="${ground}"/></svg>`;
+}
+
+function ghostInk(p: BrandPalette, o: ShareCardOptions): string {
+  return o.ghostTint ? rankInk(p, o.ghostTint) : p.brand;
 }
 
 function standingLine(input: ShareCardInput): string {
@@ -262,6 +337,11 @@ function registration(w: number, h: number, inset: number, arm: number, ink: str
   return `<path d="${d}" fill="none" stroke="${ink}" stroke-opacity="${opacity}" stroke-width="1.5"/>`;
 }
 
+/** A side whose score and baseline never reached the client, only the delta. */
+function rawNotSent(s: CardSide): boolean {
+  return s.score == null && s.baseline == null && s.delta != null && Number.isFinite(s.delta);
+}
+
 /** Place a complete <svg> element at a position and size inside another. */
 export function placeSvg(markup: string, x: number, y: number, w: number, h: number): string {
   return markup.replace(/^<svg\b/, `<svg x="${x}" y="${y}" width="${w}" height="${h}"`);
@@ -328,10 +408,10 @@ function orbit(p: BrandPalette, cx: number, cy: number, rx: number, ry: number, 
   );
 }
 
-function slot(p: BrandPalette, code: string, x: number, y: number, w: number, h: number, scale: number): string {
+function slot(p: BrandPalette, label: string, code: string, x: number, y: number, w: number, h: number, scale: number): string {
   return (
     `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${6 * scale}" fill="${p.panel}" stroke="${p.brand}" stroke-opacity=".55"/>` +
-    text("Duel code", x + 16 * scale, y + h / 2 + 4.5 * scale, { size: 12 * scale, fill: p.inkDim, family: "mono", tracking: 0.16, upper: true }) +
+    text(label, x + 16 * scale, y + h / 2 + 4.5 * scale, { size: 12 * scale, fill: p.inkDim, family: "mono", tracking: 0.16, upper: true }) +
     text(code, x + w - 16 * scale, y + h / 2 + 7 * scale, { size: 21 * scale, fill: p.brand, family: "mono", weight: 600, anchor: "end", tracking: 0.08, fit: w - 150 * scale })
   );
 }
@@ -364,19 +444,24 @@ function landscape(input: ShareCardInput, o: ShareCardOptions): string {
   const hlFill = input.kind === "rank" ? tierInk : input.verdict === "win" ? p.up : input.verdict === "loss" ? p.down : p.ink;
   out.push(text(hl, L - 5, 262, { size: 112, fill: hlFill, weight: 600, tracking: -0.035, fit: 720 }));
 
-  if (input.kind === "match" && input.opponent) {
+  if (input.kind !== "rank" && input.opponent) {
     out.push(text(`${input.player.name}  vs  ${input.opponent.name}`, L, 312, { size: 28, fill: p.ink, weight: 500, fit: 720 }));
-    const ms = input.matchScore;
-    const scoreLine = ms ? `Match ${fmtDelta(ms.you)} vs ${fmtDelta(ms.them)}` : "";
-    out.push(text([scoreLine, ratingLine(input)].filter(Boolean).join("   ·   "), L, 346, { size: 15, fill: p.inkMid, family: "mono", tracking: 0.04, fit: 720 }));
+    out.push(text([scoreLine(input), ratingLine(input)].filter(Boolean).join("   ·   "), L, 346, { size: 15, fill: p.inkMid, family: "mono", tracking: 0.04, fit: 720 }));
   } else {
     out.push(text(input.player.name, L, 312, { size: 28, fill: p.ink, weight: 500, fit: 720 }));
-    out.push(text(ratingLine(input), L, 346, { size: 15, fill: p.inkMid, family: "mono", tracking: 0.04, fit: 720 }));
+    out.push(text([setLine(input), ratingLine(input)].filter(Boolean).join("   ·   "), L, 346, { size: 15, fill: p.inkMid, family: "mono", tracking: 0.04, fit: 720 }));
   }
 
-  // Hero, right: the emblem on its orbit.
+  // Hero, right: the emblem on its orbit. A ghost match has no rank at stake, so the
+  // ghost itself goes on the orbit instead, in the tint the ghost screen marks it with.
   const ex = 986;
-  if (tier) {
+  if (input.kind === "ghost") {
+    const gi = ghostInk(p, o);
+    out.push(orbit(p, ex, 208, 150, 52, -14, gi));
+    out.push(placeSvg(ghostMark(gi, p.ground), ex - 56, 140, 112, 112));
+    out.push(text(input.ghost?.against ?? input.opponent?.name ?? "Ghost", ex, 306, { size: 24, fill: gi, weight: 600, anchor: "middle", fit: 300 }));
+    out.push(text("Ghost mode", ex, 334, { size: 12, fill: p.inkDim, family: "mono", anchor: "middle", tracking: 0.16, upper: true, fit: 300 }));
+  } else if (tier) {
     out.push(orbit(p, ex, 208, 150, 52, -14, tierInk));
     out.push(placeSvg(o.emblem(tier, tierInk), ex - 64, 132, 128, 138));
     // A rank card's headline and kicker already say the tier and where it came from; a
@@ -414,23 +499,26 @@ function landscape(input: ShareCardInput, o: ShareCardOptions): string {
         out.push(text("No run yet", x, y + 36, { size: 14, fill: p.inkDim, family: "mono" }));
         return;
       }
-      out.push(text(fmtScore(s.score), x, y + 28, { size: 22, fill: p.ink, weight: 600 }));
-      out.push(text(`base ${fmtScore(s.baseline)}`, x, y + 47, { size: 12, fill: p.inkDim, family: "mono", tracking: 0.02 }));
+      if (rawNotSent(s)) {
+        out.push(text("raw score", x, y + 28, { size: 12, fill: p.inkDim, family: "mono", tracking: 0.02 }));
+        out.push(text("not sent", x, y + 45, { size: 12, fill: p.inkDim, family: "mono", tracking: 0.02 }));
+      } else {
+        out.push(text(fmtScore(s.score), x, y + 28, { size: 22, fill: p.ink, weight: 600 }));
+        out.push(text(`base ${fmtScore(s.baseline)}`, x, y + 47, { size: 12, fill: p.inkDim, family: "mono", tracking: 0.02 }));
+      }
       out.push(text(fmtDelta(s.delta, digits), x + 214, y + 37, { size: 19, fill: deltaColour(p, s.delta), family: "mono", weight: 600, anchor: "end" }));
     };
     side(r.you, colYou);
     side(r.them, colThem);
-    out.push(text(OUTCOME_LABEL[oc], colOut, y + 36, { size: 13, fill: outcomeColour(p, oc), family: "mono", weight: 600, anchor: "end", tracking: 0.14, upper: true }));
+    out.push(text(outcomeLabel(r), colOut, y + 36, { size: 13, fill: outcomeColour(p, oc), family: "mono", weight: 600, anchor: "end", tracking: 0.14, upper: true }));
   });
 
   // Footer: the rule, and the way back in.
   const fy = 638;
-  const rule = input.rounds.some((r) => r.them)
-    ? "Raw scores from KovaaK's stats. A round goes to whoever beat their own baseline by more."
-    : "Raw scores from KovaaK's stats, against the player's own baseline.";
+  const rule = ruleLine(input);
   const hasCode = !!input.duelCode;
   out.push(text(rule, L, fy, { size: 12, fill: p.inkDim, family: "mono", fit: hasCode ? 700 : R - L - 160 }));
-  if (hasCode) out.push(slot(p, input.duelCode as string, R - 300, fy - 27, 300, 40, 1));
+  if (hasCode) out.push(slot(p, codeLabel(input), input.duelCode as string, R - 300, fy - 27, 300, 40, 1));
   else if (input.playedAt) out.push(text(dateLine(input.playedAt), R, fy, { size: 12, fill: p.inkDim, family: "mono", anchor: "end", tracking: 0.1, upper: true }));
 
   return wrap(W, H, out.join(""), input);
@@ -455,7 +543,13 @@ function portrait(input: ShareCardInput, o: ShareCardOptions): string {
   out.push(text(input.season, R, 118, { size: 18, fill: p.inkDim, family: "mono", anchor: "end", tracking: 0.18, upper: true, fit: 420 }));
 
   // The emblem is the picture on a story; everything else hangs from it.
-  if (tier) {
+  if (input.kind === "ghost") {
+    const gi = ghostInk(p, o);
+    out.push(orbit(p, C, 420, 380, 120, -12, gi));
+    out.push(placeSvg(ghostMark(gi, p.ground), C - 130, 290, 260, 260));
+    out.push(text(input.ghost?.against ?? input.opponent?.name ?? "Ghost", C, 646, { size: 40, fill: gi, weight: 600, anchor: "middle", fit: 820 }));
+    out.push(text("Ghost mode", C, 686, { size: 18, fill: p.inkDim, family: "mono", anchor: "middle", tracking: 0.18, upper: true, fit: 820 }));
+  } else if (tier) {
     out.push(orbit(p, C, 420, 380, 120, -12, tierInk));
     out.push(placeSvg(o.emblem(tier, tierInk), C - 150, 255, 300, 323));
     // On a rank card the headline below is the tier's name; naming it here as well put
@@ -469,17 +563,17 @@ function portrait(input: ShareCardInput, o: ShareCardOptions): string {
   out.push(text(kicker(input), C, 790, { size: 20, fill: p.brand, family: "mono", anchor: "middle", tracking: 0.2, upper: true, fit: 880 }));
   const hlFill = input.kind === "rank" ? tierInk : input.verdict === "win" ? p.up : input.verdict === "loss" ? p.down : p.ink;
   out.push(text(headline(input), C, 948, { size: 176, fill: hlFill, weight: 600, anchor: "middle", tracking: -0.035, fit: 900 }));
-  if (input.kind === "match" && input.opponent) {
+  if (input.kind !== "rank" && input.opponent) {
     out.push(text(`${input.player.name}  vs  ${input.opponent.name}`, C, 1030, { size: 42, fill: p.ink, weight: 500, anchor: "middle", fit: 900 }));
-    const ms = input.matchScore;
-    if (ms) out.push(text(`Match ${fmtDelta(ms.you)} vs ${fmtDelta(ms.them)}`, C, 1082, { size: 22, fill: p.inkMid, family: "mono", anchor: "middle", tracking: 0.04, fit: 900 }));
+    const ms = scoreLine(input);
+    if (ms) out.push(text(ms, C, 1082, { size: 22, fill: p.inkMid, family: "mono", anchor: "middle", tracking: 0.04, fit: 900 }));
     const rl = ratingLine(input);
     if (rl) out.push(text(rl, C, 1118, { size: 22, fill: p.inkMid, family: "mono", anchor: "middle", tracking: 0.04, fit: 900 }));
   } else {
     out.push(text(input.player.name, C, 1030, { size: 42, fill: p.ink, weight: 500, anchor: "middle", fit: 900 }));
     // A rank card has no caption under its emblem, so the standing goes here; a seeding
     // card's caption already says it.
-    const sl = input.kind === "rank" ? standingLine(input) : ratingLine(input);
+    const sl = input.kind === "rank" ? standingLine(input) : setLine(input) || ratingLine(input);
     if (sl) out.push(text(sl, C, 1082, { size: 22, fill: p.inkMid, family: "mono", anchor: "middle", tracking: 0.04, fit: 900 }));
   }
 
@@ -493,7 +587,7 @@ function portrait(input: ShareCardInput, o: ShareCardOptions): string {
     out.push(`<rect x="${L}" y="${y + 20}" width="4" height="${h - 40}" rx="2" fill="${outcomeColour(p, oc)}"/>`);
     out.push(text(String(i + 1).padStart(2, "0"), L + 32, y + 50, { size: 18, fill: p.inkDim, family: "mono" }));
     out.push(text(r.scenario, L + 80, y + 52, { size: 32, fill: p.ink, weight: 500, fit: R - L - 80 - 200 }));
-    out.push(text(OUTCOME_LABEL[oc], R - 32, y + 50, { size: 18, fill: outcomeColour(p, oc), family: "mono", weight: 600, anchor: "end", tracking: 0.14, upper: true }));
+    out.push(text(outcomeLabel(r), R - 32, y + 50, { size: 18, fill: outcomeColour(p, oc), family: "mono", weight: 600, anchor: "end", tracking: 0.14, upper: true }));
     const digits = roundDigits(r);
     const side = (label: string, s: CardSide | null | undefined, x: number, w: number) => {
       out.push(text(label, x, y + 94, { size: 14, fill: p.inkDim, family: "mono", tracking: 0.16, upper: true, fit: w - 130, fitMin: 14 }));
@@ -501,8 +595,12 @@ function portrait(input: ShareCardInput, o: ShareCardOptions): string {
         out.push(text("No run yet", x, y + 132, { size: 20, fill: p.inkDim, family: "mono" }));
         return;
       }
-      out.push(text(fmtScore(s.score), x, y + 134, { size: 34, fill: p.ink, weight: 600 }));
-      out.push(text(`base ${fmtScore(s.baseline)}`, x + w, y + 94, { size: 15, fill: p.inkDim, family: "mono", anchor: "end" }));
+      if (rawNotSent(s)) {
+        out.push(text("raw score not sent", x, y + 130, { size: 15, fill: p.inkDim, family: "mono", fit: w - 120 }));
+      } else {
+        out.push(text(fmtScore(s.score), x, y + 134, { size: 34, fill: p.ink, weight: 600 }));
+        out.push(text(`base ${fmtScore(s.baseline)}`, x + w, y + 94, { size: 15, fill: p.inkDim, family: "mono", anchor: "end" }));
+      }
       out.push(text(fmtDelta(s.delta, digits), x + w, y + 134, { size: 28, fill: deltaColour(p, s.delta), family: "mono", weight: 600, anchor: "end" }));
     };
     const half = (R - L - 80 - 32 - 40) / 2;
@@ -511,10 +609,8 @@ function portrait(input: ShareCardInput, o: ShareCardOptions): string {
     if (i < rows.length) out.push(`<path d="M${L + 80 + half + 20} ${y + 76}V${y + h - 22}" stroke="${p.line}" stroke-opacity="${p.lineOpacity * 1.5}"/>`);
   });
 
-  const rule = input.rounds.some((r) => r.them)
-    ? "Raw scores from KovaaK's stats. A round goes to whoever beat their own baseline by more."
-    : "Raw scores from KovaaK's stats, against the player's own baseline.";
-  if (input.duelCode) out.push(slot(p, input.duelCode, L, 1740, R - L, 64, 1.35));
+  const rule = ruleLine(input);
+  if (input.duelCode) out.push(slot(p, codeLabel(input), input.duelCode, L, 1740, R - L, 64, 1.35));
   else if (input.playedAt) out.push(text(dateLine(input.playedAt), C, 1780, { size: 18, fill: p.inkDim, family: "mono", anchor: "middle", tracking: 0.14, upper: true }));
   out.push(text(rule, C, 1852, { size: 16, fill: p.inkDim, family: "mono", anchor: "middle", fit: R - L }));
 
