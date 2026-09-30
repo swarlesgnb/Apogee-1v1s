@@ -1,0 +1,672 @@
+{
+  "about": "Drawn by tools/video/ghostDemo.ts on a real stats folder as of 2026-10-01T01:00:00.000Z; live scores chosen as gaps 0.026, -0.038, 0.03 of baseline.",
+  "choose": {
+    "signedIn": false,
+    "hasFolder": true,
+    "kinds": [
+      {
+        "kind": "month_ago",
+        "available": true,
+        "scenarios": 442,
+        "sessionDay": "2026-08-30",
+        "reason": null,
+        "name": "last month's you",
+        "question": "Have I improved?",
+        "inTen": 7
+      },
+      {
+        "kind": "last_week",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's you",
+        "question": "Am I still improving?",
+        "inTen": 6
+      },
+      {
+        "kind": "last_week_best",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's best",
+        "question": "Can I beat my good day?",
+        "inTen": 5
+      }
+    ],
+    "defaultKind": "last_week",
+    "active": null,
+    "last": null,
+    "streak": 3,
+    "record": {
+      "wins": 5,
+      "losses": 2,
+      "played": 7
+    },
+    "notice": null,
+    "share": {
+      "enabled": false,
+      "reason": "",
+      "card": null,
+      "busy": false
+    },
+    "now": 1790816160000
+  },
+  "ready": {
+    "signedIn": false,
+    "hasFolder": true,
+    "kinds": [
+      {
+        "kind": "month_ago",
+        "available": true,
+        "scenarios": 442,
+        "sessionDay": "2026-08-30",
+        "reason": null,
+        "name": "last month's you",
+        "question": "Have I improved?",
+        "inTen": 7
+      },
+      {
+        "kind": "last_week",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's you",
+        "question": "Am I still improving?",
+        "inTen": 6
+      },
+      {
+        "kind": "last_week_best",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's best",
+        "question": "Can I beat my good day?",
+        "inTen": 5
+      }
+    ],
+    "defaultKind": "last_week",
+    "active": {
+      "id": "2026-09-30:month_ago:0",
+      "kind": "month_ago",
+      "kindName": "last month's you",
+      "started": false,
+      "startedAt": null,
+      "deadline": null,
+      "rounds": [
+        {
+          "scenario": "Air Spectral Easy 85%",
+          "ghost": 928.8543394999999,
+          "sessionDay": "2026-05-13",
+          "sessionRuns": 2,
+          "baseline": 930.262817,
+          "pb": 931.618225,
+          "live": null,
+          "abandoned": false,
+          "gap": null,
+          "ghostBar": 0.49697187187478414,
+          "liveBar": null
+        },
+        {
+          "scenario": "psalmTS angelic click 30% Larger",
+          "ghost": 87,
+          "sessionDay": "2026-08-14",
+          "sessionRuns": 1,
+          "baseline": 74,
+          "pb": 87,
+          "live": null,
+          "abandoned": false,
+          "gap": null,
+          "ghostBar": 0.8513513513513513,
+          "liveBar": null
+        },
+        {
+          "scenario": "Aimerz+ PreciseTrack Med S1",
+          "ghost": 2203,
+          "sessionDay": "2026-08-15",
+          "sessionRuns": 1,
+          "baseline": 2249.5,
+          "pb": 2528,
+          "live": null,
+          "abandoned": false,
+          "gap": null,
+          "ghostBar": 0.4586574794398755,
+          "liveBar": null
+        }
+      ],
+      "landed": 0,
+      "runningMargin": null,
+      "next": "Air Spectral Easy 85%",
+      "result": null
+    },
+    "last": null,
+    "streak": 3,
+    "record": {
+      "wins": 5,
+      "losses": 2,
+      "played": 7
+    },
+    "notice": null,
+    "share": {
+      "enabled": false,
+      "reason": "",
+      "card": null,
+      "busy": false
+    },
+    "now": 1790816160000
+  },
+  "started": {
+    "signedIn": false,
+    "hasFolder": true,
+    "kinds": [
+      {
+        "kind": "month_ago",
+        "available": true,
+        "scenarios": 442,
+        "sessionDay": "2026-08-30",
+        "reason": null,
+        "name": "last month's you",
+        "question": "Have I improved?",
+        "inTen": 7
+      },
+      {
+        "kind": "last_week",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's you",
+        "question": "Am I still improving?",
+        "inTen": 6
+      },
+      {
+        "kind": "last_week_best",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's best",
+        "question": "Can I beat my good day?",
+        "inTen": 5
+      }
+    ],
+    "defaultKind": "last_week",
+    "active": {
+      "id": "2026-09-30:month_ago:0",
+      "kind": "month_ago",
+      "kindName": "last month's you",
+      "started": true,
+      "startedAt": 1790816160000,
+      "deadline": 1790816640000,
+      "rounds": [
+        {
+          "scenario": "Air Spectral Easy 85%",
+          "ghost": 928.8543394999999,
+          "sessionDay": "2026-05-13",
+          "sessionRuns": 2,
+          "baseline": 930.262817,
+          "pb": 931.618225,
+          "live": null,
+          "abandoned": false,
+          "gap": null,
+          "ghostBar": 0.49697187187478414,
+          "liveBar": null
+        },
+        {
+          "scenario": "psalmTS angelic click 30% Larger",
+          "ghost": 87,
+          "sessionDay": "2026-08-14",
+          "sessionRuns": 1,
+          "baseline": 74,
+          "pb": 87,
+          "live": null,
+          "abandoned": false,
+          "gap": null,
+          "ghostBar": 0.8513513513513513,
+          "liveBar": null
+        },
+        {
+          "scenario": "Aimerz+ PreciseTrack Med S1",
+          "ghost": 2203,
+          "sessionDay": "2026-08-15",
+          "sessionRuns": 1,
+          "baseline": 2249.5,
+          "pb": 2528,
+          "live": null,
+          "abandoned": false,
+          "gap": null,
+          "ghostBar": 0.4586574794398755,
+          "liveBar": null
+        }
+      ],
+      "landed": 0,
+      "runningMargin": null,
+      "next": "Air Spectral Easy 85%",
+      "result": null
+    },
+    "last": null,
+    "streak": 3,
+    "record": {
+      "wins": 5,
+      "losses": 2,
+      "played": 7
+    },
+    "notice": null,
+    "share": {
+      "enabled": false,
+      "reason": "",
+      "card": null,
+      "busy": false
+    },
+    "now": 1790816190000
+  },
+  "one": {
+    "signedIn": false,
+    "hasFolder": true,
+    "kinds": [
+      {
+        "kind": "month_ago",
+        "available": true,
+        "scenarios": 442,
+        "sessionDay": "2026-08-30",
+        "reason": null,
+        "name": "last month's you",
+        "question": "Have I improved?",
+        "inTen": 7
+      },
+      {
+        "kind": "last_week",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's you",
+        "question": "Am I still improving?",
+        "inTen": 6
+      },
+      {
+        "kind": "last_week_best",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's best",
+        "question": "Can I beat my good day?",
+        "inTen": 5
+      }
+    ],
+    "defaultKind": "last_week",
+    "active": {
+      "id": "2026-09-30:month_ago:0",
+      "kind": "month_ago",
+      "kindName": "last month's you",
+      "started": true,
+      "startedAt": 1790816160000,
+      "deadline": 1790816415000,
+      "rounds": [
+        {
+          "scenario": "Air Spectral Easy 85%",
+          "ghost": 928.8543394999999,
+          "sessionDay": "2026-05-13",
+          "sessionRuns": 2,
+          "baseline": 930.262817,
+          "pb": 931.618225,
+          "live": 953,
+          "abandoned": false,
+          "gap": 0.025955740742027396,
+          "ghostBar": 0.49697187187478414,
+          "liveBar": 0.548883353358839
+        },
+        {
+          "scenario": "psalmTS angelic click 30% Larger",
+          "ghost": 87,
+          "sessionDay": "2026-08-14",
+          "sessionRuns": 1,
+          "baseline": 74,
+          "pb": 87,
+          "live": null,
+          "abandoned": false,
+          "gap": null,
+          "ghostBar": 0.8513513513513513,
+          "liveBar": null
+        },
+        {
+          "scenario": "Aimerz+ PreciseTrack Med S1",
+          "ghost": 2203,
+          "sessionDay": "2026-08-15",
+          "sessionRuns": 1,
+          "baseline": 2249.5,
+          "pb": 2528,
+          "live": null,
+          "abandoned": false,
+          "gap": null,
+          "ghostBar": 0.4586574794398755,
+          "liveBar": null
+        }
+      ],
+      "landed": 1,
+      "runningMargin": 0.025955740742027396,
+      "next": "psalmTS angelic click 30% Larger",
+      "result": null
+    },
+    "last": null,
+    "streak": 3,
+    "record": {
+      "wins": 5,
+      "losses": 2,
+      "played": 7
+    },
+    "notice": null,
+    "share": {
+      "enabled": false,
+      "reason": "",
+      "card": null,
+      "busy": false
+    },
+    "now": 1790816240000
+  },
+  "two": {
+    "signedIn": false,
+    "hasFolder": true,
+    "kinds": [
+      {
+        "kind": "month_ago",
+        "available": true,
+        "scenarios": 442,
+        "sessionDay": "2026-08-30",
+        "reason": null,
+        "name": "last month's you",
+        "question": "Have I improved?",
+        "inTen": 7
+      },
+      {
+        "kind": "last_week",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's you",
+        "question": "Am I still improving?",
+        "inTen": 6
+      },
+      {
+        "kind": "last_week_best",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's best",
+        "question": "Can I beat my good day?",
+        "inTen": 5
+      }
+    ],
+    "defaultKind": "last_week",
+    "active": {
+      "id": "2026-09-30:month_ago:0",
+      "kind": "month_ago",
+      "kindName": "last month's you",
+      "started": true,
+      "startedAt": 1790816160000,
+      "deadline": 1790816490000,
+      "rounds": [
+        {
+          "scenario": "Air Spectral Easy 85%",
+          "ghost": 928.8543394999999,
+          "sessionDay": "2026-05-13",
+          "sessionRuns": 2,
+          "baseline": 930.262817,
+          "pb": 931.618225,
+          "live": 953,
+          "abandoned": false,
+          "gap": 0.025955740742027396,
+          "ghostBar": 0.49697187187478414,
+          "liveBar": 0.548883353358839
+        },
+        {
+          "scenario": "psalmTS angelic click 30% Larger",
+          "ghost": 87,
+          "sessionDay": "2026-08-14",
+          "sessionRuns": 1,
+          "baseline": 74,
+          "pb": 87,
+          "live": 84,
+          "abandoned": false,
+          "gap": -0.04054054054054054,
+          "ghostBar": 0.8513513513513513,
+          "liveBar": 0.7702702702702703
+        },
+        {
+          "scenario": "Aimerz+ PreciseTrack Med S1",
+          "ghost": 2203,
+          "sessionDay": "2026-08-15",
+          "sessionRuns": 1,
+          "baseline": 2249.5,
+          "pb": 2528,
+          "live": null,
+          "abandoned": false,
+          "gap": null,
+          "ghostBar": 0.4586574794398755,
+          "liveBar": null
+        }
+      ],
+      "landed": 2,
+      "runningMargin": -0.0072923998992565735,
+      "next": "Aimerz+ PreciseTrack Med S1",
+      "result": null
+    },
+    "last": null,
+    "streak": 3,
+    "record": {
+      "wins": 5,
+      "losses": 2,
+      "played": 7
+    },
+    "notice": null,
+    "share": {
+      "enabled": false,
+      "reason": "",
+      "card": null,
+      "busy": false
+    },
+    "now": 1790816315000
+  },
+  "result": {
+    "signedIn": false,
+    "hasFolder": true,
+    "kinds": [
+      {
+        "kind": "month_ago",
+        "available": true,
+        "scenarios": 442,
+        "sessionDay": "2026-08-30",
+        "reason": null,
+        "name": "last month's you",
+        "question": "Have I improved?",
+        "inTen": 7
+      },
+      {
+        "kind": "last_week",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's you",
+        "question": "Am I still improving?",
+        "inTen": 6
+      },
+      {
+        "kind": "last_week_best",
+        "available": true,
+        "scenarios": 457,
+        "sessionDay": "2026-09-22",
+        "reason": null,
+        "name": "last week's best",
+        "question": "Can I beat my good day?",
+        "inTen": 5
+      }
+    ],
+    "defaultKind": "last_week",
+    "active": {
+      "id": "2026-09-30:month_ago:0",
+      "kind": "month_ago",
+      "kindName": "last month's you",
+      "started": true,
+      "startedAt": 1790816160000,
+      "deadline": 1790816565000,
+      "rounds": [
+        {
+          "scenario": "Air Spectral Easy 85%",
+          "ghost": 928.8543394999999,
+          "sessionDay": "2026-05-13",
+          "sessionRuns": 2,
+          "baseline": 930.262817,
+          "pb": 931.618225,
+          "live": 953,
+          "abandoned": false,
+          "gap": 0.025955740742027396,
+          "ghostBar": 0.49697187187478414,
+          "liveBar": 0.548883353358839
+        },
+        {
+          "scenario": "psalmTS angelic click 30% Larger",
+          "ghost": 87,
+          "sessionDay": "2026-08-14",
+          "sessionRuns": 1,
+          "baseline": 74,
+          "pb": 87,
+          "live": 84,
+          "abandoned": false,
+          "gap": -0.04054054054054054,
+          "ghostBar": 0.8513513513513513,
+          "liveBar": 0.7702702702702703
+        },
+        {
+          "scenario": "Aimerz+ PreciseTrack Med S1",
+          "ghost": 2203,
+          "sessionDay": "2026-08-15",
+          "sessionRuns": 1,
+          "baseline": 2249.5,
+          "pb": 2528,
+          "live": 2270,
+          "abandoned": false,
+          "gap": 0.02978439653256279,
+          "ghostBar": 0.4586574794398755,
+          "liveBar": 0.5182262725050011
+        }
+      ],
+      "landed": 3,
+      "runningMargin": 0.005066532244683214,
+      "next": null,
+      "result": {
+        "verdict": "win",
+        "end": "complete",
+        "margin": 0.005066532244683216,
+        "rounds": [
+          {
+            "scenario": "Air Spectral Easy 85%",
+            "live": 953,
+            "ghost": 928.8543394999999,
+            "baseline": 930.262817,
+            "pb": 931.618225,
+            "sessionDay": "2026-05-13",
+            "delta": 0.024441676679419464,
+            "ghostDelta": -0.00151406406260793,
+            "gap": 0.025955740742027396,
+            "abandoned": false
+          },
+          {
+            "scenario": "psalmTS angelic click 30% Larger",
+            "live": 84,
+            "ghost": 87,
+            "baseline": 74,
+            "pb": 87,
+            "sessionDay": "2026-08-14",
+            "delta": 0.13513513513513514,
+            "ghostDelta": 0.17567567567567569,
+            "gap": -0.04054054054054054,
+            "abandoned": false
+          },
+          {
+            "scenario": "Aimerz+ PreciseTrack Med S1",
+            "live": 2270,
+            "ghost": 2203,
+            "baseline": 2249.5,
+            "pb": 2528,
+            "sessionDay": "2026-08-15",
+            "delta": 0.009113136252500556,
+            "ghostDelta": -0.020671260280062238,
+            "gap": 0.029784396532562794,
+            "abandoned": false
+          }
+        ],
+        "at": 1790816385000,
+        "explanation": "Beat last month's you by +0.5%, averaged over three rounds against your own baseline."
+      }
+    },
+    "last": {
+      "verdict": "win",
+      "end": "complete",
+      "margin": 0.005066532244683216,
+      "rounds": [
+        {
+          "scenario": "Air Spectral Easy 85%",
+          "live": 953,
+          "ghost": 928.8543394999999,
+          "baseline": 930.262817,
+          "pb": 931.618225,
+          "sessionDay": "2026-05-13",
+          "delta": 0.024441676679419464,
+          "ghostDelta": -0.00151406406260793,
+          "gap": 0.025955740742027396,
+          "abandoned": false
+        },
+        {
+          "scenario": "psalmTS angelic click 30% Larger",
+          "live": 84,
+          "ghost": 87,
+          "baseline": 74,
+          "pb": 87,
+          "sessionDay": "2026-08-14",
+          "delta": 0.13513513513513514,
+          "ghostDelta": 0.17567567567567569,
+          "gap": -0.04054054054054054,
+          "abandoned": false
+        },
+        {
+          "scenario": "Aimerz+ PreciseTrack Med S1",
+          "live": 2270,
+          "ghost": 2203,
+          "baseline": 2249.5,
+          "pb": 2528,
+          "sessionDay": "2026-08-15",
+          "delta": 0.009113136252500556,
+          "ghostDelta": -0.020671260280062238,
+          "gap": 0.029784396532562794,
+          "abandoned": false
+        }
+      ],
+      "at": 1790816385000,
+      "explanation": "Beat last month's you by +0.5%, averaged over three rounds against your own baseline.",
+      "id": "2026-09-30:month_ago:0",
+      "kind": "month_ago",
+      "streak": 4
+    },
+    "streak": 4,
+    "record": {
+      "wins": 6,
+      "losses": 2,
+      "played": 8
+    },
+    "notice": null,
+    "share": {
+      "enabled": false,
+      "reason": "",
+      "card": null,
+      "busy": false
+    },
+    "now": 1790816390000
+  }
+}

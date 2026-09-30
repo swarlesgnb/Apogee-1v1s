@@ -79,17 +79,62 @@ function stagedPreview() {
   const a = html.indexOf(open);
   const b = html.indexOf("</script>", a);
   if (a < 0 || b < 0) throw new Error("preview has no inlined snapshot; rebuild it with tools/buildUiPreview.ts");
+  if (!html.includes(GHOST_MARKER)) throw new Error("preview has no ghost.js; rebuild it with tools/buildUiPreview.ts");
   const snapshot = JSON.parse(html.slice(a + open.length, b));
   if (shots.demo?.match) snapshot.match = shots.demo.match;
   html = html.slice(0, a + open.length) + JSON.stringify(snapshot) + html.slice(b);
   const stage = readFileSync(join(__dirname, "stage.js"), "utf8");
-  return html.replace("<head>", "<head><script>" + stage + "</script>");
+  // Function replacers throughout: the payloads carry base64 and minified script, and a
+  // "$&" in either would be read as a replacement pattern by the string form.
+  html = html.replace("<head>", () => "<head><style>" + brandFonts() + "</style><script>" + stage + "</script>");
+  return html.replace(GHOST_MARKER, () => ghostBridge() + GHOST_MARKER);
 }
 
+/**
+ * Ghost Mode reads its screens from window.apogee, which the preview host does not
+ * provide: main draws the match, and there is no main here. The bridge answers with the
+ * frozen screens in tools/video/ghost.json (drawn by the real core, see ghostDemo.ts),
+ * the way tools/ghostUi.cjs feeds its fixture. Race and Start answer with the screen the
+ * app's GhostService would send back; the runs landing are pushed by stage.js on cue.
+ * It goes in just before ghost.js, which reads the bridge the moment it loads.
+ */
+const GHOST_MARKER = "<script>/* Ghost Mode:";
+function ghostBridge() {
+  const screens = JSON.parse(readFileSync(join(__dirname, "ghost.json"), "utf8"));
+  return `<script>(()=>{const S=${JSON.stringify(screens)};let cur=S.choose;const hs=[];` +
+    `const answer={draw:"ready",start:"started",rematch:"ready",dismiss:"choose"};` +
+    `window.__ghostPush=(name)=>{if(!S[name])throw new Error("no ghost screen "+name);cur=S[name];hs.forEach((h)=>h(cur));};` +
+    `window.apogee=Object.assign(window.apogee||{},{ghost:async()=>cur,` +
+    `ghostAction:async(a)=>{if(answer[a.type])cur=S[answer[a.type]];return {view:cur};},` +
+    `onGhost:(h)=>hs.push(h),onMatchSettled:()=>{}});})();</script>`;
+}
+
+/**
+ * The brand kit's faces as @font-face rules with the fonts inlined, under the family names
+ * the kit's own SVGs use, so a card, a caption and an inlined lockup all resolve to the
+ * same files. Inlined rather than linked because the staged pages are written into
+ * .cache/, and a relative url() from there would depend on where .cache/ is.
+ */
+function brandFonts() {
+  const face = (family, weight, file) =>
+    `@font-face{font-family:'${family}';font-weight:${weight};font-style:normal;src:url(data:font/woff2;base64,${readFileSync(join(root, "assets", "brand", "fonts", file)).toString("base64")}) format('woff2')}`;
+  return [
+    ...[400, 500, 600].map((w) => face("Apogee Display", w, `barlow-latin-${w}-normal.woff2`)),
+    ...[400, 600].map((w) => face("Apogee Mono", w, `cascadia-mono-latin-${w}-normal.woff2`)),
+  ].join("\n");
+}
+
+const dataUri = (p) => `data:${p.endsWith(".svg") ? "image/svg+xml" : "image/png"};base64,${readFileSync(join(root, p)).toString("base64")}`;
+
 function cardPage(card) {
+  const lockups = { horizontal: "assets/brand/logo/horizontal-dark.svg", stacked: "assets/brand/logo/stacked-dark.svg" };
+  const images = Object.fromEntries((card.images || []).map((im) => [im.src, dataUri(im.src)]));
   return readFileSync(join(__dirname, "card.html"), "utf8")
-    .replace("/*TOKENS*/", themeTokens())
-    .replace("/*CARD*/", JSON.stringify(card));
+    .replace("/*FONTS*/", () => brandFonts())
+    .replace("/*TOKENS*/", () => themeTokens())
+    .replace("/*CARD*/", () => JSON.stringify(card))
+    .replace("/*LOCKUPS*/", () => JSON.stringify(card.lockup ? { [card.lockup]: read(lockups[card.lockup]) } : {}))
+    .replace("/*IMAGES*/", () => JSON.stringify(images));
 }
 
 /* ------------------------------------------------------------------ camera */
@@ -197,7 +242,9 @@ async function main() {
     } else {
       if (!(scene.continue && previousKind === "app")) {
         await win.loadFile(staged);
-        win.webContents.setZoomFactor(cut.zoom || 1);
+        // A scene may set its own zoom: the ghost board is three lanes tall and has to
+        // clear the caption band, which the cut's zoom may not leave room for.
+        win.webContents.setZoomFactor(scene.zoom || cut.zoom || 1);
         // Boot, first render and the entrance animations of the landing screen, off camera.
         await sleep(1600);
         for (const s of scene.setup || []) {

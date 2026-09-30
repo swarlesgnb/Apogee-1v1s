@@ -2,41 +2,58 @@
 <html lang="en"><head><meta charset="utf-8"><title>Apogee card</title>
 <!--
   Title and caption cards for the video pipeline, filmed by tools/video/record.cjs in the
-  same offscreen Electron as the app, so the type is laid out by the same engine and fonts.
+  same offscreen Electron as the app, so the type is laid out by the same engine.
+
+  Type and logo are the brand kit's (assets/brand/, docs/overnight/brand.md): Barlow and
+  Cascadia Mono embedded by record.cjs, and the lockups inlined from assets/brand/logo/
+  rather than redrawn here, so a new lockup reaches the video on the next run. The app's
+  own Bahnschrift was the first cut; it is a Windows system font, so a trailer set in it
+  and a store page set in Barlow read as two products.
 
   Every moving thing is a pure function of t (seconds since start), drawn in one rAF loop,
   rather than CSS keyframes. That keeps a card's timing in one place, and lets `seek(t)`
-  render any instant exactly, which the recorder uses to check a card for clipping at its
-  settled frame before filming it.
+  render any instant exactly.
 
   Sizes are in vmin so one card works in 16:9 and 9:16: 1vmin is 10.8px in both.
 -->
 <style>
-  :root { /*TOKENS*/ }
+  /*FONTS*/
+  :root { /*TOKENS*/ --display: 'Apogee Display', 'Bahnschrift', sans-serif; --font: 'Apogee Display', 'Segoe UI', sans-serif; --mono: 'Apogee Mono', 'Cascadia Mono', Consolas, monospace; }
   html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: var(--ground); color: var(--ink); }
   body { font-family: var(--font); -webkit-font-smoothing: antialiased; }
   canvas { position: fixed; inset: 0; width: 100%; height: 100%; }
   .card { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center;
     padding: 0 var(--pad); box-sizing: border-box; }
   .card.center { align-items: center; text-align: center; }
-  .top { display: flex; align-items: center; gap: 1.6vmin; margin-bottom: 4vmin; }
-  .center .top { justify-content: center; }
-  .mark { width: 7vmin; height: 7vmin; color: var(--brand); flex: none; }
-  .mark path { stroke-dasharray: 100; stroke-dashoffset: 100; }
-  .eyebrow { font: 500 2.1vmin var(--mono); letter-spacing: .32em; text-transform: uppercase; color: var(--ink-dim); white-space: nowrap; }
-  .wordmark { font: 500 11vmin/1 var(--display); letter-spacing: -.05em; color: var(--ink); }
-  h1 { margin: 0; font: 600 var(--title-size)/1.02 var(--display); letter-spacing: -.035em; }
+  .top { display: flex; align-items: center; gap: 2.4vmin; margin-bottom: 4vmin; }
+  .center .top { justify-content: center; flex-direction: column; gap: 3vmin; }
+  .lockup { display: block; flex: none; }
+  .lockup.horizontal { height: 6.2vmin; width: auto; }
+  .lockup.stacked { height: 30vmin; width: auto; }
+  .eyebrow { font: 400 2.1vmin var(--mono); letter-spacing: .32em; text-transform: uppercase; color: var(--ink-dim); white-space: nowrap;
+    padding-left: 2.4vmin; border-left: 1px solid rgba(186,211,233,.22); line-height: 3.4vmin; }
+  .center .eyebrow { border-left: 0; padding-left: 0; }
+  h1 { margin: 0; font: 600 var(--title-size)/1.02 var(--display); letter-spacing: -.03em; }
   h1 .line { display: block; white-space: nowrap; }
   h1 .w { display: inline-block; will-change: transform, opacity, filter; }
   h1 em, .sub em { font-style: normal; color: var(--brand); }
   .rule { height: .35vmin; width: 0; background: var(--brand); margin: 4.4vmin 0 3.6vmin; }
   .center .rule { margin-left: auto; margin-right: auto; }
-  .sub { font: 400 var(--sub-size)/1.35 var(--font); color: var(--ink-mid); max-width: 72vmin; }
+  .sub { font: 400 var(--sub-size)/1.35 var(--font); color: var(--ink-mid); max-width: 80vmin; }
   .center .sub { margin: 0 auto; }
   .sub .line { display: block; }
   .foot { position: fixed; left: var(--pad); right: var(--pad); bottom: 6vmin; display: flex; justify-content: space-between;
-    font: 500 1.9vmin var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-dim); }
-  .center + .foot, .foot.center { justify-content: center; gap: 4vmin; }
+    font: 400 1.9vmin var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-dim); }
+  .foot.center { justify-content: center; gap: 4vmin; }
+
+  /* Showcase: the text keeps the left column and the images stack on the right, the way a
+     card lands in a feed on top of another one. In portrait they go under the text. */
+  .card.showcase { padding-right: 52vw; }
+  .shots { position: fixed; right: 5vw; top: 50%; width: 47vw; height: 0; }
+  .shots img { position: absolute; left: 0; width: 100%; height: auto; border-radius: 1.1vmin;
+    box-shadow: 0 3vmin 7vmin rgba(0,0,0,.55), 0 0 0 1px rgba(186,211,233,.14); will-change: transform, opacity; }
+  .portrait .card.showcase { padding-right: var(--pad); justify-content: flex-start; padding-top: 16vh; }
+  .portrait .shots { left: 7vw; right: 7vw; width: auto; top: 58vh; }
 </style></head>
 <body>
 <canvas id="sky"></canvas>
@@ -44,10 +61,14 @@
 <script>
 "use strict";
 const CARD = /*CARD*/;
-const MARK = "m3 20 9-17 9 17M3 20l9-6 9 6M8 11h8M12 3l0 11";
+/** assets/brand/logo/*-dark.svg, inlined by record.cjs. */
+const LOCKUPS = /*LOCKUPS*/;
+/** Image data URIs by the path shots.json names them with, inlined by record.cjs. */
+const IMAGES = /*IMAGES*/;
 const portrait = innerHeight > innerWidth;
+if (portrait) document.body.classList.add("portrait");
 document.documentElement.style.setProperty("--pad", portrait ? "8vmin" : "11vmin");
-document.documentElement.style.setProperty("--title-size", (CARD.titleSize || (portrait ? 11 : 10)) + "vmin");
+document.documentElement.style.setProperty("--title-size", ((portrait && CARD.titleSizePortrait) || CARD.titleSize || (portrait ? 11 : 10)) + "vmin");
 document.documentElement.style.setProperty("--sub-size", (portrait ? 4.1 : 3.1) + "vmin");
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -59,16 +80,40 @@ const subLines = lines(portrait && CARD.subPortrait ? CARD.subPortrait : CARD.su
 
 const card = document.getElementById("card");
 if (CARD.layout === "center") card.classList.add("center");
+if (CARD.images) card.classList.add("showcase");
+const lockup = CARD.lockup ? LOCKUPS[CARD.lockup] : "";
+if (CARD.lockup && !lockup) throw new Error("no lockup named " + CARD.lockup);
 card.innerHTML =
-  (CARD.mark || CARD.eyebrow ? `<div class="top">${CARD.mark ? `<svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path pathLength="100" d="${MARK}"/></svg>` : ""}${CARD.wordmark ? `<span class="wordmark">apogee</span>` : ""}${CARD.eyebrow ? `<span class="eyebrow">${esc(CARD.eyebrow)}</span>` : ""}</div>` : "") +
+  (lockup || CARD.eyebrow ? `<div class="top">${lockup}${CARD.eyebrow ? `<span class="eyebrow">${esc(CARD.eyebrow)}</span>` : ""}</div>` : "") +
   (titleLines.length ? `<h1>${titleLines.map((l) => `<span class="line">${inline(l).split(/(\s+)/).map((w) => (/^\s+$/.test(w) ? w : `<span class="w">${w}</span>`)).join("")}</span>`).join("")}</h1>` : "") +
   (CARD.rule !== false ? `<div class="rule"></div>` : "") +
   (subLines.length ? `<div class="sub">${subLines.map((l) => `<span class="line">${inline(l)}</span>`).join("")}</div>` : "");
+const lockupSvg = card.querySelector(".top > svg");
+if (lockupSvg) {
+  lockupSvg.classList.add("lockup", CARD.lockup);
+  // The file's own width and height are its PNG size; the card sizes it in vmin instead.
+  lockupSvg.removeAttribute("width");
+  lockupSvg.removeAttribute("height");
+  lockupSvg.querySelector("path")?.setAttribute("pathLength", "100");
+}
 if (CARD.foot) {
   const f = document.createElement("div");
   f.className = "foot" + (CARD.layout === "center" ? " center" : "");
   f.innerHTML = lines(CARD.foot).map((x) => `<span>${esc(x)}</span>`).join("");
   document.body.append(f);
+}
+const shots = [];
+if (CARD.images) {
+  const box = document.createElement("div");
+  box.className = "shots";
+  for (const im of CARD.images) {
+    const img = document.createElement("img");
+    if (!IMAGES[im.src]) throw new Error("image not inlined: " + im.src);
+    img.src = IMAGES[im.src];
+    box.append(img);
+    shots.push({ el: img, ...im });
+  }
+  document.body.append(box);
 }
 
 // A title that runs off the card is shrunk to fit rather than clipped. The recorder
@@ -76,7 +121,8 @@ if (CARD.foot) {
 const h1 = card.querySelector("h1");
 window.__fit = 1;
 if (h1) {
-  const room = innerWidth - 2 * parseFloat(getComputedStyle(card).paddingLeft);
+  const cs = getComputedStyle(card);
+  const room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
   const widest = Math.max(...[...h1.querySelectorAll(".line")].map((l) => l.scrollWidth));
   if (widest > room) {
     window.__fit = room / widest;
@@ -137,7 +183,7 @@ const clamp = (v) => Math.max(0, Math.min(1, v));
 const expo = (v) => (v >= 1 ? 1 : 1 - Math.pow(2, -10 * v));
 const words = [...card.querySelectorAll("h1 .w")];
 const topEl = card.querySelector(".top");
-const mark = card.querySelector(".mark path");
+const mark = card.querySelector(".lockup path");
 const rule = card.querySelector(".rule");
 const sub = [...card.querySelectorAll(".sub .line")];
 const foot = document.querySelector(".foot");
@@ -145,7 +191,10 @@ const at = CARD.at || 0.25;
 
 function apply(t) {
   drawSky(t);
-  if (mark) mark.style.strokeDashoffset = String(100 * (1 - expo(clamp((t - at + 0.1) / 1.4))));
+  if (mark) {
+    mark.style.strokeDasharray = "100";
+    mark.style.strokeDashoffset = String(100 * (1 - expo(clamp((t - at + 0.1) / 1.4))));
+  }
   if (topEl) { const k = expo(clamp((t - at) / 0.9)); topEl.style.opacity = k; topEl.style.transform = `translateY(${(1 - k) * 1.5}vmin)`; }
   words.forEach((w, i) => {
     const k = expo(clamp((t - at - 0.25 - i * 0.075) / 0.95));
@@ -161,6 +210,14 @@ function apply(t) {
     l.style.transform = `translateY(${(1 - k) * 1.2}vmin)`;
   });
   if (foot) foot.style.opacity = expo(clamp((t - after - 0.6) / 1));
+  // Each image slides in from below to its resting offset and tilt, then drifts with the
+  // card's push. `y` is in multiples of the image's own height, `x` of its width.
+  shots.forEach((s, i) => {
+    const k = expo(clamp((t - (s.delay ?? 0.4 + i * 0.35)) / 1.1));
+    const h = s.el.offsetHeight, w = s.el.offsetWidth;
+    s.el.style.opacity = k;
+    s.el.style.transform = `translate(${(s.x || 0) * w}px, ${(s.y ?? -0.5) * h + (1 - k) * 0.5 * h - t * (s.drift ?? 4)}px) rotate(${(s.rotate || 0) * (0.6 + 0.4 * k)}deg) scale(${s.scale || 1})`;
+  });
   // A slow push on the whole card, so a held frame is never a still.
   card.style.transform = `scale(${1 + t * 0.006})`;
 }
