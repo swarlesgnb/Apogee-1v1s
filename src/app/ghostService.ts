@@ -239,13 +239,16 @@ export class GhostService {
   onRun(run: ParsedRun, file: string): void {
     const s = this.store();
     if (!s.active || s.active.result || s.active.startedAt === null) return;
-    this.tick(false);
-    if (!s.active || s.active.result) return this.publish();
 
+    // The run first, the clock second. applyRun judges lateness by when the run ended, so
+    // a run that ended inside the grace but reached the watcher after it still counts;
+    // ticking first expired the match on the wall clock and refused it as finished.
     const incoming = this.incoming(run);
-    if (!incoming) return;
-    const { refused } = this.offer(incoming, file);
-    this.notice = refused ? REFUSAL[refused](run.scenario) : null;
+    if (incoming) {
+      const { refused } = this.offer(incoming, file);
+      this.notice = refused ? REFUSAL[refused](run.scenario) : null;
+    }
+    this.tick(false);
     this.save();
     this.publish();
   }
