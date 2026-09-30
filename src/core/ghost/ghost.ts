@@ -728,6 +728,22 @@ export interface GhostMatchView {
   /** The first round still to play, for the launch button. */
   next: string | null;
   result: GhostResult | null;
+  /**
+   * The result's best round against the player's best before the match, for the card's
+   * small "N% off your best" line. `newBest` only when the live score is strictly above
+   * the old best: equalling it is not a new one.
+   */
+  best: { scenario: string; pbGap: number; newBest: boolean } | null;
+}
+
+/** The best counted round of a result, measured against the best before the match. */
+export function bestRoundOf(result: GhostResult | null): GhostMatchView["best"] {
+  if (!result) return null;
+  const round = result.rounds
+    .filter((r) => r.live !== null && r.gap !== null && r.pb > 0)
+    .sort((a, b) => b.gap! - a.gap!)[0];
+  if (!round) return null;
+  return { scenario: round.scenario, pbGap: (round.live! - round.pb) / round.pb, newBest: round.live! > round.pb };
 }
 
 /**
@@ -764,5 +780,6 @@ export function viewOf(match: GhostMatch): GhostMatchView {
     runningMargin: gaps.length ? gaps.reduce((a, g) => a + g, 0) / gaps.length : null,
     next: match.rounds.find((r) => !r.live)?.scenario ?? null,
     result: match.result,
+    best: bestRoundOf(match.result),
   };
 }

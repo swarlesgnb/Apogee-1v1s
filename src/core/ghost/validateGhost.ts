@@ -31,6 +31,8 @@ import {
   abandonMatch,
   applyRun,
   availableKinds,
+  bestRoundOf,
+  viewOf,
   definitionOf,
   drawGhostMatch,
   drawSeed,
@@ -409,6 +411,14 @@ check("which today's abandoned match does not extend",
   ghostStreak([...records, { at: new Date(now).toISOString(), verdict: walked.result!.verdict }], now) === 3);
 check("and a win today does", ghostStreak([...records, { at: new Date(now).toISOString(), verdict: "win" }], now) === 4);
 check("a day with no win breaks it", ghostStreak([records[0], records[2]], now) === 1);
+
+// The card's distance-to-best, computed in main. Equalling a best is not a new one.
+const equalled = { ...win, rounds: win.rounds.map((r, i) => (i === 0 ? { ...r, live: r.pb, gap: 1 } : r)) };
+check("a round that equals the old best is not called a new best",
+  bestRoundOf(equalled)?.newBest === false && bestRoundOf(equalled)?.pbGap === 0);
+const beaten = { ...win, rounds: win.rounds.map((r, i) => (i === 0 ? { ...r, live: r.pb + 1, gap: 1 } : r)) };
+check("one strictly above it is", bestRoundOf(beaten)?.newBest === true);
+check("and the view carries it, so the renderer computes nothing", viewOf({ ...drawn, result: beaten }).best?.newBest === true);
 
 const rematch = rematchOf(walked, now, 1);
 check("a rematch is the same three and the same ghosts on a fresh clock",

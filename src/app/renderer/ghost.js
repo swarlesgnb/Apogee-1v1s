@@ -185,8 +185,7 @@
       : r.end === 'expired' ? 'Out of time'
       : r.verdict === 'draw' ? `Dead level with ${kind}`
       : r.verdict === 'win' ? `Beat ${kind}` : `Lost to ${kind}`;
-    const best = r.rounds.filter((x) => Number.isFinite(x.live)).sort((x, y) => (y.gap ?? -9) - (x.gap ?? -9))[0];
-    const pbGap = best && best.pb > 0 ? (best.live - best.pb) / best.pb : null;
+    const best = a.best;
     const share = screen.share || {};
     const card = share.card;
     const streak = screen.streak ?? 0;
@@ -218,7 +217,7 @@
       <div class="gh-after">
         <div class="gh-stat"><strong>${streak}</strong><span>day ghost streak${r.verdict === 'win' ? ' · today counts' : ''}</span></div>
         <div class="gh-stat"><strong>${screen.record.wins}–${screen.record.losses}</strong><span>ghost record</span></div>
-        ${pbGap !== null ? `<div class="gh-stat small"><strong>${pbGap >= 0 ? 'New best' : `${Math.abs(pbGap * 100).toFixed(1)}% off`}</strong><span>your best on ${e(best.scenario)}</span></div>` : ''}
+        ${best ? `<div class="gh-stat small"><strong>${best.newBest ? 'New best' : best.pbGap === 0 ? 'Equals your best' : `${Math.abs(best.pbGap * 100).toFixed(1)}% off`}</strong><span>your best on ${e(best.scenario)}</span></div>` : ''}
         <div class="gh-stat small"><strong>No rating change</strong><span>ghost matches never touch the ladder</span></div>
       </div>
       ${card ? `<div class="gh-card-share"><small>Share code</small><strong>${e(card.code)}</strong><span>Runs checked by the server: ${e(card.liveTier)}. Ghost rebuilt from your uploaded history. The ghost and the three were picked on your PC.</span></div>` : ''}
