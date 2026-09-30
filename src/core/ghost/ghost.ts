@@ -38,6 +38,18 @@ export function isGhostKind(value: unknown): value is GhostKind {
   return typeof value === "string" && (GHOST_KINDS as readonly string[]).includes(value);
 }
 
+/**
+ * What a match is raced against: one of the player's own past selves, or a friend's three
+ * live runs fetched by code (links.ts). A separate kind rather than a flag, so every place
+ * that reads a `GhostKind` off a match (the redraw, the share post, the chooser) has to say
+ * what it does with a friend's ghost instead of silently treating it as last week's.
+ */
+export type MatchKind = GhostKind | "friend";
+
+export function isMatchKind(value: unknown): value is MatchKind {
+  return value === "friend" || isGhostKind(value);
+}
+
 /** Structurally a `ScenarioHistory`, minus what this module does not read. */
 export interface GhostHistory {
   scenario: string;
@@ -80,6 +92,29 @@ export interface GhostRound {
   /** Best score before the match: context on the result, never the thing to beat. */
   pb: number;
   live: LiveRun | null;
+  /**
+   * The ghost side's own baseline, when it is not the player's. Absent on a match against
+   * the player's past self, where both sides share `baseline`. On a friend's ghost it is
+   * the friend's baseline at the time they played, so each side is measured against its
+   * own, as in ranked (PLAN.md §3).
+   */
+  ghostBaseline?: number;
+  /**
+   * False when the player has no baseline of their own on this scenario (fewer than
+   * MIN_RUNS_FOR_BASELINE runs before the freeze). Only a friend's ghost can produce one:
+   * a past-self match is drawn from scenarios that have a baseline. Such a round is
+   * played, shown, and left out of the verdict; `baseline` is 0 on it. Absent means true.
+   */
+  measured?: boolean;
+}
+
+/** The baseline the ghost side is measured against. */
+export function ghostBaselineOf(round: Pick<GhostRound, "baseline" | "ghostBaseline">): number {
+  return round.ghostBaseline ?? round.baseline;
+}
+
+export function isMeasured(round: Pick<GhostRound, "measured">): boolean {
+  return round.measured !== false;
 }
 
 export type GhostEnd = "complete" | "abandoned" | "expired";
@@ -93,11 +128,15 @@ export interface GhostResultRound {
   sessionDay: string;
   /** (live - baseline) / baseline, null for a round not played or not counted. */
   delta: number | null;
-  /** (ghost - baseline) / baseline. */
+  /** (ghost - ghostBaseline) / ghostBaseline: the ghost side against its own baseline. */
   ghostDelta: number;
-  /** (live - ghost) / baseline: the round's verdict in one number. */
+  /** delta - ghostDelta: the round's verdict in one number. (live - ghost) / baseline on a past self. */
   gap: number | null;
   abandoned: boolean;
+  /** The ghost side's baseline; equal to `baseline` against a past self. */
+  ghostBaseline: number;
+  /** False on a round the player has no baseline on; it is shown and not scored. */
+  measured: boolean;
 }
 
 export interface GhostResult {
@@ -116,7 +155,9 @@ export interface GhostResult {
 export interface GhostMatch {
   /** `${day}:${kind}:${ordinal}`: the seed, and a stable id for the quest board. */
   id: string;
-  kind: GhostKind;
+  kind: MatchKind;
+  /** Set on a friend's ghost: the code it was fetched by and the name it races under. */
+  link?: { code: string; sender: string };
   /** Local day the draw was made on. */
   day: string;
   ordinal: number;
@@ -178,6 +219,15 @@ export const GHOST_RECENT_DAYS = 90;
 
 /** Scenarios in a match. The ranked format's three (PLAN.md §3). */
 export const GHOST_ROUNDS = 3;
+
+/**
+ * Rounds a friend's-ghost match needs the player to have a baseline on before it can have
+ * a result. Two of three is a majority of the ranked format; one would decide a match on
+ * a single run against a single run, the variance §3's three scenarios exist to average
+ * out. A raw-score comparison on the unmeasured rounds is not a fallback: §3 threw raw
+ * scores out as the thing two players are compared on.
+ */
+export const MIN_MEASURED_ROUNDS = 2;
 
 const KINDS: Record<GhostKind, { daysBack: number; pick: "median" | "best" }> = {
   month_ago: { daysBack: 30, pick: "median" },
@@ -586,6 +636,21 @@ export const KIND_NAME: Record<GhostKind, string> = {
   last_week_best: "last week's best",
 };
 
+/** Who the ghost is, in the words the screen uses: "last week's you", "Sam's ghost". */
+export function opponentName(match: Pick<GhostMatch, "kind" | "link">): string {
+  if (match.kind === "friend") return `${match.link?.sender ?? "a friend"}'s ghost`;
+  return KIND_NAME[match.kind];
+}
+
+/**
+ * A friend's-ghost match with too few measured rounds to have a result. It is still
+ * played, for practice and to start building the baseline it lacks, and it ends void
+ * however it ends: nothing was at stake, so leaving it is not a loss either.
+ */
+export function isPractice(match: Pick<GhostMatch, "kind" | "rounds">): boolean {
+  return match.kind === "friend" && match.rounds.filter(isMeasured).length < MIN_MEASURED_ROUNDS;
+}
+
 /**
  * Score the match with `settleMatch`, so a ghost result is decided by exactly the rules
  * that decide a ranked one: both sides are `RoundSubmission`s on the same frozen
@@ -599,20 +664,25 @@ export function judge(match: GhostMatch, end: GhostEnd, at: number): GhostResult
   const live: RoundSubmission[] = [];
   const ghost: RoundSubmission[] = [];
   match.rounds.forEach((r, i) => {
-    if (!r.live) return;
+    // A round the player has no baseline on is left out of both sides, not scored raw:
+    // settleMatch needs equal counts, and §3 does not compare raw scores.
+    if (!r.live || !isMeasured(r)) return;
     // The tier matters to settleSide only when it is "rejected". Nothing on the local path
     // is verified, and the core's tier type has no "unverified" (that exists only in the
     // database enum), so both sides carry the same tier and it decides nothing.
-    const base = { scenarioId: i, scenarioName: r.scenario, baseline: r.baseline, provisional: false, verificationTier: "consistent" as const };
-    live.push({ ...base, score: r.live.score, abandoned: r.live.abandoned });
-    ghost.push({ ...base, score: r.ghost });
+    const base = { scenarioId: i, scenarioName: r.scenario, provisional: false, verificationTier: "consistent" as const };
+    live.push({ ...base, baseline: r.baseline, score: r.live.score, abandoned: r.live.abandoned });
+    // Each side against its own baseline: the player's, and the ghost's (the same one on
+    // a past self, the friend's own on a friend's ghost).
+    ghost.push({ ...base, baseline: ghostBaselineOf(r), score: r.ghost });
   });
 
   const settlement = live.length > 0 ? settleMatch({ playerRounds: live, opponentRounds: ghost }) : null;
   const rounds: GhostResultRound[] = match.rounds.map((r, i) => {
     const counted = settlement?.player.rounds.find((o) => o.scenarioId === i);
     const delta = counted?.counted ? counted.delta : null;
-    const ghostDelta = (r.ghost - r.baseline) / r.baseline;
+    const gb = ghostBaselineOf(r);
+    const ghostDelta = (r.ghost - gb) / gb;
     return {
       scenario: r.scenario,
       live: r.live?.score ?? null,
@@ -624,11 +694,27 @@ export function judge(match: GhostMatch, end: GhostEnd, at: number): GhostResult
       ghostDelta,
       gap: delta === null ? null : delta - ghostDelta,
       abandoned: r.live?.abandoned ?? false,
+      ghostBaseline: gb,
+      measured: isMeasured(r),
     };
   });
   const gaps = rounds.map((r) => r.gap).filter((g): g is number => g !== null);
   const margin = gaps.length ? gaps.reduce((a, g) => a + g, 0) / gaps.length : null;
-  const who = KIND_NAME[match.kind];
+  const who = opponentName(match);
+  const measured = match.rounds.filter(isMeasured).length;
+
+  if (isPractice(match)) {
+    return {
+      verdict: "void",
+      end,
+      margin: null,
+      rounds,
+      at,
+      explanation:
+        `Practice: you have a baseline on ${measured} of these ${GHOST_ROUNDS}, and a result needs ${MIN_MEASURED_ROUNDS}. ` +
+        `Nothing was scored, so nothing was lost. ${MIN_RUNS_FOR_BASELINE} runs on a scenario give you a baseline on it.`,
+    };
+  }
 
   if (end !== "complete") {
     const played = rounds.filter((r) => r.live !== null).length;
@@ -648,7 +734,10 @@ export function judge(match: GhostMatch, end: GhostEnd, at: number): GhostResult
   let explanation: string;
   if (verdict === "void") explanation = `No result: ${settlement!.voidReason ?? "a round did not count"}.`;
   else if (verdict === "draw") explanation = `Dead level with ${who}.`;
-  else explanation = `${verdict === "win" ? "Beat" : "Lost to"} ${who} by ${pct(Math.abs(margin ?? 0))}, averaged over three rounds against your own baseline.`;
+  else if (match.kind === "friend") {
+    const over = measured === GHOST_ROUNDS ? "three rounds" : `the ${measured} rounds you have a baseline on`;
+    explanation = `${verdict === "win" ? "Beat" : "Lost to"} ${who} by ${pct(Math.abs(margin ?? 0))}, averaged over ${over}, each of you against your own baseline.`;
+  } else explanation = `${verdict === "win" ? "Beat" : "Lost to"} ${who} by ${pct(Math.abs(margin ?? 0))}, averaged over three rounds against your own baseline.`;
 
   return { verdict, end, margin, rounds, at, explanation };
 }
@@ -690,11 +779,15 @@ export interface GhostRoundView {
   ghost: number;
   sessionDay: string;
   sessionRuns: number;
-  baseline: number;
+  /** The player's baseline; null on a round they have none on. */
+  baseline: number | null;
+  /** The ghost side's baseline: the player's own on a past self, the friend's on theirs. */
+  ghostBaseline: number;
+  measured: boolean;
   pb: number;
   live: number | null;
   abandoned: boolean;
-  /** (live - ghost) / baseline, once landed. */
+  /** Each side's delta over its own baseline, differenced, once landed and measured. */
   gap: number | null;
   /**
    * 0..1 on a scale centred on the baseline (BAR_BASELINE), BAR_SPAN either side. Scaled
@@ -716,8 +809,10 @@ function barOf(score: number, baseline: number): number {
 
 export interface GhostMatchView {
   id: string;
-  kind: GhostKind;
+  kind: MatchKind;
   kindName: string;
+  /** A friend's ghost: whose, by what code, and how many rounds can count. */
+  link: { code: string; sender: string; measured: number; practice: boolean } | null;
   started: boolean;
   startedAt: number | null;
   deadline: number | null;
@@ -752,26 +847,42 @@ export function bestRoundOf(result: GhostResult | null): GhostMatchView["best"] 
  */
 export function viewOf(match: GhostMatch): GhostMatchView {
   const rounds: GhostRoundView[] = match.rounds.map((r) => {
-    const gap = r.live && !r.live.abandoned ? (r.live.score - r.ghost) / r.baseline : null;
+    const gb = ghostBaselineOf(r);
+    const measured = isMeasured(r);
+    // Against a past self both baselines are one and this is (live - ghost) / baseline; in
+    // general it is the difference of the two deltas, which is what judge settles on.
+    const gap = r.live && !r.live.abandoned && measured
+      ? r.ghostBaseline === undefined
+        ? (r.live.score - r.ghost) / r.baseline
+        : (r.live.score - r.baseline) / r.baseline - (r.ghost - gb) / gb
+      : null;
     return {
       scenario: r.scenario,
       ghost: r.ghost,
       sessionDay: r.sessionDay,
       sessionRuns: r.sessionRuns,
-      baseline: r.baseline,
+      baseline: measured ? r.baseline : null,
+      ghostBaseline: gb,
+      measured,
       pb: r.pb,
       live: r.live?.score ?? null,
       abandoned: r.live?.abandoned ?? false,
       gap,
-      ghostBar: barOf(r.ghost, r.baseline),
-      liveBar: r.live ? barOf(r.live.score, r.baseline) : null,
+      // Each bar on its own side's baseline scale, so the middle of every bar reads "par
+      // for whoever played it". An unmeasured round has no scale of the player's own: its
+      // live bar is drawn on the ghost's, as a picture only, and the lane says so.
+      ghostBar: barOf(r.ghost, gb),
+      liveBar: r.live ? barOf(r.live.score, measured ? r.baseline : gb) : null,
     };
   });
   const gaps = rounds.map((r) => r.gap).filter((g): g is number => g !== null);
   return {
     id: match.id,
     kind: match.kind,
-    kindName: KIND_NAME[match.kind],
+    kindName: opponentName(match),
+    link: match.link
+      ? { ...match.link, measured: match.rounds.filter(isMeasured).length, practice: isPractice(match) }
+      : null,
     started: match.startedAt !== null,
     startedAt: match.startedAt,
     deadline: match.deadline,

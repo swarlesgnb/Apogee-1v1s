@@ -16,7 +16,7 @@ import { app } from "electron";
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-import { isGhostKind, type GhostKind, type GhostMatch, type GhostResult } from "../core/ghost/ghost.ts";
+import { isMatchKind, type GhostMatch, type GhostResult, type MatchKind } from "../core/ghost/ghost.ts";
 
 /** Results kept for the screen. The streak does not depend on them; see `winDays`. */
 export const GHOST_RESULTS_KEPT = 30;
@@ -26,7 +26,7 @@ const WIN_DAYS_KEPT = 400;
 
 export interface StoredGhostResult extends GhostResult {
   id: string;
-  kind: GhostKind;
+  kind: MatchKind;
   /** The streak once this result was counted, for the result screen. */
   streak: number;
 }
@@ -36,11 +36,16 @@ export interface GhostStoreState {
   active: GhostMatch | null;
   /** Newest last. */
   results: StoredGhostResult[];
-  /** Local days (YYYY-MM-DD) with a ghost win, sorted. The streak is read from these. */
+  /**
+   * Local days (YYYY-MM-DD) with a win over a past self, sorted. The streak is read from
+   * these. A friend's-ghost win is not one: the card's streak is rebuilt by the server
+   * from ghost_results, which holds past-self matches only, and a local streak that
+   * counted friend races would disagree with the card it is shared on.
+   */
   winDays: string[];
   /** Matches started on `day`: the draw's ordinal, so a new three costs finishing this one. */
   started: { day: string; count: number };
-  /** Ghost matches this install has finished, for the chooser's first-match default. */
+  /** Past-self matches this install has finished, for the chooser's first-match default. */
   finished: number;
   /**
    * The stats file behind each counted round of `active`, by scenario. Kept for Share,
@@ -68,7 +73,7 @@ function valid(v: unknown): v is GhostStoreState {
   if (typeof v.finished !== "number") return false;
   if (v.active !== null) {
     const a = v.active;
-    if (!isObject(a) || typeof a.id !== "string" || !isGhostKind(a.kind) || !Array.isArray(a.rounds) || a.rounds.length !== 3) return false;
+    if (!isObject(a) || typeof a.id !== "string" || !isMatchKind(a.kind) || !Array.isArray(a.rounds) || a.rounds.length !== 3) return false;
   }
   return true;
 }

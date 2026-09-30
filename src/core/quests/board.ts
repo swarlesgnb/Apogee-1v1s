@@ -723,7 +723,10 @@ function dailyCandidates(ctx: IssueContext): Record<"ceiling" | "floor" | "varie
       slot: "variety",
       kind: "beat_ghost",
       title: "Beat a ghost",
-      detail: "Win a ghost match against your own past runs. Any ghost counts; rating never moves.",
+      // A friend's ghost (core/ghost/links.ts) counts too: it is the same unrated race,
+      // scored against the player's own baseline, and it lands in `ghosts` like any other.
+      // It is issued on `ghostReady` alone because a friend's code cannot be promised.
+      detail: "Win a ghost match against your own past runs or a friend's. Any ghost counts; rating never moves.",
       xp: XP.beat_ghost,
       target: 1,
       unit: "ghosts",

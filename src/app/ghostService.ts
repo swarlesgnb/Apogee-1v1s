@@ -38,12 +38,13 @@ import {
   type KindAvailability,
   type RunRefusal,
 } from "../core/ghost/ghost.ts";
+import { friendMatch, isGhostLink, LINK_REFUSAL, linkOf, normaliseLinkCode } from "../core/ghost/links.ts";
 import { scanStatsFolder } from "../core/history/history.ts";
 import { dayKey } from "../core/quests/progression.ts";
 import { isAbandonedRun, runDurationSeconds } from "../core/stats/duration.ts";
 import { readStatsFolder } from "../core/stats/folderCache.ts";
 import type { ParsedRun } from "../core/stats/parseStatsFile.ts";
-import { friendlyError, isNotDeployed, postGhost, type GhostCard } from "./api.ts";
+import { ApiError, fetchGhostLink, friendlyError, isNotDeployed, postGhost, type GhostCard } from "./api.ts";
 import {
   emptyGhostState,
   loadGhostState,
@@ -93,6 +94,8 @@ export interface GhostScreen {
   record: { wins: number; losses: number; played: number };
   notice: string | null;
   share: { enabled: boolean; reason: string | null; card: GhostCard | null; busy: boolean };
+  /** Racing a friend's ghost by code: whether the field can be used now, and why not. */
+  links: { enabled: boolean; reason: string | null; busy: boolean };
   /** Main's clock when this was built, so a countdown can be drawn without deciding anything. */
   now: number;
 }
@@ -113,14 +116,18 @@ export type GhostAction =
   | { type: "rematch" }
   | { type: "abandon" }
   | { type: "dismiss" }
-  | { type: "share" };
+  | { type: "share" }
+  /** Race a friend's ghost: `code` is what the player typed, normalised in main. */
+  | { type: "link"; code: string };
 
 export function parseGhostAction(raw: unknown): GhostAction | string {
   if (!raw || typeof raw !== "object") return "no action given";
-  const a = raw as { type?: unknown; kind?: unknown };
+  const a = raw as { type?: unknown; kind?: unknown; code?: unknown };
   switch (a.type) {
     case "draw":
       return isGhostKind(a.kind) ? { type: "draw", kind: a.kind } : "unknown ghost";
+    case "link":
+      return typeof a.code === "string" ? { type: "link", code: a.code.slice(0, 64) } : "no code given";
     case "start":
     case "launch":
     case "rematch":
@@ -147,6 +154,9 @@ export class GhostService {
   private shareBlocked: { reason: string; until: number } | null = null;
   private shareBusy = false;
   private card: { resultId: string; card: GhostCard } | null = null;
+  /** As `shareBlocked`, for ghost-link: it ships undeployed and is deployed later. */
+  private linkBlocked: { reason: string; until: number } | null = null;
+  private linkBusy = false;
 
   constructor(private readonly deps: GhostDeps) {}
 
@@ -314,8 +324,12 @@ export class GhostService {
     if (s.results.some((r) => r.id === match.id)) return;
 
     const day = dayKey(new Date(match.result.at));
-    if (match.result.verdict === "win") s.winDays = [...new Set([...s.winDays, day])].sort();
-    s.finished += 1;
+    // A friend's ghost pays the quest (onFinished below) and leaves the streak and the
+    // first-race default alone; see `winDays` in ghostStore.ts.
+    if (match.kind !== "friend") {
+      if (match.result.verdict === "win") s.winDays = [...new Set([...s.winDays, day])].sort();
+      s.finished += 1;
+    }
     const streak = this.streak(new Date(match.result.at));
     const stored: StoredGhostResult = { ...match.result, id: match.id, kind: match.kind, streak };
     s.results = [...s.results, stored];
@@ -344,10 +358,18 @@ export class GhostService {
 
     let shareReason: string | null = null;
     if (!last || !s.active?.result || s.active.id !== last.id) shareReason = "Finish a match to share it.";
+    // post-ghost rebuilds a past self from the poster's own history and would refuse it.
+    else if (s.active.kind === "friend") shareReason = "A race against a friend's ghost is kept on this PC; it has no card.";
     else if (last.verdict === "void") shareReason = "A match with no result has nothing to share.";
     else if (!this.deps.signedIn()) shareReason = "Sign in with Steam to share: the server checks the runs before it makes a card.";
     else if (this.shareBlocked && Date.now() < this.shareBlocked.until) shareReason = this.shareBlocked.reason;
     else if (Object.keys(s.files).length < 3) shareReason = "The stats files behind this match are not all known, so it cannot be verified.";
+
+    let linkReason: string | null = null;
+    if (!hasFolder) linkReason = "Choose your KovaaK’s stats folder first: your side is measured against your own runs.";
+    else if (!this.deps.signedIn()) linkReason = "Sign in with Steam to race a friend’s ghost: the code is looked up on the server.";
+    else if (s.active && !s.active.result && s.active.startedAt !== null) linkReason = "Finish or abandon the match in progress first.";
+    else if (this.linkBlocked && Date.now() < this.linkBlocked.until) linkReason = this.linkBlocked.reason;
 
     return {
       signedIn: this.deps.signedIn(),
@@ -369,6 +391,7 @@ export class GhostService {
       },
       notice: this.notice,
       share: { enabled: shareReason === null && !lastCard, reason: shareReason, card: lastCard, busy: this.shareBusy },
+      links: { enabled: linkReason === null, reason: linkReason, busy: this.linkBusy },
       now: now.getTime(),
     };
   }
@@ -404,6 +427,18 @@ export class GhostService {
       case "rematch": {
         if (inProgress) return fail("Finish or abandon the match in progress first.");
         if (!s.active) return fail("There is no match to rematch.");
+        if (s.active.kind === "friend") {
+          const link = linkOf(s.active);
+          if (!link) return fail("That friend’s ghost is no longer here; enter the code again.");
+          // The same friend's runs, the player's baselines frozen again for today, and a
+          // new id: rematchOf's id is built from the daily ordinal, which friend races do
+          // not advance, so two rematches of one code would share an id and the second
+          // result would never be booked.
+          s.active = friendMatch(this.history(), now, link);
+          s.files = {};
+          this.notice = null;
+          break;
+        }
         const today = dayKey(now);
         const ordinal = s.started.day === today ? s.started.count : 0;
         // Same three and same ghosts only on the day they were frozen for. A day later the
@@ -428,7 +463,19 @@ export class GhostService {
         // today before the clock starts. Its ghosts and baselines were frozen at the start
         // of the day it was drawn on, and the match has to be played on the day it was
         // frozen for, or the server rebuilds it against a different midnight.
-        if (s.active.day !== today) {
+        if (s.active.day !== today && s.active.kind === "friend") {
+          // A friend's runs do not change overnight; only the player's baselines are
+          // frozen again, at today's midnight, as a past-self draw would be.
+          const link = linkOf(s.active);
+          s.active = link ? friendMatch(this.history(), now, link) : null;
+          s.files = {};
+          this.save();
+          this.publish();
+          return link
+            ? { view: this.view(), note: "A new day, so your baselines were frozen again: check the three and press Start again." }
+            : fail("That friend’s ghost is no longer here; enter the code again.");
+        }
+        if (s.active.day !== today && s.active.kind !== "friend") {
           const fresh = drawGhostMatch(this.history(), now, s.active.kind, s.started.day === today ? s.started.count : 0);
           if (!fresh) {
             const kind = s.active.kind;
@@ -443,8 +490,10 @@ export class GhostService {
           this.publish();
           return { view: this.view(), note: "A new day, so a new draw: check the three and press Start again." };
         }
+        // The ordinal is what stops a past-self draw being rerolled; a friend's race draws
+        // nothing, so it leaves the count alone and the day's next draw is unchanged.
+        if (s.active.kind !== "friend") s.started = { day: today, count: (s.started.day === today ? s.started.count : 0) + 1 };
         s.active = startMatch(s.active, now.getTime());
-        s.started = { day: today, count: (s.started.day === today ? s.started.count : 0) + 1 };
         this.armClock();
         this.save();
         this.publish();
@@ -473,6 +522,8 @@ export class GhostService {
         break;
       case "share":
         return this.share();
+      case "link":
+        return this.raceLink(action.code);
     }
 
     this.save();
@@ -488,6 +539,52 @@ export class GhostService {
     return launched.ok
       ? { view: this.view(), note: `Opening ${next} in KovaaK's.` }
       : { view: this.view(), error: launched.error ?? "KovaaK's could not be opened. The clock is running; open the scenario yourself." };
+  }
+
+  /**
+   * Look a friend's code up and set their ghost up to race.
+   *
+   * A malformed code is refused here, before any request, with the server's own wording.
+   * The server refuses an unknown code and the player's own. A function that is not
+   * deployed yet is a sentence and a retry later, never an error screen, as Share does.
+   */
+  private async raceLink(raw: string): Promise<{ view: GhostScreen; error?: string; note?: string }> {
+    const view = this.view();
+    if (!view.links.enabled) return { view, error: view.links.reason ?? "A friend’s ghost cannot be raced right now." };
+    const code = normaliseLinkCode(raw);
+    if (!code) return { view, error: LINK_REFUSAL.malformed.message };
+
+    this.linkBusy = true;
+    this.publish();
+    try {
+      const answer = await fetchGhostLink(code);
+      if (!isGhostLink(answer)) return { view: this.view(), error: "The server answered with something this version cannot race. Update Apogee and try again." };
+      const history = this.history();
+      const s = this.store();
+      // Checked again after the await: a run can have started a match meanwhile.
+      if (s.active && !s.active.result && s.active.startedAt !== null) return { view: this.view(), error: "Finish or abandon the match in progress first." };
+      s.active = friendMatch(history, new Date(), answer);
+      s.files = {};
+      this.notice = null;
+      this.save();
+      const measured = s.active.rounds.filter((r) => r.measured !== false).length;
+      return {
+        view: this.view(),
+        note: measured === 3 ? undefined : measured >= 2
+          ? `You have no baseline on one of these three yet: it is played for practice and the other two decide it.`
+          : `You have a baseline on ${measured} of these three, so this race is practice: it cannot win or lose.`,
+      };
+    } catch (err) {
+      if (isNotDeployed(err)) {
+        this.linkBlocked = { reason: "Ghost links are not live on the server yet.", until: Date.now() + SHARE_RETRY_MS };
+        return { view: this.view(), error: "Ghost links are not live on the server yet." };
+      }
+      // The function's refusals (unknown code, own code, rate limit) are written for the player.
+      return { view: this.view(), error: err instanceof ApiError ? err.message : friendlyError(err) };
+    } finally {
+      this.linkBusy = false;
+      this.publish();
+    }
   }
 
   /**

@@ -883,8 +883,9 @@ export interface GhostCard {
  * Supabase's gateway answers an unknown function with a 404 before any code runs, and the
  * ghost functions ship undeployed, so "not live yet" has to be told apart from "the
  * server said no" and said plainly rather than as an error. The functions' own refusals
- * are 400, 403, 409 and 429; neither ghost function answers 404 on purpose except
- * ghost-card for an unknown code, whose message names the code.
+ * are 400, 403, 409 and 429; no ghost function answers 404 on purpose except ghost-card
+ * and ghost-link for an unknown code, and both say "no ghost card" when they do
+ * (LINK_REFUSAL.unknown in core/ghost/links.ts).
  */
 export function isNotDeployed(err: unknown): boolean {
   return err instanceof ApiError && err.status === 404 && !/no ghost card/i.test(err.message);
@@ -922,4 +923,13 @@ export async function postGhost(
 
 export function fetchGhostCard(code: string): Promise<GhostCard> {
   return callFunction<GhostCard>("ghost-card", { code });
+}
+
+/**
+ * A friend's ghost by code: their three scenarios, name, live scores and baselines, and
+ * nothing else (core/ghost/links.ts). Typed `unknown` on purpose: the caller checks the
+ * shape with `isGhostLink` before a number of it is drawn.
+ */
+export function fetchGhostLink(code: string): Promise<unknown> {
+  return callFunction<unknown>("ghost-link", { code });
 }

@@ -456,6 +456,25 @@ if (history.size === 0) {
     const yesterday = recordGhost(emptyQuestState(), { id: "g0", at: new Date(since.getTime() - 3_600_000).toISOString(), kind: "last_week", verdict: "win" });
     check("nor on a ghost win from before the quest's day", measured(yesterday, beat) === 0);
 
+    // A friend's ghost (core/ghost/links.ts, kind "friend") is recorded the way main.ts
+    // records every ghost result, and must land exactly where a past-self win does: it pays
+    // beat_ghost and nothing ranked. It is the race a stranger's code starts, so it is the
+    // one most worth farming ranked counters with if it leaked.
+    const friendWin = recordGhost(emptyQuestState(), { id: "f1", at, kind: "friend", verdict: "win" });
+    check("a friend's-ghost win is recorded among ghosts, not settled matches",
+      friendWin.ghosts.length === 1 && friendWin.matches.length === 0, `${friendWin.ghosts.length} ghosts, ${friendWin.matches.length} matches`);
+    check("and pays beat_ghost", measured(friendWin, beat) === 1, `${measured(friendWin, beat)}`);
+    check("and leaves ranked_play at zero", measured(friendWin, rankedPlay) === 0, `${measured(friendWin, rankedPlay)}`);
+    check("and weekly_wins at zero", measured(friendWin, weeklyWins) === 0, `${measured(friendWin, weeklyWins)}`);
+    // A practice race (no baseline on two of the three) ends void; it must pay nothing.
+    const friendPractice = recordGhost(emptyQuestState(), { id: "f2", at, kind: "friend", verdict: "void" });
+    check("a friend's practice race pays nothing", measured(friendPractice, beat) === 0 && measured(friendPractice, weeklyWins) === 0);
+    // Several friend wins in a day still count as ghosts only; the ranked counters see none.
+    let many = emptyQuestState();
+    for (let i = 0; i < 5; i++) many = recordGhost(many, { id: `f-many-${i}`, at, kind: "friend", verdict: "win" });
+    check("five friend wins move weekly_wins by nothing", measured(many, weeklyWins) === 0 && measured(many, rankedPlay) === 0,
+      `${many.ghosts.length} ghosts recorded`);
+
     // Issued only when the library can host a ghost: a quest that cannot be done is a lie.
     // Signed out here, because that is the board it was added for: the one match-shaped
     // quest a player with no account can have.
