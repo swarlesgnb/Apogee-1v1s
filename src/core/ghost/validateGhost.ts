@@ -267,7 +267,10 @@ if (!drawn) {
 check("the same day, kind and ordinal draw the same three, later in the day too",
   JSON.stringify(again?.rounds) === JSON.stringify(drawn.rounds) && JSON.stringify(earlyInDay?.rounds) === JSON.stringify(drawn.rounds));
 const other = drawGhostMatch(history, now, "last_week", 1);
-check("a different ordinal is a different draw", other !== null && other.id !== drawn.id,
+// The scenarios, not the id: the id carries the ordinal, so comparing ids passed whatever
+// the draw did.
+check("a different ordinal is a different draw",
+  other !== null && JSON.stringify(other.rounds.map((r) => r.scenario)) !== JSON.stringify(drawn.rounds.map((r) => r.scenario)),
   other ? other.rounds.map((r) => r.scenario).join(" / ") : "none");
 check("three different scenarios", new Set(drawn.rounds.map((r) => r.scenario)).size === 3);
 check("every round has a positive ghost and baseline, and a session a week or more back",
