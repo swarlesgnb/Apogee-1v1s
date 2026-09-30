@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Apogee card</title>
+<!--
+  Title and caption cards for the video pipeline, filmed by tools/video/record.cjs in the
+  same offscreen Electron as the app, so the type is laid out by the same engine and fonts.
+
+  Every moving thing is a pure function of t (seconds since start), drawn in one rAF loop,
+  rather than CSS keyframes. That keeps a card's timing in one place, and lets `seek(t)`
+  render any instant exactly, which the recorder uses to check a card for clipping at its
+  settled frame before filming it.
+
+  Sizes are in vmin so one card works in 16:9 and 9:16: 1vmin is 10.8px in both.
+-->
+<style>
+  :root { /*TOKENS*/ }
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: var(--ground); color: var(--ink); }
+  body { font-family: var(--font); -webkit-font-smoothing: antialiased; }
+  canvas { position: fixed; inset: 0; width: 100%; height: 100%; }
+  .card { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center;
+    padding: 0 var(--pad); box-sizing: border-box; }
+  .card.center { align-items: center; text-align: center; }
+  .top { display: flex; align-items: center; gap: 1.6vmin; margin-bottom: 4vmin; }
+  .center .top { justify-content: center; }
+  .mark { width: 7vmin; height: 7vmin; color: var(--brand); flex: none; }
+  .mark path { stroke-dasharray: 100; stroke-dashoffset: 100; }
+  .eyebrow { font: 500 2.1vmin var(--mono); letter-spacing: .32em; text-transform: uppercase; color: var(--ink-dim); white-space: nowrap; }
+  .wordmark { font: 500 11vmin/1 var(--display); letter-spacing: -.05em; color: var(--ink); }
+  h1 { margin: 0; font: 600 var(--title-size)/1.02 var(--display); letter-spacing: -.035em; }
+  h1 .line { display: block; white-space: nowrap; }
+  h1 .w { display: inline-block; will-change: transform, opacity, filter; }
+  h1 em, .sub em { font-style: normal; color: var(--brand); }
+  .rule { height: .35vmin; width: 0; background: var(--brand); margin: 4.4vmin 0 3.6vmin; }
+  .center .rule { margin-left: auto; margin-right: auto; }
+  .sub { font: 400 var(--sub-size)/1.35 var(--font); color: var(--ink-mid); max-width: 72vmin; }
+  .center .sub { margin: 0 auto; }
+  .sub .line { display: block; }
+  .foot { position: fixed; left: var(--pad); right: var(--pad); bottom: 6vmin; display: flex; justify-content: space-between;
+    font: 500 1.9vmin var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--ink-dim); }
+  .center + .foot, .foot.center { justify-content: center; gap: 4vmin; }
+</style></head>
+<body>
+<canvas id="sky"></canvas>
+<div class="card" id="card"></div>
+<script>
+"use strict";
+const CARD = /*CARD*/;
+const MARK = "m3 20 9-17 9 17M3 20l9-6 9 6M8 11h8M12 3l0 11";
+const portrait = innerHeight > innerWidth;
+document.documentElement.style.setProperty("--pad", portrait ? "8vmin" : "11vmin");
+document.documentElement.style.setProperty("--title-size", (CARD.titleSize || (portrait ? 11 : 10)) + "vmin");
+document.documentElement.style.setProperty("--sub-size", (portrait ? 4.1 : 3.1) + "vmin");
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+/** `*word*` is the one accent the theme allows: the brand ink, nothing louder. */
+const inline = (s) => esc(s).replace(/\*([^*]+)\*/g, "<em>$1</em>");
+const lines = (v) => (Array.isArray(v) ? v : v ? [v] : []);
+const titleLines = lines(portrait && CARD.titlePortrait ? CARD.titlePortrait : CARD.title);
+const subLines = lines(portrait && CARD.subPortrait ? CARD.subPortrait : CARD.sub);
+
+const card = document.getElementById("card");
+if (CARD.layout === "center") card.classList.add("center");
+card.innerHTML =
+  (CARD.mark || CARD.eyebrow ? `<div class="top">${CARD.mark ? `<svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path pathLength="100" d="${MARK}"/></svg>` : ""}${CARD.wordmark ? `<span class="wordmark">apogee</span>` : ""}${CARD.eyebrow ? `<span class="eyebrow">${esc(CARD.eyebrow)}</span>` : ""}</div>` : "") +
+  (titleLines.length ? `<h1>${titleLines.map((l) => `<span class="line">${inline(l).split(/(\s+)/).map((w) => (/^\s+$/.test(w) ? w : `<span class="w">${w}</span>`)).join("")}</span>`).join("")}</h1>` : "") +
+  (CARD.rule !== false ? `<div class="rule"></div>` : "") +
+  (subLines.length ? `<div class="sub">${subLines.map((l) => `<span class="line">${inline(l)}</span>`).join("")}</div>` : "");
+if (CARD.foot) {
+  const f = document.createElement("div");
+  f.className = "foot" + (CARD.layout === "center" ? " center" : "");
+  f.innerHTML = lines(CARD.foot).map((x) => `<span>${esc(x)}</span>`).join("");
+  document.body.append(f);
+}
+
+// A title that runs off the card is shrunk to fit rather than clipped. The recorder
+// still reports it, because a line that needed shrinking usually wants rewriting.
+const h1 = card.querySelector("h1");
+window.__fit = 1;
+if (h1) {
+  const room = innerWidth - 2 * parseFloat(getComputedStyle(card).paddingLeft);
+  const widest = Math.max(...[...h1.querySelectorAll(".line")].map((l) => l.scrollWidth));
+  if (widest > room) {
+    window.__fit = room / widest;
+    h1.style.fontSize = parseFloat(getComputedStyle(h1).fontSize) * window.__fit * 0.98 + "px";
+  }
+}
+
+/* ---------------------------------------------------------------- sky */
+
+const sky = document.getElementById("sky");
+const g = sky.getContext("2d");
+sky.width = innerWidth; sky.height = innerHeight;
+let seed = 9173;
+const rnd = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+const stars = Array.from({ length: 260 }, () => ({ x: rnd(), y: rnd(), z: 0.2 + rnd() * 0.8, p: rnd() * 6.28 }));
+const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const [br, bg, bb] = hex(getComputedStyle(document.documentElement).getPropertyValue("--brand").trim() || "#e5edb0");
+
+function drawSky(t) {
+  const W = sky.width, H = sky.height, m = Math.min(W, H);
+  g.clearRect(0, 0, W, H);
+  // The app's own ground glow (cosmic.css body::before), pushed a little for a full frame.
+  const glow = g.createRadialGradient(W * 0.86, H * 0.08, 0, W * 0.86, H * 0.08, Math.max(W, H) * 0.75);
+  glow.addColorStop(0, "rgba(50,68,82,.42)"); glow.addColorStop(1, "rgba(50,68,82,0)");
+  g.fillStyle = glow; g.fillRect(0, 0, W, H);
+  const low = g.createRadialGradient(W * 0.1, H * 1.05, 0, W * 0.1, H * 1.05, m * 0.9);
+  low.addColorStop(0, `rgba(${br},${bg},${bb},.07)`); low.addColorStop(1, `rgba(${br},${bg},${bb},0)`);
+  g.fillStyle = low; g.fillRect(0, 0, W, H);
+  // Orbits: the star chart's rings, turning slowly enough to read as depth, not motion.
+  g.save();
+  g.translate(W * (portrait ? 0.5 : 0.72), H * (portrait ? 0.34 : 0.5));
+  g.rotate(-0.42 + t * 0.018);
+  for (let i = 0; i < 3; i++) {
+    g.beginPath();
+    g.ellipse(0, 0, m * (0.42 + i * 0.2), m * (0.15 + i * 0.07), 0, 0, Math.PI * 2);
+    g.strokeStyle = `rgba(186,211,233,${0.09 - i * 0.02})`;
+    g.lineWidth = 1.2;
+    g.stroke();
+    // A body on each ring, so the rotation is visible at all.
+    const a = t * (0.16 - i * 0.04) + i * 2.1;
+    g.beginPath();
+    g.arc(Math.cos(a) * m * (0.42 + i * 0.2), Math.sin(a) * m * (0.15 + i * 0.07), m * (0.005 - i * 0.001), 0, Math.PI * 2);
+    g.fillStyle = i === 0 ? `rgba(${br},${bg},${bb},.8)` : "rgba(171,197,220,.55)";
+    g.fill();
+  }
+  g.restore();
+  for (const s of stars) {
+    const x = ((s.x + t * 0.004 * s.z) % 1) * W, y = s.y * H;
+    const a = 0.25 + 0.45 * s.z * (0.75 + 0.25 * Math.sin(t * 1.3 + s.p));
+    g.fillStyle = `rgba(171,197,220,${a})`;
+    g.fillRect(x, y, s.z * 1.9, s.z * 1.9);
+  }
+}
+
+/* ------------------------------------------------------------ timeline */
+
+const clamp = (v) => Math.max(0, Math.min(1, v));
+const expo = (v) => (v >= 1 ? 1 : 1 - Math.pow(2, -10 * v));
+const words = [...card.querySelectorAll("h1 .w")];
+const topEl = card.querySelector(".top");
+const mark = card.querySelector(".mark path");
+const rule = card.querySelector(".rule");
+const sub = [...card.querySelectorAll(".sub .line")];
+const foot = document.querySelector(".foot");
+const at = CARD.at || 0.25;
+
+function apply(t) {
+  drawSky(t);
+  if (mark) mark.style.strokeDashoffset = String(100 * (1 - expo(clamp((t - at + 0.1) / 1.4))));
+  if (topEl) { const k = expo(clamp((t - at) / 0.9)); topEl.style.opacity = k; topEl.style.transform = `translateY(${(1 - k) * 1.5}vmin)`; }
+  words.forEach((w, i) => {
+    const k = expo(clamp((t - at - 0.25 - i * 0.075) / 0.95));
+    w.style.opacity = k;
+    w.style.transform = `translateY(${(1 - k) * 0.42}em)`;
+    w.style.filter = k > 0.995 ? "none" : `blur(${(1 - k) * 10}px)`;
+  });
+  const after = at + 0.35 + words.length * 0.075;
+  if (rule) rule.style.width = 14 * expo(clamp((t - after) / 1.2)) + "vmin";
+  sub.forEach((l, i) => {
+    const k = expo(clamp((t - after - 0.2 - i * 0.12) / 0.9));
+    l.style.opacity = k;
+    l.style.transform = `translateY(${(1 - k) * 1.2}vmin)`;
+  });
+  if (foot) foot.style.opacity = expo(clamp((t - after - 0.6) / 1));
+  // A slow push on the whole card, so a held frame is never a still.
+  card.style.transform = `scale(${1 + t * 0.006})`;
+}
+
+let t0 = null;
+window.__card = {
+  start() { t0 = performance.now(); },
+  seek(t) { t0 = null; apply(t); },
+};
+apply(0);
+(function loop(now) {
+  if (t0 !== null) apply((now - t0) / 1000);
+  requestAnimationFrame(loop);
+})(performance.now());
+</script>
+</body></html>

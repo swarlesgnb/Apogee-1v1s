@@ -1,0 +1,161 @@
+{
+  "about": "Shot list for npm run video. Scenes are filmed in order per cut; `seconds` is the clip length before transitions overlap it. `card` scenes are tools/video/card.html; `app` scenes are the real renderer on data/snapshot.json with `demo.match` in place of the snapshot's example match. `setup` runs before the camera rolls, `steps` at `at` seconds after. `continue` keeps the previous scene's page, so a cut between them is invisible. Scenes with enabled:false are skipped unless named in --with.",
+  "fps": 30,
+  "demo": {
+    "match": {
+      "seed": "apogee-video-demo-01",
+      "category": "Speed Switching",
+      "opponent": { "name": "ravenous", "rating": 1633, "tier": { "id": "tier-4", "name": "Lunar", "percentile": [35, 50], "color": "#29008a" } },
+      "winProbability": 0.48,
+      "verdict": "win",
+      "explanation": "You win: +1.8% vs +0.9% against your own baselines. They scored more raw points in every round, but you beat your own baseline by more, and that is what decides a round.",
+      "ratingWeight": 1,
+      "playerMatchScore": 0.018,
+      "opponentMatchScore": 0.0087,
+      "rounds": [
+        { "label": "Apogee DNAts Intermediate", "you": { "score": 3251, "baseline": 3120, "delta": 0.041987 }, "them": { "score": 3410, "baseline": 3340, "delta": 0.020958 } },
+        { "label": "Apogee CockpiTS Intermediate", "you": { "score": 2922, "baseline": 2870, "delta": 0.018118 }, "them": { "score": 3083, "baseline": 3010, "delta": 0.024252 } },
+        { "label": "Apogee ZeniTS Intermediate", "you": { "score": 2624, "baseline": 2640, "delta": -0.006061 }, "them": { "score": 2663, "baseline": 2715, "delta": -0.019153 } }
+      ]
+    }
+  },
+  "cuts": {
+    "trailer": {
+      "out": "apogee-trailer-16x9.mp4",
+      "width": 1920,
+      "height": 1080,
+      "zoom": 1.25,
+      "transition": { "type": "fade", "seconds": 0.5 },
+      "scenes": [
+        {
+          "id": "hook", "kind": "card", "seconds": 4.6,
+          "card": { "mark": true, "eyebrow": "Apogee · Season 1", "title": ["Ranked 1v1", "for *KovaaK's*."], "sub": ["Queue a category. Play three scenarios.", "The ladder settles itself."] }
+        },
+        {
+          "id": "queue", "kind": "app", "seconds": 8.6,
+          "setup": [{ "do": "screen", "screen": "queue" }],
+          "steps": [
+            { "at": 0.2, "do": "caption", "index": "01", "text": "Queue a category", "sub": "Six aim categories. Pick one, or take any." },
+            { "at": 0.7, "do": "scroll", "selector": ".queue-stage", "offset": 0.03, "ms": 1500 },
+            { "at": 2.4, "do": "click", "selector": "#cats .cat", "text": "Speed Switching", "ms": 800 },
+            { "at": 3.7, "do": "click", "selector": "#queueBtn", "press": false, "ms": 700 },
+            { "at": 4.5, "do": "demo", "name": "search", "category": "Speed Switching" },
+            { "at": 6.7, "do": "demo", "name": "found", "note": "demo opponent · stored run" },
+            { "at": 6.8, "do": "hidePointer" },
+            { "at": 6.9, "do": "scroll", "selector": "#opponent", "offset": 0.04, "ms": 1300 }
+          ]
+        },
+        {
+          "id": "scenarios", "kind": "app", "seconds": 7.6, "continue": true, "transition": { "type": "cut" },
+          "steps": [
+            { "at": 0.1, "do": "caption", "index": "02", "text": "Play three scenarios", "sub": "In KovaaK's, as you always do. First run on each counts." },
+            { "at": 1.5, "do": "demo", "name": "land", "index": 0, "tier": "verified" },
+            { "at": 2.9, "do": "demo", "name": "land", "index": 1, "tier": "verified" },
+            { "at": 4.3, "do": "demo", "name": "land", "index": 2, "tier": "verified" },
+            { "at": 5.1, "do": "caption", "index": "02", "text": "Read from the stats folder", "sub": "Every score comes straight from the game. Nothing is typed in." }
+          ]
+        },
+        {
+          "id": "never-typed", "kind": "card", "seconds": 3.8,
+          "card": { "eyebrow": "No screenshots. No honour system.", "title": ["Scores come straight", "from *the game*."], "sub": ["Baselines, deltas and ratings are settled on the server."] }
+        },
+        {
+          "id": "result", "kind": "app", "seconds": 8.4,
+          "setup": [{ "do": "screen", "screen": "result" }],
+          "steps": [
+            { "at": 0.05, "do": "demo", "name": "result", "provenance": "Demo match · illustrative opponent" },
+            { "at": 0.3, "do": "caption", "index": "03", "text": "Beat your own baseline", "sub": "Each round goes to the bigger improvement, not the bigger score." },
+            { "at": 3.8, "do": "scroll", "selector": "#debriefRounds", "offset": 0.06, "ms": 1500 },
+            { "at": 6.0, "do": "scroll", "selector": "#roundsBody", "offset": 0.22, "ms": 1400 }
+          ]
+        },
+        {
+          "id": "ladder", "kind": "app", "seconds": 7.0,
+          "setup": [{ "do": "screen", "screen": "ranks" }],
+          "steps": [
+            { "at": 0.3, "do": "caption", "index": "04", "text": "The ladder settles itself", "sub": "Ratings move after every match. Ranks follow the population." },
+            { "at": 3.4, "do": "scroll", "selector": "#screen-ranks h2", "text": "Benchmark standing", "offset": 0.05, "ms": 2000 }
+          ]
+        },
+        {
+          "id": "rank-reveal", "kind": "app", "seconds": 4.6, "continue": true, "transition": { "type": "cut" },
+          "steps": [
+            { "at": 0.0, "do": "caption", "hide": true },
+            { "at": 0.35, "do": "demo", "name": "promotion", "from": "Carbine", "to": "Rifle" }
+          ]
+        },
+        {
+          "id": "expedition", "kind": "app", "seconds": 5.6,
+          "setup": [{ "do": "screen", "screen": "expedition" }, { "do": "scroll", "selector": ".exp-map", "offset": 0.02, "ms": 1 }],
+          "steps": [
+            { "at": 0.3, "do": "caption", "index": "05", "text": "Practice between matches", "sub": "First Light: six planets, one per aim category." }
+          ]
+        },
+        {
+          "id": "mechanic-headline", "kind": "card", "seconds": 4.0, "enabled": false,
+          "placeholder": "Reserved for the new mechanic once its branch merges: replace with an app scene that shows it working.",
+          "card": { "eyebrow": "New in Apogee", "title": ["Mechanic headline", "*goes here*."], "sub": ["Placeholder scene. See docs/overnight/video.md."] }
+        },
+        {
+          "id": "share-card", "kind": "card", "seconds": 3.6, "enabled": false,
+          "placeholder": "Reserved for the shareable result card once it exists: film it from the Last match screen.",
+          "card": { "eyebrow": "Share it", "title": ["Your result,", "*one image*."], "sub": ["Placeholder scene. See docs/overnight/video.md."] }
+        },
+        {
+          "id": "close", "kind": "card", "seconds": 5.4,
+          "card": { "layout": "center", "mark": true, "wordmark": true, "rule": true, "title": [], "sub": ["Ranked 1v1 for KovaaK's.", "Queue a category, play three scenarios,", "the ladder settles itself."], "foot": ["Free for Windows", "github.com/swarlesgnb/Apogee-1v1s"] }
+        }
+      ]
+    },
+    "teaser": {
+      "out": "apogee-teaser-9x16.mp4",
+      "width": 1080,
+      "height": 1920,
+      "zoom": 1.5,
+      "transition": { "type": "fade", "seconds": 0.4 },
+      "scenes": [
+        {
+          "id": "hook", "kind": "card", "seconds": 3.0,
+          "card": { "mark": true, "eyebrow": "Apogee", "title": ["Ranked 1v1", "for *KovaaK's*."], "sub": ["Three scenarios. One opponent.", "Scores straight from the game."] }
+        },
+        {
+          "id": "queue", "kind": "app", "seconds": 3.4,
+          "setup": [{ "do": "screen", "screen": "queue" }, { "do": "scroll", "selector": ".queue-stage", "offset": 0.02, "ms": 1 }],
+          "steps": [
+            { "at": 0.0, "do": "caption", "index": "01", "text": "Queue a category" },
+            { "at": 0.2, "do": "click", "selector": "#cats .cat", "text": "Speed Switching", "ms": 500 },
+            { "at": 1.0, "do": "click", "selector": "#queueBtn", "press": false, "ms": 450 },
+            { "at": 1.5, "do": "demo", "name": "search", "category": "Speed Switching" },
+            { "at": 2.5, "do": "demo", "name": "found", "note": "demo opponent" },
+            { "at": 2.55, "do": "hidePointer" },
+            { "at": 2.6, "do": "scroll", "selector": "#opponent", "offset": 0.02, "ms": 700 }
+          ]
+        },
+        {
+          "id": "scenarios", "kind": "app", "seconds": 3.2, "continue": true, "transition": { "type": "cut" },
+          "steps": [
+            { "at": 0.0, "do": "caption", "index": "02", "text": "Play three", "sub": "Scores read from the game." },
+            { "at": 0.0, "do": "scroll", "selector": "#todoList", "offset": 0.3, "ms": 450 },
+            { "at": 0.4, "do": "demo", "name": "land", "index": 0, "tier": "verified" },
+            { "at": 1.1, "do": "demo", "name": "land", "index": 1, "tier": "verified" },
+            { "at": 1.8, "do": "demo", "name": "land", "index": 2, "tier": "verified" }
+          ]
+        },
+        {
+          "id": "result", "kind": "app", "seconds": 3.2,
+          "setup": [{ "do": "screen", "screen": "result" }],
+          "steps": [
+            { "at": 0.0, "do": "demo", "name": "result", "provenance": "Demo match · illustrative opponent" },
+            { "at": 0.1, "do": "caption", "index": "03", "text": "Beat your baseline", "sub": "Bigger improvement wins the round." },
+            { "at": 1.5, "do": "scroll", "selector": "#debriefRounds", "offset": 0.04, "ms": 1000 }
+          ]
+        },
+        {
+          "id": "close", "kind": "card", "seconds": 3.4,
+          "card": { "layout": "center", "mark": true, "wordmark": true, "title": [], "sub": ["Ranked 1v1 for KovaaK's.", "The ladder settles itself."], "foot": ["Free for Windows"] }
+        }
+      ]
+    }
+  },
+  "gif": { "from": "trailer", "scene": "queue", "seconds": 11, "width": 800, "fps": 15, "maxBytes": 8000000 }
+}

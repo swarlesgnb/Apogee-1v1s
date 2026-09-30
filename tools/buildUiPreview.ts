@@ -18,7 +18,9 @@ import { sampleTournamentView } from "../src/core/tournament/sample.ts";
 import { loadExpedition, rewardCatalog } from "../src/core/expedition/definition.ts";
 
 const RENDERER_DIR = new URL("../src/app/renderer/", import.meta.url);
-const OUT = new URL("./apogee-ui-preview.html", import.meta.url);
+// APOGEE_PREVIEW_OUT lets a tool build its own copy (the video pipeline does) without
+// rewriting the tracked preview, which would leave every render as a dirty working tree.
+const OUT: string | URL = process.env.APOGEE_PREVIEW_OUT ?? new URL("./apogee-ui-preview.html", import.meta.url);
 
 const snapshot = readFileSync(new URL("../data/snapshot.json", import.meta.url), "utf8");
 
@@ -157,7 +159,7 @@ ${rendererJs}
 writeFileSync(OUT, html, "utf8");
 
 console.log(
-  `wrote tools/apogee-ui-preview.html  (${(html.length / 1024).toFixed(0)} KB, ` +
+  `wrote ${process.env.APOGEE_PREVIEW_OUT ?? "tools/apogee-ui-preview.html"}  (${(html.length / 1024).toFixed(0)} KB, ` +
     `renderer ${(rendererJs.length / 1024).toFixed(0)} KB, ` +
     `snapshot ${(snapshot.length / 1024).toFixed(0)} KB` +
     `${practice ? `, ${practice.scenarios.length} practice rows` : ", no practice list"})`,
