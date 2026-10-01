@@ -26,6 +26,7 @@ import {
   type GhostMatch,
 } from "../src/core/ghost/ghost.ts";
 import { scanStatsFolder } from "../src/core/history/history.ts";
+import { friendMatch } from "../src/core/ghost/links.ts";
 
 const dir = process.argv[2] ?? "E:\\Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats";
 const history = scanStatsFolder(dir);
@@ -65,14 +66,21 @@ const base = (active: GhostMatch | null, extra: Record<string, unknown> = {}) =>
   record: { wins: 5, losses: 2, played: 7 },
   notice: null,
   share: { enabled: false, reason: "Sign in with Steam to share: the server checks the runs before it makes a card.", card: null, busy: false },
+  links: { enabled: false, reason: "Sign in with Steam to race a friend's ghost.", busy: false },
   now: now.getTime() - 90_000,
   ...extra,
 });
 
+const link = { code: "ABCD2345", sender: "A friend", rounds: drawn.rounds.map(r => ({ scenario: r.scenario, score: r.ghost, baseline: r.baseline * 0.9 })) };
+const friend = friendMatch(history, now, link);
+const practiceFriend = startMatch(friendMatch(new Map(), now, link), t0);
 const screens = {
   choose: base(null),
   firstChoose: base(null, { defaultKind: defaultKind(kinds, false), streak: 0, record: { wins: 0, losses: 0, played: 0 } }),
   ready: base(drawn),
+  linkChoose: base(null, { signedIn: true, links: { enabled: true, reason: null, busy: false } }),
+  friendReady: base(friend),
+  friendPractice: base(practiceFriend),
   live: base(one),
   liveTwo: base(two, { notice: `${two.rounds[0].scenario} already counted. First run per scenario only; this one was practice.` }),
   result: base(done, { streak: 4, record: { wins: 6, losses: 2, played: 8 }, last: { ...done.result, id: done.id, kind: done.kind, streak: 4 } }),

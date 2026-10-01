@@ -570,6 +570,9 @@ async function main(): Promise<void> {
     // means anything without knowing who is asking.
     "post-ghost",
     "ghost-card",
+    // A ghost link refuses the caller's own code and is rate limited per player, and an
+    // anonymous lookup would be an unmetered way to guess codes.
+    "ghost-link",
   ];
   for (const name of authedFunctions) {
     const res = await fetch(`${fnBase}/${name}`, {

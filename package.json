@@ -46,7 +46,7 @@
     "measure:coldstart": "tsx src/core/history/coldStart.ts",
     "snapshot": "tsx src/core/report/exportSnapshot.ts",
     "ui": "npm run build:cosmic && tsx src/core/report/exportSnapshot.ts && tsx tools/buildUiPreview.ts",
-    "validate": "npm run validate:expedition && npm run validate:parser && npm run validate:duration && npm run validate:season && npm run validate:pool && npm run validate:thresholds && npm run validate:aimtypes && npm run validate:standing && npm run validate:engine && npm run validate:ranks && npm run validate:sync && npm run validate:verify && npm run validate:kovaaks && npm run validate:glicko && npm run validate:match && npm run validate:duels && npm run validate:tournament && npm run validate:playlist && npm run validate:quests && npm run validate:ghost && npm run validate:live && npm run validate:schema && npm run validate:functions && npm run validate:sound && npm run validate:orb && npm run validate:theme && npm run validate:counter && npm run validate:progression && npm run validate:presentation && npm run validate:sce && npm run validate:season-files",
+    "validate": "npm run validate:expedition && npm run validate:parser && npm run validate:duration && npm run validate:season && npm run validate:pool && npm run validate:thresholds && npm run validate:aimtypes && npm run validate:standing && npm run validate:engine && npm run validate:ranks && npm run validate:sync && npm run validate:verify && npm run validate:kovaaks && npm run validate:glicko && npm run validate:match && npm run validate:duels && npm run validate:tournament && npm run validate:playlist && npm run validate:quests && npm run validate:ghost && npm run validate:ghost-links && npm run validate:live && npm run validate:schema && npm run validate:functions && npm run validate:sound && npm run validate:orb && npm run validate:theme && npm run validate:counter && npm run validate:progression && npm run validate:presentation && npm run validate:sce && npm run validate:season-files",
     "ranks": "tsx src/core/ranks/validateRanks.ts",
     "typecheck": "tsc --noEmit",
     "build:app": "npm run build:cosmic && node tools/buildApp.mjs",
@@ -81,7 +81,7 @@
     "push:season": "tsx tools/pushSeason.ts",
     "fetch:evxl": "tsx tools/fetchEvxlRegistry.ts",
     "sync:reference": "tsx tools/syncReferenceData.ts",
-    "deploy:functions": "npx supabase functions deploy steam-auth && npx supabase functions deploy submit-run && npx supabase functions deploy find-match && npx supabase functions deploy settle-match && npx supabase functions deploy abandon-match && npx supabase functions deploy refresh-baselines && npx supabase functions deploy refresh-apex && npx supabase functions deploy apex-board && npx supabase functions deploy send-duel && npx supabase functions deploy answer-duel && npx supabase functions deploy list-duels && npx supabase functions deploy list-tournaments && npx supabase functions deploy tournament-action && npx supabase functions deploy play-fixture && npx supabase functions deploy post-ghost && npx supabase functions deploy ghost-card",
+    "deploy:functions": "npx supabase functions deploy steam-auth && npx supabase functions deploy submit-run && npx supabase functions deploy find-match && npx supabase functions deploy settle-match && npx supabase functions deploy abandon-match && npx supabase functions deploy refresh-baselines && npx supabase functions deploy refresh-apex && npx supabase functions deploy apex-board && npx supabase functions deploy send-duel && npx supabase functions deploy answer-duel && npx supabase functions deploy list-duels && npx supabase functions deploy list-tournaments && npx supabase functions deploy tournament-action && npx supabase functions deploy play-fixture && npx supabase functions deploy post-ghost && npx supabase functions deploy ghost-card && npx supabase functions deploy ghost-link",
     "validate:progression": "tsx src/core/quests/validateProgression.ts",
     "validate:consistency": "tsx src/core/consistency/report.ts --compare",
     "consistency": "tsx src/core/consistency/report.ts",
@@ -105,7 +105,9 @@
     "workshop:status": "tsx tools/workshopStatus.ts",
     "workshop:previews": "electron tools/workshopPreviews.cjs",
     "workshop:upload": "tsx tools/workshopUpload.ts",
-    "video": "node tools/video/make.mjs"
+    "video": "node tools/video/make.mjs",
+    "validate:ghost-links": "tsx src/core/ghost/validateGhostLinks.ts",
+    "validate:share": "npm run build:app && node tools/buildShareTest.mjs && electron .cache/share-test.cjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",

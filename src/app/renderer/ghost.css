@@ -172,3 +172,10 @@
   .gh-lane.fresh .gh-bar i, .gh-lane.fresh .gh-lane-verdict, .gh-result.gh-v-win .gh-verdict, .gh-lane.listening .gh-lane-verdict::before { animation: none; }
 }
 body[data-presentation-paused] #ghostRoot * { animation-play-state: paused !important; }
+
+.gh-link { margin-top: 28px; padding: 20px; border: 1px solid var(--rule); border-radius: 12px; }
+.gh-link label { font-weight: 600; }
+.gh-link p, .gh-link small { color: var(--ink-dim); }
+.gh-link > div { display: flex; gap: 12px; flex-wrap: wrap; margin: 12px 0; }
+.gh-link input { min-width: 0; max-width: 100%; padding: 10px; background: var(--well); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; font: inherit; }
+.gh-link input:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }

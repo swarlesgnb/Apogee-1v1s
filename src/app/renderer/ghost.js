@@ -27,6 +27,7 @@
   let lastDefault;
   let busy = false;
   let message = '';
+  let linkCode = '';
   /** Main's news about the last action ("a new day, so a new draw"), as opposed to a failure. */
   let note = '';
   let confirmAbandon = false;
@@ -110,7 +111,14 @@
         <button type="button" class="gh-primary" data-gh="draw" ${none || !selected || busy ? 'disabled' : ''}>Race ${e(kinds.find((k) => k.kind === selected)?.name || 'your ghost')} <span aria-hidden="true">→</span></button>
         <span class="gh-note">You pick the ghost. The three scenarios are drawn for you, the same three all day.</span>
       </div>
-      ${last ? `<div class="gh-lastline">Last race: <b class="${e(tone(last.margin))}">${e(verdictWord(last))}</b> ${Number.isFinite(last.margin) ? pct(last.margin) : ''} · record ${screen.record.wins}–${screen.record.losses}</div>` : ''}`;
+      ${last ? `<div class="gh-lastline">Last race: <b class="${e(tone(last.margin))}">${e(verdictWord(last))}</b> ${Number.isFinite(last.margin) ? pct(last.margin) : ''} · record ${screen.record.wins}–${screen.record.losses}</div>` : ''}
+      <form class="gh-link" data-gh-link>
+        <label for="ghostLinkCode">Race a friend's ghost</label>
+        <p>Paste their ghost code. Each side races against its own baseline; nothing is rated.</p>
+        <div><input id="ghostLinkCode" name="code" maxlength="64" autocomplete="off" spellcheck="false" placeholder="ABCD2345" value="${e(linkCode)}" ${screen.links?.enabled && !busy ? '' : 'disabled'} aria-describedby="ghostLinkHelp">
+        <button type="submit" ${screen.links?.enabled && !screen.links?.busy && !busy ? '' : 'disabled'}>${screen.links?.busy ? 'Looking up…' : 'Find ghost'}</button></div>
+        <small id="ghostLinkHelp">${e(screen.links?.reason || 'Two measured rounds are needed for a result. Otherwise, the race is practice.')}</small>
+      </form>`;
   }
 
   function verdictWord(r) {
@@ -127,7 +135,7 @@
     const key = `${a.id}:${i}`;
     const fresh = landed && !revealed.has(key);
     const gap = r.gap;
-    const verdict = r.abandoned ? 'Left early · does not count' : landed ? `${pct(gap)} vs ${e(a.kindName)}` : isNext ? 'Listening for your run' : a.started ? 'Waiting' : 'Not started';
+    const verdict = r.measured === false ? 'Practice round · no baseline yet' : r.abandoned ? 'Left early · does not count' : landed ? `${pct(gap)} vs ${e(a.kindName)}` : isNext ? 'Listening for your run' : a.started ? 'Waiting' : 'Not started';
     return `<li class="gh-lane ${landed ? 'landed' : ''} ${isNext ? 'listening' : ''} ${fresh ? 'fresh' : ''} ${landed ? tone(gap) : ''}" data-lane="${i}" style="--ghost:${(r.ghostBar * 100).toFixed(2)}%;--live:${((r.liveBar ?? 0) * 100).toFixed(2)}%">
       <div class="gh-lane-head">
         <span class="gh-round">${i + 1}</span>
@@ -139,7 +147,7 @@
         <div class="gh-bar live"><i></i><span>${landed ? num(r.live) : ''}</span></div>
         <div class="gh-baseline" title="Your baseline: the middle of every bar"></div>
       </div>
-      <div class="gh-lane-foot"><span>ghost: ${e(day(r.sessionDay))}, ${r.sessionRuns === 1 ? 'one run' : `median of ${r.sessionRuns}`}${a.kind === 'last_week_best' ? ' · best' : ''}</span><span>baseline ${num(r.baseline)} · best ${num(r.pb)}</span></div>
+      <div class="gh-lane-foot"><span>${a.kind === 'friend' ? `friend's baseline ${num(r.ghostBaseline)}` : `ghost: ${e(day(r.sessionDay))}, ${r.sessionRuns === 1 ? 'one run' : `median of ${r.sessionRuns}`}${a.kind === 'last_week_best' ? ' · best' : ''}`}</span><span>${r.measured === false ? 'No baseline · bars for illustration only' : `your baseline ${num(r.baseline)} · best ${num(r.pb)}`}</span></div>
       ${fresh && !reduced.matches ? '<div class="gh-count" aria-hidden="true"><b>3</b><b>2</b><b>1</b></div>' : ''}
     </li>`;
   }
@@ -147,7 +155,9 @@
   function match() {
     const a = screen.active;
     const started = a.started;
-    const lede = started
+    const lede = a.kind === 'friend'
+      ? `${e(a.link?.sender || 'Your friend')} supplied these three runs. Each side is measured against its own baseline. ${a.link?.practice ? 'This is practice: fewer than two rounds have your baseline, so there is no win or loss.' : 'Your baselines are frozen at midnight. First run on each scenario counts.'}`
+      : started
       ? 'First run on each scenario counts, in any order. The clock is the ranked one.'
       : `Frozen at midnight: each ghost, and the baseline both sides are measured against. Start opens scenario 1 in KovaaK’s and starts the clock: 8 minutes for the first run, then 3 between runs.`;
     // While a lane is revealing, the margin still reads what it did before that run: the
@@ -169,7 +179,7 @@
         ${a.result ? '' : started
           ? `<button type="button" class="gh-primary" data-gh="launch" ${busy || !a.next ? 'disabled' : ''}>Open ${e(a.next || 'next')} <span aria-hidden="true">↗</span></button>
              ${confirmAbandon
-               ? `<span class="gh-confirm">Abandoning is a loss. <button type="button" class="gh-danger" data-gh="abandon">Abandon</button><button type="button" data-gh="keep">Keep racing</button></span>`
+               ? `<span class="gh-confirm">${a.link?.practice ? 'Leave this practice race? No result will count.' : 'Abandoning is a loss.'} <button type="button" class="gh-danger" data-gh="abandon">Abandon</button><button type="button" data-gh="keep">Keep racing</button></span>`
                : `<button type="button" class="gh-quiet" data-gh="ask-abandon">Abandon</button>`}`
           : `<button type="button" class="gh-primary" data-gh="start" ${busy ? 'disabled' : ''}>Start · open ${e(a.rounds[0].scenario)} <span aria-hidden="true">↗</span></button>
              <button type="button" class="gh-quiet" data-gh="dismiss">Choose another ghost</button>`}
@@ -205,7 +215,7 @@
       <table class="gh-rounds">
         <thead><tr><th>Scenario</th><th>You</th><th>Ghost</th><th>Baseline</th><th>You vs base</th><th>Ghost vs base</th><th>Round</th></tr></thead>
         <tbody>${r.rounds.map((x) => `<tr>
-          <td><strong>${e(x.scenario)}</strong><small>ghost from ${e(day(x.sessionDay))}</small></td>
+          <td><strong>${e(x.scenario)}</strong><small>${a.kind === 'friend' ? `friend's baseline ${num(x.ghostBaseline)}${x.measured === false ? ' · practice round' : ''}` : `ghost from ${e(day(x.sessionDay))}`}</small></td>
           <td class="num">${x.live === null ? '<span class="dim">not played</span>' : num(x.live)}${x.abandoned ? '<small>left early</small>' : ''}</td>
           <td class="num">${num(x.ghost)}</td>
           <td class="num dim">${num(x.baseline)}</td>
@@ -215,7 +225,7 @@
         </tr>`).join('')}</tbody>
       </table>
       <div class="gh-after">
-        <div class="gh-stat"><strong>${streak}</strong><span>day ghost streak${r.verdict === 'win' ? ' · today counts' : ''}</span></div>
+        <div class="gh-stat"><strong>${streak}</strong><span>day ghost streak${a.kind === 'friend' ? ' · past-self races only' : r.verdict === 'win' ? ' · today counts' : ''}</span></div>
         <div class="gh-stat"><strong>${screen.record.wins}–${screen.record.losses}</strong><span>ghost record</span></div>
         ${best ? `<div class="gh-stat small"><strong>${best.newBest ? 'New best' : best.pbGap === 0 ? 'Equals your best' : `${Math.abs(best.pbGap * 100).toFixed(1)}% off`}</strong><span>your best on ${e(best.scenario)}</span></div>` : ''}
         <div class="gh-stat small"><strong>No rating change</strong><span>ghost matches never touch the ladder</span></div>
@@ -292,6 +302,14 @@
     }
   }
 
+  root.addEventListener('input', (ev) => {
+    if (ev.target.id === 'ghostLinkCode') linkCode = ev.target.value;
+  });
+  root.addEventListener('submit', (ev) => {
+    if (!ev.target.matches('[data-gh-link]')) return;
+    ev.preventDefault();
+    if (screen?.links?.enabled && !screen.links.busy) act({ type: 'link', code: linkCode });
+  });
   root.addEventListener('click', (ev) => {
     const b = ev.target.closest('[data-gh]');
     if (!b || b.disabled) return;

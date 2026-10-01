@@ -411,7 +411,7 @@ export class GhostService {
   shareRecord(): GhostRecord | null {
     const s = this.store();
     const last = s.results.at(-1);
-    if (!last || !s.active?.result || s.active.id !== last.id) return null;
+    if (!last || last.kind === "friend" || !s.active?.result || s.active.id !== last.id) return null;
     return {
       id: last.id,
       verdict: last.verdict,

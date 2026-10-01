@@ -52,6 +52,21 @@ app.whenReady().then(async()=>{
   await run(`document.querySelector('[data-gh="draw"]').click();true`);await wait(200);
   assert.deepEqual(await run(`window.__ghostActions.at(-1)`),{type:'draw',kind:screens.firstChoose.defaultKind},'Race sends the chosen kind and nothing else');
 
+  await show('linkChoose');
+  await run(`const input=document.getElementById('ghostLinkCode');input.value='abcd-2345';input.dispatchEvent(new Event('input',{bubbles:true}));document.querySelector('[data-gh-link]').requestSubmit();true`);
+  await wait(200);
+  assert.deepEqual(await run(`window.__ghostActions.at(-1)`),{type:'link',code:'abcd-2345'},'the friend code reaches main');
+  await show('friendReady');await fits('friend ready');await noNaN('friend ready');
+  assert.ok(await run(`document.querySelector('.gh-head').textContent.includes('Each side is measured against its own baseline')`));
+  assert.ok(await run(`document.querySelector('.gh-lane-foot').textContent.includes("friend's baseline")`));
+  await shot('friend-ready');
+  await show('friendPractice');
+  assert.equal(await run(`document.querySelectorAll('.gh-lane-verdict').length`),3);
+  assert.ok(await run(`[...document.querySelectorAll('.gh-lane-verdict')].every(x=>x.textContent.includes('Practice round'))`));
+  await run(`document.querySelector('[data-gh="ask-abandon"]').click();true`);
+  assert.ok(await run(`document.querySelector('.gh-confirm').textContent.includes('No result will count')`));
+  await fits('friend practice');await noNaN('friend practice');await shot('friend-practice');
+
   // 2. pre-match
   await show('ready');
   assert.equal(await run(`document.querySelectorAll('.gh-lane').length`),3);

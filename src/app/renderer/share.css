@@ -1,0 +1,52 @@
+/* Share cards (share.js). A preview beside two actions and a shape toggle, in the result
+   screen's own chrome: the card itself is the loud thing, so the panel around it is not. */
+
+.share-card {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, 300px); gap: 24px; align-items: center;
+  margin: 18px 24px 24px; padding: 18px; border: 1px solid var(--rule); border-radius: 12px;
+  background: var(--well, var(--panel));
+}
+/* The ghost result is its own grid with its own gaps and padding. */
+.gh-result .share-card { margin: 0; }
+.share-card[data-layout="portrait"] { grid-template-columns: auto minmax(220px, 1fr); }
+
+.share-frame { display: grid; place-items: center; min-height: 120px; border-radius: 8px; background: var(--ground); overflow: hidden; }
+.share-frame.landscape { aspect-ratio: 1200 / 675; width: 100%; max-width: 560px; justify-self: start; }
+/* A story is tall; drawn at the landscape width it would push the actions a screen down. */
+.share-frame.portrait { aspect-ratio: 1080 / 1920; height: 340px; }
+.share-frame img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.share-empty { padding: 16px; color: var(--ink-dim); font: 11px var(--mono); letter-spacing: .08em; text-align: center; }
+
+.share-side { display: grid; gap: 12px; align-content: start; }
+.share-kicker { font: 600 10px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--brand); }
+.share-lede { margin: 0; color: var(--ink-mid); font-size: 13px; line-height: 1.45; }
+
+.share-seg { display: inline-grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.share-seg button {
+  display: grid; gap: 2px; padding: 8px 12px; border: 0; background: transparent; cursor: pointer;
+  color: var(--ink-mid); font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; text-align: left;
+}
+.share-seg button + button { border-left: 1px solid var(--rule); }
+.share-seg button small { font-weight: 400; letter-spacing: .02em; text-transform: none; color: var(--ink-dim); }
+.share-seg button[aria-pressed="true"] { color: var(--ink); background: var(--control, var(--panel)); box-shadow: inset 0 -2px 0 var(--brand); }
+.share-seg button:hover:not([aria-pressed="true"]) { color: var(--ink); }
+
+.share-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.share-actions button {
+  font: 600 var(--t-xs, 11px) var(--mono); letter-spacing: .1em; text-transform: uppercase;
+  padding: 9px 16px; border-radius: 6px; cursor: pointer;
+  color: var(--ink); background: transparent; border: 1px solid var(--rule-2, var(--rule));
+}
+.share-actions .share-go { color: var(--brand-ink); background: var(--brand); border-color: var(--brand); }
+.share-actions button:hover:not(:disabled) { filter: brightness(1.1); }
+.share-actions button:disabled { opacity: .45; cursor: default; filter: none; }
+.share-card button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+.share-status { min-height: 1.3em; font-size: 12px; color: var(--ink-dim); overflow-wrap: anywhere; }
+.share-status.ok { color: var(--up); }
+.share-status.bad { color: var(--down); }
+
+@media (max-width: 900px) {
+  .share-card, .share-card[data-layout="portrait"] { grid-template-columns: minmax(0, 1fr); }
+  .share-frame.portrait { justify-self: start; }
+}
