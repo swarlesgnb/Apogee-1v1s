@@ -1244,6 +1244,114 @@ async function main(): Promise<void> {
   check("clients cannot read or write the limit counters",
     rlLocked.rows[0].n === 0, `${rlLocked.rows[0].n} grants`);
 
+  // -------------------------------------------------------------------------------
+  // Ghost cards (20260930000020). Minted by post-ghost from re-verified runs and read by
+  // ghost-card, both under the service role; a client that could write here could mint a
+  // card with nothing behind it. Each refusal below is asserted as a refusal that fired,
+  // on a row that is otherwise valid, so a check cannot pass because the insert was
+  // broken for some other reason.
+  console.log("\n── ghost cards ──────────────────────────────────");
+
+  const ghostTable = await db.query<{ rowsecurity: boolean }>(
+    `select rowsecurity from pg_tables where schemaname = 'public' and tablename = 'ghost_results'`,
+  );
+  check("the ghost_results table exists with row level security",
+    ghostTable.rows.length === 1 && ghostTable.rows[0].rowsecurity === true);
+  const ghostPolicies = policies.rows.filter((p) => p.tablename === "ghost_results");
+  check("no client policy of any kind on it", ghostPolicies.length === 0,
+    ghostPolicies.map((p) => p.cmd).join(", ") || "none");
+  const ghostGrants = await db.query<{ n: number }>(
+    `select count(*)::int as n from information_schema.role_table_grants
+      where table_name = 'ghost_results' and grantee in ('anon', 'authenticated')`,
+  );
+  check("and no table grant to anon or authenticated", ghostGrants.rows[0].n === 0, `${ghostGrants.rows[0].n} grants`);
+
+  const ghostUser = await db.query<{ id: string }>(`insert into auth.users (email) values ('ghost@arena.invalid') returning id`);
+  const ghostPlayer = ghostUser.rows[0].id;
+  await db.exec(`insert into players (id, steam_id, display_name) values ('${ghostPlayer}', '76561199000000077', 'ghost racer')`);
+  const runIds = ["gen_random_uuid()", "gen_random_uuid()", "gen_random_uuid()"];
+  const ghostRow = (over: Record<string, string> = {}) => {
+    const cols: Record<string, string> = {
+      player_id: `'${ghostPlayer}'`,
+      code: `'ABCD2345'`,
+      kind: `'last_week'`,
+      scenario_names: `'{a,b,c}'`,
+      live_run_ids: `array[${runIds.join(",")}]`,
+      live_scores: `'{100,200,300}'`,
+      ghost_scores: `'{98,205,290}'`,
+      baselines: `'{99,201,295}'`,
+      pbs: `'{120,230,330}'`,
+      ghost_days: `'{2026-09-20,2026-09-22,2026-08-14}'`,
+      tz_offset_minutes: `360`,
+      time_zone: `'America/Chicago'`,
+      margin: `0.012`,
+      verdict: `'win'`,
+      live_tier: `'consistent'`,
+      played_at: `'2026-09-30T02:00:00Z'`,
+      ...over,
+    };
+    return db.query<{ live_run_ids: string[] }>(
+      `insert into ghost_results (${Object.keys(cols).join(", ")}) values (${Object.values(cols).join(", ")}) returning live_run_ids`,
+    );
+  };
+  const firstCard = await ghostRow();
+  check("a card of three rounds is accepted", firstCard.rows.length === 1);
+  const sameRuns = `'{${firstCard.rows[0].live_run_ids.join(",")}}'::uuid[]`;
+  check("a void result has no card: the verdict enum refuses it",
+    await refused(() => ghostRow({ code: `'ABCD2346'`, verdict: `'void'` })));
+  check("a card of two rounds is refused",
+    await refused(() => ghostRow({ code: `'ABCD2347'`, live_run_ids: `array[gen_random_uuid(), gen_random_uuid()]` })));
+  check("a card whose arrays disagree in length is refused",
+    await refused(() => ghostRow({ code: `'ABCD2348'`, ghost_scores: `'{98,205}'` })));
+  check("the same three runs cannot mint a second card",
+    await refused(() => ghostRow({ code: `'ABCD2349'`, live_run_ids: sameRuns })));
+  check("a code post-ghost could not have minted is refused",
+    await refused(() => ghostRow({ code: `'abcd0001'` })));
+  check("an offset outside any real timezone is refused",
+    await refused(() => ghostRow({ code: `'ABCD234A'`, tz_offset_minutes: `9999` })));
+  check("and a different three are accepted, so the refusals above were about their one change",
+    (await ghostRow({ code: `'ABCD234B'` })).rows.length === 1);
+  await db.exec(`delete from players where id = '${ghostPlayer}'`);
+  const ghostOrphans = await db.query<{ n: number }>(`select count(*)::int as n from ghost_results where player_id = '${ghostPlayer}'`);
+  check("a deleted player leaves no card behind", ghostOrphans.rows[0].n === 0);
+
+  // post-ghost's one UPDATE on runs, run for real: a file already counted by a ranked
+  // match must come through a ghost post byte for byte, because settle-match reads its
+  // played_at and tier. The statement is the one the function builds (player, sha,
+  // match_id is null); validate:ghost holds the function's source to that filter and
+  // runs planRunWrite, which decides it is never even attempted on a bound row.
+  const racerUser = await db.query<{ id: string }>(`insert into auth.users (email) values ('ghost2@arena.invalid') returning id`);
+  const racer = racerUser.rows[0].id;
+  await db.exec(`insert into players (id, steam_id, display_name) values ('${racer}', '76561199000000078', 'ghost racer two')`);
+  const ranked = await db.query<{ id: string }>(
+    `insert into matches (mode, category, benchmark_name, difficulty, window_index, seed, scenario_ids, status)
+     values ('async', 'Static Clicking', 'Season 1', 'Intermediate', 1, 'ghost-bound', '{1,2,3}', 'awaiting_runs')
+     returning id`,
+  );
+  const rankedId = ranked.rows[0].id;
+  await db.exec(
+    `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, match_id, verification_tier)
+     values ('${racer}', 'bound scenario', 100, '2026-09-30T12:00:00Z', 'sha-bound', '${rankedId}', 'rejected'),
+            ('${racer}', 'loose scenario', 100, '2026-09-30T12:00:00Z', 'sha-loose', null, 'suspect')`,
+  );
+  const ghostUpdate = (sha: string) =>
+    db.query<{ id: string }>(
+      `update runs set played_at = '2026-09-29T03:00:00Z', verification_tier = 'consistent', duration_seconds = 1
+        where player_id = '${racer}' and csv_sha256 = '${sha}' and match_id is null returning id`,
+    );
+  const boundTouched = await ghostUpdate("sha-bound");
+  const bound = await db.query<{ played_at: Date; verification_tier: string; match_id: string; duration_seconds: number | null }>(
+    `select played_at, verification_tier, match_id, duration_seconds from runs where csv_sha256 = 'sha-bound'`,
+  );
+  check("a ghost post's update writes no row a ranked match has counted", boundTouched.rows.length === 0, `${boundTouched.rows.length} rows`);
+  check("and that run's played_at, tier and match are exactly as the match left them",
+    new Date(bound.rows[0].played_at).toISOString() === "2026-09-30T12:00:00.000Z" &&
+      bound.rows[0].verification_tier === "rejected" && bound.rows[0].match_id === rankedId && bound.rows[0].duration_seconds === null,
+    `${new Date(bound.rows[0].played_at).toISOString()} ${bound.rows[0].verification_tier}`);
+  const looseTouched = await ghostUpdate("sha-loose");
+  check("while a history row no match has claimed is rewritten, so the filter is not simply matching nothing",
+    looseTouched.rows.length === 1);
+
   await db.close();
 
   console.log();

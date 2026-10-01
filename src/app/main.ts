@@ -18,7 +18,9 @@ import { createHash } from "node:crypto";
 
 import { dataFile, setDataDir, sourceDataDir } from "../core/dataDir.ts";
 import { levelFor } from "../core/quests/progression.ts";
-import { recordMatch, rerollQuest, type QuestState, type QuestSync } from "../core/quests/board.ts";
+import { recordGhost, recordMatch, rerollQuest, type QuestState, type QuestSync } from "../core/quests/board.ts";
+import { GhostService } from "./ghostService.ts";
+import { ShareCards } from "./shareCard.ts";
 import {
   installCrashHandlers,
   attachRendererLogging,
@@ -185,6 +187,56 @@ function expedition(): ExpeditionService {
   return expeditionService ??= new ExpeditionService(app.getPath("userData"));
 }
 
+/**
+ * Ghost Mode (ghostService.ts). Local-first: it needs a stats folder and nothing else, so
+ * it works signed out, offline and on an empty ladder.
+ */
+const ghost = new GhostService({
+  statsDir: () => state.statsDir,
+  signedIn: () => state.session !== null,
+  broadcast: (screen) => broadcast("apogee:ghost", screen),
+  onFinished: (result) => {
+    // Into the quest board's ghost list, never its settled matches: a ghost win is a win
+    // nobody else took part in, and the ranked-wins quests count matches. The rebuild
+    // then measures the board and fires apogee:questComplete the way a match does.
+    state.quests = recordGhost(state.quests ?? loadQuestState(), {
+      id: result.id,
+      at: new Date(result.at).toISOString(),
+      kind: result.kind,
+      verdict: result.verdict,
+    });
+    saveQuestState(state.quests);
+    nudge();
+    scheduleRebuild("ghost match finished");
+  },
+  launch: (scenario) => launchKovaaks(scenario),
+});
+
+/**
+ * Share cards (shareCard.ts), drawn from main's own record of a result: the settlement as
+ * it arrived, or the ghost result as booked. The renderer names a card and a shape, never
+ * a figure.
+ */
+const shareCards = new ShareCards({
+  rendererDir: join(here, "renderer"),
+  fontsDir: join(here, "fonts"),
+  context: () => {
+    const snap = state.snapshot;
+    // The season rank from the player's own scores, the one the Ranks screen shows. The
+    // snapshot's apogee rating and percentile are placeholders until the ladder has a
+    // population, so they never reach a card.
+    const rankName = snap?.player.benchmarkRank ?? null;
+    const tier = rankName ? snap?.theme.find((t) => t.name === rankName) ?? null : null;
+    return {
+      playerName: state.session?.displayName || "You",
+      season: snap?.benchmark.name || "Apogee",
+      tier: tier ? { id: tier.id, name: tier.name, color: tier.color } : null,
+    };
+  },
+  ghost: () => ghost.shareRecord(),
+  window: () => window,
+});
+
 /** Show a neutral message, and keep it for a window that has not loaded yet. */
 function notify(message: string | null): void {
   state.notice = message;
@@ -304,6 +356,14 @@ function startWatching(dir: string): void {
         file,
       });
 
+      // A ghost match in progress takes the first run on each of its scenarios. Its own
+      // try: a ghost failure must not cost a ranked submission below.
+      try {
+        ghost.onRun(run, file);
+      } catch (err) {
+        console.error("ghost run failed:", err);
+      }
+
       // If this scenario belongs to the active match, send it for verification without
       // being asked. Making the player click "submit" after every run would undo the
       // entire point of watching the folder.
@@ -323,6 +383,11 @@ function startWatching(dir: string): void {
   });
 
   rebuild("initial scan");
+  try {
+    ghost.catchUp();
+  } catch (err) {
+    console.error("ghost catch-up failed:", err);
+  }
   installScenarioFiles(dir);
   refreshInstalledPlaylists(dir);
 }
@@ -589,7 +654,11 @@ async function settleActiveMatch(attempt = 0): Promise<string | null> {
     const settled = await settleMatch(match.matchId);
     state.match = null;
     state.submitted.clear();
-    broadcast("apogee:matchSettled", settled);
+    shareCards.recordSettled(settled, !!match.duel?.to);
+    // `sentDuel` rides along because a duel you sent settles exactly like a seeding match
+    // (one side, nobody yet) and the payload cannot tell them apart. Ghost Mode's
+    // "nobody in the pool yet" offer is wrong about somebody you just named.
+    broadcast("apogee:matchSettled", { ...settled, sentDuel: !!match.duel?.to });
     nudge();
     // Ranked quests are measured from results the server settled, never from anything
     // the client worked out. Kept locally because nothing re-sends a settled match.
@@ -949,6 +1018,26 @@ function runSmokeTest(): void {
           : "MISSING"
       }`,
     );
+    // Ghost Mode round trip: the bridge answers, main builds the screen, and the page drew
+    // it. A missing handler here is the "No handler registered" of a stale bundle, which
+    // is the failure CLAUDE.md warns makes every button do nothing.
+    const ghostProbe = await probe.webContents.executeJavaScript(`(async () => {
+      if (typeof window.apogee?.ghost !== "function") return { bridged: false };
+      const screen = await window.apogee.ghost();
+      await new Promise((r) => setTimeout(r, 100));
+      return {
+        bridged: true,
+        error: screen?.error ?? null,
+        kinds: Array.isArray(screen?.kinds) ? screen.kinds.map((k) => k.kind + (k.available ? "+" : "-")).join(" ") : null,
+        tab: !!document.querySelector('.tab[data-screen="ghost"]'),
+        drawn: (document.getElementById("ghostRoot")?.textContent ?? "").includes("Race your past self"),
+      };
+    })()`);
+    if (!ghostProbe.bridged) problems.push("Ghost Mode is not on the preload bridge");
+    else if (ghostProbe.error) problems.push(`Ghost Mode's screen failed: ${ghostProbe.error}`);
+    else if (!ghostProbe.kinds || ghostProbe.kinds.split(" ").length !== 3) problems.push("Ghost Mode did not offer three ghosts");
+    else if (!ghostProbe.tab || !ghostProbe.drawn) problems.push("Ghost Mode's tab or screen is missing from the page");
+    console.log(`ghost mode   : ${ghostProbe.bridged ? ghostProbe.kinds ?? "no screen" : "MISSING"}`);
     console.log(`session      : ${state.session ? state.session.displayName : "signed out"}`);
 
     // The renderer's failure surface, proved rather than assumed. An unhandled rejection
@@ -2122,6 +2211,31 @@ ipcMain.handle("apogee:expeditionAction", async (_e, action: unknown) => {
     broadcast("apogee:expedition", view);
     return { view };
   } catch (e) { return { error: e instanceof Error ? e.message : String(e) }; }
+});
+
+ipcMain.handle("apogee:ghost", () => {
+  try {
+    return ghost.view();
+  } catch (err) {
+    return { error: friendlyError(err) };
+  }
+});
+ipcMain.handle("apogee:ghostAction", async (_e, action: unknown) => {
+  try {
+    return await ghost.action(action);
+  } catch (err) {
+    return { error: friendlyError(err) };
+  }
+});
+
+// { source: "match" | "ghost", layout, action: "preview" | "copy" | "save" } and nothing
+// else: the card is drawn from main's record, so there is no figure for the renderer to send.
+ipcMain.handle("apogee:shareCard", async (_e, request: unknown) => {
+  try {
+    return await shareCards.handle(request);
+  } catch (err) {
+    return { ok: false, error: friendlyError(err) };
+  }
 });
 
 // ---------------------------------------------------------------------------
@@ -3734,7 +3848,14 @@ ipcMain.handle("apogee:launchScenario", async (_e, { scenario } = {} as any) => 
     }
   })();
 
-  if (!inMatch && !inSeason) {
+  // A ghost match is drawn from the player's own library, so its scenarios are almost
+  // never in the season. Read from the main-side match, like inMatch, never from anything
+  // the renderer sent.
+  const inGhost = ghost.scenarios().has(scenario);
+
+  if (!inMatch && !inSeason && !inGhost) {
+    // Wording kept: mixtape.js matches "not in this match or this season" to explain a
+    // scenario that left the pool.
     return { error: "that scenario is not in this match or this season" };
   }
 

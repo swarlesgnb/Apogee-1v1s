@@ -72,6 +72,7 @@ export type QuestKind =
   | "variety"
   | "revisit"
   | "ranked_play"
+  | "beat_ghost"
   | "new_scenario"
   | "harder_band"
   | "category_tour"
@@ -84,7 +85,7 @@ export type QuestKind =
   | "weekly_family_sweep";
 
 export type QuestUnit =
-  | "score" | "runs" | "scenarios" | "matches" | "wins" | "days" | "sets" | "ranks"
+  | "score" | "runs" | "scenarios" | "matches" | "wins" | "days" | "sets" | "ranks" | "ghosts"
   | "categories" | "families" | "bests";
 
 /** What a quest measures, fixed when it is issued. */
@@ -131,6 +132,17 @@ export interface MatchRecord {
   category: string | null;
 }
 
+/**
+ * A finished ghost match (core/ghost). Kept apart from `matches` on purpose: a ghost win is
+ * a win nobody else took part in, and `weekly_wins` and `ranked_play` count `matches`.
+ */
+export interface GhostRecord {
+  id: string;
+  at: string;
+  kind: string;
+  verdict: "win" | "loss" | "draw" | "void";
+}
+
 /** Everything remembered between launches. */
 export interface QuestState {
   version: 2;
@@ -149,6 +161,11 @@ export interface QuestState {
   totalXp: number;
   /** Settled matches from the last eight days, newest last. */
   matches: MatchRecord[];
+  /**
+   * Finished ghost matches, on the same eight-day window. Added without a version bump:
+   * a stored state from before it loads with an empty list (questStore.ts).
+   */
+  ghosts: GhostRecord[];
   /** Subjects on the previous board, so the next one steers around them. */
   recent: string[];
   lastWeeklyKind: QuestKind | null;
@@ -180,6 +197,12 @@ export interface BoardContext {
   labelFor: (scenario: string) => string;
   /** Signed in now. Folded into `rankedSeen`. */
   ranked: boolean;
+  /**
+   * Whether a ghost match can be drawn from this history (`ghostReady` in core/ghost).
+   * A beat-a-ghost quest is issued only then: one that cannot be done is a lie. Absent in
+   * the replays below, which have no ghost results to measure it by.
+   */
+  ghostReady?: boolean;
 }
 
 export function emptyQuestState(totalXp = 0): QuestState {
@@ -194,6 +217,7 @@ export function emptyQuestState(totalXp = 0): QuestState {
     bonus: null,
     totalXp,
     matches: [],
+    ghosts: [],
     recent: [],
     lastWeeklyKind: null,
     rankedSeen: false,
@@ -213,6 +237,7 @@ const XP: Record<QuestKind, number> = {
   variety: 150,
   revisit: 250,
   ranked_play: 250,
+  beat_ghost: 250,
   weekly_rank_ups: 1000,
   weekly_floors: 1000,
   weekly_wins: 1000,
@@ -690,6 +715,25 @@ function dailyCandidates(ctx: IssueContext): Record<"ceiling" | "floor" | "varie
     });
   }
 
+  // Unlike ranked_play it needs no sign-in, so a signed-out board has a match-shaped quest
+  // too. It needs a ghost instead, which the library decides, not the account.
+  if (ctx.ghostReady) {
+    variety.push({
+      id: "beat_ghost",
+      slot: "variety",
+      kind: "beat_ghost",
+      title: "Beat a ghost",
+      // A friend's ghost (core/ghost/links.ts) counts too: it is the same unrated race,
+      // scored against the player's own baseline, and it lands in `ghosts` like any other.
+      // It is issued on `ghostReady` alone because a friend's code cannot be promised.
+      detail: "Win a ghost match against your own past runs or a friend's. Any ghost counts; rating never moves.",
+      xp: XP.beat_ghost,
+      target: 1,
+      unit: "ghosts",
+      params: {},
+    });
+  }
+
 
   // ---- more ceiling: a best, a top-five run, a rising session -----------------------
   //
@@ -996,13 +1040,13 @@ export function issueWeekly(ctx: BoardContext, day: Date, lastKind: QuestKind | 
 // measuring
 // ---------------------------------------------------------------------------
 
-/** How far along a quest is, from runs and matches in its window only. */
-export function measure(q: IssuedQuest, ctx: BoardContext, matches: MatchRecord[]): number {
+/** How far along a quest is, from runs, matches and ghost results in its window only. */
+export function measure(q: IssuedQuest, ctx: BoardContext, matches: MatchRecord[], ghosts: GhostRecord[] = []): number {
   const since = new Date(q.since);
   const until = new Date(q.until);
   const { history } = ctx;
   const runsOn = (scenario: string) => within(history.get(scenario), since, until);
-  const inWindow = (m: MatchRecord) => {
+  const inWindow = (m: { at: string }) => {
     const at = new Date(m.at);
     return at >= since && at < until;
   };
@@ -1085,6 +1129,9 @@ export function measure(q: IssuedQuest, ctx: BoardContext, matches: MatchRecord[
     case "ranked_play":
       return matches.filter((m) => inWindow(m) && m.verdict !== "void").length;
 
+    case "beat_ghost":
+      return ghosts.filter((g) => inWindow(g) && g.verdict === "win").length;
+
     case "weekly_rank_ups": {
       const was = q.params.ranks ?? {};
       const now = familyRanks(ctx.difficulty, bestsBefore(poolOf(ctx.difficulty), history, until));
@@ -1138,7 +1185,7 @@ function settle(state: QuestState, ctx: BoardContext, paid: CompletedQuest[]): v
   const quests = [...state.daily, ...(state.weekly ? [state.weekly] : [])];
   for (const q of quests) {
     if (q.completedAt) continue;
-    q.progress = measure(q, ctx, state.matches);
+    q.progress = measure(q, ctx, state.matches, state.ghosts ?? []);
     if (!done(q, q.progress)) continue;
 
     // Stamped with the end of its own window when settled late, so a quest finished
@@ -1187,6 +1234,7 @@ export function syncBoard(stored: QuestState | null, ctx: BoardContext): QuestSy
 
   const cutoff = ctx.now.getTime() - MATCH_MEMORY_DAYS * DAY_MS;
   state.matches = state.matches.filter((m) => new Date(m.at).getTime() >= cutoff);
+  state.ghosts = (state.ghosts ?? []).filter((g) => new Date(g.at).getTime() >= cutoff);
 
   // Whatever is on the board is settled first, against its own window.
   settle(state, ctx, paid);
@@ -1255,6 +1303,13 @@ export function rerollQuest(state: QuestState, id: string): { state: QuestState 
   next.rerolled = true;
   next.recent = next.daily.map(subjectOf);
   return { state: next };
+}
+
+/** Remember a finished ghost match, once. Never into `matches`; see GhostRecord. */
+export function recordGhost(state: QuestState, ghost: GhostRecord): QuestState {
+  const ghosts = state.ghosts ?? [];
+  if (ghosts.some((g) => g.id === ghost.id)) return state;
+  return { ...state, ghosts: [...ghosts, ghost] };
 }
 
 /** Remember a settled match, once. */

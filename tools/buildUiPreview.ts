@@ -18,7 +18,9 @@ import { sampleTournamentView } from "../src/core/tournament/sample.ts";
 import { loadExpedition, rewardCatalog } from "../src/core/expedition/definition.ts";
 
 const RENDERER_DIR = new URL("../src/app/renderer/", import.meta.url);
-const OUT = new URL("./apogee-ui-preview.html", import.meta.url);
+// APOGEE_PREVIEW_OUT lets a tool build its own copy (the video pipeline does) without
+// rewriting the tracked preview, which would leave every render as a dirty working tree.
+const OUT: string | URL = process.env.APOGEE_PREVIEW_OUT ?? new URL("./apogee-ui-preview.html", import.meta.url);
 
 const snapshot = readFileSync(new URL("../data/snapshot.json", import.meta.url), "utf8");
 
@@ -111,7 +113,7 @@ const tournamentSample = {
 };
 const body = bodyMatch[1]
   // The preview supplies its own inline script instead of loading the file.
-  .replace(/<script src="(?:renderer|cosmic|expedition|presentation|mixtape-engine|mixtape)\.js"><\/script>/g, "");
+  .replace(/<script src="(?:renderer|cosmic|expedition|presentation|mixtape-engine|mixtape|ghost|share)\.js"><\/script>/g, "");
 
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Apogee Client Preview</title>
@@ -119,6 +121,8 @@ ${style}
 <style>${cosmicCss}</style>
 <style>${readFileSync(new URL("presentation.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("mixtape.css", RENDERER_DIR), "utf8")}</style>
+<style>${readFileSync(new URL("ghost.css", RENDERER_DIR), "utf8")}</style>
+<style>${readFileSync(new URL("share.css", RENDERER_DIR), "utf8")}</style>
 </head><body data-screen="queue">
 ${body}
 <script id="apogee-snapshot" type="application/json">${snapshot}</script>
@@ -151,13 +155,15 @@ ${rendererJs}
 <script>${readFileSync(new URL("presentation.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("mixtape-engine.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("mixtape.js", RENDERER_DIR), "utf8")}</script>
+<script>${readFileSync(new URL("ghost.js", RENDERER_DIR), "utf8")}</script>
+<script>${readFileSync(new URL("share.js", RENDERER_DIR), "utf8")}</script>
 </body></html>
 `;
 
 writeFileSync(OUT, html, "utf8");
 
 console.log(
-  `wrote tools/apogee-ui-preview.html  (${(html.length / 1024).toFixed(0)} KB, ` +
+  `wrote ${process.env.APOGEE_PREVIEW_OUT ?? "tools/apogee-ui-preview.html"}  (${(html.length / 1024).toFixed(0)} KB, ` +
     `renderer ${(rendererJs.length / 1024).toFixed(0)} KB, ` +
     `snapshot ${(snapshot.length / 1024).toFixed(0)} KB` +
     `${practice ? `, ${practice.scenarios.length} practice rows` : ", no practice list"})`,

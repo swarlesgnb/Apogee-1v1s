@@ -850,3 +850,86 @@ export async function isAdmin(): Promise<boolean> {
 
   return !error && !!data;
 }
+
+// ---------------------------------------------------------------------------
+// ghost cards
+// ---------------------------------------------------------------------------
+
+/** What post-ghost and ghost-card answer with: a card the server rebuilt from stored runs. */
+export interface GhostCard {
+  code: string;
+  kind: "month_ago" | "last_week" | "last_week_best";
+  displayName: string;
+  verdict: "win" | "loss" | "draw";
+  margin: number;
+  liveTier: string;
+  ghostFromUploadedHistory: true;
+  streak: number;
+  createdAt: string;
+  rounds: {
+    scenario: string;
+    live: number;
+    ghost: number;
+    baseline: number;
+    pb: number;
+    ghostDay: string;
+    gap: number;
+  }[];
+}
+
+/**
+ * True when a call failed because the function is not deployed, as opposed to refusing.
+ *
+ * Supabase's gateway answers an unknown function with a 404 before any code runs, and the
+ * ghost functions ship undeployed, so "not live yet" has to be told apart from "the
+ * server said no" and said plainly rather than as an error. The functions' own refusals
+ * are 400, 403, 409 and 429; no ghost function answers 404 on purpose except ghost-card
+ * and ghost-link for an unknown code, and both say "no ghost card" when they do
+ * (LINK_REFUSAL.unknown in core/ghost/links.ts).
+ */
+export function isNotDeployed(err: unknown): boolean {
+  return err instanceof ApiError && err.status === 404 && !/no ghost card/i.test(err.message);
+}
+
+/**
+ * Ask the server for a card of a finished ghost match.
+ *
+ * The raw files go up, not the local result: the server re-verifies each run the way
+ * submit-run does and rebuilds the ghost and baseline from the caller's stored history,
+ * so the card is the server's claim and never this client's.
+ */
+export async function postGhost(
+  statsDir: string,
+  filenames: string[],
+  kind: string,
+  ordinal: number,
+  /** The local day the match was frozen at; the server freezes there too. */
+  day: string,
+): Promise<GhostCard> {
+  const runs = await Promise.all(filenames.map(async (filename) => {
+    const csv = readFileSync(join(statsDir, filename), "utf8");
+    const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(csv));
+    const csvSha256 = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+    return { filename, csv, csvSha256 };
+  }));
+  // Same reason as submitRun: only this machine knows what instant the filename's digits
+  // mean, and the server buckets the ghost's session days by it.
+  // The zone as well as today's offset: the server reads a month of history, and one
+  // offset is an hour wrong for every run across a daylight-saving change.
+  const tzOffsetMinutes = new Date().getTimezoneOffset();
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return callFunction<GhostCard>("post-ghost", { kind, ordinal, day, runs, tzOffsetMinutes, timeZone });
+}
+
+export function fetchGhostCard(code: string): Promise<GhostCard> {
+  return callFunction<GhostCard>("ghost-card", { code });
+}
+
+/**
+ * A friend's ghost by code: their three scenarios, name, live scores and baselines, and
+ * nothing else (core/ghost/links.ts). Typed `unknown` on purpose: the caller checks the
+ * shape with `isGhostLink` before a number of it is drawn.
+ */
+export function fetchGhostLink(code: string): Promise<unknown> {
+  return callFunction<unknown>("ghost-link", { code });
+}
