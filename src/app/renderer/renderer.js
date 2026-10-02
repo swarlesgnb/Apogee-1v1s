@@ -8846,27 +8846,50 @@ function refreshApex() {
 
 refreshApex();
 
+let practicePaintPending = false;
+function paintPractice() {
+  if (document.hidden || !document.hasFocus()) { practicePaintPending = true; return; }
+  practicePaintPending = false;
+  window.dispatchEvent(new CustomEvent('apogee:practice-ready', { detail: practice }));
+  renderScenarioRanks();
+  if (current) {
+    renderSeasonView(current);
+    renderDraw(current);
+  }
+}
+
 function refreshPractice() {
   if (HOST !== "electron" || !api || !api.practice) return;
   void api.practice().then((r) => {
     if (!r || r.error) return;
     practice = r;
-    window.dispatchEvent(new CustomEvent('apogee:practice-ready', { detail:r }));
-    // Not behind `current`: the table needs only the practice list, and a machine with no
-    // runs yet never gets a snapshot but still has a season to show.
-    renderScenarioRanks();
-    if (current) {
-      renderSeasonView(current);
-      // The queue screen lists what a match can draw, which is the same pool. Without
-      // this it stays empty until something else happens to re-render it, which on the
-      // screen the app opens on is until the player leaves and comes back.
-      renderDraw(current);
-    }
+    paintPractice();
   });
   refreshApex();
 }
 
 refreshPractice();
+
+// Keep the newest state while the game has focus, then paint once on return.
+let snapshotPaintPending = false;
+function receiveSnapshot(snapshot) {
+  current = lastSnapshot = snapshot;
+  snapshotPaintPending = true;
+  flushSnapshotPaint();
+}
+
+function flushSnapshotPaint() {
+  if (document.hidden || !document.hasFocus()) return;
+  if (snapshotPaintPending) {
+    snapshotPaintPending = false;
+    render(lastSnapshot);
+    refreshPractice();
+    renderBand();
+    if (activeMatch && !$("opponent").classList.contains("on")) paintActiveMatch();
+  } else if (practicePaintPending) paintPractice();
+}
+window.addEventListener('focus', flushSnapshotPaint);
+document.addEventListener('visibilitychange', flushSnapshotPaint);
 
 // The editor's markup, and not just the admin flag: everything below binds to elements
 // by id, so a rebuild that drops the Season section throws on the first `addEventListener`
@@ -12308,17 +12331,8 @@ if (HOST === "electron") {
 
   api.onSnapshot((snapshot) => {
     showError(null);
-    render(snapshot);
+    receiveSnapshot(snapshot);
     setStatus("ok", "Watching", snapshot ? currentPath : "");
-    // A new snapshot means a new run landed, which means a personal best on the practice
-    // list may have moved. Re-read rather than leave it: the number this screen shows is
-    // the same one the player just watched KovaaK's print.
-    refreshPractice();
-
-    // A match recovered on restart arrives before the first snapshot, so there was
-    // nothing to paint it against when it did. This is the other half of that: if the
-    // client is holding a match and the panel is not up, put it up now.
-    if (activeMatch && !$("opponent").classList.contains("on")) paintActiveMatch();
   });
 
   // A saved season has to land on every screen that draws a rank, not just the editor.
@@ -12330,17 +12344,13 @@ if (HOST === "electron") {
   // window would keep the old names until it was restarted.
   api.onSeasonChanged(() => {
     void api.getState().then((state) => {
-      if (state.snapshot) render(state.snapshot);
+      if (state.snapshot) receiveSnapshot(state.snapshot);
     });
     refreshPractice();
   });
 
   api.onRun((run) => showRunToast(run));
   if (api.onBenchmarkPromotion) api.onBenchmarkPromotion(promotion => showCelebration({ promotion }));
-
-  // The band page is drawn from the snapshot, so a run landing while it is open has to
-  // redraw it. `render` does not, because the page is not part of the snapshot's own tree.
-  api.onSnapshot(() => renderBand());
 
   api.onScanning(({ scanning }) => {
     setStatus(scanning ? "scanning" : "ok", scanning ? "Scanning…" : "Watching", currentPath);

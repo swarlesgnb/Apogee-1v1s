@@ -64,7 +64,7 @@ async function noOverflow() {
 }
 
 app.whenReady().then(async () => {
-  const html = readFileSync(resolve("tools/apogee-ui-preview.html"), "utf8").replace('<script>/* Expedition presentation.', '<script>window.apogee=window.expeditionTest;/* Expedition presentation.');
+  const html = readFileSync(resolve("tools/apogee-ui-preview.html"), "utf8").replace('<script>/* Expedition presentation.', '<script>window.apogee=window.expeditionTest;window.testFocused=true;document.hasFocus=()=>window.testFocused;/* Expedition presentation.');
   assert.ok(html.includes("window.apogee=window.expeditionTest"));
   writeFileSync(join(output, "fixture.html"), html);
   const errors: string[] = [];
@@ -72,6 +72,15 @@ app.whenReady().then(async () => {
   win.webContents.on("console-message", (_event, level, message) => { if (level >= 3) errors.push(message); });
   await win.loadFile(join(output, "fixture.html"));
   await waitFor(`!!document.querySelector('[data-exp-action="folder"]')`);
+  await evaluate(`window.testFocused=false;window.oldExpeditionHeader=document.getElementById('expeditionRoot').firstElementChild;`);
+  win.webContents.send("test:update", { ...sessionView(service.view(dir)), warning: 'Background refresh test' });
+  await evaluate(`new Promise(resolve=>setTimeout(resolve,100))`);
+  assert.equal(await evaluate(`document.getElementById('expeditionRoot').firstElementChild===window.oldExpeditionHeader`), true, 'background update preserves the rendered tree');
+  await evaluate(`window.testFocused=true;window.dispatchEvent(new Event('focus'));`);
+  await waitFor(`document.querySelector('.exp-preview-note')?.textContent==='Background refresh test'`);
+  win.webContents.send("test:update", sessionView(service.view(dir)));
+  await waitFor(`!document.querySelector('.exp-preview-note')`);
+  console.log('PASS: Expedition defers background DOM replacement and displays fresh state on focus.');
   const screens = await evaluate<string[]>(`[...document.querySelectorAll('.tab')].filter(el=>!el.hidden && el.checkVisibility()).map(el=>el.dataset.screen)`);
   const screenSizes = process.env.APOGEE_EXPEDITION_UI_ONLY === '1' ? [] : [[1440,1080],[940,640],[600,900]];
   for (const [width,height] of screenSizes) {
@@ -275,9 +284,9 @@ app.whenReady().then(async () => {
   await evaluate(`Object.defineProperty(document,'hasFocus',{configurable:true,value:()=>true});Object.defineProperty(document,'hidden',{configurable:true,value:false});window.dispatchEvent(new Event('focus'));`);
   await waitFor(`window.ApogeeCosmic.inspect().animating`);
   assert.ok(await evaluate(`window.ApogeeCosmic.inspect().available`), 'WebGL scene initialized');
-  await evaluate(`document.querySelector('.exp-planet[data-destination="destination-2"]').focus()`);
-  await click('.exp-planet[data-destination="destination-2"]');
-  assert.ok(await evaluate(`document.activeElement.matches('.exp-planet.selected[data-destination="destination-2"]')`),'Map selection retains focus on its own button after selected styling changes');
+  await evaluate(`document.querySelector('.exp-planet[data-destination="destination-6"]').focus()`);
+  await click('.exp-planet[data-destination="destination-6"]');
+  assert.ok(await evaluate(`document.activeElement.matches('.exp-planet.selected[data-destination="destination-6"]')`),'Map selection retains focus on its own button after selected styling changes');
   await waitFor(`window.ApogeeCosmic.inspect().traveling`);
   const arrivalDuration = await evaluate<number>(`window.ApogeeCosmic.inspect().travelDuration`);
   assert.equal(arrivalDuration,3200,'Unvisited destination gets a longer arrival');
@@ -286,7 +295,7 @@ app.whenReady().then(async () => {
   assert.equal(await evaluate(`window.ApogeeCosmic.inspect().traveling`),false,'Arrival can be skipped');
   await click('.exp-planet[data-destination="destination-3"]');
   await evaluate(`document.querySelector('.exp-planet.selected').dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}))`);
-  await click('.exp-planet[data-destination="destination-2"]');
+  await click('.exp-planet[data-destination="destination-6"]');
   assert.equal(await evaluate(`window.ApogeeCosmic.inspect().travelDuration`),900,'Revisit uses brief travel');
   await evaluate(`document.querySelector('.exp-planet.selected').dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}))`);
   await click('.cosmic-map-controls button[aria-pressed]');
@@ -318,7 +327,9 @@ app.whenReady().then(async () => {
   await screenshot('13-clear-reveal');
   await click('.cosmic-cinematic button');
   assert.ok(await evaluate(`document.activeElement.classList.contains('exp-planet')`),'Closing reveal restores keyboard focus');
-  await evaluate(`delete document.hasFocus;delete document.hidden;window.dispatchEvent(new Event('blur'))`);
+  await evaluate(`Object.defineProperty(document,'hasFocus',{configurable:true,value:()=>window.testFocused});window.testFocused=false;window.dispatchEvent(new Event('blur'))`);
+  assert.equal(await evaluate(`window.ApogeeCosmic.inspect().animating`), false, 'blur suspends the scene');
+  await evaluate(`window.testFocused=true;window.dispatchEvent(new Event('focus'));`);
   console.log('PASS: real 3D rendering, arrival/revisit timing, skip, pause, renderer reuse, background suspension, context-loss fallback, clear reveal focus.');
   for (const [w,h] of [[940,640],[600,900]]) {
     win.setSize(w,h); await new Promise(r=>setTimeout(r,80));

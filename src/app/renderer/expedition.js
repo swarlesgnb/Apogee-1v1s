@@ -10,6 +10,10 @@
   let view = null, page = 'map', filter = 'all', listMode = false, busy = false;
   let previewSelected = null, previewBand = null, announced = new Set(), initialized = false;
   let renderContext = '';
+  let renderPending = false;
+  const resumeRender = () => { if (renderPending) render(); };
+  window.addEventListener('focus', resumeRender);
+  document.addEventListener('visibilitychange', resumeRender);
   // First view. The first outside playtest opened this screen to four difficulty cards, six
   // planets, two reward spotlights, a locked gate, three tabs and a difficulty select at
   // once, and the tester closed it without playing. Before joining, the screen is the chart
@@ -374,6 +378,8 @@
   }
   function render() {
     if (!view) return;
+    if (bridge && (document.hidden || !document.hasFocus())) { renderPending = true; return; }
+    renderPending = false;
     const controlClass = el => String(el?.className || '').split(/\s+/).filter(c => !['selected','lit','owned','locked'].includes(c)).sort().join(' ');
     const focused = document.activeElement, focusId = focused?.id, focusedClass = controlClass(focused);
     const context = `${page}:${selected()}:${band()}`;

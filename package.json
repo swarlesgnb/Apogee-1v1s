@@ -15,7 +15,7 @@
     "validate:engine": "tsx src/core/benchmarks/validateEngine.ts",
     "validate:ranks": "tsx src/core/ranks/validateRanks.ts",
     "validate:sync": "tsx src/core/sync/validateSync.ts",
-    "validate:verify": "tsx src/core/verify/validateVerify.ts",
+    "validate:verify": "tsx src/core/verify/validateServerEvidence.ts && node tools/validateSubmitRun.mjs && tsx src/core/verify/validateVerify.ts",
     "attack:verify": "tsx src/core/verify/attackVerify.ts",
     "attack:rls": "node tools/attackRls.mjs",
     "validate:kovaaks": "tsx src/core/verify/validateKovaaks.ts",
@@ -107,7 +107,11 @@
     "workshop:upload": "tsx tools/workshopUpload.ts",
     "video": "node tools/video/make.mjs",
     "validate:ghost-links": "tsx src/core/ghost/validateGhostLinks.ts",
-    "validate:share": "npm run build:app && node tools/buildShareTest.mjs && electron .cache/share-test.cjs"
+    "validate:share": "npm run build:app && node tools/buildShareTest.mjs && electron .cache/share-test.cjs",
+    "validate:background-refresh": "node tools/validateBackgroundRefresh.mjs",
+    "validate:server-evidence": "tsx src/core/verify/validateServerEvidence.ts",
+    "validate:submit-run": "node tools/validateSubmitRun.mjs",
+    "validate:background-refresh-ui": "tsx tools/buildUiPreview.ts && electron tools/backgroundRefreshUi.cjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",

@@ -2,10 +2,15 @@
 
 ## The short version
 
-Apogee verifies runs by asking KovaaK's own servers what you scored, rather than by
-trusting the file on your disk. A forged or edited stats file does not survive that
-check, and every local integrity check was measured against 11,058 genuine runs before
-it was allowed to reject anything. **What Apogee cannot catch is a cheat that makes
+Apogee compares runs with records from KovaaK's servers when a linked account and
+matching record are available. Verified requires a matching score, nonempty scenario
+hash and challenge start, and a server timestamp within three minutes of the run's
+corrected end time. For a ranked match, that server timestamp must also lie inside
+the match window. Missing evidence never earns Verified.
+
+Without that evidence, local consistency checks can catch contradictory edits but
+cannot prove a file is genuine. Coherent forgeries can still receive Consistent and
+count under the current rating policy. **What Apogee cannot catch is a cheat that makes
 KovaaK's itself record a real score.** An aimbot or hardware assistance produces a
 genuine leaderboard entry, and no amount of reading that entry will reveal it. That
 class of cheating is addressed by statistical review of top-end accounts and human
