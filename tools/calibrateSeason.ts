@@ -76,7 +76,7 @@ const OVERRIDES: Record<string, { relative: number; why: string }> = {
 const args = process.argv.slice(2);
 const dry = args.includes("--dry");
 const keepAnchors = args.includes("--keep-anchors");
-const previousCalibration = keepAnchors
+const previousCalibration = existsSync(dataFile("season-1", "calibration.json"))
   ? (JSON.parse(readFileSync(dataFile("season-1", "calibration.json"), "utf8")) as Calibration)
   : null;
 const statsArg = args.indexOf("--stats");
@@ -226,9 +226,21 @@ for (const s of season.scenarios) {
   };
 }
 
+// Explicit per-band playtest tuning is authoritative until its override is removed.
+// Recalibrating unrelated families must not quietly restore a known difficulty cliff.
+for (const [family, previous] of Object.entries(previousCalibration?.families ?? {})) {
+  if (!season.scenarios.some(s => s.family === family)) continue;
+  for (const [window, band] of Object.entries(previous.windows ?? {})) {
+    if (band.override) {
+      families[family] ??= { ...previous, windows: {} };
+      (families[family].windows ??= {})[window] = band;
+    }
+  }
+}
+
 const out: Calibration = {
   about:
-    "Per-family and per-band corrections to the predicted thresholds, measured by npm run calibrate:season on one player's runs and applied by build:season: a band's factor is its relative correction times its category's anchor to real boards, and a band with no runs takes its family's `factor`. See src/core/season/calibration.ts.",
+    "Per-family and per-band corrections to predicted thresholds, measured by npm run calibrate:season and applied by build:season. Explicit per-band overrides retain manual playtest tuning until removed. Otherwise a band's factor is its relative correction times its category anchor, and an unplayed band takes its family's factor. See src/core/season/calibration.ts.",
   builtAt: new Date().toISOString(),
   rules: { minFamilies: MIN_FAMILIES, clamp: CLAMP, deadband: DEADBAND, anchorClamp: ANCHOR_CLAMP, combinedClamp: COMBINED_CLAMP },
   categories,
