@@ -141,6 +141,9 @@ await attack("attach a self-inserted run to my real match without naming a tier"
   " values ('" + attacker + "', 'x', 999999, now(), 'sha-escalate-2', '" + realMatch + "')");
 
 console.log("\n-- rewriting history --");
+await attack("backdate the server receipt time of a history upload",
+  `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, created_at)
+   values ('${attacker}', 'x', 1, now(), 'sha-backdated-receipt', '2000-01-01Z')`);
 await attack("update my own run's score after the fact",
   `update runs set score = 999999 where player_id = '${attacker}'`);
 await attack("delete my own run",

@@ -62,7 +62,7 @@
     "fresh:nostats": "npm run build:app && electron . --fresh --no-stats",
     "validate:live": "tsx src/core/match/validateLiveQueue.ts",
     "beta": "tsx tools/betaReadiness.ts",
-    "validate:schema": "tsx tools/validateSchema.ts",
+    "validate:schema": "tsx tools/validateSchema.ts && npm run validate:ranked-boundaries",
     "validate:functions": "tsx tools/validateFunctionImports.ts && tsx tools/validateFunctionNames.ts",
     "validate:sound": "node tools/validateSound.mjs",
     "measure:sound": "electron tools/measureSound.cjs",
@@ -111,7 +111,8 @@
     "validate:background-refresh": "node tools/validateBackgroundRefresh.mjs",
     "validate:server-evidence": "tsx src/core/verify/validateServerEvidence.ts",
     "validate:submit-run": "node tools/validateSubmitRun.mjs",
-    "validate:background-refresh-ui": "tsx tools/buildUiPreview.ts && electron tools/backgroundRefreshUi.cjs"
+    "validate:background-refresh-ui": "tsx tools/buildUiPreview.ts && electron tools/backgroundRefreshUi.cjs",
+    "validate:ranked-boundaries": "node tools/validateRankedClaims.mjs && node tools/validateBaselineBoundary.mjs && node tools/validateSettlementOrder.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",
