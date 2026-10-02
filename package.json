@@ -112,7 +112,7 @@
     "validate:server-evidence": "tsx src/core/verify/validateServerEvidence.ts",
     "validate:submit-run": "node tools/validateSubmitRun.mjs",
     "validate:background-refresh-ui": "tsx tools/buildUiPreview.ts && electron tools/backgroundRefreshUi.cjs",
-    "validate:ranked-boundaries": "node tools/validateRankedClaims.mjs && node tools/validateBaselineBoundary.mjs && node tools/validateSettlementOrder.mjs"
+    "validate:ranked-boundaries": "node tools/validateRankedClaims.mjs && node tools/validateBaselineBoundary.mjs && node tools/validateSettlementOrder.mjs && node tools/validateAtomicSettlement.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",

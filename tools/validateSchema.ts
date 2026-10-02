@@ -324,7 +324,7 @@ async function main(): Promise<void> {
       db.exec(`insert into friendships (player_id, friend_id) values ('${duelA}', '${duelB}')`)));
 
 
-  // ---- what rateChallenger stands on -------------------------------------------
+  // ---- duel lookup and legacy rating history -----------------------------------
   //
   // The function itself is an Edge Function: tsc never sees it and there is no Deno
   // here to run it. What can be checked is the contract underneath, which is where a

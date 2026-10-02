@@ -14,7 +14,9 @@ export const isCopiedSide=()=>false;
 export const enforceRateLimit=async()=>{};
 export const afterLegSettled=async()=>null;
 export const baselineFor=async()=>{throw new Error('Unexpected baseline calculation');};
-export const rateChallenger=async()=>{throw new Error('Unexpected rating write');};
+export const prepareChallengerRating=async()=>{throw new Error('Unexpected rating calculation');};
+export const commitMatchResult=async(_admin,matchId,status,sides,ratings=[])=>{
+globalThis.settlementFixture.commits.push({matchId,status,sides,ratings});return {committed:true};};
 `;
 await build({entryPoints:['supabase/functions/settle-match/index.ts'],outfile:'.cache/settlement-order.mjs',bundle:true,platform:'node',format:'esm',
   plugins:[{name:'isolated-boundaries',setup(b){
@@ -25,7 +27,7 @@ let handle;
 globalThis.Deno={serve:fn=>{handle=fn;}};
 await import(pathToFileURL(resolve('.cache/settlement-order.mjs')).href);
 assert.equal(typeof handle,'function');
-const fixture={writes:[],orders:[],runs:[],admin:{from(table){
+const fixture={writes:[],commits:[],orders:[],runs:[],admin:{from(table){
   const order=[]; let writing=false;
   const query={select(){return query;},eq(){return query;},in(){return query;},
     order(key,options){order.push([key,options.ascending]);return query;},
@@ -57,5 +59,8 @@ assert.deepEqual(fixture.orders[0],[['match_submitted_at',true],['id',true]]);
 fixture.runs=[{...first,duration_seconds:3},{...later,duration_seconds:60}];
 const abandoned=await handle(request());
 assert.equal(abandoned.body.verdict,'void','a genuine first abandoned attempt still voids');
-assert.ok(fixture.writes.some(([table,row])=>table==='matches'&&row.status==='void'));
+assert.equal(fixture.writes.length,0,'no partial table writes');
+assert.equal(fixture.commits.length,1);
+assert.equal(fixture.commits[0].status,'void');
+assert.deepEqual(fixture.commits[0].ratings,[]);
 console.log('OK: shipped settle-match uses server receipt order, with both completion and abandonment controls');

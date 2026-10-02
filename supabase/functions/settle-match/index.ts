@@ -16,7 +16,9 @@ import {
   handler,
   isCopiedSide,
   json,
-  rateChallenger,
+  prepareChallengerRating,
+  commitMatchResult,
+  type RatingProposal,
   readJson,
   requireCaller,
   HttpError,
@@ -40,17 +42,19 @@ interface Body {
   matchId: string;
 }
 
-Deno.serve(handler(async (req, admin) => {
+Deno.serve(handler(async function settleRequest(req, admin) {
   const caller = await requireCaller(req, admin);
   await enforceRateLimit(admin, caller.playerId, "settle-match");
-  const { matchId } = await readJson<Body>(req);
+  const { matchId } = await readJson<Body>(req.clone());
   if (!matchId) throw new HttpError(400, "matchId is required");
 
-  const { data: match } = await admin
+  const { data: match, error: matchError } = await admin
     .from("matches")
     .select("id, status, category, difficulty, scenario_ids, created_at, expires_at, settled_at, rated")
     .eq("id", matchId)
     .maybeSingle();
+
+  if (matchError) throw new HttpError(500, matchError.message);
 
   if (!match) throw new HttpError(404, "no such match");
 
@@ -59,10 +63,12 @@ Deno.serve(handler(async (req, admin) => {
   // skipped, so a tournament result is decided exactly the way a ladder one is.
   const rated = match.rated !== false;
 
-  const { data: sides } = await admin
+  const { data: sides, error: sidesError } = await admin
     .from("match_sides")
     .select("match_id, player_id, run_ids, deltas, match_score, result, provisional, rating_before, rd_before, rating_after, rd_after, submitted_at")
     .eq("match_id", matchId);
+
+  if (sidesError) throw new HttpError(500, sidesError.message);
 
   // The caller's own side, never a copy of their stored run set that is the opponent
   // here: settling through that closed a stranger's match before they had played it.
@@ -72,7 +78,7 @@ Deno.serve(handler(async (req, admin) => {
   if (!mine) throw new HttpError(403, "you are not in that match");
 
   // Already settled: return what was stored rather than recomputing and re-applying.
-  if (match.status === "settled") {
+  if (match.status === "settled" || match.status === "void") {
     return json({
       matchId,
       alreadySettled: true,
@@ -81,7 +87,7 @@ Deno.serve(handler(async (req, admin) => {
       // Folded in again on a repeat call, which is a no-op once it has landed and the
       // retry that lands it if the first call died before it could.
       tournament: rated ? null : await afterLegSettled(admin, matchId),
-      verdict: mine.result,
+      verdict: match.status === "void" ? "void" : mine.result,
       yourMatchScore: mine.match_score != null ? Number(mine.match_score) : null,
       theirMatchScore: theirs?.match_score != null ? Number(theirs.match_score) : null,
       ratingBefore: mine.rating_before != null ? Number(mine.rating_before) : null,
@@ -100,7 +106,7 @@ Deno.serve(handler(async (req, admin) => {
   const scenarioIds: number[] = match.scenario_ids ?? [];
 
   // ---- the caller's runs for this match ------------------------------------------
-  const { data: runs } = await admin
+  const { data: runs, error: runsError } = await admin
     .from("runs")
     .select("id, scenario_id, scenario_name, score, verification_tier, played_at, duration_seconds")
     .eq("player_id", caller.playerId)
@@ -108,12 +114,16 @@ Deno.serve(handler(async (req, admin) => {
     .order("match_submitted_at", { ascending: true })
     .order("id", { ascending: true });
 
+  if (runsError) throw new HttpError(500, runsError.message);
+
   // How long each of these scenarios is supposed to last, so a run that stopped early
   // can be told from one that went badly.
-  const { data: scenarioRows } = await admin
+  const { data: scenarioRows, error: scenarioError } = await admin
     .from("scenarios")
     .select("id, duration_seconds")
     .in("id", scenarioIds);
+
+  if (scenarioError) throw new HttpError(500, scenarioError.message);
 
   const expectedSeconds = new Map<number, number | null>(
     (scenarioRows ?? []).map((s: any) => [s.id, s.duration_seconds ?? null]),
@@ -140,18 +150,9 @@ Deno.serve(handler(async (req, admin) => {
   );
 
   if (abandonedRun) {
-    const settledAt = new Date().toISOString();
-
-    await admin
-      .from("match_sides")
-      .update({ result: null, submitted_at: settledAt })
-      .eq("match_id", matchId)
-      .eq("player_id", caller.playerId);
-
-    await admin
-      .from("matches")
-      .update({ status: "void", settled_at: settledAt })
-      .eq("id", matchId);
+    const receipt = await commitMatchResult(admin, matchId, "void",
+      [{ player_id: caller.playerId, result: null }]);
+    if (!receipt.committed) return settleRequest(req, admin);
 
     const tournament = rated ? null : await afterLegSettled(admin, matchId);
 
@@ -249,27 +250,13 @@ Deno.serve(handler(async (req, admin) => {
   // match_score the candidate query in find-match cannot see it.
   if (seeding) {
     const side = settleSide(playerRounds);
-    const settledAt = new Date().toISOString();
-
-    const { error: seedSideError } = await admin
-      .from("match_sides")
-      .update({
-        run_ids: playerRounds.map((_, i) => firstByScenario.get(scenarioIds[i])!.id),
-        deltas: side.rounds.map((r) => r.delta ?? 0),
-        match_score: side.matchScore,
-        result: null,
-        provisional: side.provisional,
-        submitted_at: settledAt,
-      })
-      .eq("match_id", matchId)
-      .eq("player_id", caller.playerId);
-
-    if (seedSideError) throw new HttpError(500, seedSideError.message);
-
-    await admin
-      .from("matches")
-      .update({ status: "settled", settled_at: settledAt })
-      .eq("id", matchId);
+    const receipt = await commitMatchResult(admin, matchId, "settled", [{
+      player_id: caller.playerId,
+      run_ids: playerRounds.map((_, i) => firstByScenario.get(scenarioIds[i])!.id),
+      deltas: side.rounds.map((r) => r.delta ?? 0), match_score: side.matchScore,
+      result: null, provisional: side.provisional,
+    }]);
+    if (!receipt.committed) return settleRequest(req, admin);
 
     // The first leg of a tournament fixture. Same scoring, same storage, but it is not
     // going to the pool (find-match reads `rated`), so the sentence about the pool below
@@ -339,11 +326,13 @@ Deno.serve(handler(async (req, admin) => {
   const settlement = settleMatch({ playerRounds, opponentRounds });
 
   // ---- rating ---------------------------------------------------------------------
-  const { data: myRatingRow } = await admin
+  const { data: myRatingRow, error: ratingError } = await admin
     .from("ratings")
     .select("rating, rd, volatility, matches_played")
     .eq("player_id", caller.playerId)
     .maybeSingle();
+
+  if (ratingError) throw new HttpError(500, ratingError.message);
 
   const before: Rating = {
     rating: Number(myRatingRow?.rating ?? 1500),
@@ -373,80 +362,29 @@ Deno.serve(handler(async (req, admin) => {
     };
   }
 
-  const settledAt = new Date().toISOString();
-
-  // ---- persist --------------------------------------------------------------------
-  const { error: sideError } = await admin
-    .from("match_sides")
-    .update({
-      run_ids: playerRounds.map((_, i) => firstByScenario.get(scenarioIds[i])!.id),
-      deltas: settlement.player.rounds.map((r) => r.delta ?? 0),
-      match_score: settlement.player.matchScore,
-      result: settlement.verdict === "void" ? null : settlement.verdict,
-      provisional: settlement.player.provisional,
-      rating_before: before.rating,
-      rating_after: after.rating,
-      rd_before: before.rd,
-      rd_after: after.rd,
-      submitted_at: settledAt,
-    })
-    .eq("match_id", matchId)
-    .eq("player_id", caller.playerId);
-
-  if (sideError) throw new HttpError(500, sideError.message);
-
+  const sidePlans: Record<string, unknown>[] = [{
+    player_id: caller.playerId,
+    run_ids: playerRounds.map((_, i) => firstByScenario.get(scenarioIds[i])!.id),
+    deltas: settlement.player.rounds.map((r) => r.delta ?? 0),
+    match_score: settlement.player.matchScore,
+    result: settlement.verdict === "void" ? null : settlement.verdict,
+    provisional: settlement.player.provisional,
+    rating_before: before.rating, rating_after: after.rating,
+    rd_before: before.rd, rd_after: after.rd,
+  }];
+  const ratingPlans: RatingProposal[] = [];
   if (settlement.verdict !== "void" && rated) {
-    await admin.from("ratings").upsert(
-      {
-        player_id: caller.playerId,
-        rating: after.rating,
-        rd: after.rd,
-        volatility: after.volatility,
-        matches_played: (myRatingRow?.matches_played ?? 0) + 1,
-        updated_at: settledAt,
-      },
-      { onConflict: "player_id" },
-    );
-
-    await admin.from("rating_history").insert({
-      player_id: caller.playerId,
-      match_id: matchId,
-      rating_before: before.rating,
-      rating_after: after.rating,
-      rd_before: before.rd,
-      rd_after: after.rd,
-      result: verdictToScore(settlement.verdict),
-      weight: settlement.ratingWeight,
-    });
+    ratingPlans.push({ player_id: caller.playerId, before, after,
+      matches_played: Number(myRatingRow?.matches_played ?? 0),
+      score: verdictToScore(settlement.verdict), weight: settlement.ratingWeight });
+    const theirVerdict = settlement.verdict === "win" ? "loss" : settlement.verdict === "loss" ? "win" : "draw";
+    const challenger = await prepareChallengerRating(admin, matchId, theirVerdict,
+      settlement.ratingWeight, updateRating, before);
+    if (challenger) { sidePlans.push(challenger.side); ratingPlans.push(challenger.rating); }
   }
-
-  await admin
-    .from("matches")
-    .update({
-      status: settlement.verdict === "void" ? "void" : "settled",
-      settled_at: settledAt,
-    })
-    .eq("id", matchId);
-
-  // If this was somebody's duel, rate them too.
-  //
-  // The block above rates the caller and nobody else, which is right for the pool: a
-  // stored side answers as many callers as draw it, so rating its owner every time would
-  // charge one performance ten ways. A duel is answered once, by the person it was sent
-  // to, so the sender did play this contest and is rated for it.
-  //
-  // A void rates nobody, on either side. Failure here is logged rather than thrown: the
-  // caller's own result is already written and returned, and losing the sender's rating
-  // update is a thing to repair, not a reason to fail a match that finished.
-  if (settlement.verdict !== "void" && rated) {
-    const theirVerdict =
-      settlement.verdict === "win" ? "loss" : settlement.verdict === "loss" ? "win" : "draw";
-    try {
-      await rateChallenger(admin, matchId, theirVerdict, settlement.ratingWeight, updateRating);
-    } catch (err) {
-      console.error(`could not rate the duel sender on ${matchId}:`, err);
-    }
-  }
+  const receipt = await commitMatchResult(admin, matchId,
+    settlement.verdict === "void" ? "void" : "settled", sidePlans, ratingPlans);
+  if (!receipt.committed) return settleRequest(req, admin);
 
   // Who it was against, so the result screen can offer a rematch.
   //
