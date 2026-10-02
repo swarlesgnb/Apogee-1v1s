@@ -105,7 +105,8 @@ Deno.serve(handler(async (req, admin) => {
     .select("id, scenario_id, scenario_name, score, verification_tier, played_at, duration_seconds")
     .eq("player_id", caller.playerId)
     .eq("match_id", matchId)
-    .order("played_at", { ascending: true });
+    .order("match_submitted_at", { ascending: true })
+    .order("id", { ascending: true });
 
   // How long each of these scenarios is supposed to last, so a run that stopped early
   // can be told from one that went badly.

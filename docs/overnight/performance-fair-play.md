@@ -24,3 +24,15 @@ The CSV attack harness still produces coherent miss-to-hit forgeries and an unmo
 Earlier MiracastPowerManager crashes and WerFault bursts remain a lead for the reported FPS drops, not a proven cause. There is no game frame-time capture correlating those events, and no Windows services or recording settings were changed. A later one-hour Event 1000 query returned no matching events; this does not demonstrate a fix.
 
 Source changes need backend deployment before server-side protections are live. No backend deployment or installer release is included.
+
+## Second pass: replay and settlement
+
+The old database accepted two different byte hashes for the same player, scenario and end instant in different matches. The migration test reproduces this before applying migration 21. Afterward, a claim table reserves that identity independently of CSV formatting, including after privileged deletion of a run. Existing duplicate rows are retained as evidence; their identities are reserved without rewriting historical results.
+
+Runs receive a server-owned match submission time when first attached to a match. Settlement orders attempts by that receipt and then row ID, rather than the client-supplied play time. Claiming an older history row cannot put it ahead of a run already submitted to the match. Existing ranked rows use created_at as the best available historical receipt; actual historical claim times cannot be recovered.
+
+Match baselines now require both played_at and server-owned created_at to predate the match. A Postgres-backed test drives the shipped baseline query with five genuine prior rows and 50 later uploads with backdated play times: only the five prior rows count. Ordinary history refresh still sees all 55. Uploading fabricated history before queueing remains a separate trust limitation.
+
+Validation includes the migration with existing duplicate history, replay refusal, receipt ordering, history claims, protected columns, and retained claims after deletion; the actual settlement handler with both completed and abandoned first-attempt controls; schema/seed application; RLS attacks; typecheck; and function imports/names. Tests run against isolated local Postgres and mocked identity boundaries, not production traffic. Separate simultaneous database connections have not been exercised; replay exclusion relies on the database primary key.
+
+Deployment order: apply migration 20261002000021_ranked_run_claims.sql before deploying settle-match and the functions importing baselineFor. Deploying the new ordering without its column would fail. Server-issued provenance is still required to authenticate a timestamp: changing the claimed run identity is outside the cosmetic-replay protection this migration establishes.

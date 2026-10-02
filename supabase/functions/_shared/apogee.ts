@@ -194,8 +194,11 @@ export async function baselineFor(
   if (before) {
     // `match_id=neq.x` on its own also drops every row whose match_id is null, which is
     // all of uploaded history, so the null case is asked for by name.
+    // Receipt time is server-owned. A later upload with a backdated played_at must
+    // not change the baseline of a match that has already begun.
     query = query
       .lt("played_at", before.at)
+      .lt("created_at", before.at)
       .or(`match_id.is.null,match_id.neq.${before.matchId}`);
   }
 
