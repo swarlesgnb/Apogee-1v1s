@@ -112,6 +112,7 @@ async function live(): Promise<void> {
 
   const target = scores[0];
   const found = matchServerRecord(scores, {
+    playedAt: target.epoch === null ? null : new Date(target.epoch),
     hash: target.hash,
     challengeStart: target.challengeStart,
     score: target.score,
@@ -119,6 +120,7 @@ async function live(): Promise<void> {
   check("a known run is located in the history", found?.challengeStart === target.challengeStart);
 
   const absent = matchServerRecord(scores, {
+    playedAt: target.epoch === null ? null : new Date(target.epoch),
     hash: target.hash,
     challengeStart: "00:00:00.001",
     score: -12345,
@@ -134,7 +136,7 @@ function offline(): void {
     score: run.score,
     hash: run.hash,
     challengeStart: run.challengeStart,
-    epoch: Date.now(),
+    epoch: run.playedAt!.getTime(),
   };
 
   check(

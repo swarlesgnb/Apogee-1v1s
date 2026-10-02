@@ -82,8 +82,13 @@ Deno.serve(handler(async (req, admin) => {
   await enforceRateLimit(admin, caller.playerId, "submit-run");
   const body = await readJson<Body>(req);
 
-  if (!body.csv || !body.filename) throw new HttpError(400, "filename and csv are required");
+  if (!body || typeof body.csv !== "string" || typeof body.filename !== "string" ||
+      !body.csv || !body.filename) throw new HttpError(400, "filename and csv are required");
   if (body.csv.length > 4_000_000) throw new HttpError(413, "stats file is implausibly large");
+  if (body.tzOffsetMinutes != null &&
+      (!Number.isInteger(body.tzOffsetMinutes) || Math.abs(body.tzOffsetMinutes) > 840)) {
+    throw new HttpError(400, "tzOffsetMinutes must be an integer between -840 and 840");
+  }
 
   // The client's hash is not trusted; it is only checked for agreement, which catches
   // a truncated or altered upload in transit.
@@ -138,7 +143,7 @@ Deno.serve(handler(async (req, admin) => {
       .maybeSingle();
     if (!side || isCopiedSide(side, match)) throw new HttpError(403, "you are not in that match");
 
-    if (scenario && !(match.scenario_ids as number[]).includes(scenario.id)) {
+    if (!scenario || !(match.scenario_ids as number[]).includes(scenario.id)) {
       throw new HttpError(400, "that scenario is not part of this match");
     }
 
@@ -159,6 +164,7 @@ Deno.serve(handler(async (req, admin) => {
     try {
       const recent = await recentScores(caller.kovaaksUsername, run.scenario);
       serverRecord = matchServerRecord(recent, {
+        playedAt: run.playedAt,
         hash: run.hash,
         challengeStart: run.challengeStart,
         score: run.score,
@@ -289,12 +295,12 @@ Deno.serve(handler(async (req, admin) => {
   // and losing to one is not a rule anybody would accept. Restarting it here is what
   // makes playing free and leaves only idling in a menu to spend it.
   //
-  // A rejected run still counts as activity. It is evidence the player is at their
-  // machine playing, which is the only thing this clock is measuring, and letting a bad
-  // verification also start a countdown would punish the same run twice.
+  // A rejected score can still record activity, but an absent or out-of-window
+  // timestamp cannot extend the deadline. Those values are supplied by the client.
   let expiresAt: string | null = null;
-  if (body.matchId) {
-    expiresAt = deadlineAfterRun(run.playedAt ?? new Date()).toISOString();
+  const insideWindow = outcome.report.checks.some(c => c.id === "in_match_window" && c.status === "pass");
+  if (body.matchId && insideWindow && run.playedAt) {
+    expiresAt = deadlineAfterRun(run.playedAt).toISOString();
     await admin.from("matches").update({ expires_at: expiresAt }).eq("id", body.matchId);
   }
 

@@ -562,7 +562,10 @@ function checkAccuracyWithinHistory(run: ParsedRun, ctx: ConsistencyContext): Ch
 
 /** For match submissions: the run must have been played inside the match window. */
 function checkWindow(run: ParsedRun, ctx: ConsistencyContext): CheckResult {
-  if (!ctx.window || !run.playedAt) return result("in_match_window", "hard", "skip");
+  if (!ctx.window) return result("in_match_window", "hard", "skip");
+  if (!run.playedAt || !Number.isFinite(run.playedAt.getTime())) {
+    return result("in_match_window", "hard", "fail", "run timestamp is missing or invalid");
+  }
   const t = run.playedAt.getTime();
   const ok = t >= ctx.window.start.getTime() && t <= ctx.window.end.getTime();
   return result(

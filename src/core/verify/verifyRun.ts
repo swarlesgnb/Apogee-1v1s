@@ -19,6 +19,7 @@
  */
 
 import type { ParsedRun } from "../stats/parseStatsFile.ts";
+import { matchesServerEvidence } from "./serverEvidence.ts";
 import {
   checkConsistency,
   type ConsistencyContext,
@@ -99,14 +100,13 @@ export function verifyRun(input: VerifyInput): VerifyOutcome {
   if (serverRecord) {
     // The strongest possible evidence: KovaaK's saw this exact run.
     const sameScore = scoresMatch(run.score, serverRecord.score);
-    const sameHash =
-      !run.hash || !serverRecord.hash || run.hash === serverRecord.hash;
-    const sameStart =
-      !run.challengeStart ||
-      !serverRecord.challengeStart ||
-      run.challengeStart === serverRecord.challengeStart;
+    const sameHash = !!run.hash && run.hash === serverRecord.hash;
+    const serverInWindow = !input.consistency?.window ||
+      (serverRecord.epoch !== null &&
+        serverRecord.epoch >= input.consistency.window.start.getTime() &&
+        serverRecord.epoch <= input.consistency.window.end.getTime());
 
-    if (sameScore && sameHash && sameStart) {
+    if (matchesServerEvidence(run, serverRecord) && serverInWindow) {
       return { tier: "verified", reasons: ["matches KovaaK's server record"], advisories, report };
     }
 

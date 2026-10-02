@@ -159,7 +159,7 @@ Deno.serve(handler(async (req, admin) => {
     if (caller.kovaaksUsername) {
       try {
         const recent = await recentScores(caller.kovaaksUsername, run.scenario);
-        serverRecord = matchServerRecord(recent, { hash: run.hash, challengeStart: run.challengeStart, score: run.score });
+        serverRecord = matchServerRecord(recent, run);
       } catch {
         serverRecord = null;
       }

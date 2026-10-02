@@ -23,6 +23,8 @@
  * failing.
  */
 
+import { matchesServerEvidence, type RunEvidence } from "./serverEvidence.ts";
+
 const BASE = "https://kovaaks.com/webapp-backend";
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0 Safari/537.36";
 
@@ -186,22 +188,7 @@ export async function recentScores(
  */
 export function matchServerRecord(
   candidates: KovaaksScore[],
-  local: { hash: string | null; challengeStart: string | null; score: number },
+  local: RunEvidence,
 ): KovaaksScore | null {
-  if (local.challengeStart) {
-    const exact = candidates.find(
-      (c) =>
-        c.challengeStart === local.challengeStart &&
-        (!local.hash || !c.hash || c.hash === local.hash),
-    );
-    if (exact) return exact;
-  }
-
-  // Fall back to an exact score match with a compatible hash. Weaker, but still
-  // requires the run to exist on KovaaK's servers.
-  return (
-    candidates.find(
-      (c) => c.score === local.score && (!local.hash || !c.hash || c.hash === local.hash),
-    ) ?? null
-  );
+  return candidates.find((candidate) => matchesServerEvidence(local, candidate)) ?? null;
 }
