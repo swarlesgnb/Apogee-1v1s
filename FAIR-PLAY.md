@@ -13,9 +13,8 @@ cannot prove a file is genuine. Coherent forgeries can still receive Consistent 
 count under the current rating policy. **What Apogee cannot catch is a cheat that makes
 KovaaK's itself record a real score.** An aimbot or hardware assistance produces a
 genuine leaderboard entry, and no amount of reading that entry will reveal it. That
-class of cheating is addressed by statistical review of top-end accounts and human
-review at the top of the ladder, which is where most competitive games end up. It is a
-real limitation.
+class of cheating would need further evidence and human review. Automated account
+review, moderation queues and an appeal workflow are not implemented.
 
 ## How a run is graded
 
@@ -23,10 +22,18 @@ Every submitted run gets a tier, and the tier is shown on the match screen.
 
 | Tier | What it means | Effect on rating |
 |---|---|---|
-| **Verified** | KovaaK's servers hold a matching record: same hash, challenge start, Steam ID, and time window | Counts in full |
-| **Consistent** | No server record, but the file is internally coherent, was played inside the match window, and is within 2% of your verified personal best | Counts in full, flagged |
-| **Suspect** | Above your verified personal best with no server record | Counts, held for review, **not** auto-voided |
-| **Rejected** | The file contradicts itself, has been submitted before, or was played outside the match window | Match void, account flagged |
+| **Verified** | A record from the linked account matches the score, hash, challenge start and time window | Counts |
+| **Consistent** | The available checks pass, but there is no matching server record | Counts |
+| **Suspect** | The grading core received evidence of an unusual score or accuracy | Counts; reasons are stored, with no automatic review workflow |
+| **Rejected** | A hard consistency or match-window check fails | Excluded; an incomplete set of counted rounds voids settlement |
+
+Rating weight also depends on whether the baselines are provisional. Verification
+alone does not guarantee a full-weight rating change. Replayed submissions are refused
+before saving another run; they do not automatically flag an account or void a match.
+
+The live submission path looks for a matching server record. It does not currently
+supply the grading core with an unrelated personal-best record or an accuracy ceiling,
+so those Suspect checks are not active in that path.
 
 Two things about that table are deliberate.
 
@@ -49,7 +56,17 @@ rather than judgements about you:
 - the exact file has been submitted before (replay)
 - it was played outside the window of the match it was submitted for
 
-A rejected run voids the match it belonged to. The account is flagged for review.
+A saved rejected run is excluded when the match settles. A refused replay saves no
+second run. Neither action currently writes an account moderation flag.
+
+A ranked run's player, scenario and claimed play time can be used only once, even if
+the CSV formatting changes. Its first server receipt determines attempt order.
+This prevents cosmetic replays; it does not authenticate a forged play time.
+
+Settlement commits the match result, rating history and affected ratings together.
+Retries return the existing terminal result. A failed or stale rating calculation
+leaves the match unchanged so it can be retried. These server protections require the
+corresponding database migrations and function deployment.
 
 ## Duels
 
@@ -89,8 +106,8 @@ answering. Ignoring it is also allowed: a duel nobody answers expires after seve
 
 ## Disputing a voided match
 
-> Draft. The process below is what the software supports; the turnaround and the
-> contact route still need to be confirmed before launch.
+There is no implemented appeal or automatic reinstatement workflow. The contact route
+and review process still need to be established. Keep the following for investigation:
 
 If a match was voided and you believe that is wrong, it can be reviewed. What makes a
 dispute answerable:
@@ -101,26 +118,14 @@ dispute answerable:
 3. **The app log**, via `Help > Open log`. Optional, and it is your choice whether to
    send it; see [PRIVACY.md](PRIVACY.md).
 
-A review re-runs verification against the stored file and the stored verification notes.
-The outcome is either that the run is reinstated and the match re-settled, or that the
-rejection stands with the specific check that failed named. "It looked suspicious" is
-not an outcome; a rejection that cannot be explained in terms of a named check is a bug
-in Apogee and will be treated as one.
-
-Two caveats:
-
-- One person answers these today. There is no moderation team. Expect a human
-  reply, not a fast one.
-- A review will not tell you your account's moderation state. Whether an account is
-  under review is deliberately not readable by its subject, because an account that can
-  see it is being watched knows exactly when to stop. A dispute answer addresses the
-  match, not the flag.
+Verification notes record which checks failed. A terminal match cannot simply be
+submitted again to change its result; correcting a historical result would need a
+separate, auditable administrative process that has not been built.
 
 ## Reporting someone else
 
-There is no in-app report button yet. Statistical review at the top of the ladder is the
-mechanism that is actually built. If you believe a specific account is cheating, the
-useful thing to include is the scenario and the scores, not a video of the crosshair.
+There is no in-app report button or automated statistical review of accounts yet.
+Scenario names, scores and dates are useful evidence for a future review process.
 
 ## Credits
 

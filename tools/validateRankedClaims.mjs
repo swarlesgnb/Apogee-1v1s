@@ -31,6 +31,9 @@ await insert('whitespace-edited-bytes', instant, secondMatch);
 assert.equal((await db.query('select count(*)::int as n from runs')).rows[0].n, 2);
 console.log('REPRODUCED: pre-migration schema accepts two byte hashes for the same run in different matches');
 await db.exec(readFileSync('supabase/migrations/' + migration, 'utf8'));
+for (const file of readdirSync('supabase/migrations').filter(f => f.endsWith('.sql') && f > migration).sort()) {
+  await db.exec(readFileSync('supabase/migrations/' + file, 'utf8'));
+}
 assert.equal((await db.query('select count(*)::int as n from runs')).rows[0].n, 2, 'migration preserves historical duplicates');
 assert.equal((await db.query('select count(*)::int as n from ranked_run_claims')).rows[0].n, 1);
 await assert.rejects(insert('third-byte-hash'), e => e.code === '23505');
@@ -60,5 +63,10 @@ for (const sql of ['select * from ranked_run_claims', 'delete from ranked_run_cl
 }
 await db.exec('reset role');
 assert.equal((await db.query('select count(*)::int as n from ranked_run_claims')).rows[0].n, 3, 'blocked attempts did not alter claims');
+await db.query('delete from matches where id=$1', [firstMatch]);
+const detached = (await db.query('select match_id,match_submitted_at from runs where id=$1',[history.id])).rows[0];
+assert.equal(detached.match_id,null,'foreign-key match deletion remains supported');
+assert.ok(detached.match_submitted_at,'ranked receipt survives match deletion');
+await assert.rejects(db.query('update runs set match_id=$1 where id=$2',[secondMatch,history.id]),e=>e.code==='23505');
 await db.close();
 console.log('OK: replay refusal, legacy evidence preservation, receipt ordering, history claim, tombstones and column privileges');

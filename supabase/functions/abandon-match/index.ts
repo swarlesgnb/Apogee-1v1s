@@ -40,7 +40,7 @@ Deno.serve(handler(async (req, admin) => {
   const outcome = await forfeitMatch(admin, matchId, caller.playerId, updateRating);
 
   // If that was a tournament leg, the bracket should know now rather than at the next look.
-  const tournament = outcome.reason === "already-played" ? null : await afterLegSettled(admin, matchId);
+  const tournament = outcome.reason === "already-played" || outcome.reason === "already-settled" ? null : await afterLegSettled(admin, matchId);
 
   const message = tournament
     ? outcome.reason === "seeding"
@@ -50,6 +50,8 @@ Deno.serve(handler(async (req, admin) => {
       ? "Nothing was rated: there was no opponent to play against."
       : outcome.reason === "off-pool"
         ? "Nothing was rated: this match was on scenarios the season no longer has."
+      : outcome.reason === "already-settled"
+        ? "This match has already ended."
       : outcome.reason === "already-played"
         ? "Your runs are already in, so this match will settle on its own."
         : "Match forfeited. You can queue again now.";

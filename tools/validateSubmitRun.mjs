@@ -34,11 +34,14 @@ function reset() {
     match: { id: 'match', status: 'open', scenario_ids: [1], created_at: '2026-10-01T12:00:00Z', expires_at: '2026-10-01T12:05:00Z' },
     side: { player_id: 'owner', submitted_at: null } };
   fixture.admin = { from(table) {
-    let mutation;
+    let mutation, operation;
     const query = { select() { return query; }, eq() { return query; }, is() { return query; },
-      insert(row) { mutation = row; fixture.rows.push(row); return query; },
-      update(row) { mutation = row; fixture.deadlines.push(row); return query; },
-      async maybeSingle() { return { data: table === 'matches' ? fixture.match : table === 'match_sides' ? fixture.side : { id: 'run' }, error: null }; },
+      insert(row) { operation = 'insert'; mutation = row; fixture.rows.push(row); return query; },
+      update(row) { operation = 'update'; mutation = row; if(table === 'matches') fixture.deadlines.push(row); return query; },
+      async maybeSingle() {
+        const error=table==='runs' ? (operation==='insert'?fixture.insertError:fixture.claimError) : null;
+        return { data:error?null:table === 'matches' ? fixture.match : table === 'match_sides' ? fixture.side : { id: 'run' }, error: error??null };
+      },
       then(resolve) { return Promise.resolve({ data: mutation, error: null }).then(resolve); } };
     return query;
   } };
@@ -82,4 +85,12 @@ const future = await submit({ ...valid, filename: 'Test - Challenge - 2099.10.01
 assert.equal(future.body.counted, false);
 assert.equal(f.deadlines.length, 0, 'out-of-window timestamp cannot push deadline into the future');
 cases++;
+for(const claim of [false,true]){
+  f=reset();
+  f.insertError=claim?{code:'23505',message:'history exists'}:{code:'55000',message:'match finished'};
+  if(claim) f.claimError={code:'55000',message:'match finished'};
+  await assert.rejects(submit(valid),e=>e.status===409 && e.message==='match is already finished');
+  assert.equal(f.deadlines.length,0,'a terminal match race does not extend its deadline');
+  cases++;
+}
 console.log(`OK: ${cases} shipped submit-run handler cases with isolated auth/database boundaries`);

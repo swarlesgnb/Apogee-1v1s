@@ -266,10 +266,13 @@ Deno.serve(handler(async (req, admin) => {
     if (claimed.data) {
       inserted = claimed.data;
       error = null;
+    } else if (claimed.error) {
+      error = claimed.error;
     }
   }
 
   if (error) {
+    if (error.code === "55000") throw new HttpError(409, "match is already finished");
     // The unique constraint on (player_id, csv_sha256) is replay protection, so a
     // duplicate is a meaningful answer rather than a failure.
     if (error.code === "23505") {
