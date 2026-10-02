@@ -150,3 +150,13 @@ the model over-predicts (Voltaic's Aether, 0.14 to 0.90 logit at the median), ar
 likeliest to be set too high. Gravity Well's come from cA fuglaapressure's board moved for
 size and game speed, not for its much faster dash, so they are likely low. Check those first
 when recutting.
+
+October 2 Gravity Well tuning: current-file Intermediate runs of 168 and 146 were both
+below the old first threshold of 184, despite Novice scores clearing its top. Intermediate
+now grades at 141, 154, 157, 165, 170 and 174. Advanced grades at 138, 142, 145, 147, 150
+and 153; Expert at 135, 138, 140 and 143. The higher two bands have no local playtest runs,
+so their reductions are provisional tuning, not measured percentiles. Novice and the
+scenario files are unchanged. Per-band overrides in data/season-1/calibration.json retain
+these choices through recalibration; remove an override to resume automatic tuning for
+that band. Apply calibration changes with `npm run recalibrate:season`, which uses the
+committed scenarios without requiring the original workshop templates.

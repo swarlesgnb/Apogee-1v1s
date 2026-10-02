@@ -626,16 +626,16 @@
           "label": "Gravity Well",
           "leaderboardId": null,
           "rankMaxes": [
-            184,
-            201,
-            205,
-            216,
-            222,
-            228
+            141,
+            154,
+            157,
+            165,
+            170,
+            174
           ],
           "source": {
             "kind": "calibrated",
-            "factor": 1.0186,
+            "factor": 0.78,
             "predicted": [
               180,
               197,
@@ -644,7 +644,7 @@
               218,
               223
             ],
-            "why": "The model's prediction (see predicted), with every score on its board multiplied by 1.0186: this band's correction from 1 playtest run(s) on its current file, which put it easier than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+            "why": "The model's prediction (see predicted), scaled by 0.78 with a manual playtest adjustment: October 2, 2026: current-file Intermediate runs scored 168 and 146, below the old entry of 184, while Novice best 164 clears its top at 146. Lower the entry to about 140 and keep the top near 174 so the latest run earns an entry rank without immediately maxing this band. Novice is unchanged. Stored in data/season-1/calibration.json; retained during recalibration until the override is removed. This is tuning, not a sampled leaderboard."
           },
           "arm": "Wrist",
           "armFrom": "Apogee"
@@ -655,16 +655,16 @@
           "label": "Gravity Well",
           "leaderboardId": null,
           "rankMaxes": [
-            162,
-            166,
-            169,
-            172,
-            175,
-            179
+            138,
+            142,
+            145,
+            147,
+            150,
+            153
           ],
           "source": {
             "kind": "calibrated",
-            "factor": 0.7604,
+            "factor": 0.65,
             "predicted": [
               213,
               218,
@@ -673,7 +673,7 @@
               231,
               236
             ],
-            "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.7604: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+            "why": "The model's prediction (see predicted), scaled by 0.65 with a manual playtest adjustment: October 2, 2026: ease Advanced by about 15 percent alongside the Intermediate correction. There are no current-file Advanced runs locally; this is a provisional tuning choice for the harder scenario, not a measured player percentile. Stored in data/season-1/calibration.json; retained during recalibration until the override is removed. This is tuning, not a sampled leaderboard."
           },
           "arm": "Wrist",
           "armFrom": "Apogee"
@@ -684,21 +684,21 @@
           "label": "Gravity Well",
           "leaderboardId": null,
           "rankMaxes": [
-            171,
-            175,
-            177,
-            181
+            135,
+            138,
+            140,
+            143
           ],
           "source": {
             "kind": "calibrated",
-            "factor": 0.7604,
+            "factor": 0.6,
             "predicted": [
               225,
               230,
               233,
               238
             ],
-            "why": "The model's prediction (see predicted), with every score on its board multiplied by 0.7604: the family's correction from 3 playtest run(s) on the current files, this band having none of its own, which put it harder than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts."
+            "why": "The model's prediction (see predicted), scaled by 0.6 with a manual playtest adjustment: October 2, 2026: ease Expert by about 21 percent alongside the Intermediate correction. There are no current-file Expert runs locally; this is a provisional tuning choice for the harder scenario, not a measured player percentile. Stored in data/season-1/calibration.json; retained during recalibration until the override is removed. This is tuning, not a sampled leaderboard."
           },
           "arm": "Wrist",
           "armFrom": "Apogee"

@@ -1,5 +1,5 @@
 {
-  "about": "Per-family and per-band corrections to the predicted thresholds, measured by npm run calibrate:season on one player's runs and applied by build:season: a band's factor is its relative correction times its category's anchor to real boards, and a band with no runs takes its family's `factor`. See src/core/season/calibration.ts.",
+  "about": "Per-family and per-band corrections to predicted thresholds, measured by npm run calibrate:season and applied by build:season. Explicit per-band overrides retain manual playtest tuning until removed. Otherwise a band's factor is its relative correction times its category anchor, and an unplayed band takes its family's factor. See src/core/season/calibration.ts.",
   "builtAt": "2026-09-28T17:29:02.685Z",
   "rules": {
     "minFamilies": 3,
@@ -793,10 +793,23 @@
           "runs": 2
         },
         "1": {
-          "factor": 1.0186,
+          "factor": 0.78,
+          "override": "October 2, 2026: current-file Intermediate runs scored 168 and 146, below the old entry of 184, while Novice best 164 clears its top at 146. Lower the entry to about 140 and keep the top near 174 so the latest run earns an entry rank without immediately maxing this band. Novice is unchanged.",
           "relative": 0.8686,
           "raw": 0.7545,
           "runs": 1
+        },
+        "2": {
+          "factor": 0.65,
+          "raw": 1,
+          "runs": 0,
+          "override": "October 2, 2026: ease Advanced by about 15 percent alongside the Intermediate correction. There are no current-file Advanced runs locally; this is a provisional tuning choice for the harder scenario, not a measured player percentile."
+        },
+        "3": {
+          "factor": 0.6,
+          "raw": 1,
+          "runs": 0,
+          "override": "October 2, 2026: ease Expert by about 21 percent alongside the Intermediate correction. There are no current-file Expert runs locally; this is a provisional tuning choice for the harder scenario, not a measured player percentile."
         }
       }
     },
