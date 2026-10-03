@@ -129,6 +129,7 @@ export class DailyService {
   private board: { key: string; board: DailyBoard; at: number } | null = null;
   private boardState: { key: string; state: BoardState; message: string | null } | null = null;
   private posting = false;
+  private syncing = false;
   private proposed: number | null = null;
   private playingSince: number | null = null;
   private lastDailyRun = 0;
@@ -193,6 +194,7 @@ export class DailyService {
     const key = `${n}:${band.index}`;
     const link = landingUrl({ kind: "daily", number: n >= 1 ? n : null, band: band.slug as (typeof BAND_SLUGS)[number] });
     const text = result && result.complete ? shareText({ result, bandName: band.name, streak, link }) : null;
+    this.sync(!!result?.complete, key);
 
     return {
       hasFolder: !!c.dir,
@@ -300,12 +302,13 @@ export class DailyService {
     const c = this.compute();
     if (!c.draw || !c.result?.complete || !c.dir) return;
     const key = `${c.n}:${c.band.index}`;
+    // A failure is retried by the player (Try again), never by a loop of pushes.
+    if (!force && this.failed(key)) return;
     const social = loadSocialState();
     if (social.posted.includes(key) && !force) {
       await this.refreshBoard(c.n, c.band.index, false);
       return;
     }
-    if (!force && this.boardState?.key === key && (this.boardState.state === "unavailable" || this.boardState.state === "error")) return;
 
     // The first run inside the day on each of the three, by file, as evaluateDaily chose.
     const { start, end } = dailyWindow(c.n);
@@ -344,9 +347,30 @@ export class DailyService {
     }
   }
 
+  private failed(key: string): boolean {
+    return this.boardState?.key === key && (this.boardState.state === "unavailable" || this.boardState.state === "error");
+  }
+
+  /**
+   * Put a finished day on the board, or read the board for it, without being asked: a day
+   * finished signed out, or before this launch, is posted once the player is signed in.
+   * Scheduled rather than run inside view(), and at most one at a time.
+   */
+  private sync(complete: boolean, key: string): void {
+    if (this.syncing || this.posting || !complete || !this.deps.signedIn() || this.failed(key)) return;
+    if (this.board?.key === key && this.now() - this.board.at < BOARD_TTL_MS) return;
+    this.syncing = true;
+    setTimeout(() => {
+      void this.post(false).finally(() => {
+        this.syncing = false;
+      });
+    }, 0);
+  }
+
   async refreshBoard(n: number, band: number, force: boolean): Promise<void> {
     const key = `${n}:${band}`;
     if (!this.deps.signedIn()) return;
+    if (!force && this.failed(key)) return;
     if (!force && this.board?.key === key && this.now() - this.board.at < BOARD_TTL_MS) return;
     try {
       const { board } = await fetchDailyBoard(n, band);
