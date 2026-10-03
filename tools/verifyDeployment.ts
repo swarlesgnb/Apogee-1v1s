@@ -573,6 +573,11 @@ async function main(): Promise<void> {
     // A ghost link refuses the caller's own code and is rate limited per player, and an
     // anonymous lookup would be an unmetered way to guess codes.
     "ghost-link",
+    // The Daily board and open challenges: an entry is a player's, a board places the
+    // caller, and a code lookup is metered per player like ghost-link.
+    "daily-submit",
+    "daily-board",
+    "open-duel",
   ];
   for (const name of authedFunctions) {
     const res = await fetch(`${fnBase}/${name}`, {
