@@ -205,6 +205,22 @@ is what you want while changing anything under `src/app/`. `npm run smoke` boots
 headlessly, asserts the window rendered, and exits. That is useful over SSH or in a
 check script, where there is nobody to look at a window.
 
+On a machine without KovaaK's, point it at a synthetic stats folder instead. `--stats
+<dir>` (or `APOGEE_STATS_DIR`) names the folder for the app, `npm run smoke` and the flow
+tools, ahead of the remembered one and of detection. A build made without `.env` fails
+smoke on purpose; `--allow-offline` accepts that one failure, and the disabled sign-in
+button it causes, and says so on the result line:
+
+```bash
+npm run fixture:stats -- --out .cache/fixture/veteran/stats --preset veteran --clean
+npm run smoke -- --stats .cache/fixture/veteran/stats --allow-offline
+```
+
+The fixture (`tools/fixtures/syntheticStats.ts`, checked by `npm run validate:fixture`)
+writes 30 to 15,000 runs that the parser reads and verification grades Consistent. Give
+it a folder of its own: the app writes Apogee's scenarios and playlists into
+`<dir>/../Saved/SaveGames`, as it does beside a real stats folder.
+
 Run `doctor` first. Every line in it exists because the answer to a real half-hour of
 confusion was further up the stack than where the looking started.
 

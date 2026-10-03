@@ -233,8 +233,37 @@ export function candidateStatsFolders(): string[] {
   return steamLibraries().map((library) => join(library, STATS_SUFFIX));
 }
 
-/** First candidate folder that exists, or null. */
+/**
+ * A stats folder named outright: `--stats <dir>` on the command line, else the
+ * APOGEE_STATS_DIR environment variable, else null.
+ *
+ * For running the app, `npm run smoke` and the flow tools against a folder that is not
+ * where KovaaK's keeps one, such as the synthetic fixture (tools/fixtures/syntheticStats.ts)
+ * on a machine with no KovaaK's at all. The same variable already points the preview
+ * build and the practice tools at a folder.
+ */
+export function statsFolderOverride(argv: readonly string[] = process.argv, env = process.env): string | null {
+  const at = argv.indexOf("--stats");
+  const named = at >= 0 ? argv[at + 1] : env.APOGEE_STATS_DIR;
+  return named && named.trim() ? named.trim() : null;
+}
+
+/**
+ * First candidate folder that exists, or null.
+ *
+ * A folder named by `statsFolderOverride` is the only candidate: when somebody says which
+ * folder to read, quietly reading a different one is the wrong answer, so a named folder
+ * that does not exist finds nothing.
+ */
 export function findStatsFolder(): string | null {
+  const named = statsFolderOverride();
+  if (named) {
+    try {
+      return statSync(named).isDirectory() ? named : null;
+    } catch {
+      return null;
+    }
+  }
   for (const candidate of candidateStatsFolders()) {
     try {
       if (statSync(candidate).isDirectory()) return candidate;
