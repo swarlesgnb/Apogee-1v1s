@@ -217,7 +217,7 @@ characters no season name has is dropped rather than sent. PRIVACY.md says the s
 | `npm run validate:daily` | 71 of 71: day boundaries; a filename lands on the same daily on the client parse and the server's `wallClockToInstant` in 9 zones (63 of 63); identical draws across 9 process time zones, from the season file and from `season_scenarios` rows in three database orders, 400 days × 4 bands; band separation; no preview; result rules; streak across Honolulu, Tokyo, London-at-DST, New York and Sydney; 256 share texts with no names; board maths |
 | `npm run validate:links` | 160 of 160: 10 valid forms with round trips through both spellings, 63 refusals, 14 argv cases (first launch, second-instance with Chromium switches, two links, injected switch, 70 arguments), 16 pasted/https cases, open-challenge view and refusal order, source checks on sinks and confirm-by-id |
 | `npm run validate:presence` | 27 of 27, against a fake Discord on a unix socket: inert without an id and when off, handshake, send-after-READY, no resend when unchanged, PING/PONG, clear on opt-out, oversized frame dropped |
-| `npm run validate:social-functions` | 34 checks. The shipped `daily-submit`, `daily-board`, `open-duel`, `settle-match` and `list-duels` handlers bundled from source against PGlite with every migration, the seed and the Season 1 pool; only identity, transport and the network client stubbed; the real rate limiter. Server glyphs and mean equal the client's evaluation of the same history; 11 refusals leave no row behind; a Chicago player's wall clocks land on the right instant; band separation; open answers are unrated and settle without moving any rating or writing rating history; own-answer refused; list-duels unaffected; the 21st call in five minutes is a 429 |
+| `npm run validate:social-functions` | 35 checks. The shipped `daily-submit`, `daily-board`, `open-duel`, `settle-match` and `list-duels` handlers bundled from source against PGlite with every migration, the seed and the Season 1 pool; only identity, transport and the network client stubbed; the real rate limiter. Server glyphs and mean equal the client's evaluation of the same history; 11 refusals leave no row behind; a Chicago player's wall clocks land on the right instant; band separation; open answers are unrated and settle without moving any rating or writing rating history; own-answer refused; two racing answers from one player leave one match; list-duels unaffected; the 21st call in five minutes is a 429 |
 | `npm run attack:rls` | no holes; 7 new attacks (write, raise or delete a board entry; post an open challenge directly; convert one into a named duel; record an answer directly; flip an answer match to rated) and 3 new reads |
 | `npm run validate:schema` | passes with migration 024 |
 | `xvfb-run -a npx electron tools/socialUi.cjs --no-sandbox` (`npm run validate:social-ui`) | the real bundled client on a synthetic stats folder: first launch from a challenge link shows the signed-out prompt; the Daily at one of three; two runs copied in while the watcher runs complete it; share text has no names; the card renders; **a second launch with a daily link reaches the first instance through Electron's lock** and offers the band switch without making it; a refused link from a second launch leaves a notice without echoing it; no renderer errors |
@@ -267,7 +267,11 @@ is also extending; `supabase/functions/settle-match/index.ts` (one line);
 
 ## What this does not do
 
-- **Rivals** was not built.
+- **Rivals** was not built. It is the stretch item, and mechanics.md already measured why
+  it can wait: a rival needs head-to-head history in `match_sides`, of which there is none
+  while no contested match has settled (it scored 1 of 5 for cold start). Built now it
+  would be an empty panel on every profile. The read is one query over `match_sides` once
+  there are contested matches, and the challenge button can reuse `send-duel`.
 - **The share image is the plain variant** described above.
 - **Future draws are computable from the source.** See the seed section.
 - **The server cannot see an attempt that was never uploaded.** A modified client that
