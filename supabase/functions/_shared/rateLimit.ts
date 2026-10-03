@@ -148,6 +148,14 @@ export const LIMITS: Record<string, Limit> = {
    * yet. What a lucky guess yields is three scenario names, a display name and six numbers.
    */
   "ghost-link": { max: 20, windowSeconds: 300 },
+
+  /**
+   * 60 per 5 minutes, list-duels' number and for the same reason: a read the client asks for
+   * on launch, on every window focus, after every settled match and when the category on the
+   * queue screen changes. Clicking through all seven categories twice is fourteen calls.
+   * Reasoned rather than measured: nobody has polled it yet.
+   */
+  "queue-board": { max: 60, windowSeconds: 300 },
 };
 
 /**
