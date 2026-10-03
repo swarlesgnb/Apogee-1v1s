@@ -282,6 +282,12 @@ check("macOS open-url goes through the same parser", /app\.on\("open-url", \(eve
 check("the first launch's argv goes through it too", /social\.receiveArgv\(process\.argv\)/.test(main));
 check("the preload exposes link actions, not a generic channel", /linkAction: \(action\) => ipcRenderer\.invoke\("apogee:linkAction", action\)/.test(preload));
 check("the protocol is registered only by a packaged build", /if \(!app\.isPackaged\) return;/.test(social));
+const landingClient = code(read("./landingClient.ts"));
+const landing = read("./landing.ts");
+check("the https landing reads its query with the app's grammar", /parseLandingQuery\(location\.search/.test(landingClient));
+check("and builds its button from the parsed link, never the query", /open\.href = deepLinkUrl\(link\)/.test(landingClient) && !/href = .*location/.test(landingClient));
+check("and writes text only, never markup", !/innerHTML|outerHTML|insertAdjacentHTML|document\.write/.test(landingClient));
+check("the landing page loads nothing from anywhere (CSP default-src 'none')", /default-src 'none'/.test(landing) && !/<script src=|<link rel="stylesheet"/.test(landing));
 check("the renderer escapes everything it draws", /const e = \(v\) => String\(v \?\? ''\)\.replace\(\/\[&<>"'\]\/g/.test(renderer));
 
 console.log(`\n${failures === 0 ? "OK" : "FAILED"}: ${checks - failures} of ${checks} link checks passed`);
