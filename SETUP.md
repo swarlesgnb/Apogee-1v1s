@@ -109,6 +109,14 @@ Optionally `STEAM_WEB_API_KEY`, from steamcommunity.com/dev/apikey. Without it s
 still works, but players get a generic display name and no avatar: the function reads the
 key as an empty string and skips the profile lookup.
 
+Optionally `APOGEE_DISCORD_CLIENT_ID`, for Discord Rich Presence. Create an application at
+discord.com/developers/applications and copy its Application ID (17 to 20 digits) from
+General Information. Uploading an image named `apogee` under Rich Presence -> Art Assets
+gives the presence its logo; without one Discord shows the text alone. The id is public by
+design and is baked into the client by `npm run build:app`, like the URL and anon key.
+Without it the client opens no Discord socket at all and the toggle in Links & Discord is
+greyed out. With it, presence is still off until a player turns it on.
+
 ### Which command needs which value
 
 Nothing reads all of them, and a missing one usually surfaces as a confusing failure
@@ -183,6 +191,9 @@ npm run deploy:functions
 | `send-duel` | yes | Creates a seeding match addressed at one named player, plus the `duels` row pointing at it |
 | `answer-duel` | yes | Accepts, declines, or withdraws a duel; accepting builds the contested match from the challenger's side |
 | `list-duels` | yes | Everything the duel panel shows, with names joined under the service role since `players` is owner-only |
+| `daily-submit` | yes | Puts a finished Apogee Daily on the day's board: redraws the day, re-verifies the three CSVs, rebuilds each baseline from runs the server held before the day began |
+| `daily-board` | yes | One band of one day as a distribution and the caller's place in it, never another player's name; refuses a day that has not started |
+| `open-duel` | yes | Open challenges by code: post one (your three first), look a code up, answer it with an unrated match, take one back, list yours |
 
 Every function except `steam-auth` requires a session, and `npm run verify:deployment`
 asserts they refuse anonymous callers. It goes one step further for `find-match` and
@@ -192,6 +203,14 @@ refuse the anon key as a caller identity. The anon key identifies the app, never
 `submit-run` takes the raw CSV rather than a parsed summary, so the integrity checks
 run over the file as KovaaK's wrote it. A client cannot present a tidy summary that
 contradicts rows it never sent.
+
+Challenge links. The packaged client registers the `apogee://` scheme the first time it
+runs (`electron-builder.yml` `protocols` covers macOS and Linux; on Windows the app calls
+`setAsDefaultProtocolClient` itself, since the NSIS installer does not). A development
+build does not register, so it never takes the scheme from an installed copy; paste a link
+into Links & Discord instead, or pass one on the command line: `npx electron . apogee://daily`.
+The https form of every link lands on `site/c/index.html`, which `npm run build:site`
+writes beside the front page; publish both directories together.
 
 ## 6. Run the client
 
