@@ -147,6 +147,14 @@ async function main(): Promise<void> {
     // would let one of them forge an accepted duel and mint a contested match out of
     // somebody else's run set.
     "duels",
+    // A Crown's holder and a race's result are decided in SQL inside the transaction that
+    // ends a match (migration 20261003000025). A client write policy on any of these would
+    // let a player crown themselves, or silence the notice that says they were dethroned.
+    "crowns",
+    "crown_reigns",
+    "crown_challenges",
+    "crown_notices",
+    "races",
   ];
   const writable = policies.rows.filter(
     (p) => protectedTables.includes(p.tablename) && p.cmd.toUpperCase() !== "SELECT",

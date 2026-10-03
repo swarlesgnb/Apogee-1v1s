@@ -25,6 +25,7 @@ import {
 } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { afterLegSettled } from "../_shared/tournament.ts";
+import { arenaNote } from "../_shared/arena.ts";
 
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 import { isAbandonedRun } from "../../../src/core/stats/duration.ts";
@@ -87,6 +88,8 @@ Deno.serve(handler(async function settleRequest(req, admin) {
       // Folded in again on a repeat call, which is a no-op once it has landed and the
       // retry that lands it if the first call died before it could.
       tournament: rated ? null : await afterLegSettled(admin, matchId),
+      // A Crown challenge or a race leg: what the database decided about it.
+      arena: rated ? null : await arenaNote(admin, matchId, caller.playerId),
       verdict: match.status === "void" ? "void" : mine.result,
       yourMatchScore: mine.match_score != null ? Number(mine.match_score) : null,
       theirMatchScore: theirs?.match_score != null ? Number(theirs.match_score) : null,
@@ -155,12 +158,14 @@ Deno.serve(handler(async function settleRequest(req, admin) {
     if (!receipt.committed) return settleRequest(req, admin);
 
     const tournament = rated ? null : await afterLegSettled(admin, matchId);
+    const arena = rated ? null : await arenaNote(admin, matchId, caller.playerId);
 
     return json({
       matchId,
       verdict: "void",
       rated: false,
       tournament,
+      arena,
       voidReason: "a scenario was left before it finished",
       scenario: abandonedRun.scenario_name,
       playedSeconds: abandonedRun.duration_seconds != null ? Number(abandonedRun.duration_seconds) : null,
@@ -262,6 +267,9 @@ Deno.serve(handler(async function settleRequest(req, admin) {
     // going to the pool (find-match reads `rated`), so the sentence about the pool below
     // would be untrue.
     const tournament = rated ? null : await afterLegSettled(admin, matchId);
+    // A claim on a vacant Crown or a race leg is one-sided too, and is not going to the
+    // pool either. The Crown or race says what it came to instead.
+    const arena = rated ? null : await arenaNote(admin, matchId, caller.playerId);
     const firstLeg = tournament
       ? `Your three are in for ${tournament.label}. Your opponent plays the same three next, ` +
         "and the fixture is decided when they have. Nothing is rated."
@@ -272,6 +280,7 @@ Deno.serve(handler(async function settleRequest(req, admin) {
       seeding: true,
       rated: false,
       tournament,
+      arena,
       verdict: null,
       yourMatchScore: side.matchScore,
       theirMatchScore: null,
@@ -297,6 +306,7 @@ Deno.serve(handler(async function settleRequest(req, admin) {
       // result has to fill it or that line renders "undefined".
       explanation:
         firstLeg ??
+        arena?.explanation ??
         (side.countedRounds === scenarioIds.length
           ? "Nothing was rated: there was no opponent to play against. Your run set is " +
             "now in the pool, and the next player to queue this category plays against it."
@@ -304,6 +314,7 @@ Deno.serve(handler(async function settleRequest(req, admin) {
             "pool yet."),
       message:
         firstLeg ??
+        arena?.headline ??
         (side.countedRounds === scenarioIds.length
           ? "Your run set is in the pool. The next player to queue this category plays against it."
           : "Recorded, but not every scenario counted, so this run set is not in the pool yet."),
@@ -406,12 +417,14 @@ Deno.serve(handler(async function settleRequest(req, admin) {
   // The second leg of a tournament fixture decides it. Folded in before answering, so the
   // result screen and the bracket agree the moment the player looks at either.
   const tournament = rated ? null : await afterLegSettled(admin, matchId);
+  const arena = rated ? null : await arenaNote(admin, matchId, caller.playerId);
 
   return json({
     matchId,
     verdict: settlement.verdict,
     rated,
     tournament,
+    arena,
     opponent:
       opponentPlayer && settlement.verdict !== "void"
         ? { playerId: opponentPlayer.id, displayName: opponentPlayer.display_name }
@@ -419,7 +432,9 @@ Deno.serve(handler(async function settleRequest(req, admin) {
     category: match.category,
     explanation: rated
       ? explainVerdict(settlement)
-      : `${explainVerdict(settlement)} Unrated: this was a tournament fixture.`,
+      : arena
+        ? `${explainVerdict(settlement)} ${arena.headline}`
+        : `${explainVerdict(settlement)} Unrated: this was a tournament fixture.`,
     voidReason: settlement.voidReason ?? null,
     ratingWeight: settlement.ratingWeight,
     yourMatchScore: settlement.player.matchScore,

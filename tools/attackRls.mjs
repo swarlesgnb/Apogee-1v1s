@@ -194,6 +194,70 @@ await attack("call the leg reservation directly",
 await attack("mark my real match unrated so a loss costs nothing",
   `update matches set rated = false where id = '${realMatch}'`);
 
+console.log("\n-- crowns and races --");
+// A Crown the victim holds and a notice addressed to them, created the way crown_resolve
+// would: by the server.
+await db.exec("reset role");
+const victimReign = (await db.query(
+  "insert into crown_reigns (category, window_index, cycle, holder_id, match_id, match_score, lowest_tier) values ('Precise Tracking', 1, 0, $1, $2, 0.05, 'verified') returning id",
+  [victim, realMatch],
+)).rows[0].id;
+await db.query("insert into crowns (category, window_index, reign_id, scenario_ids) values ('Precise Tracking', 1, $1, array[" + scen + "," + scen + "," + scen + "]::bigint[])", [victimReign]);
+const victimNotice = (await db.query(
+  "insert into crown_notices (player_id, kind, category, window_index, reign_id, other_name) values ($1, 'dethroned', 'Precise Tracking', 1, $2, 'someone') returning id",
+  [victim, victimReign],
+)).rows[0].id;
+const myNotice = (await db.query(
+  "insert into crown_notices (player_id, kind, category, window_index, other_name) values ($1, 'defended', 'Precise Tracking', 1, 'victim') returning id",
+  [attacker],
+)).rows[0].id;
+await db.exec("set role authenticated");
+await db.exec("set test.player_id = '" + attacker + "'");
+
+await attack("take a Crown by pointing it at a reign of my own",
+  `update crowns set reign_id = null where category = 'Precise Tracking'`);
+await attack("crown myself by writing a reign",
+  `insert into crown_reigns (category, window_index, cycle, holder_id, match_id, match_score, lowest_tier)
+   values ('Precise Tracking', 1, 0, '${attacker}', '${realMatch}', 9, 'verified')`);
+await attack("rewrite the holder of somebody else's reign",
+  `update crown_reigns set holder_id = '${attacker}' where id = '${victimReign}'`);
+await attack("pad my defences",
+  `update crown_reigns set defences = 99 where holder_id = '${attacker}'`);
+await attack("file a challenge naming myself the taker",
+  `insert into crown_challenges (match_id, category, window_index, cycle, challenger_id, outcome, decided_at)
+   values ('${realMatch}', 'Precise Tracking', 1, 0, '${attacker}', 'took', now())`);
+await attack("write a notice into the victim's inbox",
+  `insert into crown_notices (player_id, kind, category, window_index) values ('${victim}', 'dethroned', 'Precise Tracking', 1)`);
+await attack("mark the victim's notice read so they never see it",
+  `update crown_notices set seen_at = now() where id = '${victimNotice}'`);
+await attack("delete the victim's notice",
+  `delete from crown_notices where id = '${victimNotice}'`);
+await attack("even my own notice is not mine to edit",
+  `update crown_notices set other_name = 'x' where id = '${myNotice}'`);
+await attack("enter a race by writing it",
+  `insert into races (inviter_id, invitee_id, category, window_index, benchmark_name, difficulty, seed, scenario_ids, expires_at)
+   values ('${attacker}', '${victim}', 'x', 0, 'S', 'N', 's', array[1,2,3]::bigint[], now() + interval '1 hour')`);
+await attack("decide a race by writing its result",
+  `update races set status = 'finished', result = 'inviter'`);
+// The decisions themselves. A SELECT changes no rows, so only a refusal counts here.
+for (const [label, sql] of [
+  ["open a Crown challenge directly, with no cooldown", `select crown_open_challenge('Precise Tracking', 1, '${attacker}', 's', array[1,2,3]::bigint[], 'S', 'I', 480, 0, 604800)`],
+  ["call the Crown decision directly", `select crown_resolve('${realMatch}')`],
+  ["lapse every Crown on demand", "select crown_lapse_all(0)"],
+  ["reset a Crown on demand", "select crown_reset_off_pool('Precise Tracking', 1, 0)"],
+  ["start a race directly", `select race_start(gen_random_uuid(), '${attacker}', 480)`],
+  ["call the race decision directly", `select race_resolve('${realMatch}')`],
+  ["vacate a Crown through the internal helper", "select crown_vacate('Precise Tracking', 1, 'reset')"],
+]) {
+  try {
+    await db.query(sql);
+    findings++;
+    console.log("  HOLE     " + label + " -- the call went through");
+  } catch (e) {
+    console.log("  ok       " + label + " -- refused (" + String(e.message).split(String.fromCharCode(10))[0].slice(0, 55) + ")");
+  }
+}
+
 console.log("\n-- reading other people --");
 const readOthers = async (label, sql) => {
   try {
@@ -237,6 +301,15 @@ const readOwn = async (label, sql) => {
 };
 await readOwn("my own match", `select id from matches where id = '${realMatch}'`);
 await readOwn("my own side", `select player_id from match_sides where match_id = '${realMatch}'`);
+
+// Crowns are served by list-crowns and races by race-status; the tables behind them are
+// closed. A notice is the one exception, and only to its owner.
+await readOthers("the Crown tables", `select category, reign_id from crowns`);
+await readOthers("who holds which Crown, raw", `select id, holder_id from crown_reigns`);
+await readOthers("every challenge and its outcome", `select match_id, outcome from crown_challenges`);
+await readOthers("the races table", `select id, inviter_id from races`);
+await readOthers("the victim's Crown notices", `select id from crown_notices where player_id = '${victim}'`);
+await readOwn("my own Crown notice", `select id, kind, other_name from crown_notices where id = '${myNotice}'`);
 
 // `attack` counts changed rows, and a SELECT changes none, so it would pass this even if
 // the call went through. Only a refusal counts.
