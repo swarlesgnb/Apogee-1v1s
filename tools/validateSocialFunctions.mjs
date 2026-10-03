@@ -484,6 +484,28 @@ assert.equal(r.status, 200, JSON.stringify(r.body));
 assert.equal(r.body.outgoing.length, 0, 'an open challenge is not in the named outbox');
 ok('list-duels still answers, without the open challenge');
 
+// Two answers from one player racing (a double click): one match survives, one answer row.
+r = await call('open-duel', 'dee', { action: 'create', category: 'Speed Switching', window: band });
+assert.equal(r.status, 200, JSON.stringify(r.body));
+const code2 = r.body.duel.code;
+const posted2 = r.body.matchId;
+const ids2 = (await db.query('select scenario_ids, created_at from matches where id=$1', [posted2])).rows[0];
+const names2 = new Map((await db.query('select id,name from scenarios where id=any($1)', [ids2.scenario_ids])).rows.map((x) => [x.id, x.name]));
+for (const [i, id] of ids2.scenario_ids.entries()) {
+  await db.query(`insert into runs(player_id,scenario_name,score,played_at,csv_sha256,verification_tier,match_id) values($1,$2,100,$3,$4,'consistent',$5)`,
+    [players.dee, names2.get(id), new Date(ids2.created_at.getTime() + (i + 1) * 60_000).toISOString(), 'dee-second-' + i, posted2]);
+}
+assert.equal((await call('settle-match', 'dee', { matchId: posted2 })).status, 200);
+await db.query('delete from rate_limits');
+keepLimits = true;
+const raced = await Promise.all([call('open-duel', 'cal', { action: 'accept', code: code2 }), call('open-duel', 'cal', { action: 'accept', code: code2 })]);
+keepLimits = false;
+assert.deepEqual(raced.map((x) => x.status).sort(), [200, 409], JSON.stringify(raced.map((x) => x.body)));
+assert.equal(await count('select count(*)::int as n from open_duel_answers a join duels d on d.id=a.duel_id where d.code=$1', [code2]), 1);
+assert.equal(await count(`select count(*)::int as n from match_sides s join matches m on m.id=s.match_id
+  where s.player_id=$1 and m.status='awaiting_runs'`, [players.cal]), 1, 'the losing request left no match behind');
+ok(`two racing answers from one player leave one answer and one match (the other: ${raced.find((x) => x.status === 409).body.error})`);
+
 r = await call('open-duel', 'ana', { action: 'cancel', code });
 assert.equal(r.status, 403);
 r = await call('open-duel', 'dee', { action: 'cancel', code });
