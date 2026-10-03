@@ -156,7 +156,8 @@ export interface LiveView extends SealedView {
   status: string;
 }
 
-const pct = (v: number) => `${v >= 0 ? "+" : "−"}${Math.abs(v * 100).toFixed(1)}%`;
+/** A lead or a deficit is a size, so it is written without a sign: "lead by 1.9%". */
+const size = (v: number) => `${Math.abs(v * 100).toFixed(1)}%`;
 
 /** The sentence under the bar. */
 export function liveStatus(view: SealedView, verdict: LiveView["verdict"], kind: LiveView["kind"]): string {
@@ -168,9 +169,9 @@ export function liveStatus(view: SealedView, verdict: LiveView["verdict"], kind:
   const lead = view.margin == null
     ? "No round revealed yet."
     : view.margin > 0
-      ? `You lead by ${pct(view.margin)} over ${view.marginRounds} round${view.marginRounds === 1 ? "" : "s"}.`
+      ? `You lead by ${size(view.margin)} over ${view.marginRounds} round${view.marginRounds === 1 ? "" : "s"}.`
       : view.margin < 0
-        ? `You trail by ${pct(-view.margin)} over ${view.marginRounds} round${view.marginRounds === 1 ? "" : "s"}.`
+        ? `You trail by ${size(view.margin)} over ${view.marginRounds} round${view.marginRounds === 1 ? "" : "s"}.`
         : `Level over ${view.marginRounds} round${view.marginRounds === 1 ? "" : "s"}.`;
   return sealed > 0
     ? `${lead} ${view.them.name} has landed ${sealed} round${sealed === 1 ? "" : "s"} you have not played yet; each opens when yours lands.`

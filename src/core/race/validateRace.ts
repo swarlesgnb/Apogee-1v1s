@@ -171,7 +171,7 @@ console.log("\n── views ─────────────────�
 
   const them = side("Kestrel", [true, true, false], [0.031, -0.012, 0], false);
   const lead = sealView(side("me", [true, false, false], [0.05, 0, 0]), them);
-  check("the status line names a sealed round", liveStatus(lead, null, "race") === "You lead by +1.9% over 1 round. Kestrel has landed 1 round you have not played yet; each opens when yours lands.", liveStatus(lead, null, "race"));
+  check("the status line names a sealed round", liveStatus(lead, null, "race") === "You lead by 1.9% over 1 round. Kestrel has landed 1 round you have not played yet; each opens when yours lands.", liveStatus(lead, null, "race"));
   check("and the result once there is one", liveStatus(lead, "loss", "race") === "Kestrel won the race." && liveStatus(lead, "win", "crown") === "You beat the holder's run set.");
 }
 
