@@ -20,6 +20,7 @@ import { dataFile, setDataDir, sourceDataDir } from "../core/dataDir.ts";
 import { levelFor } from "../core/quests/progression.ts";
 import { recordGhost, recordMatch, rerollQuest, type QuestState, type QuestSync } from "../core/quests/board.ts";
 import { GhostService } from "./ghostService.ts";
+import { ArenaService } from "./arena.ts";
 import { ShareCards } from "./shareCard.ts";
 import {
   installCrashHandlers,
@@ -236,6 +237,21 @@ const shareCards = new ShareCards({
   ghost: () => ghost.shareRecord(),
   window: () => window,
 });
+
+/**
+ * Crowns and live races (arena.ts). The server decides both; this fetches the board, takes
+ * up the matches the server hands out through adoptMatch, and polls the sealed live view.
+ */
+const arena = new ArenaService({
+  session: () => state.session,
+  match: () => state.match,
+  adoptMatch: (match) => adoptMatch(match),
+  broadcast: (channel, payload) => broadcast(channel, payload),
+  focused: () => !!window && !window.isDestroyed() && window.isFocused(),
+  nudge: () => nudge(),
+});
+arena.registerIpc(ipcMain);
+arena.start();
 
 /** Show a neutral message, and keep it for a window that has not loaded yet. */
 function notify(message: string | null): void {
@@ -675,6 +691,8 @@ async function settleActiveMatch(attempt = 0): Promise<string | null> {
     if (settled.tournament) void refreshTournaments("a fixture leg settled");
     // Duel buttons read the active match when drawn; redraw them now it is gone.
     void refreshDuels("match settled", true);
+    // A Crown challenge or race leg moved the board or decided a race.
+    arena.afterSettled(settled);
     return null;
   } catch (err) {
     const message = friendlyError(err);

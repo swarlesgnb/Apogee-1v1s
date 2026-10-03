@@ -243,6 +243,27 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Fires when the tournament list changes, and with null on sign-out. */
   onTournaments: (handler) => subscribe("apogee:tournaments", handler),
 
+  // ---- crowns and races ----------------------------------------------------
+  //
+  // Named fields only, as above. Nothing here carries a score or a result: Crowns and races
+  // are decided in SQL from settled matches.
+
+  /** The Crowns board and your unread notices. `seen` marks notice ids read first. */
+  crowns: (seen) => ipcRenderer.invoke("apogee:crowns", { seen }),
+  /** Claim a vacant Crown or challenge a held one. Hands back a match as findMatch does. */
+  challengeCrown: (category, window) => ipcRenderer.invoke("apogee:challengeCrown", { category, window }),
+  onCrowns: (handler) => subscribe("apogee:crowns", handler),
+  /** Race invitations in and out, the race being played, recent results. */
+  races: () => ipcRenderer.invoke("apogee:races"),
+  inviteRace: (to, category, window) => ipcRenderer.invoke("apogee:raceAction", { action: "invite", to, category, window }),
+  acceptRace: (raceId) => ipcRenderer.invoke("apogee:raceAction", { action: "accept", raceId }),
+  declineRace: (raceId) => ipcRenderer.invoke("apogee:raceAction", { action: "decline", raceId }),
+  cancelRace: (raceId) => ipcRenderer.invoke("apogee:raceAction", { action: "cancel", raceId }),
+  onRaces: (handler) => subscribe("apogee:races", handler),
+  /** The sealed live view of the race leg or Crown challenge being played. */
+  raceLive: () => ipcRenderer.invoke("apogee:raceLive"),
+  onLive: (handler) => subscribe("apogee:live", handler),
+
   /** Whether the signed-in player holds the admin role. Gates the editors, nothing else. */
   isAdmin: () => ipcRenderer.invoke("apogee:isAdmin"),
 

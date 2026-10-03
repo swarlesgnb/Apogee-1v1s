@@ -3076,6 +3076,7 @@
 <link rel="stylesheet" href="mixtape.css">
 <link rel="stylesheet" href="ghost.css">
 <link rel="stylesheet" href="share.css">
+<link rel="stylesheet" href="crowns.css">
 </head>
 <body data-screen="queue">
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -3093,6 +3094,12 @@
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 3 6 6-2 2-6-6V3h2Zm14 0-6 6 2 2 6-6V3h-2ZM3 21l6-6m6 0 6 6M2 16l6 6m8-20-5 5m5 15 6-6M9 11l4 4m2-6-4 4"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.queue">Play arena</span>
+      </button>
+
+      <button class="tab" role="tab" aria-selected="false" data-screen="crowns">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17.5h16L21 7l-5 4.2L12 4.5 8 11.2 3 7Z"/><path d="M4 20.5h16"/></svg>
+        <span class="tab-key"></span>
+        <span class="tab-label">Crowns</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="seasonview">
@@ -3357,6 +3364,7 @@
         <div id="app" hidden>
           <section class="screen" id="screen-mixtape"><div id="mixtapeRoot"></div></section>
           <section class="screen" id="screen-ghost"><div id="ghostRoot"></div></section>
+          <section class="screen" id="screen-crowns"><div id="crownsRoot"></div></section>
 
           <!-- ------------------------------------------------ play -->
           <section class="screen active" id="screen-queue">
@@ -4344,5 +4352,7 @@
 <script src="mixtape.js"></script>
 <script src="ghost.js"></script>
 <script src="share.js"></script>
+<script src="crowns.js"></script>
+<script src="race.js"></script>
 </body>
 </html>

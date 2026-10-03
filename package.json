@@ -109,6 +109,7 @@
     "validate:ghost-links": "tsx src/core/ghost/validateGhostLinks.ts",
     "validate:crowns": "tsx src/core/crowns/validateCrowns.ts && tsx tools/validateCrownsDb.ts",
     "validate:race": "tsx src/core/race/validateRace.ts && tsx tools/validateRaceDb.ts",
+    "validate:crowns-ui": "tsx tools/crownsUiFixture.ts && electron tools/crownsUi.cjs",
     "validate:share": "npm run build:app && node tools/buildShareTest.mjs && electron .cache/share-test.cjs",
     "validate:background-refresh": "node tools/validateBackgroundRefresh.mjs",
     "validate:server-evidence": "tsx src/core/verify/validateServerEvidence.ts",

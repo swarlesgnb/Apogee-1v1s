@@ -68,7 +68,8 @@ export function friendlyError(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
 }
 
-async function callFunction<T>(name: string, body: unknown): Promise<T> {
+/** Exported for arenaApi.ts, so the Crown and race calls share this transport. */
+export async function callFunction<T>(name: string, body: unknown): Promise<T> {
   const token = await accessToken();
   if (!token) throw new ApiError("Sign in with Steam to play ranked.", 401);
 
