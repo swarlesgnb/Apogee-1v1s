@@ -68,7 +68,8 @@ export function friendlyError(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
 }
 
-async function callFunction<T>(name: string, body: unknown): Promise<T> {
+/** Exported for the feature modules that keep their calls beside them (socialApi.ts). */
+export async function callFunction<T>(name: string, body: unknown): Promise<T> {
   const token = await accessToken();
   if (!token) throw new ApiError("Sign in with Steam to play ranked.", 401);
 
@@ -295,7 +296,8 @@ export interface FoundMatch {
    * Set when this match came from a duel rather than the queue, naming whoever is on the
    * other end of it. find-match never sets it, so every existing caller sees undefined.
    */
-  duel?: { id: string; to?: string; from?: string } | null;
+  /** `code` and `open` mark an open challenge (open-duel); answering one is always unrated. */
+  duel?: { id: string; to?: string; from?: string; code?: string; open?: boolean; unrated?: boolean } | null;
   /**
    * Set when this match is one leg of a tournament fixture. Unrated. `leg` 1 is played
    * first against nobody, and `opponentName` answers it with the same three afterwards.

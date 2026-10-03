@@ -305,4 +305,22 @@ contextBridge.exposeInMainWorld("apogee", {
 
   /** Something went wrong; payload is a human-readable message. */
   onError: (handler) => subscribe("apogee:error", handler),
+
+  // ---- social (src/app/social.ts) -------------------------------------------
+  /** Apogee Daily: today's screen as main computed it, an action, and pushes when a run lands. */
+  daily: () => ipcRenderer.invoke("apogee:daily"),
+  dailyAction: (action) => ipcRenderer.invoke("apogee:dailyAction", action),
+  onDaily: (handler) => subscribe("apogee:daily", handler),
+  /**
+   * A challenge link waiting for the player: main parsed it and proposes it. Confirming
+   * names the proposal's id and nothing else, so the renderer cannot change what it says.
+   */
+  pendingLink: () => ipcRenderer.invoke("apogee:link"),
+  linkAction: (action) => ipcRenderer.invoke("apogee:linkAction", action),
+  onLink: (handler) => subscribe("apogee:link", handler),
+  /** Open challenges: { action: "create", category } | "mine" | "copy" | "cancel" with a code. */
+  openChallenge: (action) => ipcRenderer.invoke("apogee:openChallenge", action),
+  /** Discord presence, the one social preference: { discord, discordAvailable, discordConnected }. */
+  socialSettings: () => ipcRenderer.invoke("apogee:socialSettings"),
+  setSocialSettings: (patch) => ipcRenderer.invoke("apogee:setSocialSettings", patch),
 });

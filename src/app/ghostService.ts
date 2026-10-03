@@ -181,6 +181,13 @@ export class GhostService {
     }
   }
 
+  /** A race in progress, for Discord presence (social.ts): when it started and whose ghost. */
+  presence(): { startedAt: number; friend: boolean } | null {
+    const active = this.store().active;
+    if (!active || active.result || active.startedAt === null) return null;
+    return { startedAt: active.startedAt, friend: active.kind === "friend" };
+  }
+
   /** Scenario names the active match may launch. Read by apogee:launchScenario, never from the renderer. */
   scenarios(): Set<string> {
     const active = this.store().active;
