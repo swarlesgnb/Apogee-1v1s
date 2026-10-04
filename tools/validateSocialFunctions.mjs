@@ -455,10 +455,17 @@ await assert.rejects(db.query(`insert into duels(challenger_id,code,match_id,exp
 ok('the database refuses an answer on a rated match, the poster\'s own answer, a duel both named and coded, and a bad code');
 
 // Ana plays her three into the answer and settles: no rating moves.
+//
+// Five runs at 100 per scenario, not one: the challenge draws its three at random, and the
+// Daily section above left Ana two runs near 200 on the day's Tracking scenario (B). When the
+// draw landed on it, a lone baseline run lost the median to those two, and her +10% read as
+// a loss. Five at 100 keep the median at 100.
 const answerCreated = (await db.query('select created_at from matches where id=$1', [answer])).rows[0].created_at;
 for (const [i, id] of posterScenarios.entries()) {
-  await db.query(`insert into runs(player_id,scenario_name,score,played_at,created_at,csv_sha256,verification_tier) values($1,$2,100,$3,$3,$4,'consistent')`,
-    [players.ana, names.get(id), new Date(answerCreated.getTime() - 86_400_000 + i).toISOString(), 'ana-base-' + i]);
+  for (let k = 0; k < 5; k++) {
+    await db.query(`insert into runs(player_id,scenario_name,score,played_at,created_at,csv_sha256,verification_tier) values($1,$2,100,$3,$3,$4,'consistent')`,
+      [players.ana, names.get(id), new Date(answerCreated.getTime() - 86_400_000 + i * 10 + k).toISOString(), `ana-base-${i}-${k}`]);
+  }
   await db.query(`insert into runs(player_id,scenario_name,score,played_at,csv_sha256,verification_tier,match_id) values($1,$2,110,$3,$4,'consistent',$5)`,
     [players.ana, names.get(id), new Date(answerCreated.getTime() + (i + 1) * 60_000).toISOString(), 'ana-answer-' + i, answer]);
 }
