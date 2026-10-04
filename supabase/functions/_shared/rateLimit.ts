@@ -148,6 +148,25 @@ export const LIMITS: Record<string, Limit> = {
    * yet. What a lucky guess yields is three scenario names, a display name and six numbers.
    */
   "ghost-link": { max: 20, windowSeconds: 300 },
+
+  /**
+   * 10 per 5 minutes, post-ghost's number for post-ghost's reason: each call parses and
+   * verifies three CSVs, may ask KovaaK's about each, and reads three scenarios of history.
+   * A daily is posted once a day per band, so the room left is for retries. Reasoned
+   * rather than measured: no daily has been posted yet.
+   */
+  "daily-submit": { max: 10, windowSeconds: 300 },
+
+  /** 60 per 5 minutes, ghost-card's price: one band of one day off its own index. */
+  "daily-board": { max: 60, windowSeconds: 300 },
+
+  /**
+   * 20 per 5 minutes, ghost-link's number, because `view` is the call a code-guesser would
+   * make: 5,760 guesses a day per account against 31^8 codes. `create` and `accept` each
+   * also open a match, and the one-open-match rule caps those far below this anyway.
+   * Reasoned rather than measured: no open challenge exists yet.
+   */
+  "open-duel": { max: 20, windowSeconds: 300 },
 };
 
 /**

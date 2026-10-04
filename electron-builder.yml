@@ -37,6 +37,15 @@ files:
 asarUnpack:
   - dist/data/**
 
+# Challenge links (apogee://duel/..., apogee://daily). This block registers the scheme in
+# the macOS Info.plist and the Linux desktop file; on Windows the app registers itself at
+# first launch with app.setAsDefaultProtocolClient (src/app/social.ts), because NSIS does
+# not write the handler. What a link may do is in src/core/social/deepLinks.ts.
+protocols:
+  - name: Apogee challenge link
+    schemes:
+      - apogee
+
 win:
   target: nsis
   icon: build/icon.png

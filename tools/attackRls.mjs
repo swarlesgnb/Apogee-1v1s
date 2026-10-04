@@ -194,6 +194,39 @@ await attack("call the leg reservation directly",
 await attack("mark my real match unrated so a loss costs nothing",
   `update matches set rated = false where id = '${realMatch}'`);
 
+console.log("\n-- the Daily board and open challenges --");
+// A board entry and an open challenge somebody else made, the way the functions make them.
+await db.exec("reset role");
+await db.query(
+  `insert into daily_results (daily_number, window_index, player_id, season_name, scenario_names, run_ids,
+     scores, baselines, prior_runs, glyphs, mean_delta, provisional, lowest_tier, played_at)
+   values (3, 1, $1, 'Season 1', array['a','b','c'], array[gen_random_uuid(), gen_random_uuid(), gen_random_uuid()],
+     array[1,2,3], array[1,2,3], array[5,5,5], 'ANB', 0.01, false, 'consistent', now())`,
+  [victim],
+);
+await db.query(
+  `insert into duels (challenger_id, code, match_id, expires_at) values ($1, 'VCTM2345', $2, now() + interval '7 days')`,
+  [victim, realMatch],
+);
+await db.exec("set role authenticated");
+await db.exec("set test.player_id = '" + attacker + "'");
+
+await attack("put myself on a Daily board by writing the entry",
+  `insert into daily_results (daily_number, window_index, player_id, season_name, scenario_names, run_ids,
+     scores, baselines, prior_runs, glyphs, mean_delta, provisional, lowest_tier, played_at)
+   values (3, 1, '${attacker}', 'Season 1', array['a','b','c'], array[gen_random_uuid(), gen_random_uuid(), gen_random_uuid()],
+     array[9,9,9], array[1,1,1], array[5,5,5], 'AAA', 8, false, 'verified', now())`);
+await attack("raise a Daily mean after the fact", `update daily_results set mean_delta = 9`);
+await attack("delete somebody's Daily entry", `delete from daily_results`);
+await attack("post an open challenge without playing one",
+  `insert into duels (challenger_id, code, match_id, expires_at) values ('${attacker}', 'ATTK2345', '${realMatch}', now() + interval '7 days')`);
+await attack("turn somebody's open challenge into a named duel to me",
+  `update duels set challenged_id = '${attacker}', code = null where code = 'VCTM2345'`);
+await attack("record an answer to an open challenge without the function",
+  `insert into open_duel_answers (duel_id, player_id, match_id) select id, '${attacker}', match_id from duels where code = 'VCTM2345'`);
+await attack("mark an open challenge's answer rated by rewriting its match",
+  `update matches set rated = true where rated = false`);
+
 console.log("\n-- reading other people --");
 const readOthers = async (label, sql) => {
   try {
@@ -213,6 +246,11 @@ await readOthers("a tournament's stored state", `select id, state from tournamen
 await readOthers("who entered which tournament", `select * from tournament_members`);
 await readOthers("which match is which fixture leg", `select * from tournament_legs`);
 await readOthers("the receipts behind a bracket", `select * from tournament_receipts`);
+// The board is a distribution daily-board builds; its rows and the answers behind open
+// challenges are the server's, and another player's challenge code is theirs to post.
+await readOthers("the Daily board's rows", `select player_id, mean_delta from daily_results`);
+await readOthers("who answered which open challenge", `select duel_id, player_id from open_duel_answers`);
+await readOthers("another player's open challenge and its code", `select code from duels where code is not null`);
 
 // A match the attacker has no side in. The participant policies used to query
 // match_sides from inside match_sides' own policy, which Postgres refuses as infinite

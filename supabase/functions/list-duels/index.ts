@@ -160,6 +160,9 @@ Deno.serve(handler(async (req, admin) => {
         "created_at, expires_at, answered_at",
     )
     .or(`challenger_id.eq.${caller.playerId},challenged_id.eq.${caller.playerId}`)
+    // Named duels only. An open challenge names nobody (migration 20261003000024) and is
+    // listed by open-duel; here its null opponent would reach the roster lookup.
+    .is("code", null)
     .order("created_at", { ascending: false })
     .limit(100);
 

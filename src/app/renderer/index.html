@@ -3076,6 +3076,8 @@
 <link rel="stylesheet" href="mixtape.css">
 <link rel="stylesheet" href="ghost.css">
 <link rel="stylesheet" href="share.css">
+<link rel="stylesheet" href="daily.css">
+<link rel="stylesheet" href="social.css">
 </head>
 <body data-screen="queue">
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -3095,6 +3097,11 @@
         <span class="tab-label" data-copy="nav.tab.queue">Play arena</span>
       </button>
 
+      <button class="tab" role="tab" aria-selected="false" data-screen="daily">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M3.5 9h17M8 3v3m8-3v3m-8 10.5 2.2-3.5 2.1 2.2 3.7-5"/></svg>
+        <span class="tab-key"></span>
+        <span class="tab-label">Daily</span>
+      </button>
       <button class="tab" role="tab" aria-selected="false" data-screen="seasonview">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 11h16m-11 4h2m3 0h2"/></svg>
         <span class="tab-key"></span>
@@ -3357,6 +3364,7 @@
         <div id="app" hidden>
           <section class="screen" id="screen-mixtape"><div id="mixtapeRoot"></div></section>
           <section class="screen" id="screen-ghost"><div id="ghostRoot"></div></section>
+          <section class="screen" id="screen-daily"><div id="dailyRoot"></div></section>
 
           <!-- ------------------------------------------------ play -->
           <section class="screen active" id="screen-queue">
@@ -4344,5 +4352,7 @@
 <script src="mixtape.js"></script>
 <script src="ghost.js"></script>
 <script src="share.js"></script>
+<script src="daily.js"></script>
+<script src="social.js"></script>
 </body>
 </html>
