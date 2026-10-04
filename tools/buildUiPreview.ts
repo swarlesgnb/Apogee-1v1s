@@ -113,7 +113,7 @@ const tournamentSample = {
 };
 const body = bodyMatch[1]
   // The preview supplies its own inline script instead of loading the file.
-  .replace(/<script src="(?:renderer|cosmic|expedition|presentation|mixtape-engine|mixtape|ghost|share|crowns|race)\.js"><\/script>/g, "");
+  .replace(/<script src="(?:renderer|cosmic|expedition|presentation|mixtape-engine|mixtape|ghost|share|crowns|race|queue-board)\.js"><\/script>/g, "");
 
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Apogee Client Preview</title>
@@ -124,6 +124,7 @@ ${style}
 <style>${readFileSync(new URL("ghost.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("share.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("crowns.css", RENDERER_DIR), "utf8")}</style>
+<style>${readFileSync(new URL("queue-board.css", RENDERER_DIR), "utf8")}</style>
 </head><body data-screen="queue">
 ${body}
 <script id="apogee-snapshot" type="application/json">${snapshot}</script>
@@ -160,6 +161,7 @@ ${rendererJs}
 <script>${readFileSync(new URL("share.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("crowns.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("race.js", RENDERER_DIR), "utf8")}</script>
+<script>${readFileSync(new URL("queue-board.js", RENDERER_DIR), "utf8")}</script>
 </body></html>
 `;
 

@@ -18,10 +18,15 @@ export const baselineFor=async()=>{throw new Error('Unexpected baseline calculat
 export const prepareChallengerRating=async()=>{throw new Error('Unexpected rating calculation');};
 export const commitMatchResult=async(_admin,matchId,status,sides,ratings=[])=>{
 globalThis.settlementFixture.commits.push({matchId,status,sides,ratings});return {committed:true};};
+export const settleShadowMatch=async()=>null;
+export const markShadowVoid=async()=>{};
+export const shadowResultFor=async()=>null;
+export const prepareFlagAnswer=async()=>{throw new Error('Unexpected flag rating');};
+export const commitFlagAnswer=async()=>{throw new Error('Unexpected flag commit');};
 `;
 await build({entryPoints:['supabase/functions/settle-match/index.ts'],outfile:'.cache/settlement-order.mjs',bundle:true,platform:'node',format:'esm',
   plugins:[{name:'isolated-boundaries',setup(b){
-    b.onResolve({filter:/\/\_shared\/(apogee|rateLimit|tournament|arena)\.ts$/},()=>({path:'mock',namespace:'test'}));
+    b.onResolve({filter:/\/\_shared\/(apogee|rateLimit|tournament|arena|queue)\.ts$/},()=>({path:'mock',namespace:'test'}));
     b.onLoad({filter:/.*/,namespace:'test'},()=>({contents:mocks}));
   }}]});
 let handle;

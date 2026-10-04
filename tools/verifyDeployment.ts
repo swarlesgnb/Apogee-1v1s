@@ -584,6 +584,9 @@ async function main(): Promise<void> {
     "challenge-crown",
     "race-action",
     "race-status",
+    // The queue board names who answered your Flags and reads your Shadow ladder; it is
+    // about the caller and means nothing without one.
+    "queue-board",
   ];
   for (const name of authedFunctions) {
     const res = await fetch(`${fnBase}/${name}`, {
@@ -688,6 +691,18 @@ async function main(): Promise<void> {
   const noticesAnon = await rest("crown_notices?select=id&limit=1", ANON!);
   check("the anon key reads no Crown notices", noticesAnon.status !== 200 || noticesAnon.body.trim() === "[]",
     `HTTP ${noticesAnon.status}`);
+
+  // ---- shadows and flags ------------------------------------------------------------
+  console.log("\n── shadows and flags ────────────────────────────");
+
+  // Written by find-match and settle-match, read by queue-board, all under the service role.
+  // A client that could read flags could see a planted score before answering it.
+  for (const table of ["match_shadows", "flags"]) {
+    const secret = await rest(`${table}?select=match_id&limit=1`, SECRET!);
+    check(`the ${table} table exists`, secret.status === 200, `HTTP ${secret.status}`);
+    const anon = await rest(`${table}?select=match_id&limit=1`, ANON!);
+    check(`clients CANNOT read ${table} directly`, anon.status !== 200, `HTTP ${anon.status}`);
+  }
 
   console.log();
   if (failures > 0) {

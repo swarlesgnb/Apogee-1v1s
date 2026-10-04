@@ -26,6 +26,14 @@ import {
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { afterLegSettled } from "../_shared/tournament.ts";
 import { arenaNote } from "../_shared/arena.ts";
+import {
+  commitFlagAnswer,
+  markShadowVoid,
+  prepareFlagAnswer,
+  settleShadowMatch,
+  shadowResultFor,
+  type FlagAnswerPlan,
+} from "../_shared/queue.ts";
 
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 import { isAbandonedRun } from "../../../src/core/stats/duration.ts";
@@ -90,6 +98,7 @@ Deno.serve(handler(async function settleRequest(req, admin) {
       tournament: rated ? null : await afterLegSettled(admin, matchId),
       // A Crown challenge or a race leg: what the database decided about it.
       arena: rated ? null : await arenaNote(admin, matchId, caller.playerId),
+      shadow: theirs ? null : await shadowResultFor(admin, matchId),
       verdict: match.status === "void" ? "void" : mine.result,
       yourMatchScore: mine.match_score != null ? Number(mine.match_score) : null,
       theirMatchScore: theirs?.match_score != null ? Number(theirs.match_score) : null,
@@ -153,6 +162,8 @@ Deno.serve(handler(async function settleRequest(req, admin) {
   );
 
   if (abandonedRun) {
+    // A Shadow match voided this way is no result, not the loss an abandon is.
+    if (seeding) await markShadowVoid(admin, matchId);
     const receipt = await commitMatchResult(admin, matchId, "void",
       [{ player_id: caller.playerId, result: null }]);
     if (!receipt.committed) return settleRequest(req, admin);
@@ -254,6 +265,15 @@ Deno.serve(handler(async function settleRequest(req, admin) {
   // side is what the next player to queue will be matched against, and until it has a
   // match_score the candidate query in find-match cannot see it.
   if (seeding) {
+    // Played against a Shadow: judged, stored and planted as a Flag in one commit
+    // (supabase/functions/_shared/queue.ts). Null for a duel's or a fixture's first leg.
+    const shadowed = await settleShadowMatch(admin, {
+      matchId, match, playerId: caller.playerId, scenarioIds, playerRounds,
+      runIds: playerRounds.map((_, i) => firstByScenario.get(scenarioIds[i])!.id),
+      hasHistory: baselines.map((b) => b.runCount > 0),
+    });
+    if (shadowed) return shadowed.retry ? settleRequest(req, admin) : json(shadowed.body);
+
     const side = settleSide(playerRounds);
     const receipt = await commitMatchResult(admin, matchId, "settled", [{
       player_id: caller.playerId,
@@ -384,6 +404,7 @@ Deno.serve(handler(async function settleRequest(req, admin) {
     rd_before: before.rd, rd_after: after.rd,
   }];
   const ratingPlans: RatingProposal[] = [];
+  let flag: FlagAnswerPlan | null = null;
   if (settlement.verdict !== "void" && rated) {
     ratingPlans.push({ player_id: caller.playerId, before, after,
       matches_played: Number(myRatingRow?.matches_played ?? 0),
@@ -392,9 +413,14 @@ Deno.serve(handler(async function settleRequest(req, admin) {
     const challenger = await prepareChallengerRating(admin, matchId, theirVerdict,
       settlement.ratingWeight, updateRating, before);
     if (challenger) { sidePlans.push(challenger.side); ratingPlans.push(challenger.rating); }
+    // Answering a Flag rates its planter too, once (src/core/match/flags.ts).
+    else if ((flag = await prepareFlagAnswer(admin, match, theirs!, settlement.verdict,
+      settlement.ratingWeight, updateRating, before))) { sidePlans.push(flag.side); ratingPlans.push(flag.rating); }
   }
-  const receipt = await commitMatchResult(admin, matchId,
-    settlement.verdict === "void" ? "void" : "settled", sidePlans, ratingPlans);
+  const receipt = flag
+    ? await commitFlagAnswer(admin, flag.flagId, matchId, sidePlans, ratingPlans)
+    : await commitMatchResult(admin, matchId,
+      settlement.verdict === "void" ? "void" : "settled", sidePlans, ratingPlans);
   if (!receipt.committed) return settleRequest(req, admin);
 
   // Who it was against, so the result screen can offer a rematch.
@@ -425,6 +451,7 @@ Deno.serve(handler(async function settleRequest(req, admin) {
     rated,
     tournament,
     arena,
+    flag: flag ? { answered: true, line: "You answered a Flag, so this settled rated for both of you." } : null,
     opponent:
       opponentPlayer && settlement.verdict !== "void"
         ? { playerId: opponentPlayer.id, displayName: opponentPlayer.display_name }

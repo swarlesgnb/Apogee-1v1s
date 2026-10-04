@@ -23,6 +23,8 @@ export interface SettledRecord {
   tournament?: { name: string; label: string } | null;
   /** A Crown challenge or a race leg (settle-match's `arena` note). Unrated, like a tournament leg. */
   arena?: { kind: "crown" | "race"; race?: { opponentName: string } | null } | null;
+  /** A match played against a Shadow (src/core/match/shadow.ts): synthetic, unrated. */
+  shadow?: { label: string } | null;
   opponent?: { displayName: string } | null;
   category?: string;
   yourMatchScore: number | null;
@@ -104,7 +106,9 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
   const opponent = !seeding && s.opponent ? { name: s.opponent.displayName } : null;
 
   const rounds: CardRound[] = s.rounds.map((r) => {
-    const theirs = r.counted && finite(r.opponentDelta) ? r.opponentDelta : null;
+    // A Shadow's rounds are not a person's, and a card column of them would read as one.
+    // The Shadow is named in the kicker instead.
+    const theirs = !s.shadow && r.counted && finite(r.opponentDelta) ? r.opponentDelta : null;
     return {
       scenario: r.scenario,
       you: { score: finite(r.score) ? r.score : null, baseline: finite(r.baseline) ? r.baseline : null, delta: r.counted && finite(r.delta) ? r.delta : null },
@@ -115,15 +119,13 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
     };
   });
 
-  const mode = s.tournament
-    ? `Tournament · ${s.tournament.label}`
-    : rec.openChallenge
-      ? "Open challenge · unrated"
-      : s.arena?.kind === "crown"
-        ? "Crown challenge · unrated"
-        : s.arena?.kind === "race"
-          ? `Race${s.arena.race?.opponentName ? ` against ${s.arena.race.opponentName}` : ""} · unrated`
-          : seeding && rec.sentDuel ? "Duel sent" : null;
+  const mode = s.tournament ? `Tournament · ${s.tournament.label}`
+    : s.shadow ? `Shadow match, ${s.shadow.label} · unrated`
+    : rec.openChallenge ? "Open challenge · unrated"
+    : s.arena?.kind === "crown" ? "Crown challenge · unrated"
+    : s.arena?.kind === "race"
+      ? `Race${s.arena.race?.opponentName ? ` against ${s.arena.race.opponentName}` : ""} · unrated`
+    : seeding && rec.sentDuel ? "Duel sent" : null;
 
   return {
     kind: "match",
