@@ -298,7 +298,11 @@ export interface CrownRecord {
   rivalReignDays?: number | null;
   yourMatchScore: number | null;
   theirMatchScore: number | null;
-  /** The deciding match from this player's side: you are the holder on a defence. */
+  /**
+   * The deciding match from this player's side: you are the holder on a defence. Empty
+   * when the server sent only the two match scores (a defence read from its notice); the
+   * card then shows those two scores and no rounds.
+   */
   rounds: SettledRound[];
   /** When main received it, epoch ms. */
   at: number;
@@ -334,7 +338,10 @@ export interface FlagRecord {
   ratingChange?: number | null;
   yourMatchScore: number | null;
   theirMatchScore: number | null;
-  /** The planted set (you) against the answer (them). */
+  /**
+   * The planted set (you) against the answer (them). Empty when the server sent only the
+   * two match scores, which is what the queue board sends for an answered Flag.
+   */
   rounds: SettledRound[];
   /** The planter's other flags still standing after this one settled. */
   standing?: number | null;
@@ -464,7 +471,7 @@ export function dailyCardInput(rec: DailyRecord, ctx: CardContext): DailyCardInp
 
 export function crownCardInput(rec: CrownRecord, ctx: CardContext): CrownCardInput | Refusal {
   if (rec.event !== "taken" && rec.event !== "defended") return { refused: "Unknown crown event." };
-  if (!rec.rounds?.length) return { refused: "This crown match has no rounds to show." };
+  if (!rec.rounds?.length && !(finite(rec.yourMatchScore) && finite(rec.theirMatchScore))) return { refused: "This crown result has no rounds or scores to show." };
   if (rec.event === "defended" && !rec.rival) return { refused: "A defence needs the challenger it held off." };
   return {
     kind: "crown",
@@ -478,14 +485,14 @@ export function crownCardInput(rec: CrownRecord, ctx: CardContext): CrownCardInp
     heldSince: isoDay(rec.heldSince ?? null) ?? (rec.event === "taken" ? localDay(rec.at) : null),
     rivalReignDays: finite(rec.rivalReignDays) && rec.rivalReignDays >= 0 ? Math.round(rec.rivalReignDays) : null,
     matchScore: matchScore(rec.yourMatchScore, rec.theirMatchScore),
-    rounds: settledRounds(rec.rounds),
+    rounds: settledRounds(rec.rounds ?? []),
     playedAt: localDay(rec.at),
   };
 }
 
 export function flagCardInput(rec: FlagRecord, ctx: CardContext): FlagCardInput | Refusal {
   if (rec.verdict === "void") return { refused: "A void answer did not count, so it has no card." };
-  if (!rec.rounds?.length) return { refused: "This flag has no rounds to show." };
+  if (!rec.rounds?.length && !(finite(rec.yourMatchScore) && finite(rec.theirMatchScore))) return { refused: "This flag has no rounds or scores to show." };
   const plantedAt = isoDay(rec.plantedAt);
   const answeredAt = isoDay(rec.answeredAt);
   if (!plantedAt || !answeredAt) return { refused: "This flag is missing when it was planted or answered." };
@@ -505,7 +512,7 @@ export function flagCardInput(rec: FlagRecord, ctx: CardContext): FlagCardInput 
     plantedAt,
     answeredAt,
     matchScore: matchScore(rec.yourMatchScore, rec.theirMatchScore),
-    rounds: settledRounds(rec.rounds),
+    rounds: settledRounds(rec.rounds ?? []),
     standing: Number.isInteger(rec.standing) && (rec.standing as number) >= 0 ? rec.standing : null,
   };
 }

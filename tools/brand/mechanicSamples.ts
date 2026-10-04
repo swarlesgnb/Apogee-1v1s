@@ -125,9 +125,12 @@ export function mechanicSamples(): Record<string, MechanicCardInput> {
     // Daily #3 is the real number for 3 October (core/social/daily.ts counts from 1 October).
     daily: ok(dailyCardInput({ number: 3, band: "Intermediate", date: "2026-10-03", marks: ["above", "near", "below"], meanDelta: (0.031 + 0.006 - 0.018) / 3, streak: 3 }, ctx()), "daily"),
     "crown-taken": ok(crownCardInput({ event: "taken", category: "Speed Switching", band: "Intermediate", rival: { displayName: "ravenous" }, defences: 0, rivalReignDays: 3, ...crownTaken, at }, ctx()), "crown-taken"),
-    "crown-defended": ok(crownCardInput({ event: "defended", category: "Precise Tracking", band: "Intermediate", rival: { displayName: "kestrel" }, defences: 4, heldSince: "2026-09-28", ...crownHeld, at }, ctx()), "crown-defended"),
-    "flag-held": ok(flagCardInput({ category: "Dynamic Clicking", challenger: { displayName: "orbitwalker" }, plantedAt: "2026-10-01", answeredAt: "2026-10-03", rated: true, ratingAfter: 1630, ratingChange: 13, standing: 2, ...flagHeld, verdict: "win" }, ctx()), "flag-held"),
-    "flag-lost": ok(flagCardInput({ category: "Reactive Tracking", challenger: { displayName: "tardigrade_main" }, plantedAt: "2026-09-29", answeredAt: "2026-10-03", rated: true, ratingAfter: 1604, ratingChange: -13, ...flagLost, verdict: "loss" }, ctx()), "flag-lost"),
+    // A defence and an answered Flag reach the app as two match scores and no rounds (a
+    // Crown notice, the queue board's Flags), so their samples are drawn the way main
+    // builds them. The rounds versions are edge cases below (edge-crown-many, edge-flag-*).
+    "crown-defended": ok(crownCardInput({ event: "defended", category: "Precise Tracking", band: "Intermediate", rival: { displayName: "kestrel" }, defences: 4, heldSince: "2026-09-28", ...crownHeld, rounds: [], at }, ctx()), "crown-defended"),
+    "flag-held": ok(flagCardInput({ category: "Dynamic Clicking", challenger: { displayName: "orbitwalker" }, plantedAt: "2026-10-01", answeredAt: "2026-10-03", rated: true, ratingAfter: 1630, ratingChange: 13, standing: 2, ...flagHeld, rounds: [], verdict: "win" }, ctx()), "flag-held"),
+    "flag-lost": ok(flagCardInput({ category: "Reactive Tracking", challenger: { displayName: "tardigrade_main" }, plantedAt: "2026-09-29", answeredAt: "2026-10-03", rated: true, ratingAfter: 1604, ratingChange: -13, ...flagLost, rounds: [], verdict: "loss" }, ctx()), "flag-lost"),
     // A first Shadow match, won: placement still two results away.
     "shadow-placing": ok(shadowCardInput({ ...shadowHistory("Speed Switching", [{ p: 51, you: 0.021 }]), at }, ctx()), "shadow-placing"),
     // Six results up and down the ladder, the read-out showing, the latest a win.
@@ -150,6 +153,9 @@ export function mechanicEdgeCases(): Record<string, MechanicCardInput> {
     "edge-crown-long": ok(crownCardInput({ event: "taken", category: "Evasive Switching", band: "Cosmonaut to Odyssey", rival: { displayName: LONG }, defences: 0, rivalReignDays: 365, ...crown, rounds: long(crown.rounds), at }, ctx(LONG_ME)), "edge-crown-long"),
     "edge-crown-vacant": ok(crownCardInput({ event: "taken", category: "Static Clicking", band: "Stargazer", rival: null, defences: 0, ...crown, at }, ctx()), "edge-crown-vacant"),
     "edge-crown-many": ok(crownCardInput({ event: "defended", category: "Reactive Tracking", band: "1500-1650", rival: { displayName: LONG }, defences: 999, heldSince: "2026-01-01", ...crown, at }, ctx(LONG_ME)), "edge-crown-many"),
+    // Two match scores and nothing else, at the longest names and the widest figures.
+    "edge-flag-scores-long": ok(flagCardInput({ category: "Evasive Switching", challenger: { displayName: LONG }, plantedAt: "2026-09-26", answeredAt: "2026-10-03", rated: true, ratingAfter: 2101, ratingChange: -40, standing: 0, yourMatchScore: -0.1234, theirMatchScore: 0.1456, rounds: [], verdict: "loss" }, ctx(LONG_ME)), "edge-flag-scores-long"),
+    "edge-crown-scores-draw": ok(crownCardInput({ event: "defended", category: "Speed Switching", band: "Cosmonaut to Odyssey", rival: { displayName: LONG }, defences: 12, heldSince: null, yourMatchScore: 0.0123, theirMatchScore: 0.0121, rounds: [], at }, ctx(LONG_ME)), "edge-crown-scores-draw"),
     "edge-flag-draw": ok(flagCardInput({ category: null, challenger: { displayName: LONG }, plantedAt: at, answeredAt: at + 3600_000, rated: false, ...flag, verdict: "draw", rounds: long(flag.rounds) }, ctx(LONG_ME)), "edge-flag-draw"),
     "edge-flag-excluded": ok(flagCardInput({ category: "Speed Switching", challenger: { displayName: "kestrel" }, plantedAt: "2025-10-03", answeredAt: "2026-10-03", rated: true, ratingAfter: 2101, ratingChange: -40, standing: 0, ...flag, verdict: "loss", rounds: flag.rounds.map((r, i) => (i === 1 ? { ...r, counted: false, excludedReason: "left early" } : r)) }, ctx()), "edge-flag-excluded"),
     // Eleven results with a void, an abandon and a level one: trimmed to the last eight.

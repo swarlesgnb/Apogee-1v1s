@@ -12,7 +12,10 @@
  * The rules the result card keeps, these keep:
  *
  * - A card that shows rounds (crown, flag) shows every round's raw score, baseline and
- *   delta for both sides, through the same landscapeRounds()/portraitRounds().
+ *   delta for both sides, through the same landscapeRounds()/portraitRounds(). When the
+ *   server sent only the two match scores (a Flag answered while you were away, a Crown
+ *   defence read from its notice), the card shows those two, side by side, and says
+ *   nothing about rounds it was not given.
  * - The daily never names a scenario. It cannot: DailyCardInput has no field for one. Each
  *   scenario is a numbered tile with a mark, coded by shape as well as colour (a triangle
  *   up, a disc, a triangle down), so it survives a colour-blind viewer and a greyscale
@@ -33,6 +36,7 @@ import {
   SHARE_CARD_SIZES,
   dateLine,
   defs,
+  deltaColour,
   esc,
   fmtDelta,
   landscapeRounds,
@@ -148,11 +152,12 @@ function figureLines(input: MechanicCardInput): string[] {
       const reign = input.event === "taken"
         ? input.rival && input.rivalReignDays != null ? `Ends a ${input.rivalReignDays}-day reign` : ""
         : input.heldSince ? `Held since ${shortDate(input.heldSince)}` : "";
-      return [matchLine(input.matchScore), reign].filter(Boolean);
+      // Without rounds the two match scores are the card's body; they are not said twice.
+      return [input.rounds.length ? matchLine(input.matchScore) : "", reign].filter(Boolean);
     }
     case "flag":
       return [
-        matchLine(input.matchScore),
+        input.rounds.length ? matchLine(input.matchScore) : "",
         ratingChangeLine(input.player.rating, input.player.ratingChange),
         input.standing != null ? `${plural(input.standing, "flag")} still standing` : "",
       ].filter(Boolean);
@@ -194,10 +199,47 @@ function ruleLine(input: MechanicCardInput): string {
       return "A Shadow is a day at a stated percentile of genuine match scores, against own baselines. It moves no rating.";
     case "crown":
       // A Crown is decided on match score against the holder's stored set (core/crowns).
-      return "Raw scores from KovaaK's stats. The Crown goes to the higher match score; a tie stays with the holder.";
+      return input.rounds.length
+        ? "Raw scores from KovaaK's stats. The Crown goes to the higher match score; a tie stays with the holder."
+        : "A match score is the mean gain over the player's own baselines. The higher one takes the Crown; a tie stays with the holder.";
     default:
-      return "Raw scores from KovaaK's stats. A round goes to whoever beat their own baseline by more.";
+      return input.rounds.length
+        ? "Raw scores from KovaaK's stats. A round goes to whoever beat their own baseline by more."
+        : "A match score is the mean gain over the player's own baselines, from raw scores in KovaaK's stats.";
   }
+}
+
+/**
+ * The two match scores of a crown or flag result whose rounds the server did not send, as
+ * two panels: this player's side, then the other. The side that won carries the up bar.
+ */
+function scorePanels(p: BrandPalette, input: CrownCardInput | FlagCardInput, box: { x: number; y: number; w: number; h: number }, scale: number, stacked: boolean): string {
+  const ms = input.matchScore ?? { you: null, them: null };
+  const rival = input.kind === "crown" ? input.rival?.name ?? "Holder" : input.challenger.name;
+  const roles = input.kind === "flag" ? ["planted set", "answer"] : input.event === "taken" ? ["challenger", "holder"] : ["holder", "challenger"];
+  // A crown result is always the player's to keep (taken or held); a flag can go either way.
+  const youWon = input.kind === "crown" ? true : input.verdict === "win";
+  const level = input.kind === "flag" && input.verdict === "draw";
+  const sides = [
+    { name: input.player.name, role: roles[0], score: ms.you, won: youWon && !level },
+    { name: rival, role: roles[1], score: ms.them, won: !youWon && !level },
+  ];
+  const gap = 16 * scale;
+  const w = stacked ? box.w : (box.w - gap) / 2;
+  const h = stacked ? (box.h - gap) / 2 : box.h;
+  const out: string[] = [];
+  sides.forEach((side, i) => {
+    const x = box.x + (stacked ? 0 : i * (w + gap));
+    const y = box.y + (stacked ? i * (h + gap) : 0);
+    const pad = 22 * scale;
+    out.push(panel(p, x, y, w, h, 8 * scale));
+    out.push(`<rect x="${x}" y="${y + 14 * scale}" width="${3 * scale}" height="${h - 28 * scale}" rx="${1.5 * scale}" fill="${level ? p.inkMid : side.won ? p.up : p.down}"/>`);
+    out.push(text(side.name, x + pad, y + 36 * scale, { size: 20 * scale, fill: p.ink, weight: 500, fit: w - pad * 2 - 150 * scale }));
+    out.push(text(side.role, x + w - pad, y + 36 * scale, { size: 12 * scale, fill: p.inkDim, family: "mono", tracking: 0.16, upper: true, anchor: "end" }));
+    out.push(text(fmtDelta(side.score), x + pad, y + h - 46 * scale, { size: 56 * scale, fill: deltaColour(p, side.score), weight: 600, tracking: -0.02 }));
+    out.push(text("Match score", x + pad, y + h - 20 * scale, { size: 12 * scale, fill: p.inkDim, family: "mono", tracking: 0.14, upper: true }));
+  });
+  return out.join("");
 }
 
 function cardDate(input: MechanicCardInput): string | null | undefined {
@@ -345,6 +387,10 @@ function landscape(input: MechanicCardInput, o: ShareCardOptions): string {
     out.push(text(input.series.length > 1 ? `Last ${plural(input.series.length, "Shadow")}` : "Shadow ladder", L + 16, 392, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true }));
     out.push(text("Each Shadow is a percentile day", R - 16, 392, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true, anchor: "end" }));
     out.push(shadowTiles(p, input, { x: L, y: 404, w: R - L, h: 186 }, 1, n <= 5 ? n : Math.ceil(n / 2)));
+  } else if (!input.rounds.length) {
+    out.push(text("Match", L + 16, 392, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true }));
+    out.push(text("Mean gain over own baselines", R - 16, 392, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true, anchor: "end" }));
+    out.push(scorePanels(p, input, { x: L, y: 404, w: R - L, h: 186 }, 1, false));
   } else {
     const them = input.kind === "crown" ? input.rival?.name ?? "Holder" : input.challenger.name;
     out.push(landscapeRounds(p, input.rounds, { first: "Scenario", you: input.player.name, them }));
@@ -390,6 +436,8 @@ function portrait(input: MechanicCardInput, o: ShareCardOptions): string {
     const n = shadowTileCount(input);
     const perRow = n <= 3 ? n : n === 4 ? 2 : n <= 6 ? 3 : 4;
     out.push(shadowTiles(p, input, { x: L, y: 1190, w: R - L, h: 500 }, 1.35, perRow));
+  } else if (!input.rounds.length) {
+    out.push(scorePanels(p, input, { x: L, y: 1190, w: R - L, h: 500 }, 1.5, true));
   } else {
     const them = input.kind === "crown" ? input.rival?.name ?? "Holder" : input.challenger.name;
     out.push(portraitRounds(p, input.rounds, { you: input.player.name, them }));

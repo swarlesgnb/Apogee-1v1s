@@ -124,7 +124,11 @@ check("adapters refuse what they should", () => {
   refused(dailyCardInput({ number: 3, band: "Novice", marks: ["near", "near", "near", "near", "near", "near", "near"], meanDelta: 0, streak: 1 }, ctx));
   refused(dailyCardInput({ number: 3, band: "Novice", marks: ["above", "Glide" as never], meanDelta: 0, streak: 1 }, ctx));
   refused(crownCardInput({ event: "defended", category: "Any", band: "Lunar", rival: null, defences: 1, yourMatchScore: 0.1, theirMatchScore: 0, rounds: [round], at: Date.now() }, ctx));
-  refused(crownCardInput({ event: "taken", category: "Any", band: "Lunar", rival: null, defences: 0, yourMatchScore: 0.1, theirMatchScore: 0, rounds: [], at: Date.now() }, ctx));
+  refused(crownCardInput({ event: "taken", category: "Any", band: "Lunar", rival: null, defences: 0, yourMatchScore: 0.1, theirMatchScore: null, rounds: [], at: Date.now() }, ctx));
+  refused(flagCardInput({ verdict: "win", challenger: { displayName: "x" }, plantedAt: "2026-10-01", answeredAt: "2026-10-02", yourMatchScore: null, theirMatchScore: 0.01, rounds: [] }, ctx));
+  // Two match scores and no rounds is what a notice and the queue board send: drawn, not refused.
+  const scoresOnly = flagCardInput({ verdict: "win", challenger: { displayName: "x" }, plantedAt: "2026-10-01", answeredAt: "2026-10-02", yourMatchScore: 0.02, theirMatchScore: 0.01, rounds: [] }, ctx);
+  assert.ok(!("refused" in scoresOnly) && scoresOnly.rounds.length === 0 && scoresOnly.matchScore?.you === 0.02, "a flag with two match scores and no rounds is drawn");
   refused(flagCardInput({ verdict: "void", challenger: { displayName: "x" }, plantedAt: "2026-10-01", answeredAt: "2026-10-02", yourMatchScore: 0, theirMatchScore: 0, rounds: [round] }, ctx));
   refused(flagCardInput({ verdict: "win", challenger: { displayName: "x" }, plantedAt: "never", answeredAt: "2026-10-02", yourMatchScore: 0, theirMatchScore: 0, rounds: [round] }, ctx));
   refused(shadowCardInput({ series: [{ verdict: "void", percentile: 50 }], at: Date.now() }, ctx));
@@ -216,6 +220,12 @@ function expected(input: MechanicCardInput, texts: string[]): string[] {
     const tierWords = ["Stargazer", "Astrologist", "Cosmonaut", "Lunar", "Odyssey", "Arecibo", "Quasar", "Supernova"];
     if (texts.some((t) => tierWords.some((w) => t.includes(w)))) missing.push("no tier: the app shows none for Shadows");
     if (texts.some((t) => /\brating\b/i.test(t) && !/no rating/i.test(t))) missing.push("no rating figure: Shadows move none");
+  } else if (!input.rounds.length) {
+    // Two panels: both match scores, both names, and no round rows.
+    if (input.matchScore?.you != null) want(fmtDelta(input.matchScore.you));
+    if (input.matchScore?.them != null) want(fmtDelta(input.matchScore.them));
+    if (texts.filter((t) => t === "MATCH SCORE").length !== 2) missing.push("two match score panels");
+    if (texts.some((t) => /^(WON|LOST|DRAW|EXCLUDED)$/.test(t))) missing.push("no round outcome without rounds");
   } else {
     for (const r of input.rounds.slice(0, 3)) {
       want(r.scenario.slice(0, 8));
