@@ -62,7 +62,7 @@ export const MECHANICS: readonly Mechanic[] = [
   {
     id: "shadow",
     name: "Shadow",
-    line: "A calibrated opponent at your rating, when nobody else is online.",
+    line: "A typical player's day to beat when nobody is in your band. Unrated.",
     // An eclipse: a body and its equal passing behind it. The shadowed crescent is filled
     // because two outlined circles read as "overlap", not "shadow", at 16px.
     icon:
