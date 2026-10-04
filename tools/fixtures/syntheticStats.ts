@@ -41,7 +41,7 @@
  *
  *   npx tsx tools/fixtures/syntheticStats.ts --out <dir> [--preset new|regular|veteran]
  *        [--runs N] [--seed N] [--end 2026-10-03T18:00] [--season-days N] [--clean]
- *   npx tsx tools/fixtures/syntheticStats.ts --out <dir> --one [--scenario <name>]
+ *   npx tsx tools/fixtures/syntheticStats.ts --out <dir> --one [--count N] [--scenario <name>]
  *
  * `--one` adds a single run ending now to an existing folder, for timing how long a new
  * run takes to reach the screen. The app writes Apogee's scenario files and playlists into
@@ -862,15 +862,26 @@ function main(args: string[]): void {
   if (!out) {
     console.error(
       "usage: tsx tools/fixtures/syntheticStats.ts --out <stats dir> [--preset new|regular|veteran] " +
-        "[--runs N] [--seed N] [--end ISO] [--season-days N] [--clean] | --one [--scenario name]",
+        "[--runs N] [--seed N] [--end ISO] [--season-days N] [--clean] | --one [--count N] [--scenario name]",
     );
     process.exit(2);
   }
   const dir = resolve(out);
 
   if (args.includes("--one")) {
-    const run = appendRun(dir, { scenario: flag(args, "--scenario"), seed: Number(flag(args, "--seed") ?? Date.now() % 2 ** 31) });
-    console.log(`wrote ${run.file} (score ${run.score})`);
+    // `--count N` writes N runs a run-length apart, the last ending now, for staging several
+    // arrivals in one go.
+    const count = Math.max(1, Number(flag(args, "--count") ?? 1));
+    const seed = Number(flag(args, "--seed") ?? Date.now() % 2 ** 31);
+    const now = Date.now();
+    for (let i = 0; i < count; i++) {
+      const run = appendRun(dir, {
+        scenario: flag(args, "--scenario"),
+        seed: seed + i,
+        at: new Date(now - (count - 1 - i) * 75_000),
+      });
+      console.log(`wrote ${run.file} (score ${run.score})`);
+    }
     return;
   }
 
