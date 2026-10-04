@@ -24,6 +24,10 @@ import { contrast } from "../../src/core/report/contrast.ts";
 import { palettes, paletteChecks, rankInk, type BrandPalette } from "../../src/core/brand/palette.ts";
 import { MARK_PATH, placeSvg } from "../../src/core/brand/shareCard.ts";
 import { ascent, corners, ground, horizontal, mark, stars, svgDoc, t } from "./draw.ts";
+import { mechanicJobs, writeSources } from "./buildMechanics.ts";
+import { marketingJobs } from "./buildMarketing.ts";
+import { motionJobs, VIDEO_MECHANICS, videoScenes } from "./buildMotion.ts";
+import { renderChecked } from "./checks.ts";
 import { emblem, ensureDir, rasterize, root, slug, tiers, tokens, withFonts, type RasterJob } from "./kit.ts";
 
 const P = palettes(tokens);
@@ -201,3 +205,20 @@ emit("store/small-capsule-462x174", key(462, 174, { lockup: 56, lx: 30, ly: 108,
 writeFileSync(ensureDir(join(root, ".cache", "brand", "kit.txt")), jobs.map((j) => j.pngOut).join("\n") + "\n");
 console.log(`brand kit: ${jobs.length} images`);
 rasterize(jobs, "kit");
+
+// ------------------------------------------------------------------ mechanics, marketing, motion
+
+// The new mechanics' glyphs and the renderer's copy of them, the marketing kit from the
+// committed product shots, and the video cards (docs/fleet/brand.md). Each of these is
+// also its own script (npm run brand:mechanics, brand:marketing, brand:motion); here they
+// run together, held to their safe areas and contrast floors (checks.ts).
+writeSources();
+writeFileSync(VIDEO_MECHANICS, videoScenes());
+const more = [...mechanicJobs(), ...marketingJobs(), ...motionJobs()];
+console.log(`mechanics, marketing and motion: ${more.length} images`);
+const checked = renderChecked(more, "kit-more");
+if (checked.failures.length) {
+  console.error(checked.failures.map((f) => `  FAIL ${f}`).join("\n"));
+  process.exit(1);
+}
+console.log(`  ${checked.measured} checked for safe areas, overlap and contrast`);
