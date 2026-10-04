@@ -313,3 +313,59 @@ Nothing to deploy. No migration, no Edge Function, no server change.
   adds byte for byte, and rewrote only 26 pre-existing PNGs (the dark and light rank
   emblems, ladder-dark, the dark lockups, the original README hero, the store capsules and
   the two dark result samples), none of whose SVGs changed; `git checkout --` restores them.
+
+## Integration polish
+
+Branch `fleet/polish`, after the queue, social, arena and brand branches merged. What the
+seams between them needed:
+
+- **The Shadow card says what the queue says.** It was drawn before the queue settled its
+  design and printed "Shadow 1604" per match and a placed tier. A Shadow is a day at a stated
+  percentile of genuine match scores, climbed on a seven-rung ladder, and moves no rating;
+  the app shows a placement read-out after three results and no tier. The card now leads with
+  the match just played ("Shadow beaten", "Shadow wins", "Level"), names the Shadow as the app
+  does ("rylee vs a 63rd-percentile day"), gives each recent Shadow (up to the board's eight)
+  a tile with its percentile and how it went, and prints the queue board's read-out in the
+  app's words ("About the 71st percentile", "Placement from 6 Shadows"), or "1 of 3 Shadow
+  results" with dashed "To play" tiles before it shows. The kicker says "synthetic, unrated";
+  there is no tier or rating anywhere on it. `ShadowRecord` is now `{ series: { verdict,
+  percentile, yourMatchScore?, shadowScore? }[], placement?, streak?, category, at }`.
+- **Crown and Flag cards without rounds.** The queue board sends an answered Flag's two match
+  scores, not its rounds, and a Crown defence reaches the holder as a notice. Both cards now
+  draw two match-score panels (planted set and answer; holder and challenger) when no rounds
+  were sent, and refuse only when neither rounds nor both scores exist. `list-crowns` now
+  returns the two scores `crown_notices` already stores (the owner can read them under RLS
+  anyway). The committed Flag and defended-Crown samples are drawn that way.
+- **The cards are wired.** `src/app/shareRecords.ts` builds each record in main: a Shadow from
+  settle-match's `shadow` body, completed by the queue board's ladder once the board counts that
+  match; the newest answered Flag from the queue board; a Crown taken from settle-match's arena
+  note (two scores instead of rounds when the Crown changed hands mid-match), a defence from the
+  newest `defended` notice when it is newer than the Crown record held. Each record has a key;
+  main pushes the keys as `apogee:shareRecords` (preload `shareRecords`, `onShareRecords`).
+- **Share controls**, all through the one panel in `share.js` (`window.apogeeShare.panel()`):
+  the result screen offers a card switch, Shadow or Crown first and Rounds second, when main
+  holds that result's record; the Flags panel and the answered-Flag toast have Share for the
+  newest answered Flag; a defence notice on the Crowns screen has Share.
+- **Glyphs**: the Crowns tab, cards, notices and header emblem; the Shadow and Flag marks in
+  `queue-board.js`; the Daily tab and kicker; the challenge-link icon; a race mark on "Race
+  now". The rail's two tabs name their icon (`data-mechanic-icon`) and the generated
+  `mechanic-icons.js` draws it, so `index.html` holds no copy of a glyph; it loads in the head
+  of the app and of the preview.
+- **Crowns notice said twice.** The "You lost the … Crown" banner is for a player on another
+  screen; arriving on the Crowns screen, or dismissing the row, now takes it down, and the row
+  with Challenge back stays.
+- **validate:brand fails when its Electron children fail.** `app.quit()` exits 0 whatever
+  `process.exitCode` says, so cardSmoke's and the rasteriser's FAIL lines left validate:brand
+  green. Both now exit through `app.exit(status)`, and cardSmoke writes a result file the parent
+  reads. Shown by forcing a cardSmoke failure (validate:brand exited 1, then reverted). The title
+  fit check allows 1% (`window.__fit` 0.998 under load is a metric wobble) and prints the fit.
+
+Tested: `npx tsc --noEmit`, `validate:brand`, `validate:share` (now also drives
+`MechanicShares` with settle-match, queue-board and list-crowns shaped payloads),
+`validate:queue`, `validate:crowns`, `validate:presentation`, `validate:theme`: all pass.
+Screens photographed from the preview with a stub bridge (fleet shots `polish/`).
+
+Not done: Discord presence states for Crown challenges, live races and Shadow matches; the
+mechanic `line` for Shadow in `mechanics.ts` still says "A calibrated opponent at your rating",
+which the queue's design contradicts (changing it reruns the sheet, motion and marketing kit);
+the tracked `tools/apogee-ui-preview.html` is left for the PM to regenerate.
