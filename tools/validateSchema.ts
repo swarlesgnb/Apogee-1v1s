@@ -180,6 +180,44 @@ async function main(): Promise<void> {
     standing.length === 1 && /auth\.uid\(\)/.test(standing[0].qual ?? ""),
     standing.length ? `${standing[0].policyname}: ${standing[0].qual}` : "no select policy",
   );
+  // ratings follows apex_standing (20261003000026): the population is not enumerable from
+  // a session, and the public ladder is served by functions that decide what to show.
+  const ratingsRead = readPolicy("ratings");
+  check(
+    "ratings is readable only by its own player",
+    ratingsRead.length === 1 && /auth\.uid\(\)/.test(ratingsRead[0].qual ?? ""),
+    ratingsRead.map((p) => `${p.policyname}: ${p.qual}`).join("; ") || "no select policy",
+  );
+
+  // players is server-owned: steam-auth writes the profile, moderation writes flags. RLS
+  // says which row; only column privileges say which columns, and none are granted.
+  const playerWrites = await db.query<{ privilege_type: string; column_name: string | null }>(
+    `select privilege_type, null as column_name from information_schema.table_privileges
+      where table_name = 'players' and grantee in ('anon','authenticated')
+        and privilege_type in ('INSERT','UPDATE','DELETE')
+     union all
+     select privilege_type, column_name from information_schema.column_privileges
+      where table_name = 'players' and grantee in ('anon','authenticated')
+        and privilege_type in ('INSERT','UPDATE')`,
+  );
+  check(
+    "no client can write any column of players",
+    playerWrites.rows.length === 0,
+    playerWrites.rows.map((r) => `${r.privilege_type}${r.column_name ? `(${r.column_name})` : ""}`).join(", ") || "none granted",
+  );
+
+  // The time-integrity and sign-in tables are the server's alone.
+  for (const table of ["ranked_run_fingerprints", "steam_openid_nonces", "steam_signin_attempts"]) {
+    const grants = await db.query<{ n: number }>(
+      `select count(*)::int as n from information_schema.table_privileges
+        where table_name = $1 and grantee in ('anon','authenticated')`,
+      [table],
+    );
+    const secured = tables.rows.find((t) => t.tablename === table)?.rowsecurity === true;
+    check(`${table} exists, has RLS and grants clients nothing`, secured && grants.rows[0].n === 0,
+      `${grants.rows[0].n} client grants`);
+  }
+
   // ---- duels ---------------------------------------------------------------------
   //
   // The protected-list check above passes trivially for a table that is not there, so
@@ -844,7 +882,10 @@ async function main(): Promise<void> {
     )).rows.map((r) => r.column_name),
   );
   const mustNotInsert = ["verification_tier", "verification_notes", "match_id",
-                         "scenario_id", "duration_seconds"];
+                         "scenario_id", "duration_seconds",
+                         // Derived by enforce_run_time_integrity from played_at and the
+                         // offset; a client naming it would choose the run's identity.
+                         "ended_local", "match_submitted_at"];
   const leaked = mustNotInsert.filter((c) => runInsertable.has(c));
   check("clients cannot set a run's tier, match or duration", leaked.length === 0,
     leaked.length ? `insertable: ${leaked.join(", ")}` : `${runInsertable.size} columns granted`);
@@ -855,7 +896,7 @@ async function main(): Promise<void> {
   const backfillColumns = ["player_id", "scenario_name", "score", "accuracy", "avg_ttk",
     "kills", "hit_count", "miss_count", "played_at", "challenge_start", "hash",
     "game_version", "avg_fps", "resolution", "cm360", "dpi", "fov", "csv_sha256",
-    "kill_rows"];
+    "kill_rows", "tz_offset_minutes"];
   const missing = backfillColumns.filter((c) => !runInsertable.has(c));
   check("backfill can still insert every column it sends", missing.length === 0,
     missing.length ? `not granted: ${missing.join(", ")}` : `${backfillColumns.length} columns`);

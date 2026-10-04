@@ -346,3 +346,43 @@ comment on policy players_update_self on players is
 drop policy if exists ratings_read_all on ratings;
 create policy ratings_read_self on ratings
   for select using (auth.uid() = player_id);
+
+
+-- ===========================================================================
+-- 8. Steam sign-in assertions are single-use (SEC-05)
+-- ===========================================================================
+--
+-- steam-auth asked Steam whether an assertion was genuine and stopped there, so the same
+-- callback URL verified again for as long as Steam would vouch for it, minting a new
+-- session each time. OpenID 2.0 (section 11.3) makes the relying party keep the nonces
+-- it has accepted; this is that store. Sign-in attempts are recorded at /start so a
+-- callback is accepted only for an attempt the server saw begin, once, on the same port.
+-- The state is stored hashed: the row proves an attempt began, and is no use to anyone
+-- who reads it.
+
+create table if not exists steam_signin_attempts (
+  state_hash text primary key,
+  port       integer not null,
+  created_at timestamptz not null default now(),
+  used_at    timestamptz
+);
+
+create table if not exists steam_openid_nonces (
+  nonce      text primary key,
+  steam_id   text not null,
+  used_at    timestamptz not null default now()
+);
+
+alter table steam_signin_attempts enable row level security;
+alter table steam_openid_nonces enable row level security;
+revoke all on steam_signin_attempts, steam_openid_nonces from public, anon, authenticated;
+
+create index if not exists steam_signin_attempts_age_idx on steam_signin_attempts (created_at);
+create index if not exists steam_openid_nonces_age_idx on steam_openid_nonces (used_at);
+
+comment on table steam_openid_nonces is
+  'Every openid.response_nonce steam-auth has accepted. The primary key is the replay '
+  'refusal. Pruned after a day; steam-auth refuses nonces older than fifteen minutes.';
+comment on table steam_signin_attempts is
+  'Sign-in attempts begun at steam-auth /start: sha256 of the client''s state, and its '
+  'loopback port. A callback must name one, unused and under fifteen minutes old.';
