@@ -6,7 +6,8 @@ Apogee compares runs with records from KovaaK's servers when a linked account an
 matching record are available. Verified requires a matching score, nonempty scenario
 hash and challenge start, and a server timestamp within three minutes of the run's
 corrected end time. For a ranked match, that server timestamp must also lie inside
-the match window. Missing evidence never earns Verified.
+the match window. Missing evidence never earns Verified, and never rejects a run; a
+record of the same run that places it outside the match window does reject it.
 
 Without that evidence, local consistency checks can catch contradictory edits but
 cannot prove a file is genuine. Coherent forgeries can still receive Consistent and
@@ -25,11 +26,17 @@ Every submitted run gets a tier, and the tier is shown on the match screen.
 | **Verified** | A record from the linked account matches the score, hash, challenge start and time window | Counts |
 | **Consistent** | The available checks pass, but there is no matching server record | Counts |
 | **Suspect** | The grading core received evidence of an unusual score or accuracy | Counts; reasons are stored, with no automatic review workflow |
-| **Rejected** | A hard consistency or match-window check fails | Excluded; an incomplete set of counted rounds voids settlement |
+| **Rejected** | A hard consistency or match-window check fails, including a KovaaK's record of the same run timed outside the match | Excluded; an incomplete set of counted rounds voids settlement |
 
 Rating weight also depends on whether the baselines are provisional. Verification
 alone does not guarantee a full-weight rating change. Replayed submissions are refused
 before saving another run; they do not automatically flag an account or void a match.
+
+A baseline is the median of your last 50 runs on a scenario, floored at 90% of the
+best score KovaaK's has confirmed for you there: the best of your runs Apogee graded
+Verified. A match uses the floor as it stood when the match began, so a personal best
+set during a match never raises that match's baseline. Without a linked account there
+are no Verified runs and the baseline is the median alone.
 
 The live submission path looks for a matching server record. It does not currently
 supply the grading core with an unrelated personal-best record or an accuracy ceiling,
@@ -49,19 +56,46 @@ treated as suspicious and costs nothing on the ladder.
 
 ## What is rejected, and what happens
 
-A run is rejected for one of three reasons, all of which are properties of the file
-rather than judgements about you:
+A run is rejected for one of these reasons, all of which are properties of the file
+or of KovaaK's record of it rather than judgements about you:
 
 - the CSV contradicts itself in a way a genuine file cannot
-- the exact file has been submitted before (replay)
 - it was played outside the window of the match it was submitted for
+- KovaaK's has a record of this exact run (same score, scenario hash and challenge start
+  to the millisecond) timed outside that window. A missing record never does this; only
+  a record that contradicts the run's time.
 
-A saved rejected run is excluded when the match settles. A refused replay saves no
-second run. Neither action currently writes an account moderation flag.
+Some submissions are refused before anything is saved:
 
-A ranked run's player, scenario and claimed play time can be used only once, even if
-the CSV formatting changes. Its first server receipt determines attempt order.
-This prevents cosmetic replays; it does not authenticate a forged play time.
+- the same performance has already counted in a match (a replay). This is decided by
+  the scenario, the challenge start and the score, so a re-exported file, a renamed file
+  or a different time zone setting is still the same run.
+- the run's time zone differs from the one its match started with. Every run in a
+  match uses the PC clock the match began on; a daylight-saving change during the match
+  is accepted.
+- the run's end time is more than fifteen minutes ahead of the server's clock.
+- the run reaches the server more than fifteen minutes after its match ran out of time.
+- a ranked run from a client too old to say which time zone it was played in.
+
+A new match is refused, with the time it will be accepted, when the PC's time zone
+differs from the one on your own uploads from the last six hours. Daylight-saving
+changes are accepted at once; a time zone changed by travel is accepted six hours after
+your last run in the old one.
+
+A saved rejected run is excluded when the match settles. A refused submission saves no
+match run. None of these actions currently writes an account moderation flag.
+
+A run keeps the play time it was first uploaded with. The app uploads every run as
+history the moment it lands, so a run cannot later be stamped into a match it was not
+played in. Its first server receipt determines attempt order.
+
+**What the time checks cannot do.** KovaaK's writes only a local wall clock into the
+stats file, and the time zone that turns it into a moment comes from your PC. For a
+player with a linked kovaaks.com account, KovaaK's own timestamp settles when a run was
+played. Without one, a player who never lets the app upload as they play and keeps a
+false time zone consistently for weeks can still submit a run played some hours before
+a match. Such a run grades Consistent and counts, which is the same limit as any other
+coherent forgery above.
 
 Settlement commits the match result, rating history and affected ratings together.
 Retries return the existing terminal result. A failed or stale rating calculation

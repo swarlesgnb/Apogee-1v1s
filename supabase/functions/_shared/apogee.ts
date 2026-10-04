@@ -227,14 +227,28 @@ export async function baselineFor(
       .or(`match_id.is.null,match_id.neq.${before.matchId}`);
   }
 
+  // The verified-PB floor (PLAN.md section 3), frozen the same way. verified_pbs holds the
+  // best KovaaK's-confirmed score so far, which may have been set inside this very match;
+  // a match's baseline takes the best verified run from before it began instead, so a
+  // personal best can never raise the bar it is being measured against.
+  let pbQuery = admin
+    .from(before ? "runs" : "verified_pbs")
+    .select("score")
+    .eq("player_id", playerId)
+    .eq("scenario_id", scenarioId);
+  if (before) {
+    pbQuery = pbQuery
+      .eq("verification_tier", "verified")
+      .lt("played_at", before.at)
+      .lt("created_at", before.at)
+      .or(`match_id.is.null,match_id.neq.${before.matchId}`)
+      .order("score", { ascending: false })
+      .limit(1);
+  }
+
   const [runResult, pbResult] = await Promise.all([
     query.order("played_at", { ascending: false }).limit(BASELINE_HISTORY),
-    admin
-      .from("verified_pbs")
-      .select("score")
-      .eq("player_id", playerId)
-      .eq("scenario_id", scenarioId)
-      .maybeSingle(),
+    pbQuery.maybeSingle(),
   ]);
 
   if (runResult.error) throw new HttpError(500, runResult.error.message);

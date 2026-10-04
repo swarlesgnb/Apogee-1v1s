@@ -9,8 +9,9 @@
 .cr-head p { max-width: 64ch; }
 .cr-mark { width: clamp(80px, 8vw, 118px); height: auto; color: var(--brand-dim); flex: none; }
 .cr-glyph { width: 18px; height: 18px; flex: none; }
-.cr-glyph path { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
-.cr-glyph.held path.body { fill: currentColor; fill-opacity: .9; }
+.cr-glyph.held path:first-of-type { fill: currentColor; fill-opacity: .9; }
+.cr-share:not(:empty) { margin: 0 0 14px; }
+.rc-mark { width: 18px; height: 18px; margin-right: 8px; vertical-align: -3px; color: var(--brand); }
 
 .cr-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;

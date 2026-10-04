@@ -27,6 +27,7 @@
 
 import {
   check,
+  distinctChallengeStart,
   failed,
   fixtureSeason,
   freshDatabase,
@@ -82,8 +83,10 @@ let rookReign = "";
   const r = await challenge("Rook");
   check("a vacant Crown can be claimed", r.status === 200 && r.body.seeding === true && r.body.crown?.claim === true, JSON.stringify(r.body).slice(0, 300));
   check("the claim is a one-sided match on three scenarios", r.body.opponent === null && r.body.scenarios.length === 3);
-  const a = await challenge("Ash");
+  const a = await call("Ash", "challenge-crown", { category: PT, window: 1, tzOffsetMinutes: -120 });
   check("a second claimant gets a match too", a.status === 200 && a.body.crown?.claim === true);
+  const clock = (await db.query<any>("select tz_offset_minutes from match_sides where match_id = $1 and player_id = $2", [a.body.matchId, P.Ash])).rows[0];
+  check("the claimant's UTC offset is pinned to the side crown_open_challenge wrote", clock?.tz_offset_minutes === -120, JSON.stringify(clock));
   const [ra, aa] = [await matchScenarios(db, r.body.matchId), await matchScenarios(db, a.body.matchId)];
   check("both claimants play the same three", JSON.stringify(ra) === JSON.stringify(aa) && JSON.stringify((await crownRow()).scenario_ids.map(Number)) === JSON.stringify(ra));
   check("Crown matches are unrated", (await db.query<any>("select bool_and(not rated) as all from matches where id = any($1::uuid[])", [[r.body.matchId, a.body.matchId]])).rows[0].all === true);
@@ -376,9 +379,9 @@ console.log("\n── the SQL decides what the reducer decides ─────")
         for (const [i, sid] of ids.entries()) {
           const name = season.pools.get(1)!.find((s) => s.id === sid)!.name;
           const row = (await db.query<any>(
-            `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, verification_tier, match_id)
-             values ($1, $2, $3, clock_timestamp(), $4, $5, $6) returning id`,
-            [c.challengerId, name, 100 * (1 + score), `diff-run-${++fileSerial}`, tiers[i], c.matchId])).rows[0];
+            `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, verification_tier, match_id, challenge_start)
+             values ($1, $2, $3, clock_timestamp(), $4, $5, $6, $7) returning id`,
+            [c.challengerId, name, 100 * (1 + score), `diff-run-${++fileSerial}`, tiers[i], c.matchId, distinctChallengeStart(100_000 + fileSerial)])).rows[0];
           runIds.push(row.id);
         }
         const holderScore = ts.reign?.matchScore ?? 0;

@@ -414,6 +414,17 @@ export async function fixtureSeason(db: PGlite): Promise<Season> {
 
 let fileSerial = 0;
 
+/**
+ * A `Challenge Start:` time of day no other run here shares. KovaaK's writes one into every
+ * file, and the time-integrity trigger (migration 26) reads it as part of a ranked run's
+ * identity, so two different test runs with the same score must not both leave it empty.
+ */
+export function distinctChallengeStart(n: number): string {
+  const ms = n * 1001;
+  const two = (v: number) => String(v).padStart(2, "0");
+  return `${two(Math.floor(ms / 3_600_000) % 24)}:${two(Math.floor(ms / 60_000) % 60)}:${two(Math.floor(ms / 1000) % 60)}.${String(ms % 1000).padStart(3, "0")}`;
+}
+
 /** Five earlier runs at `score` on every scenario of a season, so every baseline is `score`. */
 export async function history(db: PGlite, playerId: string, season: Season, score = 100): Promise<void> {
   for (const pool of season.pools.values()) {
@@ -449,9 +460,9 @@ export async function land(
 ): Promise<void> {
   const name = (await db.query<{ name: string }>("select name from scenarios where id = $1", [scenarioId])).rows[0].name;
   await db.query(
-    `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, verification_tier, match_id, duration_seconds)
-     values ($1, $2, $3, clock_timestamp(), $4, $5, $6, $7)`,
-    [playerId, name, score, `match-run-${++fileSerial}`, tier, matchId, durationSeconds],
+    `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, verification_tier, match_id, duration_seconds, challenge_start)
+     values ($1, $2, $3, clock_timestamp(), $4, $5, $6, $7, $8)`,
+    [playerId, name, score, `match-run-${++fileSerial}`, tier, matchId, durationSeconds, distinctChallengeStart(fileSerial)],
   );
 }
 

@@ -30,7 +30,7 @@
 
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { join, relative } from "node:path";
 import { runInNewContext } from "node:vm";
@@ -46,7 +46,9 @@ import {
   shadowCardInput,
   type CardContext,
   type MechanicCardInput,
+  type ShadowRecord,
 } from "../../src/core/brand/shareInput.ts";
+import { ordinalSuffix, shadowLabel } from "../../src/core/match/shadow.ts";
 import { iconFile, mechanicJobs, rendererScript, RENDERER_ICONS, RENDERER_SCRIPT } from "./buildMechanics.ts";
 import { marketingJobs, TAGLINES } from "./buildMarketing.ts";
 import { motionJobs, VIDEO_MECHANICS, videoScenes } from "./buildMotion.ts";
@@ -122,14 +124,33 @@ check("adapters refuse what they should", () => {
   refused(dailyCardInput({ number: 3, band: "Novice", marks: ["near", "near", "near", "near", "near", "near", "near"], meanDelta: 0, streak: 1 }, ctx));
   refused(dailyCardInput({ number: 3, band: "Novice", marks: ["above", "Glide" as never], meanDelta: 0, streak: 1 }, ctx));
   refused(crownCardInput({ event: "defended", category: "Any", band: "Lunar", rival: null, defences: 1, yourMatchScore: 0.1, theirMatchScore: 0, rounds: [round], at: Date.now() }, ctx));
-  refused(crownCardInput({ event: "taken", category: "Any", band: "Lunar", rival: null, defences: 0, yourMatchScore: 0.1, theirMatchScore: 0, rounds: [], at: Date.now() }, ctx));
+  refused(crownCardInput({ event: "taken", category: "Any", band: "Lunar", rival: null, defences: 0, yourMatchScore: 0.1, theirMatchScore: null, rounds: [], at: Date.now() }, ctx));
+  refused(flagCardInput({ verdict: "win", challenger: { displayName: "x" }, plantedAt: "2026-10-01", answeredAt: "2026-10-02", yourMatchScore: null, theirMatchScore: 0.01, rounds: [] }, ctx));
+  // Two match scores and no rounds is what a notice and the queue board send: drawn, not refused.
+  const scoresOnly = flagCardInput({ verdict: "win", challenger: { displayName: "x" }, plantedAt: "2026-10-01", answeredAt: "2026-10-02", yourMatchScore: 0.02, theirMatchScore: 0.01, rounds: [] }, ctx);
+  assert.ok(!("refused" in scoresOnly) && scoresOnly.rounds.length === 0 && scoresOnly.matchScore?.you === 0.02, "a flag with two match scores and no rounds is drawn");
   refused(flagCardInput({ verdict: "void", challenger: { displayName: "x" }, plantedAt: "2026-10-01", answeredAt: "2026-10-02", yourMatchScore: 0, theirMatchScore: 0, rounds: [round] }, ctx));
   refused(flagCardInput({ verdict: "win", challenger: { displayName: "x" }, plantedAt: "never", answeredAt: "2026-10-02", yourMatchScore: 0, theirMatchScore: 0, rounds: [round] }, ctx));
-  refused(shadowCardInput({ series: [{ verdict: "void" }], of: 5, placed: null, at: Date.now() }, ctx));
-  refused(shadowCardInput({ series: [{ verdict: "win" }], of: 11, placed: null, at: Date.now() }, ctx));
-  // A tier before the series is over would be a placement the server has not made.
-  const early = shadowCardInput({ series: [{ verdict: "win" }], of: 5, placed: { id: "tier-4", name: "Lunar", color: "#29008a" }, at: Date.now() }, ctx);
-  assert.ok(!("refused" in early) && early.placed === null, "an unfinished placement shows no tier");
+  refused(shadowCardInput({ series: [{ verdict: "void", percentile: 50 }], at: Date.now() }, ctx));
+  refused(shadowCardInput({ series: [{ verdict: "win", percentile: 0 }], at: Date.now() }, ctx));
+  refused(shadowCardInput({ series: [{ verdict: "win", percentile: 51 }, { verdict: "forfeit", percentile: 65 }], at: Date.now() }, ctx));
+  refused(shadowCardInput({ series: [{ verdict: "placed" as never, percentile: 51 }], at: Date.now() }, ctx));
+  // The placement is the queue board's read-out or nothing. Under three results the app
+  // says "Placement shows after 3"; a read-out sent early is not printed; a record whose
+  // board was never read says nothing either way. A Shadow card carries no rating field.
+  const shadow = (placement: ShadowRecord["placement"], n = 1) =>
+    shadowCardInput({ series: Array.from({ length: n }, (_, i) => ({ verdict: "win" as const, percentile: 50 + i })), placement, at: Date.now() }, ctx);
+  const early = shadow({ estimate: 61, decided: 2 }, 2);
+  assert.ok(!("refused" in early) && early.placement === null, "a read-out from fewer than three results is not printed");
+  const pending = shadow(null, 2);
+  assert.ok(!("refused" in pending) && pending.placement?.kind === "pending" && pending.placement.decided === 2 && pending.placement.needed === 3, "under three results the card counts to the read-out");
+  const unknown = shadow(undefined, 4);
+  assert.ok(!("refused" in unknown) && unknown.placement === null, "a board not read since the match prints no placement");
+  const read = shadow({ estimate: 57.4, decided: 6 }, 6);
+  assert.ok(!("refused" in read) && read.placement?.kind === "read" && read.placement.estimate === 57, "the read-out prints as the board sends it");
+  assert.ok(!("refused" in read) && !Object.keys(read.player).some((k) => /rating|percentile/.test(k)) && !("placed" in read), "no rating, tier or placed field on a Shadow card");
+  const many = shadow(null, 11);
+  assert.ok(!("refused" in many) && many.series.length === 8 && many.series[7].percentile === 60 && many.placement === null, "eleven results trim to the last eight, and 'not yet' with eight in hand is not repeated");
   // Names that arrive with control characters or at any length are cleaned and capped.
   const crown = crownCardInput({ event: "taken", category: "Speed\u0007 Switching", band: "x".repeat(80), rival: { displayName: "a\nb" }, defences: -3, yourMatchScore: null, theirMatchScore: null, rounds: [round], at: Date.now() }, ctx);
   assert.ok(!("refused" in crown) && crown.category === "Speed Switching" && crown.band.length === 32 && crown.rival?.name === "ab" && crown.defences === 0);
@@ -180,10 +201,31 @@ function expected(input: MechanicCardInput, texts: string[]): string[] {
     const labels = texts.filter((t) => /^(Above|Near|Below|First run|Not played)$/i.test(t)).length;
     if (labels !== input.marks.length) missing.push(`${input.marks.length} marks (found ${labels})`);
   } else if (input.kind === "shadow") {
-    for (const m of input.series) if (m.shadowRating != null) want(`Shadow ${m.shadowRating}`);
+    // What the queue shows (queue-board.js, core/match/shadow.ts), and nothing it does not.
+    const last = input.series[input.series.length - 1];
+    // Captions are set in capitals, so these read without regard to case.
+    const wantI = (w: string) => { if (!texts.some((t) => t.toLowerCase().includes(w.toLowerCase()))) missing.push(w); };
+    want(last.verdict === "win" ? "Shadow beaten" : last.verdict === "loss" ? "Shadow wins" : "Level");
+    want(shadowLabel(last.percentile));
+    if (texts.filter((t) => /synthetic, unrated/i.test(t)).length < 1) missing.push('"synthetic, unrated" in the kicker');
+    const tiles = texts.filter((t) => /^(WON|LOST|LEVEL|FORFEIT)$/.test(t)).length;
+    if (tiles !== input.series.length) missing.push(`${input.series.length} result tiles (found ${tiles})`);
+    for (const m of input.series) if (!has(ordinalSuffix(m.percentile))) missing.push(`the ${ordinalSuffix(m.percentile)}-percentile tile`);
+    if (input.placement?.kind === "read") {
+      want(`About the ${ordinalSuffix(input.placement.estimate)} percentile`);
+      wantI(`Placement from ${input.placement.decided} Shadow`);
+    } else if (input.placement?.kind === "pending") wantI(`Placement shows after ${input.placement.needed}`);
+    else if (texts.some((t) => /Placement/i.test(t))) missing.push("no placement line when the board was not read");
+    if (input.placement?.kind === "pending" && texts.filter((t) => /^TO PLAY$/.test(t)).length !== input.placement.needed - input.series.length) missing.push("a To play tile per result the read-out still needs");
     const tierWords = ["Stargazer", "Astrologist", "Cosmonaut", "Lunar", "Odyssey", "Arecibo", "Quasar", "Supernova"];
-    if (input.placed) want(input.placed.name);
-    else if (texts.some((t) => tierWords.includes(t))) missing.push("no tier before the placement is complete");
+    if (texts.some((t) => tierWords.some((w) => t.includes(w)))) missing.push("no tier: the app shows none for Shadows");
+    if (texts.some((t) => /\brating\b/i.test(t) && !/no rating/i.test(t))) missing.push("no rating figure: Shadows move none");
+  } else if (!input.rounds.length) {
+    // Two panels: both match scores, both names, and no round rows.
+    if (input.matchScore?.you != null) want(fmtDelta(input.matchScore.you));
+    if (input.matchScore?.them != null) want(fmtDelta(input.matchScore.them));
+    if (texts.filter((t) => t === "MATCH SCORE").length !== 2) missing.push("two match score panels");
+    if (texts.some((t) => /^(WON|LOST|DRAW|EXCLUDED)$/.test(t))) missing.push("no round outcome without rounds");
   } else {
     for (const r of input.rounds.slice(0, 3)) {
       want(r.scenario.slice(0, 8));
@@ -264,9 +306,21 @@ if (!failures.length) {
   writeFileSync(file, JSON.stringify(smoke));
   const electron = createRequire(import.meta.url)("electron") as unknown as string;
   const sandbox = process.platform === "linux" && process.getuid?.() === 0 ? ["--no-sandbox"] : [];
+  const resultFile = file.replace(/\.json$/, "") + ".result.json";
+  rmSync(resultFile, { force: true });
   const r = spawnSync(electron, [...sandbox, join(root, "tools", "brand", "cardSmoke.cjs"), file], { stdio: "inherit" });
-  if (r.status !== 0) failures.push("card.html could not draw a mechanic scene (see FAIL lines above)");
-  else pass(`card.html draws all ${scenes.length} mechanic scenes with their glyph, 16:9 and 9:16, titles at full size`);
+  // Both the exit status and the result file the child writes last: a child that crashed,
+  // was killed, or exited 0 with failures must not read as a pass.
+  let result: { drawn: number; failures: string[] } | null = null;
+  try {
+    result = JSON.parse(readFileSync(resultFile, "utf8"));
+  } catch {
+    result = null;
+  }
+  if (r.error || r.status !== 0 || !result || result.failures.length > 0 || result.drawn !== smoke.length) {
+    const why = r.error ? r.error.message : !result ? `no result file (exit ${r.status ?? r.signal})` : result.failures.length ? `${result.failures.length} failure(s)` : `exit ${r.status ?? r.signal}`;
+    failures.push(`card.html could not draw every mechanic scene: ${why} (see FAIL lines above)`);
+  } else pass(`card.html draws all ${scenes.length} mechanic scenes with their glyph, 16:9 and 9:16, titles at full size`);
 }
 
 if (passed) pass(`${passed} source and adapter checks: one-colour glyphs, generated copies current, renderer script, refusals, cleaning, spoiler-free dailies`);

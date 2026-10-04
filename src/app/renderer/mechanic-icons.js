@@ -7,6 +7,8 @@
  *   mechanicIcon("crown", { className: "nav-icon" })  sized by the rail's own CSS
  *   mechanicEmblem("crown")                       80-unit emblem for an empty state, currentColor
  *   APOGEE_MECHANICS.names.crown, .lines.crown    the name and the one line, as the brand kit has them
+ *   <svg data-mechanic-icon="daily" class="nav-icon"></svg>   static markup (the rail's tabs),
+ *                                                  filled in once the document is parsed
  *
  * Ids: shadow, flag, daily, link (challenge link), crown, draft, race (live race).
  */
@@ -33,7 +35,7 @@
 };
   var NAMES = {"shadow":"Shadow","flag":"Flag","daily":"Daily","link":"Challenge link","crown":"Crown","draft":"Draft","race":"Live race"};
   var LINES = {
-  "shadow": "A calibrated opponent at your rating, when nobody else is online.",
+  "shadow": "A typical player's day to beat when nobody is in your band. Unrated.",
   "flag": "Your set stays planted as an open challenge, and settles when someone answers.",
   "daily": "One draw a day, the same for everyone.",
   "link": "A link that opens a duel or a ghost race against you.",
@@ -56,4 +58,16 @@
   window.APOGEE_MECHANICS = Object.freeze({ ids: Object.keys(BODIES), names: NAMES, lines: LINES, icon: mechanicIcon, emblem: mechanicEmblem });
   window.mechanicIcon = mechanicIcon;
   window.mechanicEmblem = mechanicEmblem;
+  // index.html names an icon rather than drawing a copy of it; this draws it, keeping the
+  // placeholder's class, so the glyph has one home in static markup too.
+  function fill() {
+    var els = document.querySelectorAll("[data-mechanic-icon]");
+    for (var i = 0; i < els.length; i++) {
+      var id = els[i].getAttribute("data-mechanic-icon");
+      if (BODIES[id]) els[i].outerHTML = mechanicIcon(id, { className: els[i].getAttribute("class") || "" });
+    }
+  }
+  if (typeof document === "undefined") return;
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fill);
+  else fill();
 })();

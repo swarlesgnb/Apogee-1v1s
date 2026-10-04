@@ -67,6 +67,7 @@ import {
   type GhostMatch,
 } from "../../../src/core/ghost/ghost.ts";
 import { fromLocalFrame, isTimeZone, toLocalFrame, wallClockToInstant } from "../../../src/core/ghost/zone.ts";
+import { futureMessage, isFutureDated, wallClock } from "../../../src/core/verify/timeIntegrity.ts";
 import { freezeDay, laterAttempts, lowerTier, planRunWrite, sittingProblem, type StoredRunRow } from "../../../src/core/ghost/serverRules.ts";
 
 interface Body {
@@ -152,6 +153,12 @@ Deno.serve(handler(async (req, admin) => {
     const durationSeconds = runDurationSeconds(run.challengeStart, run.playedAt);
     const corrected = wallClockToInstant(upload.filename, zone);
     if (!corrected) throw new HttpError(400, `${upload.filename} has no timestamp in its name`);
+    // The same rule submit-run applies: no corrected end later than the server's clock
+    // allows. The offset is stored so the run's wall clock is known (20261003000026).
+    if (isFutureDated(corrected.getTime(), Date.now())) {
+      throw new HttpError(422, futureMessage(corrected.getTime(), Date.now()));
+    }
+    const appliedOffset = Math.round((corrected.getTime() - wallClock(upload.filename)!.ms) / 60_000);
     run.playedAt = corrected;
 
     const scenario = await scenarioByName(admin, run.scenario);
@@ -209,6 +216,7 @@ Deno.serve(handler(async (req, admin) => {
         hit_count: run.hitCount,
         miss_count: run.missCount,
         played_at: run.playedAt.toISOString(),
+        tz_offset_minutes: appliedOffset,
         challenge_start: run.challengeStart,
         duration_seconds: durationSeconds,
         hash: run.hash,

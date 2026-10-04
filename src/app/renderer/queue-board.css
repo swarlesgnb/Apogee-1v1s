@@ -4,7 +4,9 @@
    moved a rating: an answered Flag. */
 :root { --qb-shadow: #b9b4e8; --qb-shadow-soft: #b9b4e81f; --qb-shadow-line: #b9b4e852; --qb-flag: var(--brand, #ff9468); }
 
-.qb-mark { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+/* The glyphs are the brand kit's (mechanic-icons.js): stroked in currentColor, with the
+   eclipse's shadowed crescent filled by the icon itself, so only size is set here. */
+.qb-mark { width: 1em; height: 1em; flex-shrink: 0; }
 .qb-glyph { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; }
 .qb-glyph .qb-mark { width: 18px; height: 18px; }
 .qb-glyph.shadow { color: var(--qb-shadow); background: var(--qb-shadow-soft); border: 1px dashed var(--qb-shadow-line); }
@@ -49,6 +51,10 @@
 .qb-chip.open { color: var(--qb-flag); border-color: color-mix(in srgb, var(--qb-flag) 40%, transparent); }
 .qb-chip.up { color: var(--up); border-color: color-mix(in srgb, var(--up) 40%, transparent); }
 .qb-chip.down { color: var(--down); border-color: color-mix(in srgb, var(--down) 40%, transparent); }
+.qb-share-btn { font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); background: transparent; border: 1px solid var(--rule-2, var(--rule)); border-radius: 6px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.qb-share-btn:hover { border-color: var(--qb-flag); }
+.qb-share-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.qb-share:not(:empty) { margin-top: 12px; }
 .qb-foot { margin: 12px 0 0; color: var(--ink-dim); font-size: 12px; line-height: 1.5; max-width: 80ch; }
 
 /* ---- the result ---- */

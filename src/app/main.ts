@@ -24,6 +24,7 @@ import { ArenaService } from "./arena.ts";
 import { ShareCards } from "./shareCard.ts";
 import { installSocial } from "./social.ts";
 import { installQueueBoard } from "./queueBoard.ts";
+import { MechanicShares } from "./shareRecords.ts";
 import {
   installCrashHandlers,
   attachRendererLogging,
@@ -251,7 +252,10 @@ const shareCards = new ShareCards({
   ghost: () => ghost.shareRecord(),
   dailyRecord: () => social.daily.shareRecord(),
   window: () => window,
+  onRecords: (keys) => broadcast("apogee:shareRecords", keys),
 });
+/** The Shadow, Flag and Crown cards' records, from the server answers below (shareRecords.ts). */
+const mechanicShares = new MechanicShares(shareCards);
 
 /**
  * Apogee Daily, challenge links, open challenges and Discord presence (social.ts). Local
@@ -304,6 +308,7 @@ const arena = new ArenaService({
   broadcast: (channel, payload) => broadcast(channel, payload),
   focused: () => !!window && !window.isDestroyed() && window.isFocused(),
   nudge: () => nudge(),
+  onCrowns: (board) => mechanicShares.crowns(board),
 });
 arena.registerIpc(ipcMain);
 arena.start();
@@ -755,6 +760,8 @@ async function settleActiveMatch(attempt = 0): Promise<string | null> {
       duelCode: match.duel?.open ? match.duel.code ?? null : null,
       openChallenge: !!match.duel?.open && settled.seeding !== true,
     });
+    // A Shadow result or a Crown taken: their cards' records, beside the match card's.
+    mechanicShares.settled(settled, match.difficulty);
     // `sentDuel` rides along because a duel you sent settles exactly like a seeding match
     // (one side, nobody yet) and the payload cannot tell them apart. Ghost Mode's
     // "nobody in the pool yet" offer is wrong about somebody you just named.
@@ -887,9 +894,13 @@ function createWindow(): void {
       preload: join(here, "preload.cjs"),
       // The renderer is a view. It gets no Node, no remote module, and a locked-down
       // context; everything it needs arrives through the preload bridge.
+      //
+      // Sandboxed, preload included. preload.cjs requires only `electron`'s contextBridge
+      // and ipcRenderer, which a sandboxed preload has; the smoke probe below runs it with
+      // these same preferences and checks the bridge (docs/fleet/security.md).
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: false,
+      sandbox: true,
     },
   });
 
@@ -1022,7 +1033,9 @@ function runSmokeTest(): void {
   // surfaces here rather than the first time a human opens the app.
   const probe = new BrowserWindow({
     show: false,
-    webPreferences: { preload: join(here, "preload.cjs"), contextIsolation: true },
+    // The main window's preferences exactly, so a preload that breaks under the sandbox
+    // fails here.
+    webPreferences: { preload: join(here, "preload.cjs"), contextIsolation: true, nodeIntegration: false, sandbox: true },
   });
 
   probe.webContents.on("did-fail-load", (_e, code, desc) => {
@@ -2401,6 +2414,10 @@ ipcMain.handle("apogee:shareCard", async (_e, request: unknown) => {
   }
 });
 
+// Which Shadow, Flag and Crown result main holds a card for, so a screen offers Share beside
+// that result only. Pushed as apogee:shareRecords whenever one changes.
+ipcMain.handle("apogee:shareRecords", () => shareCards.recordKeys());
+
 // ---------------------------------------------------------------------------
 // Steam sign-in
 //
@@ -2635,7 +2652,7 @@ async function refreshDuels(reason: string, force = false): Promise<void> {
 }
 
 /** Shadows and Flags: what queueing would do, your Flags, and their news (queueBoard.ts). */
-const queueBoard = installQueueBoard({ signedIn: () => Boolean(state.session), broadcast });
+const queueBoard = installQueueBoard({ signedIn: () => Boolean(state.session), broadcast, onBoard: (board) => mechanicShares.queueBoard(board) });
 
 ipcMain.handle("apogee:duels", async () => {
   if (!state.session) return { error: "Sign in with Steam to play ranked." };

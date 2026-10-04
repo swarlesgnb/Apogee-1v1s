@@ -135,7 +135,7 @@
     const recent = (races?.recent || []).map((r) => `<li><span class="${r.verdict === 'win' ? 'rc-win' : r.verdict === 'loss' ? 'rc-loss' : ''}">${
       r.verdict === 'win' ? 'Won' : r.verdict === 'loss' ? 'Lost' : r.verdict === 'draw' ? 'Drew' : 'Void'}</span> against ${e(r.opponent.name)} · ${e(r.category)}${r.byForfeit ? ' · did not finish' : ''}</li>`).join('');
     root.innerHTML = `<section class="panel rc-panel" aria-labelledby="rcTitle">
-      <div class="phead"><h2 id="rcTitle">Race now</h2><span class="note">unrated</span></div>
+      <div class="phead"><h2 id="rcTitle">${typeof window.mechanicIcon === 'function' ? window.mechanicIcon('race', { className: 'rc-mark' }) : ''}Race now</h2><span class="note">unrated</span></div>
       <div class="pbody">
         <div class="rc-col">
           <p class="rc-lede">You and a friend play the same three scenarios at the same time. Each of their rounds opens on your screen when your run on that scenario lands, so playing second tells you nothing. Invitations wait three minutes.</p>

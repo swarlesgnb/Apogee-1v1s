@@ -8,7 +8,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { callFunction, type FoundMatch } from "./api.ts";
+import { callFunction, matchClockOffset, type FoundMatch } from "./api.ts";
 import type { DailyBoard } from "../core/social/daily.ts";
 
 async function upload(statsDir: string, filename: string) {
@@ -38,7 +38,7 @@ export function fetchDailyBoard(dailyNumber: number, window: number): Promise<{ 
 
 /** Post an open challenge: your own three first, then a code anybody can answer, unrated. */
 export function createOpenDuel(category: string, window: number): Promise<FoundMatch> {
-  return callFunction<FoundMatch>("open-duel", { action: "create", category, window });
+  return callFunction<FoundMatch>("open-duel", { action: "create", category, window, tzOffsetMinutes: matchClockOffset() });
 }
 
 /** What a code is for. Typed `unknown`: the caller checks it with isOpenDuelView. */
@@ -47,7 +47,7 @@ export function viewOpenDuel(code: string): Promise<unknown> {
 }
 
 export function acceptOpenDuel(code: string): Promise<FoundMatch> {
-  return callFunction<FoundMatch>("open-duel", { action: "accept", code });
+  return callFunction<FoundMatch>("open-duel", { action: "accept", code, tzOffsetMinutes: matchClockOffset() });
 }
 
 export function cancelOpenDuel(code: string): Promise<{ ok: boolean; status: string; matchVoided?: string }> {

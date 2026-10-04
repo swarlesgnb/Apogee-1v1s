@@ -21,7 +21,10 @@
     if (h > 0) return mm > 0 ? `${h}h ${mm}m` : `${h}h`;
     return `${mm}m`;
   };
-  const GLYPH = (held, cls = '') => `<svg class="cr-glyph ${held ? 'held' : ''} ${cls}" viewBox="0 0 24 24" aria-hidden="true"><path class="body" d="M4 17.5h16L21 7l-5 4.2L12 4.5 8 11.2 3 7Z"/><path d="M4 20.5h16"/></svg>`;
+  // The brand kit's crown (mechanic-icons.js, loaded in the head; it draws the tab's too)
+  // for the cards and the notices, and its emblem for the screen's own mark.
+  const hasIcons = typeof window.mechanicIcon === 'function';
+  const GLYPH = (held, cls = '') => (hasIcons ? window.mechanicIcon('crown', { className: `cr-glyph ${held ? 'held' : ''} ${cls}` }) : '');
 
   root.innerHTML = `
     <div class="screen-head cr-head">
@@ -30,15 +33,17 @@
         <h1>Crowns</h1>
         <p>One Crown for each category and band. Play its three scenarios; beat the holder's score against your own baselines and it is yours until somebody beats you. Nothing is rated.</p>
       </div>
-      <svg class="cr-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" aria-hidden="true"><path d="M4 17.5h16L21 7l-5 4.2L12 4.5 8 11.2 3 7Z"/><path d="M4 20.5h16"/></svg>
+      ${typeof window.mechanicEmblem === 'function' ? window.mechanicEmblem('crown', { className: 'cr-mark' }) : ''}
     </div>
     <div class="cr-notices" id="crNotices"></div>
+    <div class="cr-share" id="crShare"></div>
     <div data-arena-live></div>
     <div class="cr-status" id="crStatus" role="status" aria-live="polite"></div>
     <div id="crBoard"></div>
     <div id="raceRoot"></div>`;
 
   const els = {
+    share: root.querySelector('#crShare'),
     notices: root.querySelector('#crNotices'),
     status: root.querySelector('#crStatus'),
     board: root.querySelector('#crBoard'),
@@ -51,6 +56,14 @@
   let received = Date.now();
   const dismissed = new Set();
   let announced = false;
+  let announcedText = '';
+
+  // Sharing a defence: share.js's panel, under the notices, for the defence main holds a
+  // card for (its key is `crown:defended:<notice id>`, src/app/shareRecords.ts).
+  const share = window.apogeeShare || null;
+  const crownShare = share ? share.panel(['crown']) : null;
+  let shareOpen = null;
+  const shareable = (n) => !!share && n.kind === 'defended' && share.keys().crown === `crown:defended:${n.id}`;
 
   const now = () => (board ? Date.parse(board.now) + (Date.now() - received) : Date.now());
 
@@ -84,11 +97,28 @@
         <div><p>${e(n.text)}</p><small>${e(new Date(n.createdAt).toLocaleString())}</small></div>
         <div class="cr-notice-actions">
           ${back ? `<button type="button" class="cr-btn primary" data-cr="challenge" data-category="${e(crown.category)}" data-window="${crown.window}">${crown.action.kind === 'claim' ? 'Claim it back' : 'Challenge back'}</button>` : ''}
+          ${shareable(n) ? `<button type="button" class="cr-btn" data-cr="share" data-id="${e(n.id)}" aria-expanded="${shareOpen === n.id}">${shareOpen === n.id ? 'Hide card' : 'Share'}</button>` : ''}
           <button type="button" class="cr-btn quiet" data-cr="dismiss" data-id="${e(n.id)}">Dismiss</button>
         </div>
       </article>`;
     }).join('');
+    const open = list.find((n) => n.id === shareOpen && shareable(n));
+    if (crownShare && open) crownShare.show(els.share, `crown:defended:${open.id}`);
+    else { shareOpen = null; crownShare?.hide(); }
   }
+
+  /**
+   * The banner that says "You lost the ... Crown" is for a player on another screen. The
+   * Crowns screen shows the same notice as a row with Challenge back, so arriving here (or
+   * dismissing that row) takes the banner down rather than saying it twice.
+   */
+  function retireBanner() {
+    const banner = document.getElementById('banner');
+    if (announcedText && banner?.classList.contains('on') && banner.textContent.startsWith(announcedText)) banner.classList.remove('on');
+  }
+  new MutationObserver(() => { if (document.body.dataset.screen === 'crowns') retireBanner(); })
+    .observe(document.body, { attributes: true, attributeFilter: ['data-screen'] });
+  share?.onKeys(() => renderNotices());
 
   // ---- the board -------------------------------------------------------------------
 
@@ -221,8 +251,10 @@
     if (what === 'challenge') await challenge(t.dataset.category, Number(t.dataset.window));
     else if (what === 'toggle') { const key = t.closest('[data-key]')?.dataset.key; open = open === key ? null : key; renderBoard(); }
     else if (what === 'go-match') { if (typeof window.openScreen === 'function') window.openScreen('queue'); }
+    else if (what === 'share') { shareOpen = shareOpen === t.dataset.id ? null : t.dataset.id; renderNotices(); }
     else if (what === 'dismiss') {
       dismissed.add(t.dataset.id);
+      retireBanner();
       render();
       const r = await bridge.crowns?.([t.dataset.id]);
       if (r?.error) say(r.error, true);
@@ -244,7 +276,8 @@
     const fresh = (board.notices || []).find((n) => n.kind === 'dethroned' && !dismissed.has(n.id));
     if (fresh && !announced && document.body.dataset.screen !== 'crowns' && typeof window.showNotice === 'function') {
       announced = true;
-      window.showNotice(`${fresh.text} Open Crowns to challenge back.`);
+      announcedText = `${fresh.text} Open Crowns to challenge back.`;
+      window.showNotice(announcedText);
     }
   }
 

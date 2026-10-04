@@ -21,9 +21,12 @@ const match = async seed => (await db.query(`insert into matches(category,status
  values ('Clicking','awaiting_runs','Voltaic S5','Intermediate',$1,$2::bigint[]) returning id`, [seed, [scenario.id, scenario.id, scenario.id]])).rows[0].id;
 const firstMatch = await match('first'), secondMatch = await match('second');
 const instant = '2026-10-01T12:01:00Z';
+// A run's Challenge Start is the time of day it began, to the millisecond: one minute
+// before its end here. A replay carries the same one; a different run cannot.
+const startOf = at => new Date(new Date(at).getTime() - 60_000).toISOString().slice(11, 23);
 const insert = async (digest, at = instant, matchId = firstMatch, created = '2026-10-01T12:01:01Z') =>
   (await db.query(`insert into runs(player_id,scenario_name,score,played_at,challenge_start,csv_sha256,match_id,verification_tier,created_at)
-   values ($1,$2,10,$3,'12:00:00.000',$4,$5,'consistent',$6) returning *`, [player, scenario.name, at, digest, matchId, created])).rows[0];
+   values ($1,$2,10,$3,$7,$4,$5,'consistent',$6) returning *`, [player, scenario.name, at, digest, matchId, created, startOf(at)])).rows[0];
 
 // Positive reproduction on the schema before the fix: different byte hashes replay.
 await insert('original-bytes');

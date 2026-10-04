@@ -60,6 +60,11 @@ export interface ShareDeps {
    */
   dailyRecord?: () => DailyRecord | null;
   window: () => BrowserWindow | null;
+  /**
+   * Told whenever a mechanic record changes, with the key of each record held, so the
+   * renderer can offer Share beside the result main would draw (shareRecords.ts).
+   */
+  onRecords?: (keys: RecordKeys) => void;
   /** Where Save puts a card. Replaced by validate:share, which cannot click a dialog. */
   saveAs?: (defaultPath: string) => Promise<string | null>;
   copy?: (png: Buffer) => void;
@@ -115,6 +120,13 @@ export interface RenderedCard<T extends AnyCardInput = ShareCardInput> {
   fileName: string;
 }
 
+/** Which result each mechanic record is of; null when main holds none. */
+export interface RecordKeys {
+  crown: string | null;
+  flag: string | null;
+  shadow: string | null;
+}
+
 /** The mechanic cards' records, as the engineers who own each mechanic hand them over. */
 interface MechanicRecords {
   daily: DailyRecord | null;
@@ -126,6 +138,7 @@ interface MechanicRecords {
 export class ShareCards {
   private match: MatchRecord | null = null;
   private mechanics: MechanicRecords = { daily: null, crown: null, flag: null, shadow: null };
+  private keys: RecordKeys = { crown: null, flag: null, shadow: null };
   private kit: Kit | null = null;
   private busy: Promise<unknown> = Promise.resolve();
 
@@ -140,21 +153,35 @@ export class ShareCards {
    * The mechanic cards, the same way: main keeps the record the server answered with, the
    * renderer asks for "daily" (or "crown", "flag", "shadow") by name, and the card is drawn
    * from the record. Each call replaces the last record of its kind; null forgets it.
+   * `key` names the result a record is of (shareRecords.ts), for the renderer.
    */
   recordDaily(rec: DailyRecord | null): void {
     this.mechanics.daily = rec;
   }
 
-  recordCrown(rec: CrownRecord | null): void {
+  recordCrown(rec: CrownRecord | null, key: string | null = null): void {
     this.mechanics.crown = rec;
+    this.setKey("crown", rec ? key : null);
   }
 
-  recordFlag(rec: FlagRecord | null): void {
+  recordFlag(rec: FlagRecord | null, key: string | null = null): void {
     this.mechanics.flag = rec;
+    this.setKey("flag", rec ? key : null);
   }
 
-  recordShadow(rec: ShadowRecord | null): void {
+  recordShadow(rec: ShadowRecord | null, key: string | null = null): void {
     this.mechanics.shadow = rec;
+    this.setKey("shadow", rec ? key : null);
+  }
+
+  /** The key of each mechanic record held, for apogee:shareRecords. */
+  recordKeys(): RecordKeys {
+    return { ...this.keys };
+  }
+
+  private setKey(kind: keyof RecordKeys, key: string | null): void {
+    this.keys = { ...this.keys, [kind]: key };
+    this.deps.onRecords?.(this.recordKeys());
   }
 
   private loadKit(): Kit {

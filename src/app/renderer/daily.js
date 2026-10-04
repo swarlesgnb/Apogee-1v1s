@@ -26,7 +26,8 @@
   let clock = null;
   let refreshedAt = 0;
 
-  const MARK = '<svg class="dy-mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M3.5 9h17M8 3v3M16 3v3"/><path d="m8 16.5 2.2-3.5 2.1 2.2 3.7-5"/></svg>';
+  // The brand kit's Daily glyph (mechanic-icons.js, loaded in the head; it draws the tab's too).
+  const MARK = typeof window.mechanicIcon === 'function' ? window.mechanicIcon('daily', { className: 'dy-mark' }) : '';
 
   function remaining() {
     if (!screen) return 0;

@@ -51,6 +51,8 @@ export interface ArenaHooks {
   focused: () => boolean;
   /** Flash the taskbar when something arrives behind the game. */
   nudge: () => void;
+  /** Every Crowns board read, before the renderer hears of it (the share records). */
+  onCrowns?: (board: CrownBoard) => void;
 }
 
 const SIGNED_OUT = "Sign in with Steam to play for Crowns and race.";
@@ -111,6 +113,7 @@ export class ArenaService {
     this.lastCrowns = Date.now();
     const board = await fetchCrowns(seen);
     this.board = board;
+    this.hooks.onCrowns?.(board);
     this.hooks.broadcast("apogee:crowns", board);
     return board;
   }

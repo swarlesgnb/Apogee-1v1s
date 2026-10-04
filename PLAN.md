@@ -125,14 +125,23 @@ were decided by who avoided a blow-up rather than who played well.
 | plain mean | +0.6% | 60% | 9.3% |
 
 The real defence turned out to be the verified-PB floor, not the high-water
-statistic. Apogee knows the player's true PB from KovaaK's own servers (§5), so:
+statistic. KovaaK's own servers vouch for a player's scores (§5), so:
 
 ```
 baseline_i = max( median(last 50 runs), 0.90 × verified_PB_i )
 ```
 
 A player cannot claim a baseline meaningfully below their demonstrated ability, because
-KovaaK's itself vouches for what they can do. With that floor in place a median is
+KovaaK's itself vouches for what they can do.
+
+As built, `verified_PB_i` is the best score among the player's runs that Apogee graded
+**Verified** (a KovaaK's record matched the run), kept in `verified_pbs` by a trigger on
+`runs`. It is not read from KovaaK's leaderboard, so it is never higher than the PB this
+section first assumed, and it is empty for a player with no linked kovaaks.com account,
+whose baseline is the median alone. Settlement freezes it with the median: a match uses
+the best verified run from before the match began, so a personal best set inside a
+match cannot raise that match's own baseline. Until 2026-10-03 nothing wrote
+`verified_pbs` and the floor never engaged (docs/fleet/security.md, SEC-04). With that floor in place a median is
 centred *and* nearly as ungameable as the high-water statistic (3.5% vs 3.0%), while a
 plain mean is three times more gameable (9.3%).
 
@@ -393,9 +402,18 @@ pressure does real work here.
 | Tier | Condition | Rating effect |
 |---|---|---|
 | **Verified** | Matching record on KovaaK's servers: same `hash`, `challengeStart`, `steamId`, `epoch` in window | Full |
-| **Consistent** | No server record (sub-PB run), but CSV internally consistent, timed inside the match window, and `score ≤ verified_PB × 1.02` | Full, flagged |
+| **Consistent** | No matching server record (sub-PB run), but CSV internally consistent and timed inside the match window | Full, flagged |
 | **Suspect** | `score > verified_PB × 1.02` with no server record | Counted, held for review, **not** auto-voided |
-| **Rejected** | CSV internally inconsistent, replayed `csv_sha256`, or timing outside the match window | Match void, account flagged |
+| **Rejected** | CSV internally inconsistent, timing outside the match window, or a KovaaK's record of the same run (score, `hash`, `challengeStart`) timed outside the window | Excluded from settlement; an incomplete set of counted rounds voids the match. No account flag is written |
+
+As built (FAIR-PLAY.md is the player-facing statement): the live submission path passes
+the grading core only a record that matches the run, so the `verified_PB × 1.02` Suspect
+check does not run there. A replay is refused before a run is saved rather than graded
+Rejected; replay is decided by scenario, `challengeStart` and score, not by
+`csv_sha256` alone. A ranked run must also carry the UTC offset its match started with,
+end no later than the server's clock plus fifteen minutes, and arrive within fifteen
+minutes of the match deadline; see docs/fleet/security.md for why each exists and what
+it still cannot catch.
 
 ### Measured: local PBs legitimately exceed server PBs
 
@@ -434,7 +452,8 @@ Cheap, local, and they catch naive edits immediately:
 - Kill timestamps must be monotonic and fall within the scenario duration
 - `Hash:` must match the known-good hash for that scenario
 - Per-kill TTK distribution must be physically plausible (no sub-20ms human reactions)
-- File mtime and `Challenge Start:` must fall inside the match window
+- The run's end time (the filename's wall clock plus the player's UTC offset) must fall
+  inside the match window. File mtime is not read: it is not uploaded.
 
 ### Measured, then corrected
 
@@ -592,7 +611,9 @@ KovaaK's account is linked.
 
 Steam OpenID login binds an Apogee account to a `steamId`, which is what KovaaK's
 leaderboards key on. Without this the verification model does not work at all, so it is
-required at signup, not optional.
+required at signup, not optional. Each Steam assertion is accepted once: its nonce is
+stored, its signed return address must be the callback it arrived on, and it must belong
+to a sign-in that began at `/start` (docs/fleet/security.md, SEC-05).
 
 ### What this does not stop
 
@@ -601,6 +622,14 @@ genuine KovaaK's scores are invisible to this design, because KovaaK's itself
 accepts them. Mitigation is statistical anomaly detection on top-end accounts plus
 human review of the top ranks, the same answer every competitive game arrives at.
 This is acceptable for launch and should be stated publicly rather than oversold.
+
+The time a run was played is authenticated only by KovaaK's own timestamp. The stats
+filename carries a local wall clock, and the UTC offset that turns it into a moment is
+the player's to declare. Apogee holds that offset to one value per match, to the
+player's own recent uploads, to the server's clock and to the first upload of each run,
+which stops the cheap ways of moving a run in time. An unlinked player who never lets
+the client upload as they play and keeps one false time zone for weeks can still count
+a run played some hours before a match, as Consistent.
 
 ---
 

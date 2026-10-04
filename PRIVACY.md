@@ -11,13 +11,16 @@ code, the code is the bug.
 
 When you sign in. Steam tells Apogee your SteamID64, display name, avatar URL and
 country, and those are stored. Signing in is done through Steam itself; Apogee never
-sees your Steam password.
+sees your Steam password. The one-time code Steam attaches to each sign-in is kept for a
+day so that the same sign-in link cannot be used twice.
 
 When a run is uploaded. KovaaK's writes a CSV for every scenario you play. Apogee
 sends that file's contents, and stores what it parses out:
 
 - the scenario name, your score, accuracy, average time-to-kill, kills, hits and misses
 - when it was played, and how long it ran
+- your PC's UTC offset when it was played (for example UTC+2), because KovaaK's records
+  local time only; the server uses it to keep each match's runs on one clock
 - the game version, average FPS and resolution
 - your sensitivity settings: cm/360, DPI and FOV
 - a SHA-256 of the file, which is what stops the same run being submitted twice
@@ -85,8 +88,12 @@ the client:
 - Opponent information reaches your client only as the server chooses to release it:
   a display name and the scores of the match you are actually in.
 
-Clients have no write access at all to ratings, matches, match sides, baselines or
-verified personal bests. Those are computed server-side. This is the same rule that
+Your rating is readable only by you as well; the ladder, duel lists and match cards show
+other players' ratings because the server chooses to send them.
+
+Clients have no write access at all to ratings, matches, match sides, baselines,
+verified personal bests or their own player profile. Those are computed or written
+server-side. This is the same rule that
 makes the anti-cheat meaningful, and it has the side effect that no other player can
 alter anything of yours.
 

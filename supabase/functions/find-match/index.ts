@@ -27,6 +27,7 @@ import {
 } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { flagForRunSet, plannedFlag, prepareShadow, recordShadow, shadowForMatch, shadowView } from "../_shared/queue.ts";
+import { matchClock } from "../_shared/timeIntegrity.ts";
 
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
 import { ANY_CATEGORY, findOpponent, type StoredRunSet } from "../../../src/core/match/matchmaking.ts";
@@ -43,6 +44,8 @@ interface Body {
    * run set already banked under the old one.
    */
   window: number;
+  /** The PC's UTC offset now; every run in the match is held to it (_shared/timeIntegrity.ts). */
+  tzOffsetMinutes?: number;
 }
 
 /** Opponents faced this recently are deprioritised, so the ladder feels bigger. */
@@ -117,6 +120,9 @@ Deno.serve(handler(async (req, admin) => {
   // whatever their history says, because refusing there would strand them in a match
   // they cannot see or abandon. What the bar is and why is in requireEligible.
   await requireEligible(admin, caller.playerId);
+  // The match clock, checked against the player's own recent uploads before anything is
+  // created, and written onto their side below.
+  const clock = await matchClock(admin, caller.playerId, body);
 
   const { season, windowName, selectable } = await loadSeasonPool(admin, body.window);
 
@@ -327,6 +333,7 @@ Deno.serve(handler(async (req, admin) => {
         player_id: caller.playerId,
         rating_before: rating.rating,
         rd_before: rating.rd,
+        ...clock,
       },
     ]);
 
@@ -404,7 +411,7 @@ Deno.serve(handler(async (req, admin) => {
   // provisional NULL against their NOT NULL constraints. Every seeding match is a
   // one-row insert, which is why this passed until the first two players met.
   const { error: sidesError } = await admin.from("match_sides").insert([
-    { match_id: match.id, player_id: caller.playerId, rating_before: rating.rating, rd_before: rating.rd },
+    { match_id: match.id, player_id: caller.playerId, rating_before: rating.rating, rd_before: rating.rd, ...clock },
     {
       match_id: match.id,
       player_id: opponent.playerId,

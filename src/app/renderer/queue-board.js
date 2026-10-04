@@ -8,7 +8,8 @@
  *   the match    the "Your match" card for a Shadow match, or for an answer to a Flag
  *   the result   the "Last match" screen for a Shadow result, with the Flag it planted
  *   the news     a toast when a Flag was answered while the player was away, and the
- *                Flags panel that keeps the record after the toast has gone
+ *                Flags panel that keeps the record after the toast has gone; the newest
+ *                answered Flag can be shared from either, through share.js's panel
  *
  * The renderer calls window.apogeeQueueHooks.paintMatch / paintSettled after drawing its own
  * version of those screens, so this file only replaces what it owns. Anything synthetic is
@@ -23,10 +24,18 @@
   const nth = (n) => { const v = Math.round(n), t = v % 100; return `${v}${t >= 11 && t <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' })[v % 10] ?? 'th'}`; };
   const day = (iso) => { const d = new Date(iso); return Number.isFinite(d.getTime()) ? `${d.getDate()} ${MONTHS[d.getMonth()]}` : ''; };
 
-  // Placeholder marks until the brand kit's Shadow and Flag glyphs land: a figure drawn
-  // in outline (somebody who is not there) and a pennant on a pole.
-  const SHADOW = '<svg class="qb-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="3.6"/><path d="M4.5 20.5c.8-4.3 3.9-7 7.5-7s6.7 2.7 7.5 7"/></svg>';
-  const FLAG = '<svg class="qb-mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 21V3.5"/><path d="M6 4h11l-2.6 3.8L17 11.6H6"/></svg>';
+  // The brand kit's glyphs (mechanic-icons.js, loaded in the head): the eclipse for a
+  // Shadow, the planted pennant for a Flag.
+  const icon = (id) => (typeof window.mechanicIcon === 'function' ? window.mechanicIcon(id, { className: 'qb-mark' }) : '');
+  const SHADOW = icon('shadow');
+  const FLAG = icon('flag');
+
+  // Sharing an answered Flag: share.js's panel, shown under the Flags list for the Flag main
+  // holds a card for (its key is `flag:<id>`, src/app/shareRecords.ts).
+  const share = window.apogeeShare || null;
+  const flagShare = share ? share.panel(['flag']) : null;
+  let flagShareOpen = false;
+  const shareable = (f) => !!share && f?.status === 'answered' && share.keys().flag === `flag:${f.id}`;
 
   /** Read the renderer's own state without depending on it existing (the preview, tests). */
   const read = (name) => { try { return name === 'category' ? (selectedCategory || 'Any') : name === 'pool' ? current?.benchmark?.matchPool ?? null : name === 'match' ? activeMatch : null; } catch { return null; } };
@@ -142,6 +151,7 @@
       <span class="qb-glyph flag">${FLAG}</span>
       <span class="qb-flag-what"><b>${e(f.category)}</b><small>${e(f.band)} band · planted ${e(day(f.plantedAt))}</small></span>
       ${status}
+      ${shareable(f) ? `<button type="button" class="qb-share-btn" data-qb="share" aria-expanded="${flagShareOpen}">${flagShareOpen ? 'Hide card' : 'Share'}</button>` : ''}
     </li>`;
   }
 
@@ -159,9 +169,26 @@
       <div class="pbody">
         <p class="qb-ladder">${SHADOW}<span>${ladderLine(s)}</span></p>
         ${flags.length ? `<ul class="qb-flags">${flags.slice(0, 6).map(flagRow).join('')}</ul>` : ''}
+        <div class="qb-share"></div>
         <p class="qb-foot">A Flag is your run set from a Shadow match, offered to the next player in its band. The first one to answer it inside a week settles a rated match for both of you.</p>
       </div>`;
+    // The share panel lives outside this markup and is put back after each redraw.
+    const held = flags.slice(0, 6).find(shareable);
+    if (flagShare && flagShareOpen && held) flagShare.show(panel.querySelector('.qb-share'), `flag:${held.id}`);
+    else { flagShareOpen = false; flagShare?.hide(); }
   }
+
+  function openFlagShare() {
+    flagShareOpen = true;
+    drawPanel();
+    setTimeout(() => panel.querySelector('.qb-share')?.scrollIntoView({ block: 'center', behavior: 'smooth' }), 50);
+  }
+  panel.addEventListener('click', (ev) => {
+    if (!ev.target.closest('[data-qb="share"]')) return;
+    if (flagShareOpen) { flagShareOpen = false; drawPanel(); } else openFlagShare();
+  });
+  // A Flag's card can be recorded after the panel was drawn: offer Share once it is.
+  share?.onKeys(() => { drawPanel(); });
 
   async function announce() {
     const fresh = (board?.news ?? []).filter((id) => !announced.has(id));
@@ -175,6 +202,7 @@
     toast.innerHTML = `
       <span class="qb-glyph flag">${FLAG}</span>
       <div><strong>Your Flag was answered</strong><p>${e(first.line)}${flags.length > 1 ? ` And ${flags.length - 1} more.` : ''}</p></div>
+      ${shareable(first) ? '<button type="button" data-qb="share">Share</button>' : ''}
       <button type="button" data-qb="view">View</button>
       <button type="button" class="qb-x" data-qb="close" aria-label="Dismiss">×</button>`;
     clearTimeout(announce.timer);
@@ -186,9 +214,10 @@
     const b = ev.target.closest('[data-qb]');
     if (!b) return;
     toast.hidden = true;
-    if (b.dataset.qb === 'view') {
+    if (b.dataset.qb === 'view' || b.dataset.qb === 'share') {
       document.querySelector('.tab[data-screen="queue"]')?.click();
-      setTimeout(() => panel.scrollIntoView({ block: 'start', behavior: 'smooth' }), 50);
+      if (b.dataset.qb === 'share') openFlagShare();
+      else setTimeout(() => panel.scrollIntoView({ block: 'start', behavior: 'smooth' }), 50);
     }
   });
 
