@@ -1,0 +1,3356 @@
+{
+ "about": "Written by tools/video/arenaDemo.ts with the real Crowns and race view builders (players and deltas invented, scenarios Season 1's). Do not edit by hand; re-run the generator.",
+ "generatedAt": "2026-10-03T19:40:00.000Z",
+ "board": {
+  "season": "Season 1",
+  "bands": [
+   {
+    "index": 0,
+    "name": "Novice"
+   },
+   {
+    "index": 1,
+    "name": "Intermediate"
+   },
+   {
+    "index": 2,
+    "name": "Advanced"
+   },
+   {
+    "index": 3,
+    "name": "Expert"
+   }
+  ],
+  "categories": [
+   "Static Clicking",
+   "Dynamic Clicking",
+   "Precise Tracking",
+   "Reactive Tracking",
+   "Speed Switching",
+   "Evasive Switching"
+  ],
+  "crowns": [
+   {
+    "key": "Static Clicking|0",
+    "category": "Static Clicking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Static Clicking Crown (Novice)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Galaga Novice",
+     "Apogee Zenith Novice",
+     "Apogee Distant Novice"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000002",
+     "name": "Wren",
+     "you": false
+    },
+    "bar": 0.018,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-01T15:40:00.000Z",
+    "reignEndsAt": "2026-10-08T15:40:00.000Z",
+    "defences": 3,
+    "challenges": 4,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Static Clicking|1",
+    "category": "Static Clicking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Static Clicking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Galaga Intermediate",
+     "Apogee Zenith Intermediate",
+     "Apogee Distant Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000005",
+     "name": "Merlin",
+     "you": false
+    },
+    "bar": 0.041,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-09-28T17:40:00.000Z",
+    "reignEndsAt": "2026-10-05T17:40:00.000Z",
+    "defences": 6,
+    "challenges": 7,
+    "live": 1,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Static Clicking|2",
+    "category": "Static Clicking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Static Clicking Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Galaga Advanced",
+     "Apogee Zenith Advanced",
+     "Apogee Distant Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000007",
+     "name": "Siskin",
+     "you": false
+    },
+    "bar": 0.012,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-03T10:40:00.000Z",
+    "reignEndsAt": "2026-10-10T10:40:00.000Z",
+    "defences": 1,
+    "challenges": 2,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Static Clicking|3",
+    "category": "Static Clicking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Static Clicking Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee Galaga Expert",
+     "Apogee Zenith Expert",
+     "Apogee Distant Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|0",
+    "category": "Dynamic Clicking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Dynamic Clicking Crown (Novice)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|1",
+    "category": "Dynamic Clicking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Dynamic Clicking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Gravclick Intermediate",
+     "Apogee Pendulum Intermediate",
+     "Apogee Antigrav Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000003",
+     "name": "Halcyon",
+     "you": false
+    },
+    "bar": 0.027,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-09-30T19:40:00.000Z",
+    "reignEndsAt": "2026-10-07T19:40:00.000Z",
+    "defences": 2,
+    "challenges": 3,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|2",
+    "category": "Dynamic Clicking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Dynamic Clicking Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Gravclick Advanced",
+     "Apogee Pendulum Advanced",
+     "Apogee Antigrav Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000004",
+     "name": "Osprey",
+     "you": false
+    },
+    "bar": 0.006,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-02T23:40:00.000Z",
+    "reignEndsAt": "2026-10-09T23:40:00.000Z",
+    "defences": 0,
+    "challenges": 1,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|3",
+    "category": "Dynamic Clicking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Dynamic Clicking Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee Gravclick Expert",
+     "Apogee Pendulum Expert",
+     "Apogee Antigrav Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Precise Tracking|0",
+    "category": "Precise Tracking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Precise Tracking Crown (Novice)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Glide Novice",
+     "Apogee Blastoff Novice",
+     "Apogee Orbit Novice"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000006",
+     "name": "Plover",
+     "you": false
+    },
+    "bar": 0.009,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-09-26T23:40:00.000Z",
+    "reignEndsAt": "2026-10-03T23:40:00.000Z",
+    "defences": 4,
+    "challenges": 5,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Precise Tracking|1",
+    "category": "Precise Tracking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Precise Tracking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Glide Intermediate",
+     "Apogee Blastoff Intermediate",
+     "Apogee Orbit Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000001",
+     "name": "Kestrel",
+     "you": false
+    },
+    "bar": 0.034,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-01T13:40:00.000Z",
+    "reignEndsAt": "2026-10-08T13:40:00.000Z",
+    "defences": 3,
+    "challenges": 4,
+    "live": 0,
+    "history": [
+     {
+      "holder": "Wren",
+      "startedAt": "2026-09-27T19:40:00.000Z",
+      "endedAt": "2026-10-01T13:40:00.000Z",
+      "defences": 1,
+      "endReason": "dethroned",
+      "endedBy": "Kestrel",
+      "bar": 0.013
+     },
+     {
+      "holder": "Siskin",
+      "startedAt": "2026-09-19T19:40:00.000Z",
+      "endedAt": "2026-09-26T19:40:00.000Z",
+      "defences": 2,
+      "endReason": "lapsed",
+      "endedBy": null,
+      "bar": 0.02
+     }
+    ],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Precise Tracking|2",
+    "category": "Precise Tracking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Precise Tracking Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Glide Advanced",
+     "Apogee Blastoff Advanced",
+     "Apogee Orbit Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000008",
+     "name": "Tern",
+     "you": false
+    },
+    "bar": 0.022,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-02T17:40:00.000Z",
+    "reignEndsAt": "2026-10-09T17:40:00.000Z",
+    "defences": 1,
+    "challenges": 2,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Precise Tracking|3",
+    "category": "Precise Tracking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Precise Tracking Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee Glide Expert",
+     "Apogee Blastoff Expert",
+     "Apogee Orbit Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Reactive Tracking|0",
+    "category": "Reactive Tracking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Reactive Tracking Crown (Novice)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Reactive Tracking|1",
+    "category": "Reactive Tracking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Reactive Tracking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Pong Intermediate",
+     "Apogee Pong3D Intermediate",
+     "Apogee Stutter Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000005",
+     "name": "Merlin",
+     "you": false
+    },
+    "bar": 0.022,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-01T19:40:00.000Z",
+    "reignEndsAt": "2026-10-08T19:40:00.000Z",
+    "defences": 1,
+    "challenges": 2,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Reactive Tracking|2",
+    "category": "Reactive Tracking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Reactive Tracking Crown (Advanced)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Reactive Tracking|3",
+    "category": "Reactive Tracking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Reactive Tracking Crown (Expert)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Pong Expert",
+     "Apogee Pong3D Expert",
+     "Apogee Stutter Expert"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000007",
+     "name": "Siskin",
+     "you": false
+    },
+    "bar": 0.051,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-09-29T19:40:00.000Z",
+    "reignEndsAt": "2026-10-06T19:40:00.000Z",
+    "defences": 5,
+    "challenges": 6,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Speed Switching|0",
+    "category": "Speed Switching",
+    "window": 0,
+    "band": "Novice",
+    "name": "Speed Switching Crown (Novice)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Speed Switching|1",
+    "category": "Speed Switching",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Speed Switching Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee DNAts Intermediate",
+     "Apogee CockpiTS Intermediate",
+     "Apogee ZeniTS Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000008",
+     "name": "Tern",
+     "you": false
+    },
+    "bar": 0.015,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-03T08:40:00.000Z",
+    "reignEndsAt": "2026-10-10T08:40:00.000Z",
+    "defences": 0,
+    "challenges": 1,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Speed Switching|2",
+    "category": "Speed Switching",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Speed Switching Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee DNAts Advanced",
+     "Apogee CockpiTS Advanced",
+     "Apogee ZeniTS Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000002",
+     "name": "Wren",
+     "you": false
+    },
+    "bar": 0.031,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-09-30T13:40:00.000Z",
+    "reignEndsAt": "2026-10-07T13:40:00.000Z",
+    "defences": 2,
+    "challenges": 3,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Speed Switching|3",
+    "category": "Speed Switching",
+    "window": 3,
+    "band": "Expert",
+    "name": "Speed Switching Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee DNAts Expert",
+     "Apogee CockpiTS Expert",
+     "Apogee ZeniTS Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Evasive Switching|0",
+    "category": "Evasive Switching",
+    "window": 0,
+    "band": "Novice",
+    "name": "Evasive Switching Crown (Novice)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee FleeTS Novice",
+     "Apogee skeeTS Novice",
+     "Apogee comeTS Novice"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000003",
+     "name": "Halcyon",
+     "you": false
+    },
+    "bar": 0.004,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-03T14:40:00.000Z",
+    "reignEndsAt": "2026-10-10T14:40:00.000Z",
+    "defences": 0,
+    "challenges": 1,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Evasive Switching|1",
+    "category": "Evasive Switching",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Evasive Switching Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee FleeTS Intermediate",
+     "Apogee skeeTS Intermediate",
+     "Apogee comeTS Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000004",
+     "name": "Osprey",
+     "you": false
+    },
+    "bar": 0.024,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-01T11:40:00.000Z",
+    "reignEndsAt": "2026-10-08T11:40:00.000Z",
+    "defences": 3,
+    "challenges": 4,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Evasive Switching|2",
+    "category": "Evasive Switching",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Evasive Switching Crown (Advanced)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Evasive Switching|3",
+    "category": "Evasive Switching",
+    "window": 3,
+    "band": "Expert",
+    "name": "Evasive Switching Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee FleeTS Expert",
+     "Apogee skeeTS Expert",
+     "Apogee comeTS Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   }
+  ],
+  "notices": [],
+  "holding": 0,
+  "rules": {
+   "reignCapDays": 7,
+   "cooldownHours": 20,
+   "tiers": [
+    "verified",
+    "consistent"
+   ]
+  },
+  "now": "2026-10-03T19:40:00.000Z"
+ },
+ "boardPlaying": {
+  "season": "Season 1",
+  "bands": [
+   {
+    "index": 0,
+    "name": "Novice"
+   },
+   {
+    "index": 1,
+    "name": "Intermediate"
+   },
+   {
+    "index": 2,
+    "name": "Advanced"
+   },
+   {
+    "index": 3,
+    "name": "Expert"
+   }
+  ],
+  "categories": [
+   "Static Clicking",
+   "Dynamic Clicking",
+   "Precise Tracking",
+   "Reactive Tracking",
+   "Speed Switching",
+   "Evasive Switching"
+  ],
+  "crowns": [
+   {
+    "key": "Static Clicking|0",
+    "category": "Static Clicking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Static Clicking Crown (Novice)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Galaga Novice",
+     "Apogee Zenith Novice",
+     "Apogee Distant Novice"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000002",
+     "name": "Wren",
+     "you": false
+    },
+    "bar": 0.018,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-01T15:40:00.000Z",
+    "reignEndsAt": "2026-10-08T15:40:00.000Z",
+    "defences": 3,
+    "challenges": 4,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Static Clicking|1",
+    "category": "Static Clicking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Static Clicking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Galaga Intermediate",
+     "Apogee Zenith Intermediate",
+     "Apogee Distant Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000005",
+     "name": "Merlin",
+     "you": false
+    },
+    "bar": 0.041,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-09-28T17:40:00.000Z",
+    "reignEndsAt": "2026-10-05T17:40:00.000Z",
+    "defences": 6,
+    "challenges": 7,
+    "live": 1,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Static Clicking|2",
+    "category": "Static Clicking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Static Clicking Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Galaga Advanced",
+     "Apogee Zenith Advanced",
+     "Apogee Distant Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000007",
+     "name": "Siskin",
+     "you": false
+    },
+    "bar": 0.012,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-03T10:40:00.000Z",
+    "reignEndsAt": "2026-10-10T10:40:00.000Z",
+    "defences": 1,
+    "challenges": 2,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Static Clicking|3",
+    "category": "Static Clicking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Static Clicking Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee Galaga Expert",
+     "Apogee Zenith Expert",
+     "Apogee Distant Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|0",
+    "category": "Dynamic Clicking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Dynamic Clicking Crown (Novice)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|1",
+    "category": "Dynamic Clicking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Dynamic Clicking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Gravclick Intermediate",
+     "Apogee Pendulum Intermediate",
+     "Apogee Antigrav Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000003",
+     "name": "Halcyon",
+     "you": false
+    },
+    "bar": 0.027,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-09-30T19:40:00.000Z",
+    "reignEndsAt": "2026-10-07T19:40:00.000Z",
+    "defences": 2,
+    "challenges": 3,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|2",
+    "category": "Dynamic Clicking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Dynamic Clicking Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Gravclick Advanced",
+     "Apogee Pendulum Advanced",
+     "Apogee Antigrav Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000004",
+     "name": "Osprey",
+     "you": false
+    },
+    "bar": 0.006,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-02T23:40:00.000Z",
+    "reignEndsAt": "2026-10-09T23:40:00.000Z",
+    "defences": 0,
+    "challenges": 1,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|3",
+    "category": "Dynamic Clicking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Dynamic Clicking Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee Gravclick Expert",
+     "Apogee Pendulum Expert",
+     "Apogee Antigrav Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Precise Tracking|0",
+    "category": "Precise Tracking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Precise Tracking Crown (Novice)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Glide Novice",
+     "Apogee Blastoff Novice",
+     "Apogee Orbit Novice"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000006",
+     "name": "Plover",
+     "you": false
+    },
+    "bar": 0.009,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-09-26T23:40:00.000Z",
+    "reignEndsAt": "2026-10-03T23:40:00.000Z",
+    "defences": 4,
+    "challenges": 5,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Precise Tracking|1",
+    "category": "Precise Tracking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Precise Tracking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Glide Intermediate",
+     "Apogee Blastoff Intermediate",
+     "Apogee Orbit Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000001",
+     "name": "Kestrel",
+     "you": false
+    },
+    "bar": 0.034,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-01T13:40:00.000Z",
+    "reignEndsAt": "2026-10-08T13:40:00.000Z",
+    "defences": 3,
+    "challenges": 4,
+    "live": 0,
+    "history": [
+     {
+      "holder": "Wren",
+      "startedAt": "2026-09-27T19:40:00.000Z",
+      "endedAt": "2026-10-01T13:40:00.000Z",
+      "defences": 1,
+      "endReason": "dethroned",
+      "endedBy": "Kestrel",
+      "bar": 0.013
+     },
+     {
+      "holder": "Siskin",
+      "startedAt": "2026-09-19T19:40:00.000Z",
+      "endedAt": "2026-09-26T19:40:00.000Z",
+      "defences": 2,
+      "endReason": "lapsed",
+      "endedBy": null,
+      "bar": 0.02
+     }
+    ],
+    "action": {
+     "kind": "playing",
+     "label": "Your challenge is open",
+     "matchId": "m-crown"
+    }
+   },
+   {
+    "key": "Precise Tracking|2",
+    "category": "Precise Tracking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Precise Tracking Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Glide Advanced",
+     "Apogee Blastoff Advanced",
+     "Apogee Orbit Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000008",
+     "name": "Tern",
+     "you": false
+    },
+    "bar": 0.022,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-02T17:40:00.000Z",
+    "reignEndsAt": "2026-10-09T17:40:00.000Z",
+    "defences": 1,
+    "challenges": 2,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Precise Tracking|3",
+    "category": "Precise Tracking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Precise Tracking Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee Glide Expert",
+     "Apogee Blastoff Expert",
+     "Apogee Orbit Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Reactive Tracking|0",
+    "category": "Reactive Tracking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Reactive Tracking Crown (Novice)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Reactive Tracking|1",
+    "category": "Reactive Tracking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Reactive Tracking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Pong Intermediate",
+     "Apogee Pong3D Intermediate",
+     "Apogee Stutter Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000005",
+     "name": "Merlin",
+     "you": false
+    },
+    "bar": 0.022,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-01T19:40:00.000Z",
+    "reignEndsAt": "2026-10-08T19:40:00.000Z",
+    "defences": 1,
+    "challenges": 2,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Reactive Tracking|2",
+    "category": "Reactive Tracking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Reactive Tracking Crown (Advanced)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Reactive Tracking|3",
+    "category": "Reactive Tracking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Reactive Tracking Crown (Expert)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Pong Expert",
+     "Apogee Pong3D Expert",
+     "Apogee Stutter Expert"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000007",
+     "name": "Siskin",
+     "you": false
+    },
+    "bar": 0.051,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-09-29T19:40:00.000Z",
+    "reignEndsAt": "2026-10-06T19:40:00.000Z",
+    "defences": 5,
+    "challenges": 6,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Speed Switching|0",
+    "category": "Speed Switching",
+    "window": 0,
+    "band": "Novice",
+    "name": "Speed Switching Crown (Novice)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Speed Switching|1",
+    "category": "Speed Switching",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Speed Switching Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee DNAts Intermediate",
+     "Apogee CockpiTS Intermediate",
+     "Apogee ZeniTS Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000008",
+     "name": "Tern",
+     "you": false
+    },
+    "bar": 0.015,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-03T08:40:00.000Z",
+    "reignEndsAt": "2026-10-10T08:40:00.000Z",
+    "defences": 0,
+    "challenges": 1,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Speed Switching|2",
+    "category": "Speed Switching",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Speed Switching Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee DNAts Advanced",
+     "Apogee CockpiTS Advanced",
+     "Apogee ZeniTS Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000002",
+     "name": "Wren",
+     "you": false
+    },
+    "bar": 0.031,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-09-30T13:40:00.000Z",
+    "reignEndsAt": "2026-10-07T13:40:00.000Z",
+    "defences": 2,
+    "challenges": 3,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Speed Switching|3",
+    "category": "Speed Switching",
+    "window": 3,
+    "band": "Expert",
+    "name": "Speed Switching Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee DNAts Expert",
+     "Apogee CockpiTS Expert",
+     "Apogee ZeniTS Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Evasive Switching|0",
+    "category": "Evasive Switching",
+    "window": 0,
+    "band": "Novice",
+    "name": "Evasive Switching Crown (Novice)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee FleeTS Novice",
+     "Apogee skeeTS Novice",
+     "Apogee comeTS Novice"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000003",
+     "name": "Halcyon",
+     "you": false
+    },
+    "bar": 0.004,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-03T14:40:00.000Z",
+    "reignEndsAt": "2026-10-10T14:40:00.000Z",
+    "defences": 0,
+    "challenges": 1,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Evasive Switching|1",
+    "category": "Evasive Switching",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Evasive Switching Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee FleeTS Intermediate",
+     "Apogee skeeTS Intermediate",
+     "Apogee comeTS Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000004",
+     "name": "Osprey",
+     "you": false
+    },
+    "bar": 0.024,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-01T11:40:00.000Z",
+    "reignEndsAt": "2026-10-08T11:40:00.000Z",
+    "defences": 3,
+    "challenges": 4,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Evasive Switching|2",
+    "category": "Evasive Switching",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Evasive Switching Crown (Advanced)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   },
+   {
+    "key": "Evasive Switching|3",
+    "category": "Evasive Switching",
+    "window": 3,
+    "band": "Expert",
+    "name": "Evasive Switching Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee FleeTS Expert",
+     "Apogee skeeTS Expert",
+     "Apogee comeTS Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "busy",
+     "label": "Finish your current match first"
+    }
+   }
+  ],
+  "notices": [],
+  "holding": 0,
+  "rules": {
+   "reignCapDays": 7,
+   "cooldownHours": 20,
+   "tiers": [
+    "verified",
+    "consistent"
+   ]
+  },
+  "now": "2026-10-03T19:40:00.000Z"
+ },
+ "boardAfter": {
+  "season": "Season 1",
+  "bands": [
+   {
+    "index": 0,
+    "name": "Novice"
+   },
+   {
+    "index": 1,
+    "name": "Intermediate"
+   },
+   {
+    "index": 2,
+    "name": "Advanced"
+   },
+   {
+    "index": 3,
+    "name": "Expert"
+   }
+  ],
+  "categories": [
+   "Static Clicking",
+   "Dynamic Clicking",
+   "Precise Tracking",
+   "Reactive Tracking",
+   "Speed Switching",
+   "Evasive Switching"
+  ],
+  "crowns": [
+   {
+    "key": "Static Clicking|0",
+    "category": "Static Clicking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Static Clicking Crown (Novice)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Galaga Novice",
+     "Apogee Zenith Novice",
+     "Apogee Distant Novice"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000002",
+     "name": "Wren",
+     "you": false
+    },
+    "bar": 0.018,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-01T15:40:00.000Z",
+    "reignEndsAt": "2026-10-08T15:40:00.000Z",
+    "defences": 3,
+    "challenges": 4,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Static Clicking|1",
+    "category": "Static Clicking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Static Clicking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Galaga Intermediate",
+     "Apogee Zenith Intermediate",
+     "Apogee Distant Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000005",
+     "name": "Merlin",
+     "you": false
+    },
+    "bar": 0.041,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-09-28T17:40:00.000Z",
+    "reignEndsAt": "2026-10-05T17:40:00.000Z",
+    "defences": 6,
+    "challenges": 7,
+    "live": 1,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Static Clicking|2",
+    "category": "Static Clicking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Static Clicking Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Galaga Advanced",
+     "Apogee Zenith Advanced",
+     "Apogee Distant Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000007",
+     "name": "Siskin",
+     "you": false
+    },
+    "bar": 0.012,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-03T10:40:00.000Z",
+    "reignEndsAt": "2026-10-10T10:40:00.000Z",
+    "defences": 1,
+    "challenges": 2,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Static Clicking|3",
+    "category": "Static Clicking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Static Clicking Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee Galaga Expert",
+     "Apogee Zenith Expert",
+     "Apogee Distant Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|0",
+    "category": "Dynamic Clicking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Dynamic Clicking Crown (Novice)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|1",
+    "category": "Dynamic Clicking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Dynamic Clicking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Gravclick Intermediate",
+     "Apogee Pendulum Intermediate",
+     "Apogee Antigrav Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000003",
+     "name": "Halcyon",
+     "you": false
+    },
+    "bar": 0.027,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-09-30T19:40:00.000Z",
+    "reignEndsAt": "2026-10-07T19:40:00.000Z",
+    "defences": 2,
+    "challenges": 3,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|2",
+    "category": "Dynamic Clicking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Dynamic Clicking Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Gravclick Advanced",
+     "Apogee Pendulum Advanced",
+     "Apogee Antigrav Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000004",
+     "name": "Osprey",
+     "you": false
+    },
+    "bar": 0.006,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-02T23:40:00.000Z",
+    "reignEndsAt": "2026-10-09T23:40:00.000Z",
+    "defences": 0,
+    "challenges": 1,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Dynamic Clicking|3",
+    "category": "Dynamic Clicking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Dynamic Clicking Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee Gravclick Expert",
+     "Apogee Pendulum Expert",
+     "Apogee Antigrav Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Precise Tracking|0",
+    "category": "Precise Tracking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Precise Tracking Crown (Novice)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Glide Novice",
+     "Apogee Blastoff Novice",
+     "Apogee Orbit Novice"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000006",
+     "name": "Plover",
+     "you": false
+    },
+    "bar": 0.009,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-09-26T23:40:00.000Z",
+    "reignEndsAt": "2026-10-03T23:40:00.000Z",
+    "defences": 4,
+    "challenges": 5,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Precise Tracking|1",
+    "category": "Precise Tracking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Precise Tracking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Glide Intermediate",
+     "Apogee Blastoff Intermediate",
+     "Apogee Orbit Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000009",
+     "name": "Vega",
+     "you": true
+    },
+    "bar": 0.041,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-03T19:59:00.000Z",
+    "reignEndsAt": "2026-10-10T19:59:00.000Z",
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [
+     {
+      "holder": "Kestrel",
+      "startedAt": "2026-10-01T13:40:00.000Z",
+      "endedAt": "2026-10-03T19:59:00.000Z",
+      "defences": 3,
+      "endReason": "dethroned",
+      "endedBy": "Vega",
+      "bar": 0.033999999999999996
+     },
+     {
+      "holder": "Wren",
+      "startedAt": "2026-09-27T19:40:00.000Z",
+      "endedAt": "2026-10-01T13:40:00.000Z",
+      "defences": 1,
+      "endReason": "dethroned",
+      "endedBy": "Kestrel",
+      "bar": 0.013
+     },
+     {
+      "holder": "Siskin",
+      "startedAt": "2026-09-19T19:40:00.000Z",
+      "endedAt": "2026-09-26T19:40:00.000Z",
+      "defences": 2,
+      "endReason": "lapsed",
+      "endedBy": null,
+      "bar": 0.02
+     }
+    ],
+    "action": {
+     "kind": "yours",
+     "label": "You hold this Crown"
+    }
+   },
+   {
+    "key": "Precise Tracking|2",
+    "category": "Precise Tracking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Precise Tracking Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Glide Advanced",
+     "Apogee Blastoff Advanced",
+     "Apogee Orbit Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000008",
+     "name": "Tern",
+     "you": false
+    },
+    "bar": 0.022,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-02T17:40:00.000Z",
+    "reignEndsAt": "2026-10-09T17:40:00.000Z",
+    "defences": 1,
+    "challenges": 2,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Precise Tracking|3",
+    "category": "Precise Tracking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Precise Tracking Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee Glide Expert",
+     "Apogee Blastoff Expert",
+     "Apogee Orbit Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Reactive Tracking|0",
+    "category": "Reactive Tracking",
+    "window": 0,
+    "band": "Novice",
+    "name": "Reactive Tracking Crown (Novice)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Reactive Tracking|1",
+    "category": "Reactive Tracking",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Reactive Tracking Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Pong Intermediate",
+     "Apogee Pong3D Intermediate",
+     "Apogee Stutter Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000005",
+     "name": "Merlin",
+     "you": false
+    },
+    "bar": 0.022,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-01T19:40:00.000Z",
+    "reignEndsAt": "2026-10-08T19:40:00.000Z",
+    "defences": 1,
+    "challenges": 2,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Reactive Tracking|2",
+    "category": "Reactive Tracking",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Reactive Tracking Crown (Advanced)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Reactive Tracking|3",
+    "category": "Reactive Tracking",
+    "window": 3,
+    "band": "Expert",
+    "name": "Reactive Tracking Crown (Expert)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee Pong Expert",
+     "Apogee Pong3D Expert",
+     "Apogee Stutter Expert"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000007",
+     "name": "Siskin",
+     "you": false
+    },
+    "bar": 0.051,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-09-29T19:40:00.000Z",
+    "reignEndsAt": "2026-10-06T19:40:00.000Z",
+    "defences": 5,
+    "challenges": 6,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Speed Switching|0",
+    "category": "Speed Switching",
+    "window": 0,
+    "band": "Novice",
+    "name": "Speed Switching Crown (Novice)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Speed Switching|1",
+    "category": "Speed Switching",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Speed Switching Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee DNAts Intermediate",
+     "Apogee CockpiTS Intermediate",
+     "Apogee ZeniTS Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000008",
+     "name": "Tern",
+     "you": false
+    },
+    "bar": 0.015,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-03T08:40:00.000Z",
+    "reignEndsAt": "2026-10-10T08:40:00.000Z",
+    "defences": 0,
+    "challenges": 1,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Speed Switching|2",
+    "category": "Speed Switching",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Speed Switching Crown (Advanced)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee DNAts Advanced",
+     "Apogee CockpiTS Advanced",
+     "Apogee ZeniTS Advanced"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000002",
+     "name": "Wren",
+     "you": false
+    },
+    "bar": 0.031,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-09-30T13:40:00.000Z",
+    "reignEndsAt": "2026-10-07T13:40:00.000Z",
+    "defences": 2,
+    "challenges": 3,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Speed Switching|3",
+    "category": "Speed Switching",
+    "window": 3,
+    "band": "Expert",
+    "name": "Speed Switching Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee DNAts Expert",
+     "Apogee CockpiTS Expert",
+     "Apogee ZeniTS Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Evasive Switching|0",
+    "category": "Evasive Switching",
+    "window": 0,
+    "band": "Novice",
+    "name": "Evasive Switching Crown (Novice)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee FleeTS Novice",
+     "Apogee skeeTS Novice",
+     "Apogee comeTS Novice"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000003",
+     "name": "Halcyon",
+     "you": false
+    },
+    "bar": 0.004,
+    "tier": "consistent",
+    "provisional": false,
+    "heldSince": "2026-10-03T14:40:00.000Z",
+    "reignEndsAt": "2026-10-10T14:40:00.000Z",
+    "defences": 0,
+    "challenges": 1,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Evasive Switching|1",
+    "category": "Evasive Switching",
+    "window": 1,
+    "band": "Intermediate",
+    "name": "Evasive Switching Crown (Intermediate)",
+    "status": "held",
+    "cycle": 2,
+    "scenarios": [
+     "Apogee FleeTS Intermediate",
+     "Apogee skeeTS Intermediate",
+     "Apogee comeTS Intermediate"
+    ],
+    "holder": {
+     "playerId": "00000000-0000-4000-8000-000000000004",
+     "name": "Osprey",
+     "you": false
+    },
+    "bar": 0.024,
+    "tier": "verified",
+    "provisional": false,
+    "heldSince": "2026-10-01T11:40:00.000Z",
+    "reignEndsAt": "2026-10-08T11:40:00.000Z",
+    "defences": 3,
+    "challenges": 4,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "challenge",
+     "label": "Challenge"
+    }
+   },
+   {
+    "key": "Evasive Switching|2",
+    "category": "Evasive Switching",
+    "window": 2,
+    "band": "Advanced",
+    "name": "Evasive Switching Crown (Advanced)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": null,
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   },
+   {
+    "key": "Evasive Switching|3",
+    "category": "Evasive Switching",
+    "window": 3,
+    "band": "Expert",
+    "name": "Evasive Switching Crown (Expert)",
+    "status": "vacant",
+    "cycle": 1,
+    "scenarios": [
+     "Apogee FleeTS Expert",
+     "Apogee skeeTS Expert",
+     "Apogee comeTS Expert"
+    ],
+    "holder": null,
+    "bar": null,
+    "tier": null,
+    "provisional": false,
+    "heldSince": null,
+    "reignEndsAt": null,
+    "defences": 0,
+    "challenges": 0,
+    "live": 0,
+    "history": [],
+    "action": {
+     "kind": "claim",
+     "label": "Claim"
+    }
+   }
+  ],
+  "notices": [],
+  "holding": 1,
+  "rules": {
+   "reignCapDays": 7,
+   "cooldownHours": 20,
+   "tiers": [
+    "verified",
+    "consistent"
+   ]
+  },
+  "now": "2026-10-03T20:00:00.000Z"
+ },
+ "crownMatch": {
+  "matchId": "m-crown",
+  "category": "Precise Tracking",
+  "difficulty": "Intermediate",
+  "expiresAt": "2026-10-03T20:24:00.000Z",
+  "scenarios": [
+   {
+    "id": 70,
+    "name": "Apogee Glide Intermediate"
+   },
+   {
+    "id": 74,
+    "name": "Apogee Blastoff Intermediate"
+   },
+   {
+    "id": 78,
+    "name": "Apogee Orbit Intermediate"
+   }
+  ],
+  "opponent": {
+   "displayName": "Kestrel",
+   "rating": 1702,
+   "playedAt": "2026-10-01T13:40:00.000Z",
+   "provisional": false
+  },
+  "seeding": false,
+  "resumed": false,
+  "winProbability": null,
+  "poolSize": null,
+  "crown": {
+   "category": "Precise Tracking",
+   "window": 1,
+   "band": "Intermediate",
+   "name": "Precise Tracking Crown (Intermediate)",
+   "claim": false,
+   "holderName": "Kestrel",
+   "bar": 0.033999999999999996
+  }
+ },
+ "crownLive": [
+  {
+   "rounds": [
+    {
+     "scenarioId": 70,
+     "scenario": "Apogee Glide Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": true,
+      "sealed": true,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    },
+    {
+     "scenarioId": 74,
+     "scenario": "Apogee Blastoff Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": true,
+      "sealed": true,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    },
+    {
+     "scenarioId": 78,
+     "scenario": "Apogee Orbit Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": true,
+      "sealed": true,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    }
+   ],
+   "you": {
+    "name": "Vega",
+    "landed": 0,
+    "terminal": false,
+    "matchScore": null
+   },
+   "them": {
+    "name": "Kestrel",
+    "landed": 3,
+    "terminal": true,
+    "matchScore": null
+   },
+   "margin": null,
+   "marginRounds": 0,
+   "kind": "crown",
+   "matchId": "m-crown",
+   "raceId": null,
+   "title": "Precise Tracking Crown (Intermediate)",
+   "verdict": null,
+   "byForfeit": false,
+   "status": "No round revealed yet. Kestrel has landed 3 rounds you have not played yet; each opens when yours lands."
+  },
+  {
+   "rounds": [
+    {
+     "scenarioId": 70,
+     "scenario": "Apogee Glide Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.046,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.021,
+      "counted": true
+     },
+     "margin": 0.024999999999999998
+    },
+    {
+     "scenarioId": 74,
+     "scenario": "Apogee Blastoff Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": true,
+      "sealed": true,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    },
+    {
+     "scenarioId": 78,
+     "scenario": "Apogee Orbit Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": true,
+      "sealed": true,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    }
+   ],
+   "you": {
+    "name": "Vega",
+    "landed": 1,
+    "terminal": false,
+    "matchScore": null
+   },
+   "them": {
+    "name": "Kestrel",
+    "landed": 3,
+    "terminal": true,
+    "matchScore": null
+   },
+   "margin": 0.024999999999999998,
+   "marginRounds": 1,
+   "kind": "crown",
+   "matchId": "m-crown",
+   "raceId": null,
+   "title": "Precise Tracking Crown (Intermediate)",
+   "verdict": null,
+   "byForfeit": false,
+   "status": "You lead by 2.5% over 1 round. Kestrel has landed 2 rounds you have not played yet; each opens when yours lands."
+  },
+  {
+   "rounds": [
+    {
+     "scenarioId": 70,
+     "scenario": "Apogee Glide Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.046,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.021,
+      "counted": true
+     },
+     "margin": 0.024999999999999998
+    },
+    {
+     "scenarioId": 74,
+     "scenario": "Apogee Blastoff Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.031,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.052,
+      "counted": true
+     },
+     "margin": -0.020999999999999998
+    },
+    {
+     "scenarioId": 78,
+     "scenario": "Apogee Orbit Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": true,
+      "sealed": true,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    }
+   ],
+   "you": {
+    "name": "Vega",
+    "landed": 2,
+    "terminal": false,
+    "matchScore": null
+   },
+   "them": {
+    "name": "Kestrel",
+    "landed": 3,
+    "terminal": true,
+    "matchScore": null
+   },
+   "margin": 0.002,
+   "marginRounds": 2,
+   "kind": "crown",
+   "matchId": "m-crown",
+   "raceId": null,
+   "title": "Precise Tracking Crown (Intermediate)",
+   "verdict": null,
+   "byForfeit": false,
+   "status": "You lead by 0.2% over 2 rounds. Kestrel has landed 1 round you have not played yet; each opens when yours lands."
+  },
+  {
+   "rounds": [
+    {
+     "scenarioId": 70,
+     "scenario": "Apogee Glide Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.046,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.021,
+      "counted": true
+     },
+     "margin": 0.024999999999999998
+    },
+    {
+     "scenarioId": 74,
+     "scenario": "Apogee Blastoff Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.031,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.052,
+      "counted": true
+     },
+     "margin": -0.020999999999999998
+    },
+    {
+     "scenarioId": 78,
+     "scenario": "Apogee Orbit Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.046,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.029,
+      "counted": true
+     },
+     "margin": 0.016999999999999998
+    }
+   ],
+   "you": {
+    "name": "Vega",
+    "landed": 3,
+    "terminal": true,
+    "matchScore": 0.041
+   },
+   "them": {
+    "name": "Kestrel",
+    "landed": 3,
+    "terminal": true,
+    "matchScore": 0.033999999999999996
+   },
+   "margin": 0.006999999999999999,
+   "marginRounds": 3,
+   "kind": "crown",
+   "matchId": "m-crown",
+   "raceId": null,
+   "title": "Precise Tracking Crown (Intermediate)",
+   "verdict": "win",
+   "byForfeit": false,
+   "status": "You beat the holder's run set."
+  }
+ ],
+ "settledTake": {
+  "matchId": "m-crown",
+  "verdict": "win",
+  "rated": false,
+  "tournament": null,
+  "category": "Precise Tracking",
+  "arena": {
+   "kind": "crown",
+   "headline": "You took the Precise Tracking Crown (Intermediate).",
+   "explanation": "+4.1% against your baselines beat Kestrel's +3.4%. Your run set is now the one to beat. Nothing was rated.",
+   "crown": {
+    "kind": "crown",
+    "outcome": "took",
+    "crown": "Precise Tracking Crown (Intermediate)",
+    "category": "Precise Tracking",
+    "window": 1,
+    "claim": false,
+    "holderName": "Kestrel",
+    "judgedAgainstNewHolder": false,
+    "challengerScore": 0.041,
+    "holderScore": 0.033999999999999996,
+    "defences": 3,
+    "headline": "You took the Precise Tracking Crown (Intermediate).",
+    "explanation": "+4.1% against your baselines beat Kestrel's +3.4%. Your run set is now the one to beat. Nothing was rated."
+   },
+   "race": null
+  },
+  "explanation": "You win: +4.1% vs +3.4% against your own baselines. You took the Precise Tracking Crown (Intermediate).",
+  "yourMatchScore": 0.041,
+  "theirMatchScore": 0.033999999999999996,
+  "ratingBefore": 1617,
+  "ratingAfter": 1617,
+  "ratingChange": 0,
+  "ratingWeight": 1,
+  "opponent": {
+   "playerId": "00000000-0000-4000-8000-000000000001",
+   "displayName": "Kestrel"
+  },
+  "voidReason": null,
+  "rounds": [
+   {
+    "scenario": "Apogee Glide Intermediate",
+    "score": 2312,
+    "baseline": 2210,
+    "delta": 0.046,
+    "opponentDelta": 0.021,
+    "counted": true,
+    "excludedReason": null,
+    "verificationTier": "verified"
+   },
+   {
+    "scenario": "Apogee Blastoff Intermediate",
+    "score": 2047,
+    "baseline": 1985,
+    "delta": 0.031,
+    "opponentDelta": 0.052,
+    "counted": true,
+    "excludedReason": null,
+    "verificationTier": "verified"
+   },
+   {
+    "scenario": "Apogee Orbit Intermediate",
+    "score": 2573,
+    "baseline": 2460,
+    "delta": 0.046,
+    "opponentDelta": 0.029,
+    "counted": true,
+    "excludedReason": null,
+    "verificationTier": "verified"
+   }
+  ]
+ },
+ "raceMatch": {
+  "matchId": "m-race",
+  "category": "Speed Switching",
+  "difficulty": "Intermediate",
+  "expiresAt": "2026-10-03T20:24:00.000Z",
+  "scenarios": [
+   {
+    "id": 118,
+    "name": "Apogee DNAts Intermediate"
+   },
+   {
+    "id": 122,
+    "name": "Apogee CockpiTS Intermediate"
+   },
+   {
+    "id": 126,
+    "name": "Apogee ZeniTS Intermediate"
+   }
+  ],
+  "opponent": {
+   "displayName": "Wren",
+   "rating": 1588,
+   "playedAt": null,
+   "provisional": false
+  },
+  "seeding": false,
+  "resumed": false,
+  "winProbability": null,
+  "poolSize": null,
+  "crown": null,
+  "race": {
+   "id": "race-1",
+   "opponentName": "Wren",
+   "role": "invitee",
+   "band": "Intermediate"
+  }
+ },
+ "raceLive": [
+  {
+   "rounds": [
+    {
+     "scenarioId": 118,
+     "scenario": "Apogee DNAts Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": false,
+      "sealed": false,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    },
+    {
+     "scenarioId": 122,
+     "scenario": "Apogee CockpiTS Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": false,
+      "sealed": false,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    },
+    {
+     "scenarioId": 126,
+     "scenario": "Apogee ZeniTS Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": false,
+      "sealed": false,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    }
+   ],
+   "you": {
+    "name": "Vega",
+    "landed": 0,
+    "terminal": false,
+    "matchScore": null
+   },
+   "them": {
+    "name": "Wren",
+    "landed": 0,
+    "terminal": false,
+    "matchScore": null
+   },
+   "margin": null,
+   "marginRounds": 0,
+   "kind": "race",
+   "matchId": "m-race",
+   "raceId": "race-1",
+   "title": "Race against Wren",
+   "verdict": null,
+   "byForfeit": false,
+   "status": "No round revealed yet."
+  },
+  {
+   "rounds": [
+    {
+     "scenarioId": 118,
+     "scenario": "Apogee DNAts Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": true,
+      "sealed": true,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    },
+    {
+     "scenarioId": 122,
+     "scenario": "Apogee CockpiTS Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": false,
+      "sealed": false,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    },
+    {
+     "scenarioId": 126,
+     "scenario": "Apogee ZeniTS Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": false,
+      "sealed": false,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    }
+   ],
+   "you": {
+    "name": "Vega",
+    "landed": 0,
+    "terminal": false,
+    "matchScore": null
+   },
+   "them": {
+    "name": "Wren",
+    "landed": 1,
+    "terminal": false,
+    "matchScore": null
+   },
+   "margin": null,
+   "marginRounds": 0,
+   "kind": "race",
+   "matchId": "m-race",
+   "raceId": "race-1",
+   "title": "Race against Wren",
+   "verdict": null,
+   "byForfeit": false,
+   "status": "No round revealed yet. Wren has landed 1 round you have not played yet; each opens when yours lands."
+  },
+  {
+   "rounds": [
+    {
+     "scenarioId": 118,
+     "scenario": "Apogee DNAts Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.012,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.019,
+      "counted": true
+     },
+     "margin": -0.006999999999999999
+    },
+    {
+     "scenarioId": 122,
+     "scenario": "Apogee CockpiTS Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": false,
+      "sealed": false,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    },
+    {
+     "scenarioId": 126,
+     "scenario": "Apogee ZeniTS Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": false,
+      "sealed": false,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    }
+   ],
+   "you": {
+    "name": "Vega",
+    "landed": 1,
+    "terminal": false,
+    "matchScore": null
+   },
+   "them": {
+    "name": "Wren",
+    "landed": 1,
+    "terminal": false,
+    "matchScore": null
+   },
+   "margin": -0.006999999999999999,
+   "marginRounds": 1,
+   "kind": "race",
+   "matchId": "m-race",
+   "raceId": "race-1",
+   "title": "Race against Wren",
+   "verdict": null,
+   "byForfeit": false,
+   "status": "You trail by 0.7% over 1 round."
+  },
+  {
+   "rounds": [
+    {
+     "scenarioId": 118,
+     "scenario": "Apogee DNAts Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.012,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.019,
+      "counted": true
+     },
+     "margin": -0.006999999999999999
+    },
+    {
+     "scenarioId": 122,
+     "scenario": "Apogee CockpiTS Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.034,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": false,
+      "sealed": false,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    },
+    {
+     "scenarioId": 126,
+     "scenario": "Apogee ZeniTS Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": false,
+      "sealed": false,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    }
+   ],
+   "you": {
+    "name": "Vega",
+    "landed": 2,
+    "terminal": false,
+    "matchScore": null
+   },
+   "them": {
+    "name": "Wren",
+    "landed": 1,
+    "terminal": false,
+    "matchScore": null
+   },
+   "margin": -0.006999999999999999,
+   "marginRounds": 1,
+   "kind": "race",
+   "matchId": "m-race",
+   "raceId": "race-1",
+   "title": "Race against Wren",
+   "verdict": null,
+   "byForfeit": false,
+   "status": "You trail by 0.7% over 1 round."
+  },
+  {
+   "rounds": [
+    {
+     "scenarioId": 118,
+     "scenario": "Apogee DNAts Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.012,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.019,
+      "counted": true
+     },
+     "margin": -0.006999999999999999
+    },
+    {
+     "scenarioId": 122,
+     "scenario": "Apogee CockpiTS Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.034,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.006,
+      "counted": true
+     },
+     "margin": 0.028000000000000004
+    },
+    {
+     "scenarioId": 126,
+     "scenario": "Apogee ZeniTS Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": false,
+      "sealed": false,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    }
+   ],
+   "you": {
+    "name": "Vega",
+    "landed": 2,
+    "terminal": false,
+    "matchScore": null
+   },
+   "them": {
+    "name": "Wren",
+    "landed": 2,
+    "terminal": false,
+    "matchScore": null
+   },
+   "margin": 0.010500000000000002,
+   "marginRounds": 2,
+   "kind": "race",
+   "matchId": "m-race",
+   "raceId": "race-1",
+   "title": "Race against Wren",
+   "verdict": null,
+   "byForfeit": false,
+   "status": "You lead by 1.1% over 2 rounds."
+  },
+  {
+   "rounds": [
+    {
+     "scenarioId": 118,
+     "scenario": "Apogee DNAts Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.012,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.019,
+      "counted": true
+     },
+     "margin": -0.006999999999999999
+    },
+    {
+     "scenarioId": 122,
+     "scenario": "Apogee CockpiTS Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.034,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.006,
+      "counted": true
+     },
+     "margin": 0.028000000000000004
+    },
+    {
+     "scenarioId": 126,
+     "scenario": "Apogee ZeniTS Intermediate",
+     "you": {
+      "landed": false,
+      "delta": null,
+      "counted": false,
+      "provisional": false,
+      "tier": null
+     },
+     "them": {
+      "landed": true,
+      "sealed": true,
+      "delta": null,
+      "counted": null
+     },
+     "margin": null
+    }
+   ],
+   "you": {
+    "name": "Vega",
+    "landed": 2,
+    "terminal": false,
+    "matchScore": null
+   },
+   "them": {
+    "name": "Wren",
+    "landed": 3,
+    "terminal": false,
+    "matchScore": null
+   },
+   "margin": 0.010500000000000002,
+   "marginRounds": 2,
+   "kind": "race",
+   "matchId": "m-race",
+   "raceId": "race-1",
+   "title": "Race against Wren",
+   "verdict": null,
+   "byForfeit": false,
+   "status": "You lead by 1.1% over 2 rounds. Wren has landed 1 round you have not played yet; each opens when yours lands."
+  },
+  {
+   "rounds": [
+    {
+     "scenarioId": 118,
+     "scenario": "Apogee DNAts Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.012,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.019,
+      "counted": true
+     },
+     "margin": -0.006999999999999999
+    },
+    {
+     "scenarioId": 122,
+     "scenario": "Apogee CockpiTS Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.034,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.006,
+      "counted": true
+     },
+     "margin": 0.028000000000000004
+    },
+    {
+     "scenarioId": 126,
+     "scenario": "Apogee ZeniTS Intermediate",
+     "you": {
+      "landed": true,
+      "delta": 0.015,
+      "counted": true,
+      "provisional": false,
+      "tier": "verified"
+     },
+     "them": {
+      "landed": true,
+      "sealed": false,
+      "delta": 0.02,
+      "counted": true
+     },
+     "margin": -0.005000000000000001
+    }
+   ],
+   "you": {
+    "name": "Vega",
+    "landed": 3,
+    "terminal": true,
+    "matchScore": 0.02033333333333333
+   },
+   "them": {
+    "name": "Wren",
+    "landed": 3,
+    "terminal": true,
+    "matchScore": 0.015
+   },
+   "margin": 0.005333333333333335,
+   "marginRounds": 3,
+   "kind": "race",
+   "matchId": "m-race",
+   "raceId": "race-1",
+   "title": "Race against Wren",
+   "verdict": "win",
+   "byForfeit": false,
+   "status": "You won the race against Wren."
+  }
+ ],
+ "races": {
+  "incoming": [],
+  "outgoing": null,
+  "live": null,
+  "recent": [],
+  "inviteTtlSeconds": 180
+ },
+ "duels": {
+  "incoming": [],
+  "outgoing": [],
+  "steamFriends": "public",
+  "friends": [],
+  "roster": []
+ }
+}
