@@ -142,4 +142,3 @@ export function ascent(p: BrandPalette, o: { cx: number; cy: number; rx: number;
   });
   return out;
 }
-
