@@ -8,7 +8,11 @@
  * Each job is { card, width, height, out }. The page is built the way record.cjs builds a
  * card page (fonts and tokens inlined, the emblem from assets/brand/mechanics), seeked to
  * 3 s, and captured. Fails if the page throws, if the title had to be shrunk to fit
- * (card.html's window.__fit below 1), or if the glyph is missing from the top row.
+ * (card.html's window.__fit below FIT_FLOOR), or if the glyph is missing from the top row.
+ *
+ * Exits through app.exit() with the status, and also writes <jobs>.result.json, which
+ * validate:brand reads: Electron's app.quit() exits 0 whatever process.exitCode says, so a
+ * failure reported only through the exit code once went unnoticed.
  */
 
 const { app, BrowserWindow } = require("electron");
@@ -19,7 +23,16 @@ const { tmpdir } = require("node:os");
 const root = resolve(__dirname, "..", "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
 const jobs = JSON.parse(readFileSync(process.argv.at(-1), "utf8"));
+const resultFile = process.argv.at(-1).replace(/\.json$/, "") + ".result.json";
 app.setPath("userData", mkdtempSync(join(tmpdir(), "apogee-card-")));
+
+/**
+ * card.html shrinks a title only when it would overflow, and reports the scale as
+ * window.__fit. Under load the font metrics wobble by a fraction of a pixel (fit 0.998 on
+ * all seven 1920x1080 cards in one full `npm run validate`), which is not a shrunk title.
+ * A real overflow shrinks by several percent.
+ */
+const FIT_FLOOR = 0.99;
 app.commandLine.appendSwitch("force-device-scale-factor", "1");
 
 // As record.cjs: the brand faces inlined, the theme tokens read from the stylesheets.
@@ -74,16 +87,15 @@ app.whenReady().then(async () => {
     writeFileSync(job.out, png);
     const name = `${job.card.glyph} ${job.width}x${job.height}`;
     if (errors.length) failures.push(`${name}: ${errors.join("; ")}`);
-    if (r.fit < 1) failures.push(`${name}: the title was shrunk to ${(r.fit * 100).toFixed(0)}% to fit`);
+    if (typeof r.fit !== "number" || !Number.isFinite(r.fit)) failures.push(`${name}: card.html did not report how its title fits (window.__fit = ${r.fit})`);
+    else if (r.fit < FIT_FLOOR) failures.push(`${name}: the title was shrunk to fit (window.__fit = ${r.fit.toFixed(3)}, floor ${FIT_FLOOR})`);
     if (!r.glyph) failures.push(`${name}: the glyph is not in the top row`);
     win.destroy();
   }
   console.log(`  card.html: ${jobs.length} mechanic card(s) drawn`);
-  if (failures.length) {
-    console.error(failures.map((f) => `  FAIL ${f}`).join("\n"));
-    process.exitCode = 1;
-  }
-  app.quit();
+  if (failures.length) console.error(failures.map((f) => `  FAIL ${f}`).join("\n"));
+  writeFileSync(resultFile, JSON.stringify({ drawn: jobs.length, failures }));
+  app.exit(failures.length ? 1 : 0);
 }).catch((err) => {
   console.error(err);
   app.exit(1);

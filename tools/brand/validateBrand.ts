@@ -30,7 +30,7 @@
 
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { join, relative } from "node:path";
 import { runInNewContext } from "node:vm";
@@ -264,9 +264,21 @@ if (!failures.length) {
   writeFileSync(file, JSON.stringify(smoke));
   const electron = createRequire(import.meta.url)("electron") as unknown as string;
   const sandbox = process.platform === "linux" && process.getuid?.() === 0 ? ["--no-sandbox"] : [];
+  const resultFile = file.replace(/\.json$/, "") + ".result.json";
+  rmSync(resultFile, { force: true });
   const r = spawnSync(electron, [...sandbox, join(root, "tools", "brand", "cardSmoke.cjs"), file], { stdio: "inherit" });
-  if (r.status !== 0) failures.push("card.html could not draw a mechanic scene (see FAIL lines above)");
-  else pass(`card.html draws all ${scenes.length} mechanic scenes with their glyph, 16:9 and 9:16, titles at full size`);
+  // Both the exit status and the result file the child writes last: a child that crashed,
+  // was killed, or exited 0 with failures must not read as a pass.
+  let result: { drawn: number; failures: string[] } | null = null;
+  try {
+    result = JSON.parse(readFileSync(resultFile, "utf8"));
+  } catch {
+    result = null;
+  }
+  if (r.error || r.status !== 0 || !result || result.failures.length > 0 || result.drawn !== smoke.length) {
+    const why = r.error ? r.error.message : !result ? `no result file (exit ${r.status ?? r.signal})` : result.failures.length ? `${result.failures.length} failure(s)` : `exit ${r.status ?? r.signal}`;
+    failures.push(`card.html could not draw every mechanic scene: ${why} (see FAIL lines above)`);
+  } else pass(`card.html draws all ${scenes.length} mechanic scenes with their glyph, 16:9 and 9:16, titles at full size`);
 }
 
 if (passed) pass(`${passed} source and adapter checks: one-colour glyphs, generated copies current, renderer script, refusals, cleaning, spoiler-free dailies`);
