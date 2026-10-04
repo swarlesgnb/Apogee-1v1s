@@ -35,7 +35,7 @@ import {
 
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
 import { updateRating } from "../../../src/core/rating/glicko2.ts";
-import { RACE_INVITE_TTL_MS } from "../../../src/core/race/race.ts";
+import { DECLINE_QUIET_MS, RACE_INVITE_TTL_MS } from "../../../src/core/race/race.ts";
 import { RACE_COLUMNS, raceRowFromDb as raceRow, summarise } from "../../../src/core/race/view.ts";
 
 Deno.serve(handler(async (req, admin) => {
@@ -59,6 +59,20 @@ Deno.serve(handler(async (req, admin) => {
 
     const { data: them } = await admin.from("players").select("id").eq("id", to).maybeSingle();
     if (!them) throw new HttpError(404, "No such player.");
+
+    // A decline is an answer. Asking again at once is pestering, and with a toast on the
+    // other end it is pestering that interrupts whatever they are doing.
+    const { data: declined } = await admin
+      .from("races")
+      .select("id")
+      .eq("inviter_id", caller.playerId)
+      .eq("invitee_id", to)
+      .eq("status", "declined")
+      .gte("created_at", new Date(Date.now() - DECLINE_QUIET_MS).toISOString())
+      .limit(1);
+    if ((declined ?? []).length > 0) {
+      throw new HttpError(429, "They declined a race from you a few minutes ago. Try again later.");
+    }
 
     // A race is played now, so an inviter already in a match has nothing to start.
     const live = await sweepStaleMatches(admin, caller.playerId, updateRating);

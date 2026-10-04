@@ -34,6 +34,9 @@ import type { RunTier } from "../crowns/crowns.ts";
 /** How long an invitation to race waits for an answer. Minutes: a race is for now. */
 export const RACE_INVITE_TTL_MS = 3 * 60_000;
 
+/** How long a declined invitation keeps its sender from asking the same player again. */
+export const DECLINE_QUIET_MS = 10 * 60_000;
+
 /** settleMatch's DRAW_EPSILON, restated for the same reason crowns.ts restates it. */
 export const RACE_DRAW_EPSILON = 0.0005;
 

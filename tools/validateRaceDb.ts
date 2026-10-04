@@ -159,6 +159,15 @@ console.log("\n── forfeits, expiry, simultaneous finishes ──────
   r = await race(inv.body.race.id);
   check("the side that finished beats the side that quit, even from behind", ab.status === 200 && r.status === "finished" && r.result === "inviter" && r.by_forfeit === true, `${r.status} ${r.result}`);
 
+  const asked = await invite("Ed", "Di");
+  await act("Di", { action: "decline", raceId: asked.body.race.id });
+  const again = await invite("Ed", "Di");
+  check("a declined invitation keeps its sender quiet for ten minutes", again.status === 429, JSON.stringify(again.body));
+  await db.query("update races set created_at = now() - interval '11 minutes' where id = $1", [asked.body.race.id]);
+  const later = await invite("Ed", "Di");
+  check("and only for ten minutes", later.status === 200);
+  await act("Ed", { action: "cancel", raceId: later.body.race.id });
+
   const late = await invite("Ed", "Ana");
   await db.query("update races set expires_at = now() - interval '1 second' where id = $1", [late.body.race.id]);
   check("an expired invitation cannot be accepted", (await act("Ana", { action: "accept", raceId: late.body.race.id })).status === 409);
