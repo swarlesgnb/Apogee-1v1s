@@ -259,3 +259,57 @@ revoke all on function enforce_run_time_integrity() from public, anon, authentic
 drop trigger if exists runs_zzz_time_integrity on runs;
 create trigger runs_zzz_time_integrity before insert or update on runs
   for each row execute function enforce_run_time_integrity();
+
+
+-- ===========================================================================
+-- 5. Verified personal bests, from the runs KovaaK's confirmed (SEC-04)
+-- ===========================================================================
+--
+-- PLAN.md section 3: baseline = max(median of the last 50 runs, 0.9 x verified PB). The
+-- floor read verified_pbs and nothing ever wrote it, so for everybody the baseline was the
+-- median alone. A run graded Verified matched a KovaaK's record on score, hash, challenge
+-- start and time, so its score is one KovaaK's vouches for: that is what is recorded here,
+-- the highest per player and scenario. A run cannot reach 'verified' from a client
+-- (20260825000013 withholds the column), so neither can a row here.
+--
+-- What this does not do: read anybody's KovaaK's leaderboard best. The floor therefore
+-- engages only from runs the server itself verified, which is never higher than the PB
+-- PLAN.md describes. Settlement freezes it as it freezes the median: baselineFor reads the
+-- best verified run from before the match began, so a personal best set inside a match
+-- never raises that same match's baseline.
+
+create or replace function record_verified_pb() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+begin
+  if new.verification_tier = 'verified' and new.scenario_id is not null then
+    insert into verified_pbs (player_id, scenario_id, score, epoch, hash, synced_at)
+    values (new.player_id, new.scenario_id, new.score,
+            (extract(epoch from new.played_at) * 1000)::bigint, new.hash, now())
+    on conflict (player_id, scenario_id) do update
+      set score = excluded.score, epoch = excluded.epoch, hash = excluded.hash, synced_at = excluded.synced_at
+      where verified_pbs.score < excluded.score;
+  end if;
+  return null;
+end;
+$$;
+
+revoke all on function record_verified_pb() from public, anon, authenticated;
+
+drop trigger if exists runs_record_verified_pb on runs;
+create trigger runs_record_verified_pb after insert or update of verification_tier, score on runs
+  for each row execute function record_verified_pb();
+
+insert into verified_pbs (player_id, scenario_id, score, epoch, hash, synced_at)
+select distinct on (player_id, scenario_id)
+  player_id, scenario_id, score, (extract(epoch from played_at) * 1000)::bigint, hash, now()
+from runs
+where verification_tier = 'verified' and scenario_id is not null
+order by player_id, scenario_id, score desc, played_at
+on conflict (player_id, scenario_id) do update
+  set score = excluded.score, epoch = excluded.epoch, hash = excluded.hash, synced_at = excluded.synced_at
+  where verified_pbs.score < excluded.score;
+
+comment on table verified_pbs is
+  'The best score per player and scenario that KovaaK''s confirmed: maintained from runs '
+  'graded verified by record_verified_pb. Supplies the baseline floor (PLAN.md section 3) '
+  'and the apex board''s inputs. Service role writes only.';

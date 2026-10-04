@@ -25,9 +25,10 @@ import assert from "node:assert/strict";
 import { PGlite } from "@electric-sql/pglite";
 import { build } from "esbuild";
 import { mkdirSync, readFileSync, readdirSync, rmSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
+import { migratedDatabase, restClient, toParam } from "./lib/postgrestOverPglite.mjs";
 import { appendRun, catalog } from "./fixtures/syntheticStats.ts";
 import { parseStatsFile } from "../src/core/stats/parseStatsFile.ts";
 import { hashCsv, runClockOffset, toPayload } from "../src/core/sync/uploadRuns.ts";
@@ -47,92 +48,8 @@ let cases = 0;
 const pass = (label) => { cases++; console.log(`  ok   ${label}`); };
 
 // ---- database ------------------------------------------------------------------------
-const db = new PGlite();
-await db.waitReady;
-await db.exec(`
-  create schema if not exists auth;
-  create table auth.users (id uuid primary key default gen_random_uuid(), email text unique);
-  create or replace function auth.uid() returns uuid
-    language sql stable as $$ select nullif(current_setting('test.player_id', true), '')::uuid $$;
-  create role anon nologin; create role authenticated nologin; create role service_role nologin bypassrls;
-  grant usage on schema public to anon, authenticated, service_role;
-  alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
-`);
-for (const f of readdirSync("supabase/migrations").filter((f) => f.endsWith(".sql")).sort()) {
-  await db.exec(readFileSync(join("supabase/migrations", f), "utf8"));
-}
-await db.exec(readFileSync("supabase/seed.sql", "utf8"));
-
-// ---- a PostgREST-shaped client over PGlite, for the service role ---------------------
-const ident = (s) => { assert.match(s, /^[a-z_][a-z0-9_]*$/, `identifier ${s}`); return s; };
-const toParam = (v) =>
-  v === undefined ? null
-    : Array.isArray(v) && v.every((x) => x === null || typeof x !== "object") ? v
-    : v !== null && typeof v === "object" && !(v instanceof Date) ? JSON.stringify(v)
-    : v;
-const admin = {
-  from(table) {
-    ident(table);
-    const st = { op: "select", columns: "*", returning: null, where: [], values: [], order: [], limit: "", single: false };
-    const param = (v) => { st.values.push(toParam(v)); return `$${st.values.length}`; };
-    const cols = (list) => list.split(",").map((c) => ident(c.trim())).join(", ");
-    const q = {
-      select(list = "*") { if (st.op === "select") st.columns = list === "*" ? "*" : cols(list); else st.returning = list === "*" ? "*" : cols(list); return q; },
-      eq(k, v) { st.where.push(`${ident(k)} = ${param(v)}`); return q; },
-      neq(k, v) { st.where.push(`${ident(k)} <> ${param(v)}`); return q; },
-      gt(k, v) { st.where.push(`${ident(k)} > ${param(v)}`); return q; },
-      gte(k, v) { st.where.push(`${ident(k)} >= ${param(v)}`); return q; },
-      lt(k, v) { st.where.push(`${ident(k)} < ${param(v)}`); return q; },
-      lte(k, v) { st.where.push(`${ident(k)} <= ${param(v)}`); return q; },
-      in(k, v) { st.where.push(`${ident(k)} = any(${param(v)})`); return q; },
-      is(k, v) { assert.equal(v, null); st.where.push(`${ident(k)} is null`); return q; },
-      not(k, op, v) { assert.ok(op === "is" && v === null); st.where.push(`${ident(k)} is not null`); return q; },
-      or(expr) {
-        const parts = expr.split(",").map((p) => {
-          const m = /^([a-z_]+)\.(eq|is)\.(.+)$/.exec(p);
-          assert.ok(m, `or() term ${p}`);
-          return m[2] === "is" ? `${ident(m[1])} is null` : `${ident(m[1])} = ${param(m[3])}`;
-        });
-        st.where.push(`(${parts.join(" or ")})`);
-        return q;
-      },
-      order(k, o) { st.order.push(`${ident(k)} ${o?.ascending === false ? "desc" : "asc"}`); return q; },
-      limit(n) { st.limit = ` limit ${Number(n)}`; return q; },
-      maybeSingle() { st.single = true; return q; },
-      insert(rows) { st.op = "insert"; st.rows = [rows].flat(); return q; },
-      update(row) { st.op = "update"; st.row = row; return q; },
-      upsert(rows, opts) { st.op = "upsert"; st.rows = [rows].flat(); st.conflict = opts?.onConflict; return q; },
-      then(ok, fail) { return run().then(ok, fail); },
-    };
-    const where = () => (st.where.length ? ` where ${st.where.join(" and ")}` : "");
-    async function run() {
-      let sql;
-      if (st.op === "select") {
-        sql = `select ${st.columns} from ${table}${where()}${st.order.length ? ` order by ${st.order.join(", ")}` : ""}${st.limit}`;
-      } else if (st.op === "insert" || st.op === "upsert") {
-        const keys = Object.keys(st.rows[0]).map(ident);
-        const tuples = st.rows.map((r) => `(${keys.map((k) => param(r[k])).join(", ")})`);
-        sql = `insert into ${table} (${keys.join(", ")}) values ${tuples.join(", ")}`;
-        if (st.op === "upsert") {
-          const conflict = st.conflict.split(",").map((c) => ident(c.trim()));
-          sql += ` on conflict (${conflict.join(", ")}) do update set ${keys.filter((k) => !conflict.includes(k)).map((k) => `${k} = excluded.${k}`).join(", ")}`;
-        }
-        if (st.returning) sql += ` returning ${st.returning}`;
-      } else {
-        const sets = Object.keys(st.row).map((k) => `${ident(k)} = ${param(st.row[k])}`);
-        sql = `update ${table} set ${sets.join(", ")}${where()}`;
-        if (st.returning) sql += ` returning ${st.returning}`;
-      }
-      try {
-        const r = await db.query(sql, st.values);
-        return { data: st.single ? r.rows[0] ?? null : r.rows, error: null };
-      } catch (e) {
-        return { data: null, error: { code: e.code, message: e.message } };
-      }
-    }
-    return q;
-  },
-};
+const { db } = await migratedDatabase(PGlite, readFileSync, readdirSync);
+const admin = restClient(db);
 
 // ---- the shipped handler and helpers -------------------------------------------------
 mkdirSync(".cache", { recursive: true });
