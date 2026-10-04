@@ -237,7 +237,7 @@ const shareCards = new ShareCards({
     };
   },
   ghost: () => ghost.shareRecord(),
-  daily: (ctx) => social.daily.shareCardInput(ctx),
+  dailyRecord: () => social.daily.shareRecord(),
   window: () => window,
 });
 

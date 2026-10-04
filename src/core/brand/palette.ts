@@ -89,7 +89,18 @@ export interface BrandPalette {
   warn: string;
   /** The ground a rank colour is lifted against: the brightest surface it sits on. */
   rankGround: string;
+  /**
+   * The ground where the corner wash is strongest. On the light palette that is the
+   * darkest ground any text sits on, so the light inks are deepened against it.
+   */
+  washed: string;
 }
+
+/**
+ * The one corner wash every card and kit picture paints (the client's body::before), at
+ * the strongest opacity any of them uses. Drawn by shareCard.ts defs() and draw.ts ground().
+ */
+export const WASH = { dark: { color: "#324452", opacity: 0.45 }, light: { color: "#c9d6e2", opacity: 0.6 } } as const;
 
 export function darkPalette(t: BrandTokens): BrandPalette {
   return {
@@ -111,12 +122,17 @@ export function darkPalette(t: BrandTokens): BrandPalette {
     down: t.down,
     warn: t.warn,
     rankGround: t.panel,
+    washed: mix(t.ground, WASH.dark.color, WASH.dark.opacity * 100),
   };
 }
 
 export function lightPalette(t: BrandTokens): BrandPalette {
   const ground = LIGHT_GROUND;
-  const on = (c: string, floor: number) => deepen(c, ground, floor);
+  // Deepened against the washed corner, not the bare ground: the wash darkens the light
+  // ground, and inks cut to exactly 4.5:1 on the bare ground fell to 3.9:1 under it (the
+  // top-right labels of every light card and sheet). validate:brand measures the pixels.
+  const washed = mix(ground, WASH.light.color, WASH.light.opacity * 100);
+  const on = (c: string, floor: number) => deepen(c, washed, floor);
   return {
     theme: "light",
     ground,
@@ -137,6 +153,7 @@ export function lightPalette(t: BrandTokens): BrandPalette {
     down: on(t.down, TEXT),
     warn: on(t.warn, TEXT),
     rankGround: ground,
+    washed,
   };
 }
 
@@ -161,9 +178,15 @@ export function paletteChecks(p: BrandPalette): { pair: string; ratio: number; f
     ["up", p.up, "panel", TEXT],
     ["down", p.down, "panel", TEXT],
     ["warn", p.warn, "ground", TEXT],
+    ["ink", p.ink, "wash", TEXT],
+    ["inkMid", p.inkMid, "wash", TEXT],
+    ["inkDim", p.inkDim, "wash", TEXT],
+    ["brand", p.brand, "wash", TEXT],
+    ["up", p.up, "wash", TEXT],
+    ["down", p.down, "wash", TEXT],
   ];
   return rows.map(([name, c, g, floor]) => {
-    const ground = g === "panel" ? p.panel : p.ground;
+    const ground = g === "panel" ? p.panel : g === "wash" ? p.washed : p.ground;
     return { pair: `${name} on ${g}`, ratio: contrast(c, ground), floor };
   });
 }

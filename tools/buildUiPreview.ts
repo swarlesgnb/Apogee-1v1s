@@ -117,6 +117,7 @@ const body = bodyMatch[1]
 
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Apogee Client Preview</title>
+<script>${readFileSync(new URL("mechanic-icons.js", RENDERER_DIR), "utf8")}</script>
 ${style}
 <style>${cosmicCss}</style>
 <style>${readFileSync(new URL("presentation.css", RENDERER_DIR), "utf8")}</style>

@@ -134,7 +134,9 @@ and mixing a pastel toward near-black lands in grey, so Victory came out #5a716c
 as disabled. Rank colours still use `legibleOn` against the surface they sit on, as the
 client and the rank sheet do, so a tier looks the same in the kit as in the app.
 `paletteChecks()` lists every pair a card sets text in, and `npm run brand` fails on any
-under its floor. At the last run all 22 cleared on both themes.
+under its floor. At the last run all 22 cleared on both themes. (Since fleet/brand the light
+inks are deepened against the washed corner, not the bare ground, and the list has 34 pairs:
+see docs/fleet/brand.md, "The palette fix this found".)
 
 **Two tiers look alike on paper.** Stargazer (#00eaea) and Quasar (#00ffff) are nearly the
 same cyan as authored, and on the light ground both land near #0a7176. That is in the
