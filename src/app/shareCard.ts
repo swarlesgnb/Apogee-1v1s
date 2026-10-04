@@ -23,16 +23,27 @@ import { join } from "node:path";
 
 import { emblemFrom, readGhostTint, readTokens, sliceBadge, TOKEN_SHEETS, tokenCss, withFonts } from "../core/brand/clientSources.ts";
 import { darkPalette, type BrandPalette } from "../core/brand/palette.ts";
-import { FIT_TEXT_SCRIPT, headline, SHARE_CARD_SIZES, shareCardSvg, type CardLayout, type ShareCardInput } from "../core/brand/shareCard.ts";
+import { anyCardSvg, mechanicHeadline } from "../core/brand/mechanicCards.ts";
+import { FIT_TEXT_SCRIPT, headline, SHARE_CARD_SIZES, type CardLayout, type ShareCardInput } from "../core/brand/shareCard.ts";
 import {
+  crownCardInput,
+  dailyCardInput,
+  flagCardInput,
   ghostCardInput,
+  isMechanicCard,
   matchCardInput,
   parseShareRequest,
+  shadowCardInput,
   shareFileName,
+  type AnyCardInput,
   type CardContext,
+  type CrownRecord,
+  type DailyRecord,
+  type FlagRecord,
   type GhostRecord,
   type MatchRecord,
   type SettledRecord,
+  type ShadowRecord,
 } from "../core/brand/shareInput.ts";
 
 export interface ShareDeps {
@@ -43,6 +54,11 @@ export interface ShareDeps {
   context: () => CardContext;
   /** The ghost result on screen, or null when there is none to share. */
   ghost: () => GhostRecord | null;
+  /**
+   * Today's Daily as a record, pulled when the card is asked for (dailyService.ts can
+   * answer from its own view); when absent, the last recordDaily() is used.
+   */
+  dailyRecord?: () => DailyRecord | null;
   window: () => BrowserWindow | null;
   /** Where Save puts a card. Replaced by validate:share, which cannot click a dialog. */
   saveAs?: (defaultPath: string) => Promise<string | null>;
@@ -89,18 +105,27 @@ const PAGE_SCRIPT = (width: number, height: number) => `(async () => {
   return { problems, missing, texts, png: canvas.toDataURL('image/png') };
 })()`;
 
-export interface RenderedCard {
+export interface RenderedCard<T extends AnyCardInput = ShareCardInput> {
   png: Buffer;
   width: number;
   height: number;
   /** Every text node after fitting, for validate:share to read the figures back. */
   texts: string[];
-  input: ShareCardInput;
+  input: T;
   fileName: string;
+}
+
+/** The mechanic cards' records, as the engineers who own each mechanic hand them over. */
+interface MechanicRecords {
+  daily: DailyRecord | null;
+  crown: CrownRecord | null;
+  flag: FlagRecord | null;
+  shadow: ShadowRecord | null;
 }
 
 export class ShareCards {
   private match: MatchRecord | null = null;
+  private mechanics: MechanicRecords = { daily: null, crown: null, flag: null, shadow: null };
   private kit: Kit | null = null;
   private busy: Promise<unknown> = Promise.resolve();
 
@@ -109,6 +134,27 @@ export class ShareCards {
   /** Keep the settlement exactly as main received it. The next one replaces it. */
   recordSettled(settled: SettledRecord, sentDuel: boolean, at = Date.now()): void {
     this.match = { settled, sentDuel, at };
+  }
+
+  /**
+   * The mechanic cards, the same way: main keeps the record the server answered with, the
+   * renderer asks for "daily" (or "crown", "flag", "shadow") by name, and the card is drawn
+   * from the record. Each call replaces the last record of its kind; null forgets it.
+   */
+  recordDaily(rec: DailyRecord | null): void {
+    this.mechanics.daily = rec;
+  }
+
+  recordCrown(rec: CrownRecord | null): void {
+    this.mechanics.crown = rec;
+  }
+
+  recordFlag(rec: FlagRecord | null): void {
+    this.mechanics.flag = rec;
+  }
+
+  recordShadow(rec: ShadowRecord | null): void {
+    this.mechanics.shadow = rec;
   }
 
   private loadKit(): Kit {
@@ -135,17 +181,38 @@ export class ShareCards {
   }
 
   /** The card for a source, or why there is none. Built from main's records only. */
-  input(source: "match" | "ghost"): ShareCardInput | { refused: string } {
-    if (source === "match") {
-      if (!this.match) return { refused: "There is no settled match on screen to share." };
-      return matchCardInput(this.match, this.deps.context());
+  input(source: "match" | "ghost"): ShareCardInput | { refused: string };
+  input(source: "match" | "ghost" | "daily" | "crown" | "flag" | "shadow"): AnyCardInput | { refused: string };
+  input(source: "match" | "ghost" | "daily" | "crown" | "flag" | "shadow"): AnyCardInput | { refused: string } {
+    const ctx = () => this.deps.context();
+    switch (source) {
+      case "match":
+        if (!this.match) return { refused: "There is no settled match on screen to share." };
+        return matchCardInput(this.match, ctx());
+      case "ghost": {
+        const g = this.deps.ghost();
+        if (!g) return { refused: "Finish a ghost match to share it." };
+        return ghostCardInput(g, ctx());
+      }
+      case "daily": {
+        const rec = this.deps.dailyRecord?.() ?? this.mechanics.daily;
+        return rec ? dailyCardInput(rec, ctx()) : { refused: "Finish today's daily to share it." };
+      }
+      case "crown":
+        return this.mechanics.crown ? crownCardInput(this.mechanics.crown, ctx()) : { refused: "There is no crown result to share." };
+      case "flag":
+        return this.mechanics.flag ? flagCardInput(this.mechanics.flag, ctx()) : { refused: "None of your flags has been answered yet." };
+      case "shadow":
+        return this.mechanics.shadow ? shadowCardInput(this.mechanics.shadow, ctx()) : { refused: "Play a Shadow match to share the placement." };
     }
-    const g = this.deps.ghost();
-    if (!g) return { refused: "Finish a ghost match to share it." };
-    return ghostCardInput(g, this.deps.context());
   }
 
   async render(input: ShareCardInput, layout: CardLayout): Promise<RenderedCard> {
+    return (await this.renderAny(input, layout)) as RenderedCard;
+  }
+
+  /** Any card, result or mechanic: the same window, the same checks. */
+  async renderAny(input: AnyCardInput, layout: CardLayout): Promise<RenderedCard<AnyCardInput>> {
     // One at a time: each render is its own window, and a burst of preview clicks should
     // queue rather than open five.
     const run = this.busy.then(() => this.renderNow(input, layout));
@@ -153,10 +220,10 @@ export class ShareCards {
     return run;
   }
 
-  private async renderNow(input: ShareCardInput, layout: CardLayout): Promise<RenderedCard> {
+  private async renderNow(input: AnyCardInput, layout: CardLayout): Promise<RenderedCard<AnyCardInput>> {
     const kit = this.loadKit();
     const { width, height } = SHARE_CARD_SIZES[layout];
-    const svg = withFonts(shareCardSvg(input, { layout, palette: kit.palette, emblem: kit.emblem, ghostTint: kit.ghostTint }), kit.fontBase64);
+    const svg = withFonts(anyCardSvg(input, { layout, palette: kit.palette, emblem: kit.emblem, ghostTint: kit.ghostTint }), kit.fontBase64);
 
     const win = new BrowserWindow({
       show: false,
@@ -182,7 +249,7 @@ export class ShareCards {
       const w = png.readUInt32BE(16);
       const h = png.readUInt32BE(20);
       if (w !== width || h !== height) throw new Error(`the card came out ${w}x${h}, not ${width}x${height}`);
-      return { png, width, height, texts: r.texts, input, fileName: shareFileName(input, headline(input)) };
+      return { png, width, height, texts: r.texts, input, fileName: shareFileName(input, isMechanicCard(input) ? mechanicHeadline(input) : headline(input)) };
     } finally {
       win.destroy();
     }
@@ -206,9 +273,9 @@ export class ShareCards {
     const input = this.input(req.source);
     if ("refused" in input) return { ok: false, error: input.refused };
 
-    let card: RenderedCard;
+    let card: RenderedCard<AnyCardInput>;
     try {
-      card = await this.render(input, req.layout);
+      card = await this.renderAny(input, req.layout);
     } catch (err) {
       return { ok: false, error: `The card could not be drawn: ${err instanceof Error ? err.message : String(err)}` };
     }

@@ -176,12 +176,12 @@ export function outcomeLabel(r: CardRound): string {
   return o === "excluded" ? (r.excluded as string) : OUTCOME_LABEL[o];
 }
 
-function deltaColour(p: BrandPalette, d: number | null | undefined): string {
+export function deltaColour(p: BrandPalette, d: number | null | undefined): string {
   if (d == null || !Number.isFinite(d) || Math.abs(d) < 5e-4) return p.inkMid;
   return d > 0 ? p.up : p.down;
 }
 
-function outcomeColour(p: BrandPalette, o: ReturnType<typeof roundOutcome>): string {
+export function outcomeColour(p: BrandPalette, o: ReturnType<typeof roundOutcome>): string {
   return o === "won" ? p.up : o === "lost" ? p.down : p.inkMid;
 }
 
@@ -270,16 +270,20 @@ function emblemCaption(input: ShareCardInput): string {
 }
 
 function ratingLine(input: ShareCardInput): string {
-  const p = input.player;
-  if (p.rating == null) return "";
-  if (p.ratingChange == null || !Number.isFinite(p.ratingChange)) return `Rating ${Math.round(p.rating)}`;
-  const before = Math.round(p.rating - p.ratingChange);
-  const change = Math.round(p.ratingChange);
-  const signed = change > 0 ? `+${change}` : change < 0 ? `−${-change}` : "±0";
-  return `Rating ${before} → ${Math.round(p.rating)} (${signed})`;
+  return ratingChangeLine(input.player.rating, input.player.ratingChange);
 }
 
-function dateLine(iso: string | null | undefined): string {
+/** "Rating 1617 → 1585 (−32)", or just "Rating 1617" when the change is not known. */
+export function ratingChangeLine(rating: number | null | undefined, ratingChange: number | null | undefined): string {
+  if (rating == null) return "";
+  if (ratingChange == null || !Number.isFinite(ratingChange)) return `Rating ${Math.round(rating)}`;
+  const before = Math.round(rating - ratingChange);
+  const change = Math.round(ratingChange);
+  const signed = change > 0 ? `+${change}` : change < 0 ? `−${-change}` : "±0";
+  return `Rating ${before} → ${Math.round(rating)} (${signed})`;
+}
+
+export function dateLine(iso: string | null | undefined): string {
   if (!iso) return "";
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
   if (!m) return "";
@@ -306,7 +310,7 @@ function rng(seed: string): () => number {
  * Square stars, the atlas plates' own device (tools/buildAtlas.mjs), kept out of the
  * rectangles text sits in so no glyph ever has a dot behind it.
  */
-function starfield(seed: string, w: number, h: number, count: number, ink: string, avoid: [number, number, number, number][]): string {
+export function starfield(seed: string, w: number, h: number, count: number, ink: string, avoid: [number, number, number, number][]): string {
   const r = rng(seed);
   const out: string[] = [];
   for (let tries = 0; out.length < count && tries < count * 20; tries++) {
@@ -322,12 +326,12 @@ function starfield(seed: string, w: number, h: number, count: number, ink: strin
 }
 
 /** On paper a near-black square reads as dust, not a star, so the light sky is slate. */
-function starInk(p: BrandPalette): string {
+export function starInk(p: BrandPalette): string {
   return p.theme === "dark" ? p.ink : p.inkDim;
 }
 
 /** Corner registration marks, as on the atlas plates. */
-function registration(w: number, h: number, inset: number, arm: number, ink: string, opacity: number): string {
+export function registration(w: number, h: number, inset: number, arm: number, ink: string, opacity: number): string {
   const d = [
     `M${inset} ${inset + arm}V${inset}H${inset + arm}`,
     `M${w - inset - arm} ${inset}H${w - inset}V${inset + arm}`,
@@ -347,7 +351,7 @@ export function placeSvg(markup: string, x: number, y: number, w: number, h: num
   return markup.replace(/^<svg\b/, `<svg x="${x}" y="${y}" width="${w}" height="${h}"`);
 }
 
-function text(
+export function text(
   s: string,
   x: number,
   y: number,
@@ -367,7 +371,7 @@ function text(
   return `<text ${attrs.join(" ")}>${esc(o.upper ? s.toUpperCase() : s)}</text>`;
 }
 
-function lockup(p: BrandPalette, x: number, y: number, size: number): string {
+export function lockup(p: BrandPalette, x: number, y: number, size: number): string {
   // The rail sets the mark at 31x36 beside 29px type; this keeps that ratio at any size.
   const markH = size * 1.2;
   const markW = markH * (24 / 24);
@@ -377,7 +381,7 @@ function lockup(p: BrandPalette, x: number, y: number, size: number): string {
   );
 }
 
-function defs(p: BrandPalette, w: number, h: number, fontCss: string | undefined, gx: number, gy: number): string {
+export function defs(p: BrandPalette, w: number, h: number, fontCss: string | undefined, gx: number, gy: number): string {
   // The client's body::before: one faint wash from a corner, not a glow behind content.
   const wash = p.theme === "dark" ? "#324452" : "#c9d6e2";
   const washOpacity = p.theme === "dark" ? 0.42 : 0.55;
@@ -396,7 +400,7 @@ function defs(p: BrandPalette, w: number, h: number, fontCss: string | undefined
  * farthest the orbit gets from what it circles. Drawn on the upper end so the point is
  * also the highest thing on the path, which is the name's other sense.
  */
-function orbit(p: BrandPalette, cx: number, cy: number, rx: number, ry: number, tilt: number, tint: string): string {
+export function orbit(p: BrandPalette, cx: number, cy: number, rx: number, ry: number, tilt: number, tint: string): string {
   const a = (tilt * Math.PI) / 180;
   const px = cx + rx * Math.cos(a);
   const py = cy + rx * Math.sin(a);
@@ -408,12 +412,103 @@ function orbit(p: BrandPalette, cx: number, cy: number, rx: number, ry: number, 
   );
 }
 
-function slot(p: BrandPalette, label: string, code: string, x: number, y: number, w: number, h: number, scale: number): string {
+export function slot(p: BrandPalette, label: string, code: string, x: number, y: number, w: number, h: number, scale: number): string {
   return (
     `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${6 * scale}" fill="${p.panel}" stroke="${p.brand}" stroke-opacity=".55"/>` +
     text(label, x + 16 * scale, y + h / 2 + 4.5 * scale, { size: 12 * scale, fill: p.inkDim, family: "mono", tracking: 0.16, upper: true }) +
     text(code, x + w - 16 * scale, y + h / 2 + 7 * scale, { size: 21 * scale, fill: p.brand, family: "mono", weight: 600, anchor: "end", tracking: 0.08, fit: w - 150 * scale })
   );
+}
+
+// ---------------------------------------------------------------- round rows
+
+/**
+ * Up to three round rows on a 1200x675 card, with their column heads, from `top`: every
+ * round's scenario, both sides' raw score, baseline and delta, and the round's result.
+ * Shared by the match card and the cards that settle a match of their own (a crown, a
+ * flag), so a round reads the same on every card that prints one.
+ */
+export function landscapeRounds(p: BrandPalette, rounds: CardRound[], heads: { first: string; you: string; them: string }, top = 404): string {
+  const { width: W } = SHARE_CARD_SIZES.landscape;
+  const L = 64;
+  const R = W - 64;
+  const out: string[] = [];
+  const colYou = 500;
+  const colThem = 760;
+  const colOut = R - 16;
+  out.push(text(heads.first, L + 16, top - 12, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true }));
+  out.push(text(heads.you, colYou, top - 12, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true, fit: 200, fitMin: 11 }));
+  out.push(text(heads.them, colThem, top - 12, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true, fit: 200, fitMin: 11 }));
+  out.push(text("Round", colOut, top - 12, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true, anchor: "end" }));
+  const rows = rounds.slice(0, 3);
+  rows.forEach((r, i) => {
+    const y = top + i * 66;
+    const h = 58;
+    const oc = roundOutcome(r);
+    out.push(`<rect x="${L}" y="${y}" width="${R - L}" height="${h}" rx="7" fill="${p.panel}" fill-opacity="${p.theme === "dark" ? 0.86 : 1}" stroke="${p.line}" stroke-opacity="${p.lineOpacity}"/>`);
+    // A bar in the round's colour on the leading edge: the result reads before the numbers.
+    out.push(`<rect x="${L}" y="${y + 12}" width="3" height="${h - 24}" rx="1.5" fill="${outcomeColour(p, oc)}"/>`);
+    out.push(text(String(i + 1).padStart(2, "0"), L + 22, y + 36, { size: 13, fill: p.inkDim, family: "mono" }));
+    out.push(text(r.scenario, L + 62, y + 37, { size: 22, fill: p.ink, weight: 500, fit: colYou - L - 62 - 28 }));
+    const digits = roundDigits(r);
+    const side = (s: CardSide | null | undefined, x: number) => {
+      if (!s) {
+        out.push(text("No run yet", x, y + 36, { size: 14, fill: p.inkDim, family: "mono" }));
+        return;
+      }
+      if (rawNotSent(s)) {
+        out.push(text("raw score", x, y + 28, { size: 12, fill: p.inkDim, family: "mono", tracking: 0.02 }));
+        out.push(text("not sent", x, y + 45, { size: 12, fill: p.inkDim, family: "mono", tracking: 0.02 }));
+      } else {
+        out.push(text(fmtScore(s.score), x, y + 28, { size: 22, fill: p.ink, weight: 600 }));
+        out.push(text(`base ${fmtScore(s.baseline)}`, x, y + 47, { size: 12, fill: p.inkDim, family: "mono", tracking: 0.02 }));
+      }
+      out.push(text(fmtDelta(s.delta, digits), x + 214, y + 37, { size: 19, fill: deltaColour(p, s.delta), family: "mono", weight: 600, anchor: "end" }));
+    };
+    side(r.you, colYou);
+    side(r.them, colThem);
+    out.push(text(outcomeLabel(r), colOut, y + 36, { size: 13, fill: outcomeColour(p, oc), family: "mono", weight: 600, anchor: "end", tracking: 0.14, upper: true }));
+  });
+  return out.join("");
+}
+
+/** The same rows on a 1080x1920 story, from `top`: one 160px panel per round. */
+export function portraitRounds(p: BrandPalette, rounds: CardRound[], names: { you: string; them: string }, top = 1190): string {
+  const { width: W } = SHARE_CARD_SIZES.portrait;
+  const L = 80;
+  const R = W - 80;
+  const out: string[] = [];
+  const rows = rounds.slice(0, 3);
+  rows.forEach((r, i) => {
+    const y = top + i * 176;
+    const h = 160;
+    const oc = roundOutcome(r);
+    out.push(`<rect x="${L}" y="${y}" width="${R - L}" height="${h}" rx="12" fill="${p.panel}" fill-opacity="${p.theme === "dark" ? 0.86 : 1}" stroke="${p.line}" stroke-opacity="${p.lineOpacity}"/>`);
+    out.push(`<rect x="${L}" y="${y + 20}" width="4" height="${h - 40}" rx="2" fill="${outcomeColour(p, oc)}"/>`);
+    out.push(text(String(i + 1).padStart(2, "0"), L + 32, y + 50, { size: 18, fill: p.inkDim, family: "mono" }));
+    out.push(text(r.scenario, L + 80, y + 52, { size: 32, fill: p.ink, weight: 500, fit: R - L - 80 - 200 }));
+    out.push(text(outcomeLabel(r), R - 32, y + 50, { size: 18, fill: outcomeColour(p, oc), family: "mono", weight: 600, anchor: "end", tracking: 0.14, upper: true }));
+    const digits = roundDigits(r);
+    const side = (label: string, s: CardSide | null | undefined, x: number, w: number) => {
+      out.push(text(label, x, y + 94, { size: 14, fill: p.inkDim, family: "mono", tracking: 0.16, upper: true, fit: w - 130, fitMin: 14 }));
+      if (!s) {
+        out.push(text("No run yet", x, y + 132, { size: 20, fill: p.inkDim, family: "mono" }));
+        return;
+      }
+      if (rawNotSent(s)) {
+        out.push(text("raw score not sent", x, y + 130, { size: 15, fill: p.inkDim, family: "mono", fit: w - 120 }));
+      } else {
+        out.push(text(fmtScore(s.score), x, y + 134, { size: 34, fill: p.ink, weight: 600 }));
+        out.push(text(`base ${fmtScore(s.baseline)}`, x + w, y + 94, { size: 15, fill: p.inkDim, family: "mono", anchor: "end" }));
+      }
+      out.push(text(fmtDelta(s.delta, digits), x + w, y + 134, { size: 28, fill: deltaColour(p, s.delta), family: "mono", weight: 600, anchor: "end" }));
+    };
+    const half = (R - L - 80 - 32 - 40) / 2;
+    side(names.you, r.you, L + 80, half);
+    side(names.them, r.them, L + 80 + half + 40, half);
+    if (i < rows.length) out.push(`<path d="M${L + 80 + half + 20} ${y + 76}V${y + h - 22}" stroke="${p.line}" stroke-opacity="${p.lineOpacity * 1.5}"/>`);
+  });
+  return out.join("");
 }
 
 // ---------------------------------------------------------------- layouts
@@ -475,43 +570,7 @@ function landscape(input: ShareCardInput, o: ShareCardOptions): string {
   }
 
   // Rounds.
-  const colYou = 500;
-  const colThem = 760;
-  const colOut = R - 16;
-  const top = 404;
-  out.push(text(input.kind === "rank" ? "Last match" : "Scenario", L + 16, top - 12, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true }));
-  out.push(text(input.player.name, colYou, top - 12, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true, fit: 200, fitMin: 11 }));
-  out.push(text(input.opponent?.name ?? "Opponent", colThem, top - 12, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true, fit: 200, fitMin: 11 }));
-  out.push(text("Round", colOut, top - 12, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true, anchor: "end" }));
-  const rows = input.rounds.slice(0, 3);
-  rows.forEach((r, i) => {
-    const y = top + i * 66;
-    const h = 58;
-    const oc = roundOutcome(r);
-    out.push(`<rect x="${L}" y="${y}" width="${R - L}" height="${h}" rx="7" fill="${p.panel}" fill-opacity="${p.theme === "dark" ? 0.86 : 1}" stroke="${p.line}" stroke-opacity="${p.lineOpacity}"/>`);
-    // A bar in the round's colour on the leading edge: the result reads before the numbers.
-    out.push(`<rect x="${L}" y="${y + 12}" width="3" height="${h - 24}" rx="1.5" fill="${outcomeColour(p, oc)}"/>`);
-    out.push(text(String(i + 1).padStart(2, "0"), L + 22, y + 36, { size: 13, fill: p.inkDim, family: "mono" }));
-    out.push(text(r.scenario, L + 62, y + 37, { size: 22, fill: p.ink, weight: 500, fit: colYou - L - 62 - 28 }));
-    const digits = roundDigits(r);
-    const side = (s: CardSide | null | undefined, x: number) => {
-      if (!s) {
-        out.push(text("No run yet", x, y + 36, { size: 14, fill: p.inkDim, family: "mono" }));
-        return;
-      }
-      if (rawNotSent(s)) {
-        out.push(text("raw score", x, y + 28, { size: 12, fill: p.inkDim, family: "mono", tracking: 0.02 }));
-        out.push(text("not sent", x, y + 45, { size: 12, fill: p.inkDim, family: "mono", tracking: 0.02 }));
-      } else {
-        out.push(text(fmtScore(s.score), x, y + 28, { size: 22, fill: p.ink, weight: 600 }));
-        out.push(text(`base ${fmtScore(s.baseline)}`, x, y + 47, { size: 12, fill: p.inkDim, family: "mono", tracking: 0.02 }));
-      }
-      out.push(text(fmtDelta(s.delta, digits), x + 214, y + 37, { size: 19, fill: deltaColour(p, s.delta), family: "mono", weight: 600, anchor: "end" }));
-    };
-    side(r.you, colYou);
-    side(r.them, colThem);
-    out.push(text(outcomeLabel(r), colOut, y + 36, { size: 13, fill: outcomeColour(p, oc), family: "mono", weight: 600, anchor: "end", tracking: 0.14, upper: true }));
-  });
+  out.push(landscapeRounds(p, input.rounds, { first: input.kind === "rank" ? "Last match" : "Scenario", you: input.player.name, them: input.opponent?.name ?? "Opponent" }));
 
   // Footer: the rule, and the way back in.
   const fy = 638;
@@ -577,37 +636,7 @@ function portrait(input: ShareCardInput, o: ShareCardOptions): string {
     if (sl) out.push(text(sl, C, 1082, { size: 22, fill: p.inkMid, family: "mono", anchor: "middle", tracking: 0.04, fit: 900 }));
   }
 
-  const top = 1190;
-  const rows = input.rounds.slice(0, 3);
-  rows.forEach((r, i) => {
-    const y = top + i * 176;
-    const h = 160;
-    const oc = roundOutcome(r);
-    out.push(`<rect x="${L}" y="${y}" width="${R - L}" height="${h}" rx="12" fill="${p.panel}" fill-opacity="${p.theme === "dark" ? 0.86 : 1}" stroke="${p.line}" stroke-opacity="${p.lineOpacity}"/>`);
-    out.push(`<rect x="${L}" y="${y + 20}" width="4" height="${h - 40}" rx="2" fill="${outcomeColour(p, oc)}"/>`);
-    out.push(text(String(i + 1).padStart(2, "0"), L + 32, y + 50, { size: 18, fill: p.inkDim, family: "mono" }));
-    out.push(text(r.scenario, L + 80, y + 52, { size: 32, fill: p.ink, weight: 500, fit: R - L - 80 - 200 }));
-    out.push(text(outcomeLabel(r), R - 32, y + 50, { size: 18, fill: outcomeColour(p, oc), family: "mono", weight: 600, anchor: "end", tracking: 0.14, upper: true }));
-    const digits = roundDigits(r);
-    const side = (label: string, s: CardSide | null | undefined, x: number, w: number) => {
-      out.push(text(label, x, y + 94, { size: 14, fill: p.inkDim, family: "mono", tracking: 0.16, upper: true, fit: w - 130, fitMin: 14 }));
-      if (!s) {
-        out.push(text("No run yet", x, y + 132, { size: 20, fill: p.inkDim, family: "mono" }));
-        return;
-      }
-      if (rawNotSent(s)) {
-        out.push(text("raw score not sent", x, y + 130, { size: 15, fill: p.inkDim, family: "mono", fit: w - 120 }));
-      } else {
-        out.push(text(fmtScore(s.score), x, y + 134, { size: 34, fill: p.ink, weight: 600 }));
-        out.push(text(`base ${fmtScore(s.baseline)}`, x + w, y + 94, { size: 15, fill: p.inkDim, family: "mono", anchor: "end" }));
-      }
-      out.push(text(fmtDelta(s.delta, digits), x + w, y + 134, { size: 28, fill: deltaColour(p, s.delta), family: "mono", weight: 600, anchor: "end" }));
-    };
-    const half = (R - L - 80 - 32 - 40) / 2;
-    side(input.player.name, r.you, L + 80, half);
-    side(input.opponent?.name ?? "Opponent", r.them, L + 80 + half + 40, half);
-    if (i < rows.length) out.push(`<path d="M${L + 80 + half + 20} ${y + 76}V${y + h - 22}" stroke="${p.line}" stroke-opacity="${p.lineOpacity * 1.5}"/>`);
-  });
+  out.push(portraitRounds(p, input.rounds, { you: input.player.name, them: input.opponent?.name ?? "Opponent" }));
 
   const rule = ruleLine(input);
   if (input.duelCode) out.push(slot(p, codeLabel(input), input.duelCode, L, 1740, R - L, 64, 1.35));
