@@ -313,3 +313,36 @@ comment on table verified_pbs is
   'The best score per player and scenario that KovaaK''s confirmed: maintained from runs '
   'graded verified by record_verified_pb. Supplies the baseline floor (PLAN.md section 3) '
   'and the apex board''s inputs. Service role writes only.';
+
+
+-- ===========================================================================
+-- 6. A player's profile is server-owned (SEC-03)
+-- ===========================================================================
+--
+-- No client path writes `players`: steam-auth upserts the profile under the service role
+-- on every sign-in, the KovaaK's link is written by the function that verified it, and
+-- moderation flags are the server's. The table-wide UPDATE Supabase grants by default let
+-- a session rewrite its own steam_id (the join key verification rests on), its display
+-- name (which other players see) and its own flags (erasing under_review). Revoked, the
+-- way 20260825000013 narrowed runs. players_update_self stays as the row guard for any
+-- column a future migration grants on purpose.
+
+revoke insert, update, delete on players from anon, authenticated;
+
+comment on policy players_update_self on players is
+  'Row guard only. No column of players is granted UPDATE to clients (20261003000026); a '
+  'self-editable field must be granted by name.';
+
+
+-- ===========================================================================
+-- 7. Ratings are served, not enumerated (SEC-06)
+-- ===========================================================================
+--
+-- The same argument 20260830000015 made for apex_standing: a world-readable table of
+-- player_id and rating is an ordered list of the whole population. The only client read
+-- of ratings is the player's own (fetchStanding); everybody else's rating reaches the
+-- client through list-duels, find-match and apex-board, under the service role.
+
+drop policy if exists ratings_read_all on ratings;
+create policy ratings_read_self on ratings
+  for select using (auth.uid() = player_id);
