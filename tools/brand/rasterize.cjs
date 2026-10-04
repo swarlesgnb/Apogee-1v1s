@@ -175,9 +175,11 @@ app.whenReady().then(async () => {
   win.destroy();
   if (reports.some(Boolean)) writeFileSync(process.argv.at(-1).replace(/\.json$/, ".report.json"), JSON.stringify(reports));
   console.log(`  rasterised ${jobs.length} image(s)`);
-  if (failures.length) {
-    console.error(failures.map((f) => `  FAIL ${f}`).join("\n"));
-    process.exitCode = 1;
-  }
-  app.quit();
+  if (failures.length) console.error(failures.map((f) => `  FAIL ${f}`).join("\n"));
+  // app.exit, not process.exitCode and app.quit(): Electron's quit exits 0 whatever
+  // exitCode says, so the callers' status checks never saw a failure.
+  app.exit(failures.length ? 1 : 0);
+}).catch((err) => {
+  console.error(err);
+  app.exit(1);
 });
