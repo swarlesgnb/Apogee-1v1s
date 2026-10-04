@@ -7824,6 +7824,8 @@ function renderSettled(s) {
       '<td class="' + (youWon ? "won-round" : "") + '">' + outcome + "</td>";
     body.append(tr);
   });
+  // A Shadow result, or an answer that settled a Flag (queue-board.js), says so.
+  window.apogeeQueueHooks?.paintSettled?.(s);
 }
 
 /**
@@ -9823,6 +9825,9 @@ function showRealMatch(match, data) {
         " plays the same three after you, and the fixture goes to whoever improves more."
       : leg.opponentName + " has played these three. Only your first run on each counts.";
   }
+
+  // A Shadow match or an answer to a Flag (queue-board.js) draws its own opponent card.
+  window.apogeeQueueHooks?.paintMatch?.(match);
 
   startMatchClock(match.expiresAt);
 
