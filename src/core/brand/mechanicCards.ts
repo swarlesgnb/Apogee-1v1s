@@ -78,6 +78,8 @@ function record(series: ShadowCardInput["series"]): string {
   return [`${w} won`, `${l} lost`, d ? `${d} level` : ""].filter(Boolean).join(", ");
 }
 
+const signedRating = (n: number) => { const c = Math.round(n); return c > 0 ? `+${c}` : c < 0 ? `−${-c}` : "±0"; };
+
 const latest = (input: ShadowCardInput) => input.series[input.series.length - 1];
 
 /** The app's words for a Shadow result (queue-board.js), short enough for a headline. */
@@ -158,7 +160,8 @@ function figureLines(input: MechanicCardInput): string[] {
     case "flag":
       return [
         input.rounds.length ? matchLine(input.matchScore) : "",
-        ratingChangeLine(input.player.rating, input.player.ratingChange),
+        // The queue board sends the change and not the rating it moved to.
+        input.player.rating == null && input.player.ratingChange != null ? `Rated · ${signedRating(input.player.ratingChange)} rating` : ratingChangeLine(input.player.rating, input.player.ratingChange),
         input.standing != null ? `${plural(input.standing, "flag")} still standing` : "",
       ].filter(Boolean);
     case "shadow":

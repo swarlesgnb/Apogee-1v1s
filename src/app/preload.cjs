@@ -36,6 +36,9 @@ contextBridge.exposeInMainWorld("apogee", {
    * Resolves { ok, png?, fileName, savedTo?, copied? } or { ok: false, error }.
    */
   shareCard: (source, layout, action) => ipcRenderer.invoke("apogee:shareCard", { source, layout, action }),
+  /** Which Shadow, Flag and Crown result a card is held for: { crown, flag, shadow } keys. */
+  shareRecords: () => ipcRenderer.invoke("apogee:shareRecords"),
+  onShareRecords: (handler) => subscribe("apogee:shareRecords", handler),
 
   /**
    * Start Steam sign-in. Opens the system browser and resolves once a session exists.
