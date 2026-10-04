@@ -240,6 +240,20 @@ const shadowSettle = queueServer.slice(queueServer.indexOf("export async functio
 check("the server's Shadow settlement never builds a rating", shadowSettle.length > 0 && !/rating_after|updateRating|p_ratings/.test(shadowSettle));
 // The flow test (tools/validateQueueFlow.ts) asserts the same against the database: no
 // rating_history row for any match that has a Shadow.
+{
+  const { matchCardInput } = await import("../brand/shareInput.ts");
+  const card = matchCardInput({
+    at: Date.now(), sentDuel: false,
+    settled: {
+      matchId: "m", verdict: null, seeding: true, rated: false, shadow: { label: shadowLabel(51) }, category: "Static Clicking",
+      yourMatchScore: 0.1, theirMatchScore: null, ratingAfter: 1500, ratingChange: 0,
+      rounds: [{ scenario: "s", score: 110, baseline: 100, delta: 0.1, opponentDelta: 0.005, counted: true, excludedReason: null }],
+    },
+  }, { season: "Season 1", playerName: "p", tier: null } as never);
+  check("a share card of a Shadow result names the Shadow, claims no rating and draws no opponent column",
+    "kind" in card && card.mode === "Shadow match, a 51st-percentile day · unrated" && card.player.ratingChange === null &&
+    card.opponent === null && card.rounds.every((r) => r.them === null), "kind" in card ? String(card.mode) : "refused");
+}
 
 // ---------------------------------------------------------------------------
 console.log("\nFlags");

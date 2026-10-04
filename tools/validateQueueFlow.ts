@@ -21,12 +21,12 @@
  *   4. a third player on the same run set rates only themselves
  *   5. two answerers racing one Flag: exactly one settles it, the other is rated alone
  *   6. an expired Flag rates nobody but its answerer, and closes cleanly
- *   7. letting a Shadow match expire is a Shadow loss and steps the ladder down; a round left
- *      early is no result and leaves it where it was
+ *   7. letting a Shadow match expire, or pressing Abandon on one, is a Shadow loss and steps
+ *      the ladder down; a round left early is no result and leaves it where it was
  */
 
 import assert from "node:assert/strict";
-import { mkdirSync, readFileSync, readdirSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -62,18 +62,23 @@ const CATEGORIES = {
   evasive: "Evasive Switching",
 } as const;
 const scenarioIds: Record<string, number[]> = {};
+const seasonFile = JSON.parse(readFileSync("data/seasons/season-1.json", "utf8")) as { scenarios: { scenario: string; category: string; window: number }[] };
+const realNames = (category: string) => seasonFile.scenarios.filter((x) => x.category === category && x.window === 1).map((x) => x.scenario).slice(0, 3);
 const season = (await q(`insert into seasons(name,status,windows,window_size) values('Queue test season','draft','{Novice,Intermediate}',4) returning id`))[0].id;
 for (const [key, category] of Object.entries(CATEGORIES)) {
   scenarioIds[category] = [];
-  for (let i = 1; i <= 3; i++) {
-    const id = (await q(`insert into scenarios(name,duration_seconds) values($1,60) returning id`, [`Queue ${key} ${i}`]))[0].id;
+  const names = realNames(category);
+  assert.equal(names.length, 3, `Season 1 has three ${category} scenarios in Intermediate`);
+  for (const [i, name] of names.entries()) {
+    const id = (await q(`insert into scenarios(name,duration_seconds) values($1,60) on conflict (name) do update set duration_seconds = 60 returning id`, [name]))[0].id;
     await q(`insert into season_scenarios(season_id,scenario_id,category,family,window_index) values($1,$2,$3,$4,1)`,
       [season, id, category, `${key}-${i}`]);
     scenarioIds[category].push(Number(id));
   }
 }
-const filler = (await q(`select name from scenarios where name not like 'Queue %' order by id limit 1`))[0].name;
-const nameOf = new Map((await q(`select id,name from scenarios where name like 'Queue %'`)).map((r) => [Number(r.id), r.name]));
+const poolIds = Object.values(scenarioIds).flat();
+const filler = (await q(`select name from scenarios where id <> all($1::bigint[]) order by id limit 1`, [poolIds]))[0].name;
+const nameOf = new Map((await q(`select id,name from scenarios where id = any($1::bigint[])`, [poolIds])).map((r) => [Number(r.id), r.name]));
 
 let digest = 0;
 const days = (n: number) => new Date(Date.now() - n * 86_400_000).toISOString();
@@ -152,6 +157,7 @@ const rpcLog: { name: string; result: any }[] = [];
 const findMatch = await bundle("find-match");
 const settleMatch = await bundle("settle-match");
 const queueBoard = await bundle("queue-board");
+const abandonMatch = await bundle("abandon-match");
 
 const WINDOW = 1;
 const ok = (r: { status: number; body: any }, label: string) => {
@@ -177,17 +183,21 @@ async function records(who: string): Promise<ShadowRecord[]> {
     .map((r) => ({ ordinal: r.ordinal, percentile: r.percentile, result: r.result }));
 }
 
-const A = await player("Queue A"), B = await player("Queue B"), C = await player("Queue C"), D = await player("Queue D");
+const A = await player("mira"), B = await player("kestrel"), C = await player("juno"), D = await player("rook");
 await history(A, CATEGORIES.static, 100);
 await history(A, CATEGORIES.precise, 200);
 await history(B, CATEGORIES.static, 100);
 await history(C, CATEGORIES.static, 100);
 let checks = 0;
+/** Real handler payloads, photographed by tools/queueUi.cjs. */
+const screens: Record<string, unknown> = {};
 const pass = (label: string) => { checks++; console.log(`  ok   ${label}`); };
 
 // ---- 1. empty pool: a Shadow, and a Flag ------------------------------------------------
 const expected = planShadow(SHADOW_DAYS, A, [], CATEGORIES.static);
 const first = await queue(A, CATEGORIES.static);
+screens.planShadow = first.board;
+screens.matchShadow = first.found;
 assert.equal(first.found.seeding, true);
 assert.equal(first.found.opponent, null);
 assert.equal(first.found.shadow.percentile, expected.percentile, "the Shadow is the one the core predicts from server data");
@@ -209,6 +219,8 @@ pass("requeueing returns the open match and its Shadow; the one-open-match rule 
 const ratingBefore = await ratingOf(A);
 await play(A, first.found.matchId, first.ids, [110, 110, 110]);
 const settledA = ok(await settleMatch(A, { matchId: first.found.matchId }), "settle Shadow match");
+screens.resultShadowWin = settledA;
+screens.boardAfterFirst = ok(await queueBoard(A, {}), "board after first Shadow");
 assert.equal(settledA.seeding, true);
 assert.equal(settledA.rated, false);
 assert.equal(settledA.verdict, null, "the ladder records no verdict for a match with nobody on the other side");
@@ -237,13 +249,16 @@ pass("settling twice returns the stored result and plants nothing twice");
 
 // ---- 2. a second player answers the Flag ------------------------------------------------
 const answer = await queue(B, CATEGORIES.static);
+screens.planOpponent = answer.board;
+screens.matchAnswer = answer.found;
 assert.ok(!answer.found.seeding, "a contested match, not a seeding one");
-assert.equal(answer.found.opponent.displayName, "Queue A");
+assert.equal(answer.found.opponent.displayName, "mira");
 assert.equal(answer.found.flag.answering, true);
 assert.deepEqual(answer.ids, first.ids, "the answer is played on the planter's three");
 await play(B, answer.found.matchId, answer.ids, [95, 95, 95]);
 const aBefore = await ratingOf(A), bBefore = await ratingOf(B);
 const settledB = ok(await settleMatch(B, { matchId: answer.found.matchId }), "settle answer");
+screens.resultAnswer = settledB;
 assert.equal(settledB.verdict, "loss");
 assert.equal(settledB.rated, true);
 assert.equal(settledB.flag.answered, true);
@@ -262,12 +277,13 @@ pass(`second player answered the Flag: rated both sides (A ${Math.round(aBefore)
 
 // ---- 3. the planter's next launch -------------------------------------------------------
 const news = ok(await queueBoard(A, {}), "planter board");
+screens.planterNews = news;
 assert.deepEqual(news.news, [flag1.id]);
 assert.equal(news.flags[0].status, "answered");
 assert.equal(news.flags[0].verdict, "win");
-assert.equal(news.flags[0].answeredBy, "Queue B");
+assert.equal(news.flags[0].answeredBy, "kestrel");
 assert.ok(news.flags[0].ratingChange > 0);
-assert.match(news.flags[0].line, /^Your Static Clicking Flag was answered by Queue B: you won, \+\d+ rating\.$/);
+assert.match(news.flags[0].line, /^Your Static Clicking Flag was answered by kestrel: you won, \+\d+ rating\.$/);
 assert.equal(news.shadow.streak, 1);
 assert.equal(news.shadow.next.rung, 3, "a Shadow win moves the next one a rung up");
 const acked = ok(await queueBoard(A, { ack: [flag1.id] }), "ack");
@@ -279,7 +295,7 @@ pass(`planter's board on next launch: "${news.flags[0].line}", then quiet once a
 // ---- 4. later answers rate only the answerer ---------------------------------------------
 await q("update ratings set rating=(select rating from ratings where player_id=$1) where player_id=$2", [A, C]);
 const third = await queue(C, CATEGORIES.static);
-assert.equal(third.found.opponent.displayName, "Queue A", "drew the planter's run set again");
+assert.equal(third.found.opponent.displayName, "mira", "drew the planter's run set again");
 assert.equal(third.found.flag, null, "an answered flag is not offered as a flag");
 await play(C, third.found.matchId, third.ids, [99, 99, 99]);
 const aMid = await ratingOf(A);
@@ -298,6 +314,7 @@ assert.equal(tracking.found.shadow.percentile, expectedSecond.percentile);
 assert.equal(tracking.found.shadow.skill, "Tracking");
 await play(A, tracking.found.matchId, tracking.ids, [190, 190, 190]);
 const lost = ok(await settleMatch(A, { matchId: tracking.found.matchId }), "settle second Shadow");
+screens.resultShadowLoss = lost;
 assert.equal(lost.shadow.verdict, "loss");
 assert.match(lost.explanation, /-percentile day beat you: −5\.0% vs \+\d\.\d% against baselines\./);
 assert.equal(lost.flag.status, "open", "a lost Shadow still plants the run set");
@@ -338,13 +355,14 @@ assert.match(speedSettled.explanation, /^None of these 3 scenarios had earlier r
 const flag3 = (await q("select * from flags where match_id=$1", [speed.found.matchId]))[0];
 await q("update flags set planted_at = now() - interval '8 days', expires_at = now() - interval '1 day' where id=$1", [flag3.id]);
 const late = await queue(B, CATEGORIES.speed);
-assert.equal(late.found.opponent.displayName, "Queue A");
+assert.equal(late.found.opponent.displayName, "mira");
 assert.equal(late.found.flag, null, "an expired flag is not offered");
 await play(B, late.found.matchId, late.ids, [100, 100, 100]);
 const receiptsBeforeLate = await receipts(A);
 ok(await settleMatch(B, { matchId: late.found.matchId }), "settle late answer");
 assert.equal(await receipts(A), receiptsBeforeLate, "an expired flag rates nobody but its answerer");
 const closed = ok(await queueBoard(A, {}), "board after expiry");
+screens.boardLater = closed;
 const expiredFlag = closed.flags.find((f: any) => f.id === flag3.id);
 assert.equal(expiredFlag.status, "expired");
 assert.match(expiredFlag.line, /expired unanswered/);
@@ -369,9 +387,23 @@ assert.equal((await q("select result from match_shadows where match_id=$1", [nex
 assert.equal(ok(await queueBoard(A, {}), "board").shadow.next.rung, next.shadow.rung, "a void leaves the ladder where it was");
 pass("a round left early voids the Shadow match: no result, the ladder holds");
 
+const pressed = await queue(A, CATEGORIES.evasive);
+assert.equal(pressed.found.seeding, true);
+const left = ok(await abandonMatch(A, {}), "abandon a Shadow match");
+assert.equal(left.rated, false);
+assert.equal(left.shadow, true);
+assert.match(left.message, /^Shadow match abandoned\. It counts as a loss to an? \d+(st|nd|rd|th)-percentile day; nothing was rated and no Flag was planted\./);
+assert.ok(!/no opponent/.test(left.message));
+assert.equal((await q("select result from match_shadows where match_id=$1", [pressed.found.matchId]))[0].result, "forfeit");
+assert.equal(ok(await queueBoard(A, {}), "board").shadow.next.rung, Math.max(0, next.shadow.rung - 1), "pressing Abandon costs the same rung as letting it expire");
+pass(`pressing Abandon on a Shadow match: "${left.message}"`);
+
 const shadowReceipts = (await q("select count(*)::int as n from rating_history where match_id in (select match_id from match_shadows)"))[0].n;
 assert.equal(shadowReceipts, 0, "no Shadow match ever wrote a rating receipt");
 pass("across every Shadow match played here, no rating receipt was written");
+
+mkdirSync(".cache/queue-ui", { recursive: true });
+writeFileSync(".cache/queue-ui/screens.json", JSON.stringify(screens, null, 1));
 
 await db.close();
 console.log(`\nOK: ${checks} queue-flow checks against the shipped handlers and migrations`);

@@ -21,6 +21,8 @@ export interface SettledRecord {
   seeding?: boolean;
   rated?: boolean;
   tournament?: { name: string; label: string } | null;
+  /** A match played against a Shadow (src/core/match/shadow.ts): synthetic, unrated. */
+  shadow?: { label: string } | null;
   opponent?: { displayName: string } | null;
   category?: string;
   yourMatchScore: number | null;
@@ -98,7 +100,9 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
   const opponent = !seeding && s.opponent ? { name: s.opponent.displayName } : null;
 
   const rounds: CardRound[] = s.rounds.map((r) => {
-    const theirs = r.counted && finite(r.opponentDelta) ? r.opponentDelta : null;
+    // A Shadow's rounds are not a person's, and a card column of them would read as one.
+    // The Shadow is named in the kicker instead.
+    const theirs = !s.shadow && r.counted && finite(r.opponentDelta) ? r.opponentDelta : null;
     return {
       scenario: r.scenario,
       you: { score: finite(r.score) ? r.score : null, baseline: finite(r.baseline) ? r.baseline : null, delta: r.counted && finite(r.delta) ? r.delta : null },
@@ -109,7 +113,9 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
     };
   });
 
-  const mode = s.tournament ? `Tournament · ${s.tournament.label}` : seeding && rec.sentDuel ? "Duel sent" : null;
+  const mode = s.tournament ? `Tournament · ${s.tournament.label}`
+    : s.shadow ? `Shadow match, ${s.shadow.label} · unrated`
+    : seeding && rec.sentDuel ? "Duel sent" : null;
 
   return {
     kind: "match",

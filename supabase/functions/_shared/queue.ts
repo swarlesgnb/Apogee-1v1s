@@ -305,6 +305,17 @@ export async function settleShadowMatch(
   };
 }
 
+/**
+ * What abandoning a Shadow match says, in place of the seeding match's "there was no
+ * opponent". Null when the match had no Shadow.
+ */
+export async function shadowAbandonMessage(admin: SupabaseClient, matchId: string): Promise<string | null> {
+  const { data } = await admin.from("match_shadows").select("percentile, result").eq("match_id", matchId).maybeSingle();
+  if (!data) return null;
+  return `Shadow match abandoned. It counts as a loss to ${shadowLabel(Number(data.percentile))}; ` +
+    "nothing was rated and no Flag was planted. You can queue again now.";
+}
+
 /** The stored Shadow result, for a repeated settle call. */
 export async function shadowResultFor(admin: SupabaseClient, matchId: string) {
   const { data } = await admin
