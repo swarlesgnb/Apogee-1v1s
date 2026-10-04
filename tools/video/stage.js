@@ -166,6 +166,13 @@
     if (m) m.textContent = m.textContent.replace(/ · example set$/, "");
   };
 
+  /** A frozen payload the bridge in record.cjs carries: `screen` is a dotted path. */
+  const payload = (source, screen) => {
+    const v = String(screen).split(".").reduce((o, k) => (o == null ? o : o[k]), window.__demo?.data?.[source]);
+    if (v === undefined) throw new Error(`stage: no ${source} payload ${screen}`);
+    return v;
+  };
+
   let searchTimer = 0;
   const demos = {
     /** The button's searching state, with its orb and ticking clock, as the app draws it. */
@@ -214,6 +221,48 @@
      */
     ghost({ screen }) {
       window.__ghostPush(screen);
+    },
+    /**
+     * What queue-board answers next (tools/video/queue.json), and pushed now with `push`,
+     * as main pushes apogee:queueBoard after a settle. No screen: an empty board.
+     */
+    queueBoard({ screen, push }) {
+      const board = screen ? payload("queue", screen) : null;
+      window.__demo.state.board = board;
+      if (push) window.__demo.push("queueBoard", board);
+    },
+    /**
+     * A match arriving (find-match's or challenge-crown's answer), painted by the renderer's
+     * own paintActiveMatch, which hands Shadow and Flag matches to queue-board.js; then
+     * main's apogee:match push, which race.js listens for.
+     */
+    match({ source, screen }) {
+      clearInterval(searchTimer);
+      const m = JSON.parse(JSON.stringify(payload(source, screen)));
+      // eslint-disable-next-line no-new-func
+      Function("m", "activeMatch = m; paintActiveMatch();")(m);
+      window.__demo.push("match", m);
+      tidyReadiness();
+    },
+    /** A settle-match answer: renderSettled draws the result, then main's push. */
+    settled({ source, screen }) {
+      const s = payload(source, screen);
+      // eslint-disable-next-line no-new-func
+      Function("activeMatch = null;")();
+      R("renderSettled")(s);
+      window.__demo.push("settled", s);
+    },
+    /**
+     * Any other push main makes (crowns, live, races, daily, link), from the frozen data:
+     * `screen` is a path into that file, `index` picks one of a sequence.
+     */
+    push({ channel, source, screen, index }) {
+      let v = payload(source, screen);
+      if (index != null) v = v[index];
+      if (v === undefined) throw new Error(`stage: ${source}.${screen}[${index}] is missing`);
+      if (channel === "crowns") window.__demo.state.crowns = v;
+      if (channel === "daily") window.__demo.state.daily = v;
+      window.__demo.push(channel, v);
     },
     promotion({ from, to }) {
       R("showCelebration")({ promotion: { from, to } });

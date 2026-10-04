@@ -68,6 +68,8 @@ if (!flag("skip-record")) {
   run("node", ["tools/buildCosmic.mjs"], "cosmic build");
   process.env.APOGEE_PREVIEW_OUT = preview;
   run("npx", ["tsx", "tools/buildUiPreview.ts"], "preview build");
+  // The challenge-link landing page and the Daily's share card, from source (prepare.ts).
+  run("npx", ["tsx", "tools/video/prepare.ts"], "scene inputs");
 }
 
 /* ----------------------------------------------------------- 2. filming */

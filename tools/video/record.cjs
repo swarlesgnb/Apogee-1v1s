@@ -23,7 +23,7 @@
 
 const { app, BrowserWindow, session } = require("electron");
 const { spawn } = require("node:child_process");
-const { mkdirSync, readFileSync, writeFileSync, mkdtempSync } = require("node:fs");
+const { existsSync, mkdirSync, readFileSync, writeFileSync, mkdtempSync } = require("node:fs");
 const { join, resolve } = require("node:path");
 const { tmpdir } = require("node:os");
 
@@ -86,27 +86,127 @@ function stagedPreview() {
   const stage = readFileSync(join(__dirname, "stage.js"), "utf8");
   // Function replacers throughout: the payloads carry base64 and minified script, and a
   // "$&" in either would be read as a replacement pattern by the string form.
-  html = html.replace("<head>", () => "<head><style>" + brandFonts() + "</style><script>" + stage + "</script>");
-  return html.replace(GHOST_MARKER, () => ghostBridge() + GHOST_MARKER);
+  html = html.replace("<head>", () => "<head><style>" + brandFonts() + "\n" + uiFonts() + "</style><script>" + stage + "</script>");
+  return html.replace(GHOST_MARKER, () => demoBridge() + GHOST_MARKER);
 }
 
 /**
- * Ghost Mode reads its screens from window.apogee, which the preview host does not
- * provide: main draws the match, and there is no main here. The bridge answers with the
- * frozen screens in tools/video/ghost.json (drawn by the real core, see ghostDemo.ts),
- * the way tools/ghostUi.cjs feeds its fixture. Race and Start answer with the screen the
- * app's GhostService would send back; the runs landing are pushed by stage.js on cue.
- * It goes in just before ghost.js, which reads the bridge the moment it loads.
+ * A page that is not the client (the challenge-link landing), with the same stage
+ * directions and faces. Its CSP is default-src 'none', which also refuses the inlined
+ * fonts, so the staged copy adds font-src data: and nothing else.
+ */
+function stagedPage(file) {
+  let html = readFileSync(file, "utf8");
+  const stage = readFileSync(join(__dirname, "stage.js"), "utf8");
+  if (!html.includes("default-src 'none';")) throw new Error(`${file}: expected its default-src 'none' CSP`);
+  html = html.replace("default-src 'none';", "default-src 'none'; font-src data:;");
+  return html.replace("<head>", () => "<head><style>" + brandFonts() + "\n" + uiFonts() + "</style><script>" + stage + "</script>");
+}
+
+/**
+ * The feature scripts read their screens from window.apogee, which the preview host does
+ * not provide: main draws them, and there is no main here. The bridge answers with frozen
+ * payloads, the way tools/ghostUi.cjs, queueUi.cjs, crownsUi.cjs and socialUi.cjs feed
+ * their fixtures, and stage.js pushes the next one on cue the way main pushes them:
+ *
+ *   ghost.json    Ghost Mode's screens (ghostDemo.ts, the real ghost core)
+ *   queue.json    Shadow and Flag payloads (queueDemo.ts, the shipped handlers on PGlite)
+ *   arena.json    the Crowns board, a Crown challenge and a race (arenaDemo.ts, the real
+ *                 view builders)
+ *   social.json   the Daily (socialDemo.ts, DailyService.view()) and a link proposal
+ *
+ * Every ISO timestamp in the last three is moved by (now - generatedAt) as the page loads,
+ * so clocks, "held 2d 6h" and "days left" read as they did when the payloads were made.
+ *
+ * It goes in just before ghost.js: after renderer.js, which decides it is the static
+ * preview by window.apogee being absent, and before every feature script, which reads the
+ * bridge the moment it loads. shareCard is added on load, after share.js has looked for it
+ * and left (as the pipeline always filmed the result screens), so only the Daily's
+ * "Share image" panel, which asks at the moment it draws, uses it.
  */
 const GHOST_MARKER = "<script>/* Ghost Mode:";
-function ghostBridge() {
-  const screens = JSON.parse(readFileSync(join(__dirname, "ghost.json"), "utf8"));
-  return `<script>(()=>{const S=${JSON.stringify(screens)};let cur=S.choose;const hs=[];` +
-    `const answer={draw:"ready",start:"started",rematch:"ready",dismiss:"choose"};` +
-    `window.__ghostPush=(name)=>{if(!S[name])throw new Error("no ghost screen "+name);cur=S[name];hs.forEach((h)=>h(cur));};` +
-    `window.apogee=Object.assign(window.apogee||{},{ghost:async()=>cur,` +
-    `ghostAction:async(a)=>{if(answer[a.type])cur=S[answer[a.type]];return {view:cur};},` +
-    `onGhost:(h)=>hs.push(h),onMatchSettled:()=>{}});})();</script>`;
+function demoBridge() {
+  const load = (f) => JSON.parse(readFileSync(join(__dirname, f), "utf8"));
+  const data = { ghost: load("ghost.json"), queue: load("queue.json"), arena: load("arena.json"), social: load("social.json") };
+  const cards = {};
+  for (const layout of ["landscape", "portrait"]) {
+    const file = join(root, ".cache", "video", "cards", `daily-${layout}.png`);
+    if (!existsSync(file)) throw new Error(`${file} is missing: run npx tsx tools/video/prepare.ts`);
+    cards[layout] = "data:image/png;base64," + readFileSync(file).toString("base64");
+  }
+  const json = (v) => JSON.stringify(v).replace(/</g, "\\u003c");
+  return `<script>(${bridge.toString()})(${json(data)}, ${json(cards)});</script>`;
+}
+
+/** Runs in the page; see demoBridge(). */
+function bridge(D, CARDS) {
+  const ISO = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/;
+  const rebase = (v, shift) => typeof v === "string" ? (ISO.test(v) ? new Date(Date.parse(v) + shift).toISOString() : v)
+    : Array.isArray(v) ? v.map((x) => rebase(x, shift))
+    : v && typeof v === "object" ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, rebase(x, shift)])) : v;
+  const now = Date.now();
+  for (const k of ["queue", "arena", "social"]) D[k] = rebase(D[k], now - Date.parse(D[k].generatedAt));
+  const handlers = {};
+  const on = (channel) => (h) => { (handlers[channel] = handlers[channel] || []).push(h); return () => {}; };
+  const push = (channel, payload) => (handlers[channel] || []).forEach((h) => h(payload));
+  let ghost = D.ghost.choose;
+  const answer = { draw: "ready", start: "started", rematch: "ready", dismiss: "choose" };
+  // What the next read answers with; stage.js moves these on cue.
+  const state = { board: null, crowns: D.arena.board, daily: D.social.daily[0] };
+  window.__demo = { data: D, state, push };
+  window.__ghostPush = (name) => {
+    if (!D.ghost[name]) throw new Error("no ghost screen " + name);
+    ghost = D.ghost[name];
+    push("ghost", ghost);
+  };
+  const none = async () => ({ race: null });
+  window.apogee = Object.assign(window.apogee || {}, {
+    ghost: async () => ghost,
+    ghostAction: async (a) => { if (answer[a.type]) ghost = D.ghost[answer[a.type]]; return { view: ghost }; },
+    onGhost: on("ghost"),
+    onMatch: on("match"), onMatchSettled: on("settled"), onSession: on("session"),
+    queueBoard: async (a) => ({ board: state.board && a && a.ack ? { ...state.board, news: [] } : state.board }),
+    onQueueBoard: on("queueBoard"),
+    crowns: async () => ({ board: state.crowns }),
+    challengeCrown: async () => ({ match: D.arena.crownMatch }),
+    onCrowns: on("crowns"),
+    races: async () => ({ board: D.arena.races }), raceLive: async () => ({ view: null }),
+    inviteRace: none, acceptRace: none, declineRace: none, cancelRace: none,
+    onRaces: on("races"), onLive: on("live"),
+    duels: async () => ({ board: D.arena.duels }), onDuels: on("duels"),
+    daily: async () => state.daily, dailyAction: async () => ({ view: state.daily }), onDaily: on("daily"),
+    linkAction: async () => ({ ok: true }), pendingLink: async () => null, onLink: on("link"),
+  });
+  addEventListener("load", () => {
+    window.apogee.shareCard = async (source, layout) => source === "daily" && CARDS[layout]
+      ? { ok: true, png: CARDS[layout], width: 0, height: 0, fileName: "" }
+      : { ok: false, error: "No card for " + source + " in the video." };
+  });
+}
+
+/**
+ * The client's own faces are Windows system fonts: Segoe UI Variable and Segoe UI for text,
+ * Bahnschrift for display, Cascadia Mono for figures. A Linux machine has none of them and
+ * falls back to Liberation Sans and DejaVu, which is not what a player sees. For filming
+ * only, those family names are pointed at the brand kit's open faces: Barlow (a DIN-style
+ * grotesque like Bahnschrift, and the face the kit already sets in Bahnschrift's place)
+ * for all four sans families, and the kit's Cascadia Mono, the face the app asks for.
+ * Selawik, Microsoft's open Segoe UI fallback, would be closer for body text, but it is
+ * not on npm and the pipeline adds no other download. Weights round to the three Barlow
+ * cuts. The app's stylesheets are untouched; on Windows these names resolve to the real
+ * fonts.
+ */
+function uiFonts() {
+  const b64 = (file) => readFileSync(join(root, "assets", "brand", "fonts", file)).toString("base64");
+  const face = (family, weights, data) =>
+    `@font-face{font-family:'${family}';font-weight:${weights};font-style:normal;src:url(data:font/woff2;base64,${data}) format('woff2')}`;
+  const barlow = { 400: b64("barlow-latin-400-normal.woff2"), 500: b64("barlow-latin-500-normal.woff2"), 600: b64("barlow-latin-600-normal.woff2") };
+  const cascadia = { 400: b64("cascadia-mono-latin-400-normal.woff2"), 600: b64("cascadia-mono-latin-600-normal.woff2") };
+  const sans = ["Segoe UI Variable Text", "Segoe UI Variable Display", "Segoe UI", "Bahnschrift"];
+  return [
+    ...sans.flatMap((f) => [face(f, "1 449", barlow[400]), face(f, "450 549", barlow[500]), face(f, "550 1000", barlow[600])]),
+    face("Cascadia Mono", "1 499", cascadia[400]), face("Cascadia Mono", "500 1000", cascadia[600]),
+  ].join("\n");
 }
 
 /**
@@ -242,6 +342,20 @@ async function main() {
       await sleep(250);
       report.fit = await win.webContents.executeJavaScript("window.__fit", true);
       Object.assign(report, await roll(win, file, scene.seconds, [], () => win.webContents.executeJavaScript("window.__card.start()", true)));
+    } else if (scene.kind === "page") {
+      // A page beside the app (the challenge-link landing), opened with a query the way a
+      // link opens it, and given the same captions and pointer.
+      const page = join(outDir, `page-${scene.id}.html`);
+      writeFileSync(page, stagedPage(resolve(root, scene.page)));
+      await win.loadFile(page, scene.search ? { search: scene.search } : undefined);
+      win.webContents.setZoomFactor(scene.zoom || cut.zoom || 1);
+      await sleep(700);
+      for (const s of scene.setup || []) {
+        const e = await win.webContents.executeJavaScript(`window.__stage.run(${JSON.stringify(s)}).then(()=>null,e=>String(e))`, true);
+        if (e) throw new Error(`${scene.id} setup ${s.do}: ${e}`);
+      }
+      await sleep(300);
+      Object.assign(report, await roll(win, file, scene.seconds, scene.steps || []));
     } else {
       if (!(scene.continue && previousKind === "app")) {
         await win.loadFile(staged);
