@@ -39,6 +39,7 @@ import {
 import { buildBoard, crownKey, crownResultNote, type BoardInput } from "./view.ts";
 import { settleMatch, type RoundSubmission } from "../match/settle.ts";
 import { seededRandom } from "../match/scenarioSelection.ts";
+import { matchCardInput } from "../brand/shareInput.ts";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
@@ -399,6 +400,25 @@ console.log("\n── why a cap and a cooldown: replayed ───────�
   console.log(`       a 5-a-day grinder among 5 players holds the Crown ${(100 * free / trials).toFixed(0)}% of days without a cooldown, ${(100 * limited / trials).toFixed(0)}% with one (fair share 20%)`);
   check("without a cooldown the grinder takes well over a fair share", free / trials > 0.4);
   check("with one, the grinder is back near a fair share", Math.abs(limited / trials - 0.2) < 0.06);
+}
+
+/* ------------------------------------------------------------------------------- */
+console.log("\n── the share card says unrated ──────────────────");
+{
+  // A Crown challenge settles as a contested unrated match, and main hands its result to
+  // the share card like any other. The card must not print a rating or call it ranked.
+  const settled = {
+    matchId: "m", verdict: "win" as const, rated: false, tournament: null, arena: { kind: "crown" as const },
+    opponent: { displayName: "Kestrel" }, category: "Precise Tracking", yourMatchScore: 0.041, theirMatchScore: 0.034,
+    ratingAfter: 1500, ratingChange: 0,
+    rounds: [0, 1, 2].map((i) => ({ scenario: `s${i}`, score: 1040, baseline: 1000, delta: 0.04, opponentDelta: 0.03, counted: true, excludedReason: null })),
+  };
+  const card = matchCardInput({ settled, at: T0, sentDuel: false }, { playerName: "Me", season: "Season 1", tier: null });
+  check("a Crown challenge card is labelled unrated and prints no rating",
+    !("refused" in card) && card.kind === "match" && card.mode === "Crown challenge · unrated" && card.player.rating === null && card.player.ratingChange === null);
+  const race = matchCardInput({ settled: { ...settled, verdict: null, seeding: true, theirMatchScore: null, arena: { kind: "race" as const, race: { opponentName: "Wren" } } }, at: T0, sentDuel: false },
+    { playerName: "Me", season: "Season 1", tier: null });
+  check("a race leg card names the race", !("refused" in race) && race.kind === "match" && race.mode === "Race against Wren · unrated");
 }
 
 console.log(failures === 0 ? "\nOK: Crown rules hold" : `\n${failures} check(s) failed`);

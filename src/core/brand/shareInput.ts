@@ -21,6 +21,8 @@ export interface SettledRecord {
   seeding?: boolean;
   rated?: boolean;
   tournament?: { name: string; label: string } | null;
+  /** A Crown challenge or a race leg (settle-match's `arena` note). Unrated, like a tournament leg. */
+  arena?: { kind: "crown" | "race"; race?: { opponentName: string } | null } | null;
   opponent?: { displayName: string } | null;
   category?: string;
   yourMatchScore: number | null;
@@ -94,7 +96,7 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
   // Seeding is decided by the flag and a missing verdict together, as renderSettled
   // decides it: a seeding match sent with a verdict still has nobody on the other side.
   const seeding = s.seeding === true || s.verdict == null;
-  const rated = !seeding && !s.tournament && s.rated !== false;
+  const rated = !seeding && !s.tournament && !s.arena && s.rated !== false;
   const opponent = !seeding && s.opponent ? { name: s.opponent.displayName } : null;
 
   const rounds: CardRound[] = s.rounds.map((r) => {
@@ -109,7 +111,13 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
     };
   });
 
-  const mode = s.tournament ? `Tournament · ${s.tournament.label}` : seeding && rec.sentDuel ? "Duel sent" : null;
+  const mode = s.tournament
+    ? `Tournament · ${s.tournament.label}`
+    : s.arena?.kind === "crown"
+      ? "Crown challenge · unrated"
+      : s.arena?.kind === "race"
+        ? `Race${s.arena.race?.opponentName ? ` against ${s.arena.race.opponentName}` : ""} · unrated`
+        : seeding && rec.sentDuel ? "Duel sent" : null;
 
   return {
     kind: "match",
