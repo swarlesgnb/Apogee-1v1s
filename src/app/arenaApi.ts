@@ -5,7 +5,7 @@
  * rather than a section. Same transport, same error wording: `callFunction`.
  */
 
-import { callFunction, type FoundMatch } from "./api.ts";
+import { callFunction, matchClockOffset, type FoundMatch } from "./api.ts";
 import type { CrownBoard, CrownResultNote } from "../core/crowns/view.ts";
 import type { LiveView, RaceBoard, RaceSummary } from "../core/race/view.ts";
 
@@ -39,7 +39,7 @@ export function fetchCrowns(seen?: string[]): Promise<CrownBoard> {
 
 /** Claim a vacant Crown or challenge a held one. Shaped like findMatch. */
 export function challengeCrown(category: string, window: number): Promise<ArenaMatch> {
-  return callFunction<ArenaMatch>("challenge-crown", { category, window });
+  return callFunction<ArenaMatch>("challenge-crown", { category, window, tzOffsetMinutes: matchClockOffset() });
 }
 
 /** Invitations in and out, the race being played, recent results. */
@@ -59,5 +59,5 @@ export function inviteRace(to: string, category: string, window: number): Promis
 export function answerRace(raceId: string, action: "accept"): Promise<ArenaMatch>;
 export function answerRace(raceId: string, action: "decline" | "cancel"): Promise<{ ok: boolean; race: RaceSummary }>;
 export function answerRace(raceId: string, action: "accept" | "decline" | "cancel"): Promise<unknown> {
-  return callFunction("race-action", { action, raceId });
+  return callFunction("race-action", { action, raceId, tzOffsetMinutes: matchClockOffset() });
 }

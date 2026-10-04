@@ -28,6 +28,7 @@ import {
   sweepStaleMatches,
 } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import { matchClock, recordMatchClock } from "../_shared/timeIntegrity.ts";
 import {
   namesFor,
   onlyFields,
@@ -52,7 +53,7 @@ Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
   await enforceRateLimit(admin, caller.playerId, "challenge-crown");
 
-  const body = onlyFields(await readJson<unknown>(req), ["category", "window"]);
+  const body = onlyFields(await readJson<unknown>(req), ["category", "window", "tzOffsetMinutes"]);
   const category = requireCategory(body.category);
   const window = requireWindow(body.window);
 
@@ -120,6 +121,9 @@ Deno.serve(handler(async (req, admin) => {
 
   const seed = crypto.randomUUID();
   const drawn = selectScenarios(pool, seed, { category }).map((s) => s.id);
+  // The caller's UTC offset, checked against their recent uploads before a match exists, and
+  // pinned to the side crown_open_challenge writes (see _shared/timeIntegrity.ts).
+  const clock = await matchClock(admin, caller.playerId, body);
 
   const { data: opened, error } = await admin.rpc("crown_open_challenge", {
     p_category: category,
@@ -135,6 +139,7 @@ Deno.serve(handler(async (req, admin) => {
   });
   if (error) throw sqlRefusal(error);
   const { matchId, created, claim } = opened as { matchId: string; created: boolean; claim: boolean };
+  await recordMatchClock(admin, matchId, caller.playerId, clock);
 
   const { data: match } = await admin
     .from("matches")

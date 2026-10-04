@@ -406,7 +406,7 @@ export function findMatch(
  * one, and it has to agree with the offsets on this machine's recent history uploads
  * (src/core/verify/timeIntegrity.ts).
  */
-function matchClockOffset(): number {
+export function matchClockOffset(): number {
   return new Date().getTimezoneOffset();
 }
 

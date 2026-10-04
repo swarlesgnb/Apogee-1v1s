@@ -441,10 +441,11 @@ assert.match(r.body.error, /already answered/);
 assert.equal(await count('select count(*)::int as n from open_duel_answers'), 1);
 ok('a second answer from the same player is refused (409), and no second match is made');
 
-r = await call('open-duel', 'ben', { action: 'accept', code });
+r = await call('open-duel', 'ben', { action: 'accept', code, tzOffsetMinutes: -60 });
 assert.equal(r.status, 200, JSON.stringify(r.body));
 assert.equal(await count('select count(*)::int as n from open_duel_answers'), 2);
-ok('a second player answers the same code with a match of their own');
+assert.equal((await db.query('select tz_offset_minutes from match_sides where match_id=$1 and player_id=$2', [r.body.matchId, players.ben])).rows[0].tz_offset_minutes, -60, 'the answerer\'s UTC offset is pinned to their side');
+ok('a second player answers the same code with a match of their own, its clock pinned');
 
 // The database holds the rule as well as the function.
 await assert.rejects(db.query(`insert into open_duel_answers(duel_id,player_id,match_id) select id,$1,match_id from duels where code=$2`, [players.cal, code]), /unrated match/);
