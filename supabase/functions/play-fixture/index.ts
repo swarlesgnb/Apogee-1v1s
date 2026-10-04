@@ -27,6 +27,7 @@ import {
 } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { loadTournament, onlyFields, reconcile, requireUuid } from "../_shared/tournament.ts";
+import { matchClock, recordMatchClock } from "../_shared/timeIntegrity.ts";
 
 import { getReadyFixtures } from "../../../src/core/tournament/tournament.ts";
 import { fixtureLabelFor } from "../../../src/core/tournament/view.ts";
@@ -41,7 +42,7 @@ Deno.serve(handler(async (req, admin) => {
   await enforceRateLimit(admin, caller.playerId, "play-fixture");
 
   const body = await readJson<Record<string, unknown>>(req);
-  onlyFields(body, ["tournamentId", "fixtureId", "attempt"]);
+  onlyFields(body, ["tournamentId", "fixtureId", "attempt", "tzOffsetMinutes"]);
   const tournamentId = requireUuid(body.tournamentId, "tournamentId");
   if (typeof body.fixtureId !== "string" || body.fixtureId.length === 0 || body.fixtureId.length > 128) {
     throw new HttpError(400, "fixtureId is required");
@@ -69,6 +70,7 @@ Deno.serve(handler(async (req, admin) => {
   // Retire this player's expired matches first, charged by the ordinary rule. The live
   // one, if any, is judged inside tournament_open_leg: it may be this very leg.
   await sweepStaleMatches(admin, caller.playerId, updateRating);
+  const clock = await matchClock(admin, caller.playerId, body);
 
   const { season, windowName, selectable } = await loadSeasonPool(admin, row.window_index);
   const seed = crypto.randomUUID();
@@ -97,6 +99,9 @@ Deno.serve(handler(async (req, admin) => {
   }
 
   const { matchId, leg, created } = opened as { matchId: string; leg: 1 | 2; created: boolean };
+  // tournament_open_leg writes the side in SQL; the clock goes on afterwards, and only
+  // onto a side that has none, so pressing Play again cannot change it.
+  await recordMatchClock(admin, matchId, caller.playerId, clock);
 
   const { data: match } = await admin
     .from("matches")

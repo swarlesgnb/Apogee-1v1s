@@ -20,7 +20,7 @@ import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { parseStatsFile, type ParsedRun } from "../stats/parseStatsFile.ts";
+import { parseFilename, parseStatsFile, type ParsedRun } from "../stats/parseStatsFile.ts";
 
 /** Rows per insert. Large enough to be fast, small enough to stay well under limits. */
 export const BATCH_SIZE = 500;
@@ -44,6 +44,25 @@ export interface RunPayload {
   fov: number | null;
   csv_sha256: string;
   kill_rows: unknown[] | null;
+  /**
+   * The UTC offset `played_at` was read with: `getTimezoneOffset()` at that run's own
+   * wall clock, so a run from before a daylight-saving change carries the offset it was
+   * played under. The server keeps it to know the run's wall clock and the player's
+   * recent clock (src/core/verify/timeIntegrity.ts).
+   */
+  tz_offset_minutes: number;
+}
+
+/**
+ * The UTC offset to declare for one stats file: the one this machine's zone had when the
+ * file's wall clock was read, which is what `parseFilename` used to make its instant.
+ *
+ * Not `new Date().getTimezoneOffset()`. For a run played before a daylight-saving change
+ * and sent after it, today's offset is an hour off the one its history upload carried,
+ * and the server holds the two to each other.
+ */
+export function runClockOffset(filename: string): number {
+  return parseFilename(filename)?.playedAt.getTimezoneOffset() ?? new Date().getTimezoneOffset();
 }
 
 export function hashCsv(content: string): string {
@@ -85,6 +104,7 @@ export function toPayload(
     fov: run.fov,
     csv_sha256: csvSha256,
     kill_rows: includeKillRows ? run.killRows : null,
+    tz_offset_minutes: run.playedAt.getTimezoneOffset(),
   };
 }
 
