@@ -4,7 +4,7 @@
     {
       "id": "shadow",
       "name": "Shadow",
-      "line": "A calibrated opponent at your rating, when nobody else is online.",
+      "line": "A typical player's day to beat when nobody is in your band. Unrated.",
       "card": {
         "glyph": "shadow",
         "eyebrow": "New in Apogee",
@@ -12,7 +12,7 @@
           "Shadow"
         ],
         "sub": [
-          "A calibrated opponent at your rating, when nobody else is online."
+          "A typical player's day to beat when nobody is in your band. Unrated."
         ],
         "rule": true
       },
@@ -27,7 +27,7 @@
             "Shadow"
           ],
           "sub": [
-            "A calibrated opponent at your rating, when nobody else is online."
+            "A typical player's day to beat when nobody is in your band. Unrated."
           ]
         }
       },
@@ -35,7 +35,7 @@
         "do": "caption",
         "index": "New",
         "text": "Shadow",
-        "sub": "A calibrated opponent at your rating, when nobody else is online."
+        "sub": "A typical player's day to beat when nobody is in your band. Unrated."
       },
       "stills": {
         "title16x9": "assets/brand/motion/shadow/title-16x9.png",

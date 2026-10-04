@@ -35,7 +35,7 @@
 };
   var NAMES = {"shadow":"Shadow","flag":"Flag","daily":"Daily","link":"Challenge link","crown":"Crown","draft":"Draft","race":"Live race"};
   var LINES = {
-  "shadow": "A calibrated opponent at your rating, when nobody else is online.",
+  "shadow": "A typical player's day to beat when nobody is in your band. Unrated.",
   "flag": "Your set stays planted as an open challenge, and settles when someone answers.",
   "daily": "One draw a day, the same for everyone.",
   "link": "A link that opens a duel or a ghost race against you.",
