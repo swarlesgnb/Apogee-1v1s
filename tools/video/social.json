@@ -1,0 +1,389 @@
+{
+ "about": "Written by tools/video/socialDemo.ts: DailyService.view() over a synthetic stats folder at a fixed instant, and the open-challenge proposal social.ts publishes. Do not edit by hand; re-run the generator.",
+ "generatedAt": "2026-10-04T19:40:00.000Z",
+ "daily": [
+  {
+   "hasFolder": true,
+   "signedIn": false,
+   "number": 4,
+   "band": {
+    "index": 1,
+    "name": "Intermediate",
+    "slug": "intermediate"
+   },
+   "bands": [
+    {
+     "index": 0,
+     "name": "Novice",
+     "slug": "novice"
+    },
+    {
+     "index": 1,
+     "name": "Intermediate",
+     "slug": "intermediate"
+    },
+    {
+     "index": 2,
+     "name": "Advanced",
+     "slug": "advanced"
+    },
+    {
+     "index": 3,
+     "name": "Expert",
+     "slug": "expert"
+    }
+   ],
+   "nextInMs": 44400000,
+   "rounds": [
+    {
+     "skill": "Clicking",
+     "scenario": "Apogee Zenith Intermediate",
+     "glyph": "pending",
+     "char": "·",
+     "word": "Not played yet",
+     "score": null,
+     "baseline": 1162,
+     "delta": null,
+     "priorRuns": 7,
+     "provisional": false
+    },
+    {
+     "skill": "Tracking",
+     "scenario": "Apogee Orbit Intermediate",
+     "glyph": "pending",
+     "char": "·",
+     "word": "Not played yet",
+     "score": null,
+     "baseline": 3812,
+     "delta": null,
+     "priorRuns": 9,
+     "provisional": false
+    },
+    {
+     "skill": "Switching",
+     "scenario": "Apogee QuantumTS Intermediate",
+     "glyph": "pending",
+     "char": "·",
+     "word": "Not played yet",
+     "score": null,
+     "baseline": 2566,
+     "delta": null,
+     "priorRuns": 9,
+     "provisional": false
+    }
+   ],
+   "complete": false,
+   "meanDelta": null,
+   "provisional": false,
+   "streak": 3,
+   "shareText": null,
+   "link": "https://swarlesgnb.github.io/Apogee-1v1s/c/?daily=4&band=intermediate",
+   "board": {
+    "state": "signed-out",
+    "message": "Sign in with Steam to see where today's result places you in your band.",
+    "board": null
+   },
+   "proposedBand": null,
+   "error": null,
+   "now": 1791142800000
+  },
+  {
+   "hasFolder": true,
+   "signedIn": false,
+   "number": 4,
+   "band": {
+    "index": 1,
+    "name": "Intermediate",
+    "slug": "intermediate"
+   },
+   "bands": [
+    {
+     "index": 0,
+     "name": "Novice",
+     "slug": "novice"
+    },
+    {
+     "index": 1,
+     "name": "Intermediate",
+     "slug": "intermediate"
+    },
+    {
+     "index": 2,
+     "name": "Advanced",
+     "slug": "advanced"
+    },
+    {
+     "index": 3,
+     "name": "Expert",
+     "slug": "expert"
+    }
+   ],
+   "nextInMs": 44400000,
+   "rounds": [
+    {
+     "skill": "Clicking",
+     "scenario": "Apogee Zenith Intermediate",
+     "glyph": "above",
+     "char": "▲",
+     "word": "Above baseline",
+     "score": 1204,
+     "baseline": 1162,
+     "delta": 0.03614457831325301,
+     "priorRuns": 7,
+     "provisional": false
+    },
+    {
+     "skill": "Tracking",
+     "scenario": "Apogee Orbit Intermediate",
+     "glyph": "pending",
+     "char": "·",
+     "word": "Not played yet",
+     "score": null,
+     "baseline": 3812,
+     "delta": null,
+     "priorRuns": 9,
+     "provisional": false
+    },
+    {
+     "skill": "Switching",
+     "scenario": "Apogee QuantumTS Intermediate",
+     "glyph": "pending",
+     "char": "·",
+     "word": "Not played yet",
+     "score": null,
+     "baseline": 2566,
+     "delta": null,
+     "priorRuns": 9,
+     "provisional": false
+    }
+   ],
+   "complete": false,
+   "meanDelta": null,
+   "provisional": false,
+   "streak": 3,
+   "shareText": null,
+   "link": "https://swarlesgnb.github.io/Apogee-1v1s/c/?daily=4&band=intermediate",
+   "board": {
+    "state": "signed-out",
+    "message": "Sign in with Steam to see where today's result places you in your band.",
+    "board": null
+   },
+   "proposedBand": null,
+   "error": null,
+   "now": 1791142800000
+  },
+  {
+   "hasFolder": true,
+   "signedIn": false,
+   "number": 4,
+   "band": {
+    "index": 1,
+    "name": "Intermediate",
+    "slug": "intermediate"
+   },
+   "bands": [
+    {
+     "index": 0,
+     "name": "Novice",
+     "slug": "novice"
+    },
+    {
+     "index": 1,
+     "name": "Intermediate",
+     "slug": "intermediate"
+    },
+    {
+     "index": 2,
+     "name": "Advanced",
+     "slug": "advanced"
+    },
+    {
+     "index": 3,
+     "name": "Expert",
+     "slug": "expert"
+    }
+   ],
+   "nextInMs": 44400000,
+   "rounds": [
+    {
+     "skill": "Clicking",
+     "scenario": "Apogee Zenith Intermediate",
+     "glyph": "above",
+     "char": "▲",
+     "word": "Above baseline",
+     "score": 1204,
+     "baseline": 1162,
+     "delta": 0.03614457831325301,
+     "priorRuns": 7,
+     "provisional": false
+    },
+    {
+     "skill": "Tracking",
+     "scenario": "Apogee Orbit Intermediate",
+     "glyph": "below",
+     "char": "▼",
+     "word": "Below baseline",
+     "score": 3750,
+     "baseline": 3812,
+     "delta": -0.01626442812172088,
+     "priorRuns": 9,
+     "provisional": false
+    },
+    {
+     "skill": "Switching",
+     "scenario": "Apogee QuantumTS Intermediate",
+     "glyph": "pending",
+     "char": "·",
+     "word": "Not played yet",
+     "score": null,
+     "baseline": 2566,
+     "delta": null,
+     "priorRuns": 9,
+     "provisional": false
+    }
+   ],
+   "complete": false,
+   "meanDelta": null,
+   "provisional": false,
+   "streak": 3,
+   "shareText": null,
+   "link": "https://swarlesgnb.github.io/Apogee-1v1s/c/?daily=4&band=intermediate",
+   "board": {
+    "state": "signed-out",
+    "message": "Sign in with Steam to see where today's result places you in your band.",
+    "board": null
+   },
+   "proposedBand": null,
+   "error": null,
+   "now": 1791142800000
+  },
+  {
+   "hasFolder": true,
+   "signedIn": false,
+   "number": 4,
+   "band": {
+    "index": 1,
+    "name": "Intermediate",
+    "slug": "intermediate"
+   },
+   "bands": [
+    {
+     "index": 0,
+     "name": "Novice",
+     "slug": "novice"
+    },
+    {
+     "index": 1,
+     "name": "Intermediate",
+     "slug": "intermediate"
+    },
+    {
+     "index": 2,
+     "name": "Advanced",
+     "slug": "advanced"
+    },
+    {
+     "index": 3,
+     "name": "Expert",
+     "slug": "expert"
+    }
+   ],
+   "nextInMs": 44400000,
+   "rounds": [
+    {
+     "skill": "Clicking",
+     "scenario": "Apogee Zenith Intermediate",
+     "glyph": "above",
+     "char": "▲",
+     "word": "Above baseline",
+     "score": 1204,
+     "baseline": 1162,
+     "delta": 0.03614457831325301,
+     "priorRuns": 7,
+     "provisional": false
+    },
+    {
+     "skill": "Tracking",
+     "scenario": "Apogee Orbit Intermediate",
+     "glyph": "below",
+     "char": "▼",
+     "word": "Below baseline",
+     "score": 3750,
+     "baseline": 3812,
+     "delta": -0.01626442812172088,
+     "priorRuns": 9,
+     "provisional": false
+    },
+    {
+     "skill": "Switching",
+     "scenario": "Apogee QuantumTS Intermediate",
+     "glyph": "near",
+     "char": "◆",
+     "word": "Near baseline",
+     "score": 2575,
+     "baseline": 2566,
+     "delta": 0.0035074045206547155,
+     "priorRuns": 9,
+     "provisional": false
+    }
+   ],
+   "complete": true,
+   "meanDelta": 0.007795851570728949,
+   "provisional": false,
+   "streak": 4,
+   "shareText": "Apogee Daily #4 · Intermediate\n▲ ▼ ◆  +0.8%\nStreak 4\nhttps://swarlesgnb.github.io/Apogee-1v1s/c/?daily=4&band=intermediate",
+   "link": "https://swarlesgnb.github.io/Apogee-1v1s/c/?daily=4&band=intermediate",
+   "board": {
+    "state": "signed-out",
+    "message": "Sign in with Steam to see where today's result places you in your band.",
+    "board": null
+   },
+   "proposedBand": null,
+   "error": null,
+   "now": 1791142800000
+  }
+ ],
+ "dailyRecord": {
+  "number": 4,
+  "band": "Intermediate",
+  "marks": [
+   "above",
+   "below",
+   "near"
+  ],
+  "meanDelta": 0.007795851570728949,
+  "streak": 4,
+  "provisional": false,
+  "date": "2026-10-04"
+ },
+ "cardContext": {
+  "playerName": "You",
+  "season": "Season 1",
+  "tier": {
+   "id": "tier-3",
+   "name": "Cosmonaut",
+   "color": "#fff700"
+  }
+ },
+ "link": {
+  "url": "https://swarlesgnb.github.io/Apogee-1v1s/c/?duel=Q7MX4KPA",
+  "deepLink": "apogee://duel/Q7MX4KPA",
+  "proposal": {
+   "id": 1,
+   "kind": "duel",
+   "code": "Q7MX4KPA",
+   "state": "ready",
+   "title": "Open challenge from Wren",
+   "lines": [
+    "Precise Tracking · Intermediate",
+    "Unrated: an open challenge never moves anybody's rating.",
+    "You play the same three scenarios. Their score stays hidden until yours is in.",
+    "3 players have answered it."
+   ],
+   "confirm": "Accept and play",
+   "error": null,
+   "duel": null,
+   "navigate": "queue"
+  }
+ }
+}
