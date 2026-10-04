@@ -82,6 +82,13 @@ export interface CrownNoticeView {
   text: string;
   otherName: string | null;
   defences: number;
+  /**
+   * The two match scores the decision compared, as the notice row stores them: on a
+   * defence, the challenger who fell short and the holder's bar. The owner can already read
+   * them from crown_notices directly; the board carries them so a defence can be shared.
+   */
+  challengerScore: number | null;
+  holderScore: number | null;
   createdAt: string;
 }
 
@@ -137,6 +144,8 @@ export interface BoardNoticeRow {
   defences: number;
   reignMs: number;
   otherName: string | null;
+  challengerScore?: number | null;
+  holderScore?: number | null;
   createdAt: number;
 }
 
@@ -244,6 +253,8 @@ export function buildBoard(input: BoardInput): CrownBoard {
       text: noticeText(n, bandName(n.window), n.otherName),
       otherName: n.otherName,
       defences: n.defences,
+      challengerScore: Number.isFinite(n.challengerScore) ? (n.challengerScore as number) : null,
+      holderScore: Number.isFinite(n.holderScore) ? (n.holderScore as number) : null,
       createdAt: iso(n.createdAt),
     }));
 

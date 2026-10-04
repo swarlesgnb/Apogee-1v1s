@@ -12,6 +12,7 @@
  * headline invites exactly the "but I won that" the void exists to prevent.
  */
 
+import { PLACEMENT_MIN } from "../match/shadow.ts";
 import type { CardRound, CardTier, ShareCardInput } from "./shareCard.ts";
 
 /** The parts of api.ts's SettledMatch a card reads. Structural, so core does not import the app. */
@@ -297,7 +298,11 @@ export interface CrownRecord {
   rivalReignDays?: number | null;
   yourMatchScore: number | null;
   theirMatchScore: number | null;
-  /** The deciding match from this player's side: you are the holder on a defence. */
+  /**
+   * The deciding match from this player's side: you are the holder on a defence. Empty
+   * when the server sent only the two match scores (a defence read from its notice); the
+   * card then shows those two scores and no rounds.
+   */
   rounds: SettledRound[];
   /** When main received it, epoch ms. */
   at: number;
@@ -333,7 +338,10 @@ export interface FlagRecord {
   ratingChange?: number | null;
   yourMatchScore: number | null;
   theirMatchScore: number | null;
-  /** The planted set (you) against the answer (them). */
+  /**
+   * The planted set (you) against the answer (them). Empty when the server sent only the
+   * two match scores, which is what the queue board sends for an answered Flag.
+   */
   rounds: SettledRound[];
   /** The planter's other flags still standing after this one settled. */
   standing?: number | null;
@@ -353,40 +361,72 @@ export interface FlagCardInput {
   standing?: number | null;
 }
 
-/** One match against a Shadow in a placement series. */
+/**
+ * One Shadow result, in the queue's own terms (src/core/match/shadow.ts). A Shadow is not a
+ * player and has no rating: it is a day at a stated percentile of genuine three-scenario
+ * match scores, "a 49th-percentile day", fielded from a seven-rung ladder.
+ */
 export interface ShadowMatch {
-  verdict: "win" | "loss" | "draw" | "void";
-  /** The rating the Shadow was calibrated to for this match. */
-  shadowRating?: number | null;
+  /**
+   * How it went for the player. "forfeit" is a Shadow match abandoned or left to expire:
+   * the ladder and the placement both count it as a loss. "void" did not count.
+   */
+  verdict: "win" | "loss" | "draw" | "void" | "forfeit";
+  /** The Shadow fielded: the percentile of the genuine day it scored (2 to 98 on the ladder). */
+  percentile: number;
+  /** Known only for the match just settled (settle-match's `shadow.yourScore` / `shadowScore`). */
   yourMatchScore?: number | null;
-  theirMatchScore?: number | null;
+  shadowScore?: number | null;
 }
 
-/** A placement series played against Shadows, as main holds it after each match settles. */
+/** The placement read-out as the queue board serves it (core/match/shadow.ts `placement()`). */
+export interface ShadowPlacement {
+  /** Where the player's recent days sit among genuine days, 5 to 95. */
+  estimate: number;
+  /** How many decided Shadow results it was read from. */
+  decided: number;
+}
+
+/**
+ * A player's recent Shadow results, as main holds them after a Shadow match settles: the
+ * settle-match `shadow` body for the match just played, and the queue board's Shadow ladder
+ * (`shadow.recent`, `shadow.placement`, `shadow.streak`) read after it.
+ */
 export interface ShadowRecord {
   category?: string | null;
-  /** In the order played. Void matches did not count and are left off the card. */
+  /** In the order played, the match being shared last. Voids did not count and are dropped. */
   series: ShadowMatch[];
-  /** How many counted matches the series needs. */
-  of: number;
-  /** The tier the series placed the player in, once it is complete; null while placing. */
-  placed: CardTier | null;
-  rating?: number | null;
-  /** Share of the ladder this player beats, 0..100. */
-  percentile?: number | null;
+  /**
+   * The read-out the app shows: an estimate once there are PLACEMENT_MIN decided results;
+   * null before that, which the app words "Placement shows after 3 Shadow results";
+   * undefined when the board has not been read since the match, so the card says nothing.
+   */
+  placement?: ShadowPlacement | null;
+  /** Consecutive Shadow wins, newest first (queue board `shadow.streak`). */
+  streak?: number | null;
   at: number;
 }
+
+/** What the Shadow card prints of the placement: the read-out, how far off it is, or nothing. */
+export type ShadowCardPlacement =
+  | { kind: "read"; estimate: number; decided: number }
+  | { kind: "pending"; decided: number; needed: number }
+  | null;
 
 export interface ShadowCardInput {
   kind: "shadow";
   season: string;
   category: string | null;
-  player: { name: string; tier: CardTier | null; rating?: number | null; percentile?: number | null };
-  series: { verdict: "win" | "loss" | "draw"; shadowRating: number | null; matchScore: { you: number | null; them: number | null } | null }[];
-  of: number;
-  placed: CardTier | null;
+  player: { name: string; tier: CardTier | null };
+  /** In play order, the shared match last; at most SHADOW_CARD_MATCHES. No rating anywhere: a Shadow moves none. */
+  series: { verdict: "win" | "loss" | "draw" | "forfeit"; percentile: number; matchScore: { you: number | null; them: number | null } | null }[];
+  placement: ShadowCardPlacement;
+  streak: number;
   playedAt?: string | null;
 }
+
+/** The most Shadow results a card shows: the queue board's `shadow.recent` sends eight. */
+export const SHADOW_CARD_MATCHES = 8;
 
 export type MechanicCardInput = DailyCardInput | CrownCardInput | FlagCardInput | ShadowCardInput;
 
@@ -431,7 +471,7 @@ export function dailyCardInput(rec: DailyRecord, ctx: CardContext): DailyCardInp
 
 export function crownCardInput(rec: CrownRecord, ctx: CardContext): CrownCardInput | Refusal {
   if (rec.event !== "taken" && rec.event !== "defended") return { refused: "Unknown crown event." };
-  if (!rec.rounds?.length) return { refused: "This crown match has no rounds to show." };
+  if (!rec.rounds?.length && !(finite(rec.yourMatchScore) && finite(rec.theirMatchScore))) return { refused: "This crown result has no rounds or scores to show." };
   if (rec.event === "defended" && !rec.rival) return { refused: "A defence needs the challenger it held off." };
   return {
     kind: "crown",
@@ -445,14 +485,14 @@ export function crownCardInput(rec: CrownRecord, ctx: CardContext): CrownCardInp
     heldSince: isoDay(rec.heldSince ?? null) ?? (rec.event === "taken" ? localDay(rec.at) : null),
     rivalReignDays: finite(rec.rivalReignDays) && rec.rivalReignDays >= 0 ? Math.round(rec.rivalReignDays) : null,
     matchScore: matchScore(rec.yourMatchScore, rec.theirMatchScore),
-    rounds: settledRounds(rec.rounds),
+    rounds: settledRounds(rec.rounds ?? []),
     playedAt: localDay(rec.at),
   };
 }
 
 export function flagCardInput(rec: FlagRecord, ctx: CardContext): FlagCardInput | Refusal {
   if (rec.verdict === "void") return { refused: "A void answer did not count, so it has no card." };
-  if (!rec.rounds?.length) return { refused: "This flag has no rounds to show." };
+  if (!rec.rounds?.length && !(finite(rec.yourMatchScore) && finite(rec.theirMatchScore))) return { refused: "This flag has no rounds or scores to show." };
   const plantedAt = isoDay(rec.plantedAt);
   const answeredAt = isoDay(rec.answeredAt);
   if (!plantedAt || !answeredAt) return { refused: "This flag is missing when it was planted or answered." };
@@ -472,34 +512,45 @@ export function flagCardInput(rec: FlagRecord, ctx: CardContext): FlagCardInput 
     plantedAt,
     answeredAt,
     matchScore: matchScore(rec.yourMatchScore, rec.theirMatchScore),
-    rounds: settledRounds(rec.rounds),
+    rounds: settledRounds(rec.rounds ?? []),
     standing: Number.isInteger(rec.standing) && (rec.standing as number) >= 0 ? rec.standing : null,
   };
 }
 
+const SHADOW_VERDICTS = ["win", "loss", "draw", "forfeit"] as const;
+
 export function shadowCardInput(rec: ShadowRecord, ctx: CardContext): ShadowCardInput | Refusal {
-  const series = (rec.series ?? []).filter((m) => m.verdict !== "void").map((m) => ({
-    verdict: m.verdict as "win" | "loss" | "draw",
-    shadowRating: finite(m.shadowRating) ? Math.round(m.shadowRating) : null,
-    matchScore: matchScore(m.yourMatchScore, m.theirMatchScore),
-  }));
-  if (!series.length) return { refused: "Play a Shadow match to share the placement." };
-  const of = Number.isInteger(rec.of) && rec.of >= series.length ? rec.of : series.length;
-  if (of > 10) return { refused: "A placement card shows at most ten matches." };
+  const counted = (rec.series ?? []).filter((m) => m.verdict !== "void");
+  if (!counted.length) return { refused: "Play a Shadow match to share it." };
+  if (!counted.every((m) => (SHADOW_VERDICTS as readonly string[]).includes(m.verdict))) return { refused: "This Shadow result has a verdict the card does not know." };
+  if (!counted.every((m) => finite(m.percentile) && m.percentile >= 1 && m.percentile <= 99)) {
+    return { refused: "A Shadow is a day between the 1st and 99th percentile." };
+  }
+  // The card leads with the match being shared, and an abandoned one is not a result to post.
+  if (counted[counted.length - 1].verdict === "forfeit") return { refused: "An abandoned Shadow match has no card." };
+
+  // The read-out exactly as the app words it, or nothing when the record cannot say. A
+  // record that claims "not yet" with PLACEMENT_MIN results in hand is not repeated.
+  let placement: ShadowCardPlacement = null;
+  const p = rec.placement;
+  if (p && finite(p.estimate) && Number.isInteger(p.decided) && p.decided >= PLACEMENT_MIN) {
+    placement = { kind: "read", estimate: Math.max(1, Math.min(99, Math.round(p.estimate))), decided: p.decided };
+  } else if (p === null && counted.length < PLACEMENT_MIN) {
+    placement = { kind: "pending", decided: counted.length, needed: PLACEMENT_MIN };
+  }
+
   return {
     kind: "shadow",
     season: ctx.season,
     category: rec.category && rec.category !== "Any" ? clean(rec.category) : null,
-    player: {
-      name: ctx.playerName,
-      tier: rec.placed ?? ctx.tier,
-      rating: finite(rec.rating) ? rec.rating : null,
-      percentile: finite(rec.percentile) ? Math.max(0, Math.min(100, rec.percentile)) : null,
-    },
-    series,
-    of,
-    // A tier before the series is done would be a placement the server has not made.
-    placed: series.length >= of ? rec.placed ?? null : null,
+    player: { name: ctx.playerName, tier: ctx.tier },
+    series: counted.slice(-SHADOW_CARD_MATCHES).map((m) => ({
+      verdict: m.verdict as ShadowCardInput["series"][number]["verdict"],
+      percentile: Math.round(m.percentile),
+      matchScore: matchScore(m.yourMatchScore, m.shadowScore),
+    })),
+    placement,
+    streak: Number.isInteger(rec.streak) && (rec.streak as number) > 0 ? (rec.streak as number) : 0,
     playedAt: localDay(rec.at),
   };
 }
@@ -531,11 +582,12 @@ export function parseShareRequest(raw: unknown): ShareRequest | string {
   return { source, layout, action };
 }
 
-/** "2026-09-30-victory.png", "2026-09-30-ghost-out-of-time.png", "2026-10-03-daily-212.png". */
+/** "2026-09-30-victory.png", "2026-09-30-ghost-out-of-time.png", "2026-10-03-daily-212.png", "2026-10-03-shadow-beaten.png". */
 export function shareFileName(input: AnyCardInput, headlineText: string): string {
   const slug = headlineText.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "result";
   const day = input.kind === "daily" ? input.date : input.kind === "flag" ? input.answeredAt : input.playedAt;
   if (input.kind === "daily") return `${day ?? "apogee"}-daily-${input.number}.png`;
-  const prefix = input.kind === "ghost" ? "ghost-" : input.kind === "shadow" ? "shadow-" : "";
+  // "Shadow beaten" and "Shadow wins" name themselves; a level one becomes "shadow-level".
+  const prefix = input.kind === "ghost" ? "ghost-" : input.kind === "shadow" && !slug.startsWith("shadow") ? "shadow-" : "";
   return `${day ?? "apogee"}-${prefix}${slug}.png`;
 }

@@ -23,7 +23,8 @@
   let working = false;
   let opener = null;
 
-  const LINK_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
+  // The brand kit's challenge-link glyph (mechanic-icons.js, loaded in the head).
+  const LINK_ICON = typeof window.mechanicIcon === 'function' ? window.mechanicIcon('link') : '';
 
   function drawPrompt() {
     const p = proposal;

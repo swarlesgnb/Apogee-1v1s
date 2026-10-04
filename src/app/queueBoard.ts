@@ -16,7 +16,7 @@
 
 import { app, ipcMain } from "electron";
 
-import { fetchQueueBoard, friendlyError } from "./api.ts";
+import { fetchQueueBoard, friendlyError, type QueueBoard } from "./api.ts";
 
 /**
  * How often a focus can re-read the board.
@@ -31,6 +31,8 @@ const FOCUS_INTERVAL_MS = 20_000;
 export interface QueueBoardDeps {
   signedIn: () => boolean;
   broadcast: (channel: string, payload: unknown) => void;
+  /** Every board read, polled or asked for, before the renderer hears of it (the share records). */
+  onBoard?: (board: QueueBoard) => void;
 }
 
 export function installQueueBoard(deps: QueueBoardDeps): { refresh: (reason: string, force?: boolean) => Promise<void> } {
@@ -41,7 +43,9 @@ export function installQueueBoard(deps: QueueBoardDeps): { refresh: (reason: str
     if (!force && Date.now() - lastRead < FOCUS_INTERVAL_MS) return;
     lastRead = Date.now();
     try {
-      deps.broadcast("apogee:queueBoard", await fetchQueueBoard({}));
+      const board = await fetchQueueBoard({});
+      deps.onBoard?.(board);
+      deps.broadcast("apogee:queueBoard", board);
     } catch (err) {
       // Quiet, like the duel board: a missed read is a convenience lost, and the next
       // focus tries again. Not deployed yet reads the same way.
@@ -59,6 +63,7 @@ export function installQueueBoard(deps: QueueBoardDeps): { refresh: (reason: str
     try {
       const board = await fetchQueueBoard(request);
       lastRead = Date.now();
+      deps.onBoard?.(board);
       return { board };
     } catch (err) {
       return { error: friendlyError(err) };
