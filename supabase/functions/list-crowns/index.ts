@@ -126,7 +126,7 @@ Deno.serve(handler(async (req, admin) => {
       .order("created_at", { ascending: false }),
     admin
       .from("crown_notices")
-      .select("id, kind, category, window_index, defences, reign_seconds, other_name, created_at")
+      .select("id, kind, category, window_index, defences, reign_seconds, other_name, challenger_score, holder_score, created_at")
       .eq("player_id", caller.playerId)
       .is("seen_at", null)
       .order("created_at", { ascending: false })
@@ -210,6 +210,8 @@ Deno.serve(handler(async (req, admin) => {
     defences: Number(n.defences),
     reignMs: Number(n.reign_seconds) * 1000,
     otherName: n.other_name ?? null,
+    challengerScore: n.challenger_score == null ? null : Number(n.challenger_score),
+    holderScore: n.holder_score == null ? null : Number(n.holder_score),
     createdAt: ms(n.created_at),
   }));
 
