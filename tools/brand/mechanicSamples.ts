@@ -6,9 +6,9 @@
  * sample also proves the adapter. Where a card prints rounds, the scenarios and the
  * player's raw scores are the committed snapshot's (data/snapshot.json), and every delta
  * and match score comes from the real settleMatch(), as renderShareCard.ts builds the
- * result-card samples. The other side of each match and the Shadows' ratings are
- * constructed; the mechanics are being built tonight on other branches and have no real
- * results yet.
+ * result-card samples. The other side of each crown and flag match is constructed. A
+ * Shadow's score is the committed Shadow table's day at its percentile, and the placement
+ * and streak are core/match/shadow.ts's own read-outs over the sample's results.
  */
 
 import { readFileSync } from "node:fs";
@@ -24,9 +24,13 @@ import {
   type MechanicCardInput,
   type Refusal,
   type SettledRound,
+  type ShadowMatch,
+  type ShadowRecord,
 } from "../../src/core/brand/shareInput.ts";
+import { placement, shadowQuantile, shadowStreak, skillOf, type ShadowRecord as LadderRecord } from "../../src/core/match/shadow.ts";
+import { SHADOW_DAYS } from "../../src/core/match/shadowDays.ts";
 import { settleMatch, type RoundSubmission } from "../../src/core/match/settle.ts";
-import { root, tiers } from "./kit.ts";
+import { root } from "./kit.ts";
 
 interface SnapshotScenario { name: string; label: string; score: number; runs: number }
 interface Snapshot {
@@ -38,12 +42,6 @@ interface Snapshot {
 const snap = JSON.parse(readFileSync(join(root, "data", "snapshot.json"), "utf8")) as Snapshot;
 const me = snap.player.apogee;
 const at = Date.parse("2026-10-03T19:30:00");
-
-export const tierByName = (n: string): CardTier => {
-  const t = tiers.find((x) => x.name === n);
-  if (!t) throw new Error(`no tier named ${n}`);
-  return { id: t.id, name: t.name, color: t.color };
-};
 
 const ctx = (playerName = "rylee"): CardContext => ({ playerName, season: "Season 1", tier: { id: me.tier.id, name: me.tier.name, color: me.tier.color } });
 
@@ -85,6 +83,27 @@ function settled(category: string, mine: number[], theirs: number[]) {
   return { verdict: r.verdict, rounds, yourMatchScore: r.player.matchScore, theirMatchScore: r.opponent.matchScore };
 }
 
+/**
+ * A Shadow history as main would hold it after the queue board is read: each day is the
+ * percentile fielded and the player's match score. The Shadow's score is the committed
+ * table's three-round day at that percentile for the category's skill, the verdict is
+ * settleMatch's rule (level within 0.05 points), and the placement and streak are
+ * placement() and shadowStreak() over the results, as queue-board serves them. Only the
+ * last match carries scores: the board's ladder sends none for the others.
+ */
+function shadowHistory(category: string | null, days: { p: number; you: number | "forfeit" | "void" }[]): Omit<ShadowRecord, "at"> {
+  const skill = skillOf(category);
+  const ladder: LadderRecord[] = [];
+  const series: ShadowMatch[] = days.map((d, i) => {
+    const them = shadowQuantile(SHADOW_DAYS, skill, 3, d.p);
+    const verdict = typeof d.you !== "number" ? d.you : Math.abs(d.you - them) < 0.0005 ? "draw" : d.you > them ? "win" : "loss";
+    ladder.push({ ordinal: i, percentile: d.p, result: verdict });
+    return { verdict, percentile: d.p, ...(i === days.length - 1 && typeof d.you === "number" ? { yourMatchScore: d.you, shadowScore: them } : {}) };
+  });
+  const read = placement(ladder);
+  return { category, series, placement: read ? { estimate: read.estimate, decided: read.decided } : null, streak: shadowStreak(ladder) };
+}
+
 function ok<T>(v: T | Refusal, name: string): T {
   if (v && typeof v === "object" && "refused" in v) throw new Error(`sample ${name} was refused: ${v.refused}`);
   return v as T;
@@ -109,24 +128,13 @@ export function mechanicSamples(): Record<string, MechanicCardInput> {
     "crown-defended": ok(crownCardInput({ event: "defended", category: "Precise Tracking", band: "Intermediate", rival: { displayName: "kestrel" }, defences: 4, heldSince: "2026-09-28", ...crownHeld, at }, ctx()), "crown-defended"),
     "flag-held": ok(flagCardInput({ category: "Dynamic Clicking", challenger: { displayName: "orbitwalker" }, plantedAt: "2026-10-01", answeredAt: "2026-10-03", rated: true, ratingAfter: 1630, ratingChange: 13, standing: 2, ...flagHeld, verdict: "win" }, ctx()), "flag-held"),
     "flag-lost": ok(flagCardInput({ category: "Reactive Tracking", challenger: { displayName: "tardigrade_main" }, plantedAt: "2026-09-29", answeredAt: "2026-10-03", rated: true, ratingAfter: 1604, ratingChange: -13, ...flagLost, verdict: "loss" }, ctx()), "flag-lost"),
-    "shadow-placing": ok(shadowCardInput({
-      category: "Speed Switching", of: 5, placed: null, at,
-      series: [
-        { verdict: "win", shadowRating: 1604, yourMatchScore: 0.021, theirMatchScore: 0.012 },
-        { verdict: "loss", shadowRating: 1621, yourMatchScore: 0.004, theirMatchScore: 0.017 },
-        { verdict: "win", shadowRating: 1611, yourMatchScore: 0.019, theirMatchScore: 0.008 },
-      ],
-    }, ctx()), "shadow-placing"),
-    "shadow-placed": ok(shadowCardInput({
-      category: "Speed Switching", of: 5, placed: tierByName("Lunar"), rating: 1617, percentile: me.percentile, at,
-      series: [
-        { verdict: "win", shadowRating: 1604, yourMatchScore: 0.021, theirMatchScore: 0.012 },
-        { verdict: "loss", shadowRating: 1621, yourMatchScore: 0.004, theirMatchScore: 0.017 },
-        { verdict: "win", shadowRating: 1611, yourMatchScore: 0.019, theirMatchScore: 0.008 },
-        { verdict: "draw", shadowRating: 1619, yourMatchScore: 0.011, theirMatchScore: 0.011 },
-        { verdict: "win", shadowRating: 1615, yourMatchScore: 0.026, theirMatchScore: 0.014 },
-      ],
-    }, ctx()), "shadow-placed"),
+    // A first Shadow match, won: placement still two results away.
+    "shadow-placing": ok(shadowCardInput({ ...shadowHistory("Speed Switching", [{ p: 51, you: 0.021 }]), at }, ctx()), "shadow-placing"),
+    // Six results up and down the ladder, the read-out showing, the latest a win.
+    "shadow-placement": ok(shadowCardInput({
+      ...shadowHistory("Speed Switching", [{ p: 51, you: 0.019 }, { p: 64, you: 0.004 }, { p: 49, you: 0.012 }, { p: 66, you: 0.031 }, { p: 81, you: 0.015 }, { p: 63, you: 0.027 }]),
+      at,
+    }, ctx()), "shadow-placement"),
   };
 }
 
@@ -144,11 +152,18 @@ export function mechanicEdgeCases(): Record<string, MechanicCardInput> {
     "edge-crown-many": ok(crownCardInput({ event: "defended", category: "Reactive Tracking", band: "1500-1650", rival: { displayName: LONG }, defences: 999, heldSince: "2026-01-01", ...crown, at }, ctx(LONG_ME)), "edge-crown-many"),
     "edge-flag-draw": ok(flagCardInput({ category: null, challenger: { displayName: LONG }, plantedAt: at, answeredAt: at + 3600_000, rated: false, ...flag, verdict: "draw", rounds: long(flag.rounds) }, ctx(LONG_ME)), "edge-flag-draw"),
     "edge-flag-excluded": ok(flagCardInput({ category: "Speed Switching", challenger: { displayName: "kestrel" }, plantedAt: "2025-10-03", answeredAt: "2026-10-03", rated: true, ratingAfter: 2101, ratingChange: -40, standing: 0, ...flag, verdict: "loss", rounds: flag.rounds.map((r, i) => (i === 1 ? { ...r, counted: false, excludedReason: "left early" } : r)) }, ctx()), "edge-flag-excluded"),
-    "edge-shadow-ten": ok(shadowCardInput({
-      category: "Evasive Switching", of: 10, placed: tierByName("Supernova"), rating: 2144, percentile: 99.6, at,
-      series: Array.from({ length: 10 }, (_, i) => ({ verdict: (["win", "loss", "draw"] as const)[i % 3], shadowRating: 2000 + i * 17, yourMatchScore: 0.1234, theirMatchScore: -0.0567 })),
-    }, ctx(LONG_ME)), "edge-shadow-ten"),
-    "edge-shadow-first": ok(shadowCardInput({ category: null, of: 7, placed: null, at, series: [{ verdict: "loss", shadowRating: null }] }, ctx()), "edge-shadow-first"),
+    // Eleven results with a void, an abandon and a level one: trimmed to the last eight.
+    "edge-shadow-eight": ok(shadowCardInput({
+      ...shadowHistory("Evasive Switching", [
+        { p: 50, you: 0.02 }, { p: 65, you: 0.01 }, { p: 50, you: "void" }, { p: 49, you: 0.03 }, { p: 66, you: "forfeit" },
+        { p: 51, you: 0.05 }, { p: 64, you: 0.03 }, { p: 79, you: 0.02 }, { p: 66, you: 0.03 }, { p: 80, you: 0.033 }, { p: 81, you: 0.1234 },
+      ]),
+      at,
+    }, ctx(LONG_ME)), "edge-shadow-eight"),
+    // Two results: one tile still to play.
+    "edge-shadow-two": ok(shadowCardInput({ ...shadowHistory("Static Clicking", [{ p: 50, you: 0.01 }, { p: 65, you: -0.02 }]), at }, ctx()), "edge-shadow-two"),
+    // No category, a loss, and the board not read since: no placement line at all.
+    "edge-shadow-first": ok(shadowCardInput({ ...shadowHistory(null, [{ p: 52, you: -0.031 }]), placement: undefined, at }, ctx()), "edge-shadow-first"),
   };
 }
 
@@ -160,6 +175,6 @@ export const MECHANIC_COMMITTED: [string, "landscape" | "portrait", "dark" | "li
   ["crown-defended", "portrait", "light"],
   ["flag-held", "landscape", "dark"],
   ["flag-lost", "landscape", "light"],
-  ["shadow-placed", "landscape", "dark"],
+  ["shadow-placement", "landscape", "dark"],
   ["shadow-placing", "portrait", "dark"],
 ];

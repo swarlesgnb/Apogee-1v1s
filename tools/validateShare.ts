@@ -75,12 +75,14 @@ app.whenReady().then(async () => {
   cards.recordDaily({ number: 212, band: 'Intermediate', date: '2026-10-03', marks: ['above', 'near', 'below'], meanDelta: .0063, streak: 6 });
   cards.recordCrown({ event: 'taken', category: 'Speed Switching', band: 'Lunar', rival: { displayName: 'Holder' }, defences: 0, rivalReignDays: 3, yourMatchScore: .1, theirMatchScore: .05, rounds: settled.rounds, at });
   cards.recordFlag({ verdict: 'win', category: 'Precise Tracking', challenger: { displayName: 'Challenger' }, plantedAt: '2026-10-01', answeredAt: '2026-10-03', rated: true, ratingAfter: 1550, ratingChange: 15, yourMatchScore: .1, theirMatchScore: .05, rounds: settled.rounds });
-  cards.recordShadow({ category: 'Speed Switching', of: 5, placed: null, at, series: [{ verdict: 'win', shadowRating: 1604, yourMatchScore: .02, theirMatchScore: .01 }, { verdict: 'loss', shadowRating: 1621 }] });
+  // As main builds it after a Shadow match: the board's ladder, the match just settled last
+  // with its scores, and placement null because the board says fewer than three results.
+  cards.recordShadow({ category: 'Speed Switching', at, placement: null, streak: 0, series: [{ verdict: 'win', percentile: 51 }, { verdict: 'loss', percentile: 64, yourMatchScore: .004, shadowScore: .021 }] });
   const want: Record<string, string[]> = {
     daily: ['Daily #212', 'Test Player', 'ABOVE', 'NEAR', 'BELOW', 'Streak 6 days'],
     crown: ['Crown taken', 'Test Player  vs  Holder', 'Scenario One', 'Lunar band'],
     flag: ['Flag held', 'Test Player  vs  Challenger', 'Scenario One', 'Stood 2 days'],
-    shadow: ['Placing', 'Shadow 1604', 'Shadow 1621', 'TO PLAY'],
+    shadow: ['Shadow wins', 'Test Player  vs  a 64th-percentile day', 'SYNTHETIC, UNRATED', '51st', '64th', 'TO PLAY', 'PLACEMENT SHOWS AFTER 3', '+0.4% vs +2.1%'],
   };
   for (const source of ['daily', 'crown', 'flag', 'shadow'] as const) {
     const input = cards.input(source);

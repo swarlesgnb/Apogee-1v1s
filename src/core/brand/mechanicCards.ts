@@ -1,6 +1,6 @@
 /**
  * The share cards for the new mechanics: Apogee Daily, a crown taken or defended, a planted
- * flag answered, and a placement played against Shadows.
+ * flag answered, and a match against a Shadow with the Shadow ladder behind it.
  *
  * Same contract as shareCard.ts, and drawn with its pieces: a pure function from a typed
  * input (shareInput.ts says where each comes from) to SVG, no Node or DOM, the palette and
@@ -17,14 +17,18 @@
  *   scenario is a numbered tile with a mark, coded by shape as well as colour (a triangle
  *   up, a disc, a triangle down), so it survives a colour-blind viewer and a greyscale
  *   repost.
- * - A Shadow placement prints a tier only once the series is complete, and every Shadow's
- *   calibrated rating sits on its own tile.
+ * - A Shadow card says what the queue says (core/match/shadow.ts): each Shadow is a
+ *   percentile day on its own tile, the placement is the queue board's read-out in the
+ *   app's words ("about the 53rd percentile from 5 Shadows", or "shows after 3"), and
+ *   nothing on it is a tier or a rating, because a Shadow moves neither. "Synthetic,
+ *   unrated" is in the kicker.
  * - Anything a player names (a player, a category, a band) carries a fit budget, and the
  *   rasteriser fails the render if it still leaves the canvas.
  */
 
 import { mechanicEmblemSvg, type MechanicId } from "./mechanics.ts";
-import { rankInk, type BrandPalette } from "./palette.ts";
+import type { BrandPalette } from "./palette.ts";
+import { ordinalSuffix, shadowLabel } from "../match/shadow.ts";
 import {
   SHARE_CARD_SIZES,
   dateLine,
@@ -43,7 +47,6 @@ import {
   starfield,
   text,
   type CardLayout,
-  type CardTier,
   type ShareCardOptions,
 } from "./shareCard.ts";
 import type { AnyCardInput, CrownCardInput, DailyCardInput, DailyMark, FlagCardInput, MechanicCardInput, ShadowCardInput } from "./shareInput.ts";
@@ -63,12 +66,22 @@ function daysBetween(a: string, b: string): number {
   return Math.max(0, Math.round((t(b) - t(a)) / 86_400_000));
 }
 
+/** "3 won, 1 lost" over the tiles on the card; an abandoned Shadow match is a loss, as the ladder counts it. */
 function record(series: ShadowCardInput["series"]): string {
   const w = series.filter((m) => m.verdict === "win").length;
-  const l = series.filter((m) => m.verdict === "loss").length;
+  const l = series.filter((m) => m.verdict === "loss" || m.verdict === "forfeit").length;
   const d = series.filter((m) => m.verdict === "draw").length;
-  return d ? `${w}–${l}–${d}` : `${w}–${l}`;
+  return [`${w} won`, `${l} lost`, d ? `${d} level` : ""].filter(Boolean).join(", ");
 }
+
+const latest = (input: ShadowCardInput) => input.series[input.series.length - 1];
+
+/** The app's words for a Shadow result (queue-board.js), short enough for a headline. */
+const SHADOW_VERDICT = { win: "Shadow beaten", loss: "Shadow wins", draw: "Level", forfeit: "Abandoned" } as const;
+const SHADOW_TILE = { win: "Won", loss: "Lost", draw: "Level", forfeit: "Forfeit" } as const;
+
+/** "49th-percentile day": the Shadow's own label (core/match/shadow.ts) without its article. */
+const dayLabel = (percentile: number) => shadowLabel(percentile).replace(/^an? /, "");
 
 function matchLine(ms: { you: number | null; them: number | null } | null | undefined): string {
   return ms && (ms.you != null || ms.them != null) ? `Match ${fmtDelta(ms.you)} vs ${fmtDelta(ms.them)}` : "";
@@ -83,7 +96,7 @@ export function mechanicHeadline(input: MechanicCardInput): string {
     case "flag":
       return input.verdict === "win" ? "Flag held" : input.verdict === "loss" ? "Flag lost" : "Draw";
     case "shadow":
-      return input.placed ? input.placed.name : "Placing";
+      return SHADOW_VERDICT[latest(input).verdict];
   }
 }
 
@@ -97,14 +110,15 @@ function kicker(input: MechanicCardInput): string {
     case "flag":
       return ["Flag answered", input.category].filter(Boolean).join(" · ");
     case "shadow":
-      return ["Shadow placement", input.category].filter(Boolean).join(" · ");
+      // Named as the queue names it everywhere: synthetic, and no rating moved.
+      return ["Shadow match", input.category, "synthetic, unrated"].filter(Boolean).join(" · ");
   }
 }
 
 function headlineFill(input: MechanicCardInput, p: BrandPalette): string {
   if (input.kind === "crown") return p.up;
   if (input.kind === "flag") return input.verdict === "win" ? p.up : input.verdict === "loss" ? p.down : p.ink;
-  if (input.kind === "shadow" && input.placed) return rankInk(p, input.placed.color);
+  if (input.kind === "shadow") return latest(input).verdict === "win" ? p.up : latest(input).verdict === "loss" ? p.down : p.ink;
   return p.ink;
 }
 
@@ -113,6 +127,7 @@ function nameLine(input: MechanicCardInput): string {
   const me = input.player.name;
   if (input.kind === "crown" && input.rival) return `${me}  vs  ${input.rival.name}`;
   if (input.kind === "flag") return `${me}  vs  ${input.challenger.name}`;
+  if (input.kind === "shadow") return `${me}  vs  ${shadowLabel(latest(input).percentile)}`;
   return me;
 }
 
@@ -141,14 +156,12 @@ function figureLines(input: MechanicCardInput): string[] {
         ratingChangeLine(input.player.rating, input.player.ratingChange),
         input.standing != null ? `${plural(input.standing, "flag")} still standing` : "",
       ].filter(Boolean);
-    case "shadow": {
-      const p = input.player;
-      const top = p.percentile != null ? `Top ${Math.max(1, Math.ceil(100 - p.percentile))}%` : "";
-      const rating = p.rating != null ? `Rating ${Math.round(p.rating)}` : "";
-      return input.placed
-        ? [`Record ${record(input.series)}`, rating, top].filter(Boolean)
-        : [`Match ${input.series.length} of ${input.of}`, `Record ${record(input.series)}`].filter(Boolean);
-    }
+    case "shadow":
+      return [
+        matchLine(latest(input).matchScore),
+        record(input.series),
+        input.streak > 1 ? `Shadow streak ${input.streak}` : "",
+      ].filter(Boolean);
   }
 }
 
@@ -163,10 +176,13 @@ function emblemWords(input: MechanicCardInput): [string, string] {
       const d = daysBetween(input.plantedAt, input.answeredAt);
       return [d === 0 ? "Answered the same day" : `Stood ${plural(d, "day")}`, `Planted ${shortDate(input.plantedAt)} · answered ${shortDate(input.answeredAt)}`];
     }
-    case "shadow":
-      return input.placed
-        ? [plural(input.of, "Shadow match", "Shadow matches"), "Placement complete"]
-        : [`${input.series.length} of ${input.of} played`, "Placement in progress"];
+    case "shadow": {
+      // The queue board's read-out, in queue-board.js's words.
+      const pl = input.placement;
+      if (pl?.kind === "read") return [`About the ${ordinalSuffix(pl.estimate)} percentile`, `Placement from ${plural(pl.decided, "Shadow")}`];
+      if (pl?.kind === "pending") return [`${pl.decided} of ${pl.needed} Shadow results`, `Placement shows after ${pl.needed}`];
+      return ["Shadow ladder", "Synthetic · moves no rating"];
+    }
   }
 }
 
@@ -175,7 +191,7 @@ function ruleLine(input: MechanicCardInput): string {
     case "daily":
       return `Each mark is a run against the player's own baseline (near: within ±${(input.nearBand * 100).toFixed(1)}%). No scenario is named.`;
     case "shadow":
-      return "Raw scores from KovaaK's stats. Each Shadow is calibrated to the rating on its tile.";
+      return "A Shadow is a day at a stated percentile of genuine match scores, against own baselines. It moves no rating.";
     case "crown":
       // A Crown is decided on match score against the holder's stored set (core/crowns).
       return "Raw scores from KovaaK's stats. The Crown goes to the higher match score; a tie stays with the holder.";
@@ -190,13 +206,12 @@ function cardDate(input: MechanicCardInput): string | null | undefined {
 
 const MECHANIC_OF: Record<MechanicCardInput["kind"], MechanicId> = { daily: "daily", crown: "crown", flag: "flag", shadow: "shadow" };
 
-/** The picture on the orbit: a placement that has finished shows the tier it gave. */
-function hero(input: MechanicCardInput, p: BrandPalette, o: ShareCardOptions): { svg: string; ink: string; tier: CardTier | null } {
-  if (input.kind === "shadow" && input.placed) {
-    const ink = rankInk(p, input.placed.color);
-    return { svg: o.emblem(input.placed, ink), ink, tier: input.placed };
-  }
-  return { svg: mechanicEmblemSvg(MECHANIC_OF[input.kind], p.brand), ink: p.brand, tier: null };
+/**
+ * The picture on the orbit: the mechanic's emblem, in the brand colour. Never a rank
+ * insignia: a Shadow places nobody in a tier, and the other three are not ranks either.
+ */
+function hero(input: MechanicCardInput, p: BrandPalette): { svg: string; ink: string } {
+  return { svg: mechanicEmblemSvg(MECHANIC_OF[input.kind], p.brand), ink: p.brand };
 }
 
 // ---------------------------------------------------------------- marks and tiles
@@ -244,9 +259,17 @@ function dailyTiles(p: BrandPalette, marks: DailyMark[], box: { x: number; y: nu
   return out.join("");
 }
 
-/** A placement series: one tile per match, played or still to play. */
+/**
+ * The Shadow ladder: one tile per recent Shadow, the shared match last, each a percentile
+ * day and how it went. Before the placement shows, the results it still needs are dashed
+ * "To play" tiles, so the card counts to the read-out the way the queue screen does.
+ */
+function shadowTileCount(input: ShadowCardInput): number {
+  return input.placement?.kind === "pending" ? Math.max(input.series.length, input.placement.needed) : input.series.length;
+}
+
 function shadowTiles(p: BrandPalette, input: ShadowCardInput, box: { x: number; y: number; w: number; h: number }, scale: number, perRow: number): string {
-  const n = input.of;
+  const n = shadowTileCount(input);
   const rows = Math.ceil(n / perRow);
   const gap = 12 * scale;
   const th = (box.h - gap * (rows - 1)) / rows;
@@ -257,23 +280,24 @@ function shadowTiles(p: BrandPalette, input: ShadowCardInput, box: { x: number; 
     const x = box.x + (i % perRow) * (tw + gap);
     const y = box.y + Math.floor(i / perRow) * (th + gap);
     const m = input.series[i];
-    out.push(panel(p, x, y, tw, th, 8 * scale, !m));
     const pad = 16 * scale;
-    out.push(text(String(i + 1).padStart(2, "0"), x + pad, y + 26 * scale, { size: 13 * scale, fill: p.inkDim, family: "mono" }));
+    out.push(panel(p, x, y, tw, th, 8 * scale, !m));
+    out.push(text(m && i === input.series.length - 1 ? "Latest" : String(i + 1).padStart(2, "0"), x + pad, y + 26 * scale, { size: 13 * scale, fill: p.inkDim, family: "mono", tracking: m && i === input.series.length - 1 ? 0.1 : 0, upper: true }));
     if (!m) {
       out.push(text("To play", x + pad, y + th - (tall ? 24 : 16) * scale, { size: 13 * scale, fill: p.inkDim, family: "mono", tracking: 0.1, upper: true, fit: tw - pad * 2 }));
       continue;
     }
-    const ink = m.verdict === "win" ? p.up : m.verdict === "loss" ? p.down : p.inkMid;
+    const ink = m.verdict === "win" ? p.up : m.verdict === "loss" || m.verdict === "forfeit" ? p.down : p.inkMid;
     out.push(`<rect x="${x}" y="${y + 12 * scale}" width="${3 * scale}" height="${th - 24 * scale}" rx="${1.5 * scale}" fill="${ink}"/>`);
-    out.push(text(m.verdict === "win" ? "Won" : m.verdict === "loss" ? "Lost" : "Draw", x + tw - pad, y + 26 * scale, { size: 13 * scale, fill: ink, family: "mono", weight: 600, anchor: "end", tracking: 0.14, upper: true }));
-    const vs = m.shadowRating != null ? `Shadow ${m.shadowRating}` : "Shadow";
+    out.push(text(SHADOW_TILE[m.verdict], x + tw - pad, y + 26 * scale, { size: 13 * scale, fill: ink, family: "mono", weight: 600, anchor: "end", tracking: 0.14, upper: true }));
     if (tall) {
-      out.push(text(vs, x + pad, y + th / 2 + 12 * scale, { size: 22 * scale, fill: p.ink, weight: 600, fit: tw - pad * 2 }));
+      // The percentile large, what it is a percentile of beneath it.
+      out.push(text(ordinalSuffix(m.percentile), x + pad, y + th / 2 + 10 * scale, { size: 34 * scale, fill: p.ink, weight: 600, fit: tw - pad * 2 }));
+      out.push(text("percentile day", x + pad, y + th / 2 + 34 * scale, { size: 12 * scale, fill: p.inkMid, family: "mono", tracking: 0.1, upper: true, fit: tw - pad * 2, fitMin: 9 }));
       const ms = m.matchScore ? `${fmtDelta(m.matchScore.you)} vs ${fmtDelta(m.matchScore.them)}` : "";
       if (ms) out.push(text(ms, x + pad, y + th - 22 * scale, { size: 12 * scale, fill: p.inkDim, family: "mono", fit: tw - pad * 2, fitMin: 10 }));
     } else {
-      out.push(text(vs, x + pad, y + th - 16 * scale, { size: 16 * scale, fill: p.ink, weight: 600, fit: tw - pad * 2 }));
+      out.push(text(dayLabel(m.percentile), x + pad, y + th - 16 * scale, { size: 16 * scale, fill: p.ink, weight: 600, fit: tw - pad * 2 }));
     }
   }
   return out.join("");
@@ -305,11 +329,11 @@ function landscape(input: MechanicCardInput, o: ShareCardOptions): string {
   out.push(text(figureLines(input).join("   ·   "), L, 346, { size: 15, fill: p.inkMid, family: "mono", tracking: 0.04, fit: 720 }));
 
   const ex = 986;
-  const h = hero(input, p, o);
+  const h = hero(input, p);
   out.push(orbit(p, ex, 208, 150, 52, -14, h.ink));
-  out.push(h.tier ? placeSvg(h.svg, ex - 64, 132, 128, 138) : placeSvg(h.svg, ex - 66, 142, 132, 132));
+  out.push(placeSvg(h.svg, ex - 66, 142, 132, 132));
   const [accent, caption] = emblemWords(input);
-  out.push(text(accent, ex, 306, { size: 24, fill: h.tier ? h.ink : p.brand, weight: 600, anchor: "middle", fit: 300 }));
+  out.push(text(accent, ex, 306, { size: 24, fill: p.brand, weight: 600, anchor: "middle", fit: 300 }));
   out.push(text(caption, ex, 334, { size: 12, fill: p.inkDim, family: "mono", anchor: "middle", tracking: 0.16, upper: true, fit: 300 }));
 
   if (input.kind === "daily") {
@@ -317,9 +341,10 @@ function landscape(input: MechanicCardInput, o: ShareCardOptions): string {
     out.push(text("Against own baseline", R - 16, 392, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true, anchor: "end" }));
     out.push(dailyTiles(p, input.marks, { x: L, y: 404, w: R - L, h: 186 }, 1, 6));
   } else if (input.kind === "shadow") {
-    out.push(text("Placement series", L + 16, 392, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true }));
-    out.push(text("Shadow rating per match", R - 16, 392, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true, anchor: "end" }));
-    out.push(shadowTiles(p, input, { x: L, y: 404, w: R - L, h: 186 }, 1, input.of <= 5 ? input.of : Math.ceil(input.of / 2)));
+    const n = shadowTileCount(input);
+    out.push(text(input.series.length > 1 ? `Last ${plural(input.series.length, "Shadow")}` : "Shadow ladder", L + 16, 392, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true }));
+    out.push(text("Each Shadow is a percentile day", R - 16, 392, { size: 11, fill: p.inkDim, family: "mono", tracking: 0.18, upper: true, anchor: "end" }));
+    out.push(shadowTiles(p, input, { x: L, y: 404, w: R - L, h: 186 }, 1, n <= 5 ? n : Math.ceil(n / 2)));
   } else {
     const them = input.kind === "crown" ? input.rival?.name ?? "Holder" : input.challenger.name;
     out.push(landscapeRounds(p, input.rounds, { first: "Scenario", you: input.player.name, them }));
@@ -346,11 +371,11 @@ function portrait(input: MechanicCardInput, o: ShareCardOptions): string {
   out.push(lockup(p, L, 126, 42));
   out.push(text(input.season, R, 118, { size: 18, fill: p.inkDim, family: "mono", anchor: "end", tracking: 0.18, upper: true, fit: 420 }));
 
-  const h = hero(input, p, o);
+  const h = hero(input, p);
   out.push(orbit(p, C, 420, 380, 120, -12, h.ink));
-  out.push(h.tier ? placeSvg(h.svg, C - 150, 255, 300, 323) : placeSvg(h.svg, C - 140, 280, 280, 280));
+  out.push(placeSvg(h.svg, C - 140, 280, 280, 280));
   const [accent, caption] = emblemWords(input);
-  out.push(text(accent, C, 646, { size: 40, fill: h.tier ? h.ink : p.brand, weight: 600, anchor: "middle", fit: 820 }));
+  out.push(text(accent, C, 646, { size: 40, fill: p.brand, weight: 600, anchor: "middle", fit: 820 }));
   out.push(text(caption, C, 686, { size: 18, fill: p.inkDim, family: "mono", anchor: "middle", tracking: 0.18, upper: true, fit: 820 }));
 
   out.push(text(kicker(input), C, 790, { size: 20, fill: p.brand, family: "mono", anchor: "middle", tracking: 0.2, upper: true, fit: 880 }));
@@ -362,7 +387,8 @@ function portrait(input: MechanicCardInput, o: ShareCardOptions): string {
     const rows = Math.ceil(input.marks.length / 3);
     out.push(dailyTiles(p, input.marks, { x: L, y: 1190, w: R - L, h: rows === 1 ? 420 : 500 }, 1.5, 3));
   } else if (input.kind === "shadow") {
-    const perRow = input.of <= 3 ? input.of : input.of === 4 ? 2 : input.of <= 6 ? 3 : Math.ceil(input.of / 3);
+    const n = shadowTileCount(input);
+    const perRow = n <= 3 ? n : n === 4 ? 2 : n <= 6 ? 3 : 4;
     out.push(shadowTiles(p, input, { x: L, y: 1190, w: R - L, h: 500 }, 1.35, perRow));
   } else {
     const them = input.kind === "crown" ? input.rival?.name ?? "Holder" : input.challenger.name;

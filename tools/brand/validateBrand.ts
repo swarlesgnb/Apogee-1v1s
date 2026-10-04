@@ -46,7 +46,9 @@ import {
   shadowCardInput,
   type CardContext,
   type MechanicCardInput,
+  type ShadowRecord,
 } from "../../src/core/brand/shareInput.ts";
+import { ordinalSuffix, shadowLabel } from "../../src/core/match/shadow.ts";
 import { iconFile, mechanicJobs, rendererScript, RENDERER_ICONS, RENDERER_SCRIPT } from "./buildMechanics.ts";
 import { marketingJobs, TAGLINES } from "./buildMarketing.ts";
 import { motionJobs, VIDEO_MECHANICS, videoScenes } from "./buildMotion.ts";
@@ -125,11 +127,26 @@ check("adapters refuse what they should", () => {
   refused(crownCardInput({ event: "taken", category: "Any", band: "Lunar", rival: null, defences: 0, yourMatchScore: 0.1, theirMatchScore: 0, rounds: [], at: Date.now() }, ctx));
   refused(flagCardInput({ verdict: "void", challenger: { displayName: "x" }, plantedAt: "2026-10-01", answeredAt: "2026-10-02", yourMatchScore: 0, theirMatchScore: 0, rounds: [round] }, ctx));
   refused(flagCardInput({ verdict: "win", challenger: { displayName: "x" }, plantedAt: "never", answeredAt: "2026-10-02", yourMatchScore: 0, theirMatchScore: 0, rounds: [round] }, ctx));
-  refused(shadowCardInput({ series: [{ verdict: "void" }], of: 5, placed: null, at: Date.now() }, ctx));
-  refused(shadowCardInput({ series: [{ verdict: "win" }], of: 11, placed: null, at: Date.now() }, ctx));
-  // A tier before the series is over would be a placement the server has not made.
-  const early = shadowCardInput({ series: [{ verdict: "win" }], of: 5, placed: { id: "tier-4", name: "Lunar", color: "#29008a" }, at: Date.now() }, ctx);
-  assert.ok(!("refused" in early) && early.placed === null, "an unfinished placement shows no tier");
+  refused(shadowCardInput({ series: [{ verdict: "void", percentile: 50 }], at: Date.now() }, ctx));
+  refused(shadowCardInput({ series: [{ verdict: "win", percentile: 0 }], at: Date.now() }, ctx));
+  refused(shadowCardInput({ series: [{ verdict: "win", percentile: 51 }, { verdict: "forfeit", percentile: 65 }], at: Date.now() }, ctx));
+  refused(shadowCardInput({ series: [{ verdict: "placed" as never, percentile: 51 }], at: Date.now() }, ctx));
+  // The placement is the queue board's read-out or nothing. Under three results the app
+  // says "Placement shows after 3"; a read-out sent early is not printed; a record whose
+  // board was never read says nothing either way. A Shadow card carries no rating field.
+  const shadow = (placement: ShadowRecord["placement"], n = 1) =>
+    shadowCardInput({ series: Array.from({ length: n }, (_, i) => ({ verdict: "win" as const, percentile: 50 + i })), placement, at: Date.now() }, ctx);
+  const early = shadow({ estimate: 61, decided: 2 }, 2);
+  assert.ok(!("refused" in early) && early.placement === null, "a read-out from fewer than three results is not printed");
+  const pending = shadow(null, 2);
+  assert.ok(!("refused" in pending) && pending.placement?.kind === "pending" && pending.placement.decided === 2 && pending.placement.needed === 3, "under three results the card counts to the read-out");
+  const unknown = shadow(undefined, 4);
+  assert.ok(!("refused" in unknown) && unknown.placement === null, "a board not read since the match prints no placement");
+  const read = shadow({ estimate: 57.4, decided: 6 }, 6);
+  assert.ok(!("refused" in read) && read.placement?.kind === "read" && read.placement.estimate === 57, "the read-out prints as the board sends it");
+  assert.ok(!("refused" in read) && !Object.keys(read.player).some((k) => /rating|percentile/.test(k)) && !("placed" in read), "no rating, tier or placed field on a Shadow card");
+  const many = shadow(null, 11);
+  assert.ok(!("refused" in many) && many.series.length === 8 && many.series[7].percentile === 60 && many.placement === null, "eleven results trim to the last eight, and 'not yet' with eight in hand is not repeated");
   // Names that arrive with control characters or at any length are cleaned and capped.
   const crown = crownCardInput({ event: "taken", category: "Speed\u0007 Switching", band: "x".repeat(80), rival: { displayName: "a\nb" }, defences: -3, yourMatchScore: null, theirMatchScore: null, rounds: [round], at: Date.now() }, ctx);
   assert.ok(!("refused" in crown) && crown.category === "Speed Switching" && crown.band.length === 32 && crown.rival?.name === "ab" && crown.defences === 0);
@@ -180,10 +197,25 @@ function expected(input: MechanicCardInput, texts: string[]): string[] {
     const labels = texts.filter((t) => /^(Above|Near|Below|First run|Not played)$/i.test(t)).length;
     if (labels !== input.marks.length) missing.push(`${input.marks.length} marks (found ${labels})`);
   } else if (input.kind === "shadow") {
-    for (const m of input.series) if (m.shadowRating != null) want(`Shadow ${m.shadowRating}`);
+    // What the queue shows (queue-board.js, core/match/shadow.ts), and nothing it does not.
+    const last = input.series[input.series.length - 1];
+    // Captions are set in capitals, so these read without regard to case.
+    const wantI = (w: string) => { if (!texts.some((t) => t.toLowerCase().includes(w.toLowerCase()))) missing.push(w); };
+    want(last.verdict === "win" ? "Shadow beaten" : last.verdict === "loss" ? "Shadow wins" : "Level");
+    want(shadowLabel(last.percentile));
+    if (texts.filter((t) => /synthetic, unrated/i.test(t)).length < 1) missing.push('"synthetic, unrated" in the kicker');
+    const tiles = texts.filter((t) => /^(WON|LOST|LEVEL|FORFEIT)$/.test(t)).length;
+    if (tiles !== input.series.length) missing.push(`${input.series.length} result tiles (found ${tiles})`);
+    for (const m of input.series) if (!has(ordinalSuffix(m.percentile))) missing.push(`the ${ordinalSuffix(m.percentile)}-percentile tile`);
+    if (input.placement?.kind === "read") {
+      want(`About the ${ordinalSuffix(input.placement.estimate)} percentile`);
+      wantI(`Placement from ${input.placement.decided} Shadow`);
+    } else if (input.placement?.kind === "pending") wantI(`Placement shows after ${input.placement.needed}`);
+    else if (texts.some((t) => /Placement/i.test(t))) missing.push("no placement line when the board was not read");
+    if (input.placement?.kind === "pending" && texts.filter((t) => /^TO PLAY$/.test(t)).length !== input.placement.needed - input.series.length) missing.push("a To play tile per result the read-out still needs");
     const tierWords = ["Stargazer", "Astrologist", "Cosmonaut", "Lunar", "Odyssey", "Arecibo", "Quasar", "Supernova"];
-    if (input.placed) want(input.placed.name);
-    else if (texts.some((t) => tierWords.includes(t))) missing.push("no tier before the placement is complete");
+    if (texts.some((t) => tierWords.some((w) => t.includes(w)))) missing.push("no tier: the app shows none for Shadows");
+    if (texts.some((t) => /\brating\b/i.test(t) && !/no rating/i.test(t))) missing.push("no rating figure: Shadows move none");
   } else {
     for (const r of input.rounds.slice(0, 3)) {
       want(r.scenario.slice(0, 8));
