@@ -887,9 +887,13 @@ function createWindow(): void {
       preload: join(here, "preload.cjs"),
       // The renderer is a view. It gets no Node, no remote module, and a locked-down
       // context; everything it needs arrives through the preload bridge.
+      //
+      // Sandboxed, preload included. preload.cjs requires only `electron`'s contextBridge
+      // and ipcRenderer, which a sandboxed preload has; the smoke probe below runs it with
+      // these same preferences and checks the bridge (docs/fleet/security.md).
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: false,
+      sandbox: true,
     },
   });
 
@@ -1022,7 +1026,9 @@ function runSmokeTest(): void {
   // surfaces here rather than the first time a human opens the app.
   const probe = new BrowserWindow({
     show: false,
-    webPreferences: { preload: join(here, "preload.cjs"), contextIsolation: true },
+    // The main window's preferences exactly, so a preload that breaks under the sandbox
+    // fails here.
+    webPreferences: { preload: join(here, "preload.cjs"), contextIsolation: true, nodeIntegration: false, sandbox: true },
   });
 
   probe.webContents.on("did-fail-load", (_e, code, desc) => {

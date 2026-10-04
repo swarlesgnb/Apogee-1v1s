@@ -30,12 +30,21 @@ import {
   HttpError,
 } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import { declaredOffset, firstSeenPlayTime, holdToMatchClock } from "../_shared/timeIntegrity.ts";
 
 import { parseStatsFile } from "../../../src/core/stats/parseStatsFile.ts";
 import { playedAtUtc, runDurationSeconds } from "../../../src/core/stats/duration.ts";
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 import { verifyRun } from "../../../src/core/verify/verifyRun.ts";
-import { matchServerRecord, recentScores } from "../../../src/core/verify/kovaaksClient.ts";
+import { matchServerRecord, recentScores, sameRunRecord } from "../../../src/core/verify/kovaaksClient.ts";
+import {
+  futureMessage,
+  isFutureDated,
+  isLateReceipt,
+  LATE_RECEIPT_GRACE_MS,
+  MAX_OFFSET_MINUTES,
+  wallClock,
+} from "../../../src/core/verify/timeIntegrity.ts";
 
 interface Body {
   /** File name, which carries the date KovaaK's does not put inside the file. */
@@ -46,7 +55,10 @@ interface Body {
   csvSha256: string;
   /** Set when the run is being submitted for a match. */
   matchId?: string;
-  /** Minutes to add to the player's local time to reach UTC; see playedAtUtc. */
+  /**
+   * Minutes to add to the player's local time to reach UTC; see playedAtUtc. Required for
+   * a ranked run, and held to the clock its match started with (timeIntegrity.ts).
+   */
   tzOffsetMinutes?: number;
 }
 
@@ -81,13 +93,19 @@ Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
   await enforceRateLimit(admin, caller.playerId, "submit-run");
   const body = await readJson<Body>(req);
+  // Server receipt: the clock every time rule below is measured against.
+  const receivedAt = Date.now();
 
   if (!body || typeof body.csv !== "string" || typeof body.filename !== "string" ||
       !body.csv || !body.filename) throw new HttpError(400, "filename and csv are required");
   if (body.csv.length > 4_000_000) throw new HttpError(413, "stats file is implausibly large");
-  if (body.tzOffsetMinutes != null &&
-      (!Number.isInteger(body.tzOffsetMinutes) || Math.abs(body.tzOffsetMinutes) > 840)) {
-    throw new HttpError(400, "tzOffsetMinutes must be an integer between -840 and 840");
+  const offset = declaredOffset(body);
+
+  // Omitting the offset reads the wall clock as UTC, which is as much a choice as any
+  // offset. An older client may still do that for a run that decides nothing; a ranked
+  // run says which clock it was played on, so it can be held to its match's.
+  if (body.matchId && offset === null) {
+    throw new HttpError(400, "A ranked run has to say which UTC offset your PC was on. Update Apogee and play the scenario again.");
   }
 
   // The client's hash is not trusted; it is only checked for agreement, which catches
@@ -114,9 +132,22 @@ Deno.serve(handler(async (req, admin) => {
   // it belongs and falls outside its match window; that is what rejected all three runs
   // of the first real match. An older client that sends no offset keeps the old
   // behaviour rather than being refused.
-  if (body.tzOffsetMinutes != null) {
-    const corrected = playedAtUtc(body.filename, body.tzOffsetMinutes);
-    if (corrected) run.playedAt = corrected;
+  const wall = wallClock(body.filename);
+  let storedOffset: number | null = null;
+  if (offset !== null) {
+    const corrected = playedAtUtc(body.filename, offset);
+    if (corrected) {
+      run.playedAt = corrected;
+      storedOffset = offset;
+    }
+  }
+
+  // Nothing from the future. A corrected end later than the server's clock plus slack is
+  // either a PC clock that is badly wrong or an offset pushing a run past when it was
+  // played; neither can count, and the second is how a run uploaded as it was played
+  // would otherwise be restamped into a later match.
+  if (run.playedAt && isFutureDated(run.playedAt.getTime(), receivedAt)) {
+    throw new HttpError(422, futureMessage(run.playedAt.getTime(), receivedAt));
   }
 
   const scenario = await scenarioByName(admin, run.scenario);
@@ -137,7 +168,7 @@ Deno.serve(handler(async (req, admin) => {
     // sitting in it as the opponent carries their player_id too, and does not count.
     const { data: side } = await admin
       .from("match_sides")
-      .select("player_id, submitted_at")
+      .select("player_id, submitted_at, tz_offset_minutes, tz_declared_at")
       .eq("match_id", body.matchId)
       .eq("player_id", caller.playerId)
       .maybeSingle();
@@ -146,6 +177,31 @@ Deno.serve(handler(async (req, admin) => {
     if (!scenario || !(match.scenario_ids as number[]).includes(scenario.id)) {
       throw new HttpError(400, "that scenario is not part of this match");
     }
+
+    // On time. A match nobody has swept stays open past its deadline, and a run reaching
+    // the server long after that was played after time ran out or held back to be
+    // stamped into it. The honest client submits as each file lands, seconds after the
+    // run, and that run had to end inside the window anyway.
+    const deadline = match.expires_at ? new Date(match.expires_at).getTime() : null;
+    if (isLateReceipt(receivedAt, deadline, WINDOW_END_GRACE_MS)) {
+      throw new HttpError(
+        409,
+        `This match ran out of time at ${new Date(deadline!).toISOString().slice(11, 16)} UTC. A ranked run ` +
+          `has to reach the server within ${LATE_RECEIPT_GRACE_MS / 60_000} minutes of the deadline, so it was not counted.`,
+      );
+    }
+
+    // One clock per match: the offset this run declares must be the one the match was
+    // started with (or the one its first run pinned), daylight-saving changes aside.
+    await holdToMatchClock(admin, {
+      matchId: body.matchId,
+      playerId: caller.playerId,
+      side,
+      matchCreatedAt: match.created_at,
+      offset: offset!,
+      runEndedAt: run.playedAt?.getTime() ?? null,
+      now: receivedAt,
+    });
 
     window = {
       start: new Date(new Date(match.created_at).getTime() - WINDOW_START_GRACE_MS),
@@ -156,28 +212,63 @@ Deno.serve(handler(async (req, admin) => {
     };
   }
 
+  // First seen wins. If this performance is already stored - uploaded as history the
+  // moment it landed, or submitted before - it keeps the time it was stored with, whatever
+  // offset or filename this request carries. Graded against that time, so a run restamped
+  // into a match it was not played in fails that match's window, the existing rule. The
+  // database trigger enforces the same thing for every writer (20261003000026).
+  const advisories: string[] = [];
+  if (scenario && run.playedAt) {
+    const first = await firstSeenPlayTime(admin, {
+      playerId: caller.playerId,
+      scenarioId: scenario.id,
+      challengeStart: run.challengeStart,
+      endedLocal: wall?.local ?? null,
+      score: run.score,
+      ranked: !!body.matchId,
+    });
+    if (first && first.playedAt.getTime() !== run.playedAt.getTime()) {
+      advisories.push(
+        `first uploaded ending at ${first.playedAt.toISOString()}; this submission said ${run.playedAt.toISOString()}`,
+      );
+      run.playedAt = first.playedAt;
+      const implied = wall ? Math.round((first.playedAt.getTime() - wall.ms) / 60_000) : null;
+      storedOffset = implied !== null && Math.abs(implied) <= MAX_OFFSET_MINUTES ? implied : first.offset;
+    }
+  }
+
   // Cross-check against KovaaK's, where the player has linked an account. Their recent
   // runs include sub-personal-best results, so a match run is verifiable whether or not
   // it was a record.
+  //
+  // Two questions, not one. `matchServerRecord` asks whether KovaaK's saw this run at
+  // this time, which is Verified. `sameRunRecord` asks whether KovaaK's has this run at
+  // all; when it does and the times disagree, that is a contradiction, not an absence,
+  // and verifyRun reads it as one.
   let serverRecord = null;
+  let sameRun = null;
   if (caller.kovaaksUsername) {
     try {
       const recent = await recentScores(caller.kovaaksUsername, run.scenario);
-      serverRecord = matchServerRecord(recent, {
+      const evidence = {
         playedAt: run.playedAt,
         hash: run.hash,
         challengeStart: run.challengeStart,
         score: run.score,
-      });
+      };
+      serverRecord = matchServerRecord(recent, evidence);
+      sameRun = serverRecord ? null : sameRunRecord(recent, evidence);
     } catch {
       // KovaaK's being unreachable must degrade verification, never block submission.
       serverRecord = null;
+      sameRun = null;
     }
   }
 
   const outcome = verifyRun({
     run,
     serverRecord,
+    sameRunRecord: sameRun,
     consistency: {
       worldRecord: scenario?.world_record ? Number(scenario.world_record) : undefined,
       knownHash: scenario?.known_hash ?? undefined,
@@ -210,6 +301,7 @@ Deno.serve(handler(async (req, admin) => {
       window,
     },
   });
+  outcome.advisories.push(...advisories);
 
   const row = {
     player_id: caller.playerId,
@@ -221,6 +313,7 @@ Deno.serve(handler(async (req, admin) => {
     hit_count: run.hitCount,
     miss_count: run.missCount,
     played_at: (run.playedAt ?? new Date()).toISOString(),
+    tz_offset_minutes: storedOffset,
     challenge_start: run.challengeStart,
     duration_seconds: durationSeconds,
     hash: run.hash,
@@ -273,6 +366,10 @@ Deno.serve(handler(async (req, admin) => {
 
   if (error) {
     if (error.code === "55000") throw new HttpError(409, "match is already finished");
+    // The trigger's own time rules, reached only when another upload of this performance
+    // raced this request between the lookup above and the write.
+    if (error.code === "TI409") throw new HttpError(409, "this run was uploaded with a different end time; submit it again");
+    if (error.code === "TI422") throw new HttpError(422, futureMessage(run.playedAt?.getTime() ?? receivedAt, receivedAt));
     // The unique constraint on (player_id, csv_sha256) is replay protection, so a
     // duplicate is a meaningful answer rather than a failure.
     if (error.code === "23505") {
@@ -301,7 +398,9 @@ Deno.serve(handler(async (req, admin) => {
   // A rejected score can still record activity, but an absent or out-of-window
   // timestamp cannot extend the deadline. Those values are supplied by the client.
   let expiresAt: string | null = null;
-  const insideWindow = outcome.report.checks.some(c => c.id === "in_match_window" && c.status === "pass");
+  // Nor can a time KovaaK's own record of the run contradicts.
+  const insideWindow = outcome.report.checks.some(c => c.id === "in_match_window" && c.status === "pass") &&
+    !outcome.report.checks.some(c => c.id === "server_time_in_window" && c.status === "fail");
   if (body.matchId && insideWindow && run.playedAt) {
     expiresAt = deadlineAfterRun(run.playedAt).toISOString();
     await admin.from("matches").update({ expires_at: expiresAt }).eq("id", body.matchId);

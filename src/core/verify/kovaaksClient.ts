@@ -23,7 +23,7 @@
  * failing.
  */
 
-import { matchesServerEvidence, type RunEvidence } from "./serverEvidence.ts";
+import { matchesServerEvidence, sameRunAs, type RunEvidence } from "./serverEvidence.ts";
 
 const BASE = "https://kovaaks.com/webapp-backend";
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0 Safari/537.36";
@@ -191,4 +191,19 @@ export function matchServerRecord(
   local: RunEvidence,
 ): KovaaksScore | null {
   return candidates.find((candidate) => matchesServerEvidence(local, candidate)) ?? null;
+}
+
+/**
+ * The server record of this run, found without trusting its corrected end time.
+ *
+ * `matchServerRecord` also demands that KovaaK's timestamp agree with the corrected time,
+ * which is what Verified means. This asks the earlier question, whether KovaaK's has the
+ * run at all, so that a record agreeing on everything except *when* can be read as the
+ * contradiction it is (verifyRun) instead of as a missing record.
+ */
+export function sameRunRecord(
+  candidates: KovaaksScore[],
+  local: Omit<RunEvidence, "playedAt">,
+): KovaaksScore | null {
+  return candidates.find((candidate) => sameRunAs(local, candidate)) ?? null;
 }
