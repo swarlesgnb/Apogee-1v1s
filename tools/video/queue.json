@@ -1,0 +1,379 @@
+{
+ "about": "Written by tools/video/queueDemo.ts from the shipped find-match, settle-match and queue-board handlers on PGlite. Do not edit by hand; re-run the generator.",
+ "generatedAt": "2026-10-04T17:27:51.786Z",
+ "planShadow": {
+  "now": "2026-10-04T17:27:51.647Z",
+  "preview": {
+   "category": "Static Clicking",
+   "window": 1,
+   "band": "Intermediate",
+   "measured": {
+    "full": 3,
+    "some": 0,
+    "total": 3
+   },
+   "outcome": "shadow",
+   "opponents": 0,
+   "shadow": {
+    "percentile": 50,
+    "label": "a 50th-percentile day",
+    "rung": 2,
+    "ordinal": 0,
+    "skill": "Clicking",
+    "synthetic": true
+   },
+   "flag": {
+    "willPlant": true,
+    "band": "Intermediate",
+    "category": "Static Clicking",
+    "ttlDays": 7,
+    "line": "Flag planted: Intermediate band, Static Clicking. It settles when someone answers it (up to 7 days)."
+   },
+   "line": "No one in your band right now. You'll face a Shadow now (a 50th-percentile day), and your run set stays planted as a Flag."
+  },
+  "shadow": {
+   "next": {
+    "percentile": 50,
+    "label": "a 50th-percentile day",
+    "rung": 2,
+    "ordinal": 0,
+    "skill": "Clicking",
+    "synthetic": true
+   },
+   "placement": null,
+   "streak": 0,
+   "played": 0,
+   "recent": []
+  },
+  "activeShadow": null,
+  "flags": [],
+  "news": []
+ },
+ "matchShadow": {
+  "matchId": "84f91521-80f0-4680-a7b5-c8937d84d131",
+  "category": "Static Clicking",
+  "difficulty": "Intermediate",
+  "expiresAt": "2026-10-04T17:35:51.688Z",
+  "scenarios": [
+   {
+    "id": 278,
+    "name": "Apogee Galaga Intermediate"
+   },
+   {
+    "id": 378,
+    "name": "Apogee Zenith Intermediate"
+   },
+   {
+    "id": 262,
+    "name": "Apogee Distant Intermediate"
+   }
+  ],
+  "opponent": null,
+  "seeding": true,
+  "shadow": {
+   "percentile": 50,
+   "label": "a 50th-percentile day",
+   "rung": 2,
+   "ordinal": 0,
+   "skill": "Clicking",
+   "synthetic": true
+  },
+  "flag": {
+   "willPlant": true,
+   "band": "Intermediate",
+   "category": "Static Clicking",
+   "ttlDays": 7,
+   "line": "Flag planted: Intermediate band, Static Clicking. It settles when someone answers it (up to 7 days)."
+  },
+  "winProbability": null,
+  "poolSize": 0
+ },
+ "resultShadow": {
+  "matchId": "84f91521-80f0-4680-a7b5-c8937d84d131",
+  "seeding": true,
+  "rated": false,
+  "tournament": null,
+  "verdict": null,
+  "category": "Static Clicking",
+  "yourMatchScore": 0.016745111257306378,
+  "theirMatchScore": null,
+  "countedRounds": 3,
+  "rounds": [
+   {
+    "scenario": "Apogee Galaga Intermediate",
+    "score": 3248,
+    "baseline": 3120,
+    "delta": 0.041025641025641026,
+    "opponentDelta": 0.004,
+    "counted": true,
+    "excludedReason": null,
+    "verificationTier": "consistent"
+   },
+   {
+    "scenario": "Apogee Zenith Intermediate",
+    "score": 2916,
+    "baseline": 2870,
+    "delta": 0.01602787456445993,
+    "opponentDelta": 0.004,
+    "counted": true,
+    "excludedReason": null,
+    "verificationTier": "consistent"
+   },
+   {
+    "scenario": "Apogee Distant Intermediate",
+    "score": 2622,
+    "baseline": 2640,
+    "delta": -0.006818181818181818,
+    "opponentDelta": 0.004,
+    "counted": true,
+    "excludedReason": null,
+    "verificationTier": "consistent"
+   }
+  ],
+  "ratingChange": 0,
+  "shadow": {
+   "percentile": 50,
+   "label": "a 50th-percentile day",
+   "rung": 2,
+   "ordinal": 0,
+   "skill": "Clicking",
+   "synthetic": true,
+   "verdict": "win",
+   "yourScore": 0.016745111257306378,
+   "shadowScore": 0.0040000000000000036,
+   "comparable": 3,
+   "rounds": 3
+  },
+  "flag": {
+   "id": "98cc9f59-5792-425e-8b9a-db3f8b33eb9e",
+   "status": "open",
+   "category": "Static Clicking",
+   "band": "Intermediate",
+   "plantedAt": "2026-10-04T17:27:51.711+00:00",
+   "expiresAt": "2026-10-11T17:27:51.711+00:00",
+   "ttlDays": 7,
+   "line": "Flag planted: Intermediate band, Static Clicking. It settles when someone answers it (up to 7 days)."
+  },
+  "explanation": "You beat a 50th-percentile day: +1.7% vs +0.4% against baselines. Shadows move no rating.",
+  "message": "Flag planted: Intermediate band, Static Clicking. It settles when someone answers it (up to 7 days)."
+ },
+ "boardAfterShadow": {
+  "now": "2026-10-04T17:27:51.722Z",
+  "preview": null,
+  "shadow": {
+   "next": {
+    "percentile": 66,
+    "label": "a 66th-percentile day",
+    "rung": 3,
+    "ordinal": 1,
+    "skill": "All",
+    "synthetic": true
+   },
+   "placement": null,
+   "streak": 1,
+   "played": 1,
+   "recent": [
+    {
+     "ordinal": 0,
+     "percentile": 50,
+     "label": "a 50th-percentile day",
+     "result": "win",
+     "decidedAt": "2026-10-04T17:27:51.711+00:00"
+    }
+   ]
+  },
+  "activeShadow": null,
+  "flags": [
+   {
+    "id": "98cc9f59-5792-425e-8b9a-db3f8b33eb9e",
+    "category": "Static Clicking",
+    "band": "Intermediate",
+    "status": "open",
+    "plantedAt": "2026-10-04T17:27:51.711+00:00",
+    "expiresAt": "2026-10-11T17:27:51.711+00:00",
+    "daysLeft": 7,
+    "answeredAt": null,
+    "answeredBy": null,
+    "verdict": null,
+    "ratingChange": null,
+    "yourScore": null,
+    "theirScore": null,
+    "seen": false,
+    "line": "Flag planted: Intermediate band, Static Clicking. It settles when someone answers it (up to 7 days)."
+   }
+  ],
+  "news": []
+ },
+ "planOpponent": {
+  "now": "2026-10-04T17:27:51.728Z",
+  "preview": {
+   "category": "Static Clicking",
+   "window": 1,
+   "band": "Intermediate",
+   "measured": {
+    "full": 3,
+    "some": 0,
+    "total": 3
+   },
+   "outcome": "opponent",
+   "opponents": 1,
+   "line": "A stored run set is waiting in Intermediate · Static Clicking. You'll be matched on rating; the result is rated."
+  },
+  "shadow": {
+   "next": {
+    "percentile": 49,
+    "label": "a 49th-percentile day",
+    "rung": 2,
+    "ordinal": 0,
+    "skill": "Clicking",
+    "synthetic": true
+   },
+   "placement": null,
+   "streak": 0,
+   "played": 0,
+   "recent": []
+  },
+  "activeShadow": null,
+  "flags": [],
+  "news": []
+ },
+ "matchAnswer": {
+  "matchId": "52d19769-f789-4430-a71e-dce26783e2e0",
+  "category": "Static Clicking",
+  "difficulty": "Intermediate",
+  "expiresAt": "2026-10-04T17:35:51.749Z",
+  "scenarios": [
+   {
+    "id": 278,
+    "name": "Apogee Galaga Intermediate"
+   },
+   {
+    "id": 378,
+    "name": "Apogee Zenith Intermediate"
+   },
+   {
+    "id": 262,
+    "name": "Apogee Distant Intermediate"
+   }
+  ],
+  "opponent": {
+   "displayName": "vega",
+   "rating": 1617,
+   "playedAt": "2026-10-04T17:27:51.711Z",
+   "provisional": false
+  },
+  "winProbability": 0.5498327497106622,
+  "poolSize": 1,
+  "flag": {
+   "answering": true,
+   "plantedAt": "2026-10-03T03:27:51.711+00:00",
+   "expiresAt": "2026-10-10T03:27:51.711+00:00",
+   "line": "You're answering a Flag. When you finish, this settles rated for both of you."
+  }
+ },
+ "resultAnswer": {
+  "matchId": "52d19769-f789-4430-a71e-dce26783e2e0",
+  "verdict": "loss",
+  "rated": true,
+  "tournament": null,
+  "arena": null,
+  "flag": {
+   "answered": true,
+   "line": "You answered a Flag, so this settled rated for both of you."
+  },
+  "opponent": {
+   "playerId": "00000000-0000-4000-8000-00000000a1a1",
+   "displayName": "vega"
+  },
+  "category": "Static Clicking",
+  "explanation": "You lose: +0.4% vs +1.7% against your own baselines. You scored more raw points, but they beat their own baseline by more, and that is what decides a round.",
+  "voidReason": null,
+  "ratingWeight": 1,
+  "yourMatchScore": 0.003651235978756192,
+  "theirMatchScore": 0.016745111257306416,
+  "ratingBefore": 1655,
+  "ratingAfter": 1631,
+  "ratingChange": -24,
+  "rounds": [
+   {
+    "scenario": "Apogee Galaga Intermediate",
+    "score": 3403,
+    "baseline": 3340,
+    "delta": 0.018862275449101795,
+    "opponentDelta": 0.041025641025641026,
+    "counted": true,
+    "excludedReason": null,
+    "verificationTier": "consistent"
+   },
+   {
+    "scenario": "Apogee Zenith Intermediate",
+    "score": 2974,
+    "baseline": 3010,
+    "delta": -0.011960132890365448,
+    "opponentDelta": 0.01602787456445993,
+    "counted": true,
+    "excludedReason": null,
+    "verificationTier": "consistent"
+   },
+   {
+    "scenario": "Apogee Distant Intermediate",
+    "score": 2726,
+    "baseline": 2715,
+    "delta": 0.004051565377532229,
+    "opponentDelta": -0.006818181818181818,
+    "counted": true,
+    "excludedReason": null,
+    "verificationTier": "consistent"
+   }
+  ]
+ },
+ "planterNews": {
+  "now": "2026-10-04T17:27:51.780Z",
+  "preview": null,
+  "shadow": {
+   "next": {
+    "percentile": 66,
+    "label": "a 66th-percentile day",
+    "rung": 3,
+    "ordinal": 1,
+    "skill": "All",
+    "synthetic": true
+   },
+   "placement": null,
+   "streak": 1,
+   "played": 1,
+   "recent": [
+    {
+     "ordinal": 0,
+     "percentile": 50,
+     "label": "a 50th-percentile day",
+     "result": "win",
+     "decidedAt": "2026-10-04T17:27:51.711+00:00"
+    }
+   ]
+  },
+  "activeShadow": null,
+  "flags": [
+   {
+    "id": "98cc9f59-5792-425e-8b9a-db3f8b33eb9e",
+    "category": "Static Clicking",
+    "band": "Intermediate",
+    "status": "answered",
+    "plantedAt": "2026-10-03T03:27:51.711+00:00",
+    "expiresAt": "2026-10-10T03:27:51.711+00:00",
+    "daysLeft": 0,
+    "answeredAt": "2026-10-04T17:27:51.778+00:00",
+    "answeredBy": "kestrel",
+    "verdict": "win",
+    "ratingChange": 31,
+    "yourScore": 0.016745111257306378,
+    "theirScore": 0.003651235978756192,
+    "seen": false,
+    "line": "Your Static Clicking Flag was answered by kestrel: you won, +31 rating."
+   }
+  ],
+  "news": [
+   "98cc9f59-5792-425e-8b9a-db3f8b33eb9e"
+  ]
+ }
+}
