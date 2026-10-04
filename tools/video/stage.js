@@ -27,6 +27,9 @@
     /* Room to scroll the last panel clear of the caption band. In portrait the match list
        is the last thing on the page and could only reach the bottom third, under the band. */
     .scroll::after { content: ""; display: block; height: 36vh; }
+    /* A toast sits in the bottom corner, which in a video is under the caption band; it is
+       lifted clear of the band, nothing else about it changes. */
+    html.video-stage .qb-toast { bottom: calc(var(--vs-band) + 1.5vh) !important; }
     /* Hover states would otherwise stick to wherever the pointer last was. */
     html.video-stage { cursor: none !important; }
 
@@ -236,21 +239,24 @@
      * own paintActiveMatch, which hands Shadow and Flag matches to queue-board.js; then
      * main's apogee:match push, which race.js listens for.
      */
-    match({ source, screen }) {
+    match({ source, screen, note }) {
       clearInterval(searchTimer);
       const m = JSON.parse(JSON.stringify(payload(source, screen)));
       // eslint-disable-next-line no-new-func
       Function("m", "activeMatch = m; paintActiveMatch();")(m);
       window.__demo.push("match", m);
       tidyReadiness();
+      // Invented players are labelled on the opponent card, as the demo match always was.
+      if (note) document.getElementById("oppAge").textContent += " · " + note;
     },
     /** A settle-match answer: renderSettled draws the result, then main's push. */
-    settled({ source, screen }) {
+    settled({ source, screen, provenance }) {
       const s = payload(source, screen);
       // eslint-disable-next-line no-new-func
       Function("activeMatch = null;")();
       R("renderSettled")(s);
       window.__demo.push("settled", s);
+      if (provenance) document.getElementById("debriefProvenance").textContent = provenance;
     },
     /**
      * Any other push main makes (crowns, live, races, daily, link), from the frozen data:
