@@ -48,7 +48,8 @@
     "measure:coldstart": "tsx src/core/history/coldStart.ts",
     "snapshot": "tsx src/core/report/exportSnapshot.ts",
     "ui": "npm run build:cosmic && tsx src/core/report/exportSnapshot.ts && tsx tools/buildUiPreview.ts",
-    "validate": "npm run validate:expedition && npm run validate:parser && npm run validate:duration && npm run validate:season && npm run validate:pool && npm run validate:thresholds && npm run validate:aimtypes && npm run validate:standing && npm run validate:engine && npm run validate:ranks && npm run validate:sync && npm run validate:verify && npm run validate:kovaaks && npm run validate:glicko && npm run validate:match && npm run validate:duels && npm run validate:tournament && npm run validate:playlist && npm run validate:quests && npm run validate:ghost && npm run validate:ghost-links && npm run validate:daily && npm run validate:links && npm run validate:presence && npm run validate:social-functions && npm run validate:crowns && npm run validate:race && npm run validate:queue && npm run validate:live && npm run validate:schema && npm run validate:functions && npm run validate:sound && npm run validate:orb && npm run validate:theme && npm run validate:counter && npm run validate:progression && npm run validate:presentation && npm run validate:sce && npm run validate:season-files && npm run validate:brand",
+    "validate": "node tools/validateAll.mjs",
+    "validate:suites": "npm run validate:expedition && npm run validate:parser && npm run validate:duration && npm run validate:season && npm run validate:pool && npm run validate:thresholds && npm run validate:aimtypes && npm run validate:standing && npm run validate:engine && npm run validate:ranks && npm run validate:sync && npm run validate:verify && npm run validate:kovaaks && npm run validate:glicko && npm run validate:match && npm run validate:duels && npm run validate:tournament && npm run validate:playlist && npm run validate:quests && npm run validate:ghost && npm run validate:ghost-links && npm run validate:daily && npm run validate:links && npm run validate:presence && npm run validate:social-functions && npm run validate:crowns && npm run validate:race && npm run validate:queue && npm run validate:live && npm run validate:schema && npm run validate:functions && npm run validate:sound && npm run validate:orb && npm run validate:theme && npm run validate:counter && npm run validate:progression && npm run validate:presentation && npm run validate:sce && npm run validate:season-files && npm run validate:fixture && npm run validate:security && npm run validate:brand",
     "ranks": "tsx src/core/ranks/validateRanks.ts",
     "typecheck": "tsc --noEmit",
     "build:app": "npm run build:cosmic && node tools/buildApp.mjs",
@@ -130,7 +131,8 @@
     "validate:background-refresh-ui": "tsx tools/buildUiPreview.ts && electron tools/backgroundRefreshUi.cjs",
     "fixture:stats": "tsx tools/fixtures/syntheticStats.ts",
     "validate:fixture": "tsx tools/fixtures/validateSyntheticStats.ts",
-    "validate:ranked-boundaries": "node tools/validateRankedClaims.mjs && node tools/validateBaselineBoundary.mjs && node tools/validateSettlementOrder.mjs && node tools/validateAtomicSettlement.mjs"
+    "validate:ranked-boundaries": "node tools/validateRankedClaims.mjs && node tools/validateBaselineBoundary.mjs && node tools/validateSettlementOrder.mjs && node tools/validateAtomicSettlement.mjs && tsx tools/validateTimeIntegrity.mjs && node tools/validateVerifiedPbs.mjs",
+    "validate:security": "tsx tools/validateTimeIntegrity.mjs && node tools/validateVerifiedPbs.mjs && node tools/validateSteamAuth.mjs && node tools/validateRendererSinks.mjs && node tools/attackRls.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",

@@ -22,7 +22,7 @@ import { join } from "node:path";
 
 import { parseFilename } from "../core/stats/parseStatsFile.ts";
 import { log } from "./crashLog.ts";
-import { collectRuns, type RunPayload } from "../core/sync/uploadRuns.ts";
+import { collectRuns, runClockOffset, type RunPayload } from "../core/sync/uploadRuns.ts";
 import { accessToken, supabase, SUPABASE_URL } from "./session.ts";
 
 const FUNCTIONS_BASE = `${SUPABASE_URL.replace(/\/+$/, "")}/functions/v1`;
@@ -398,7 +398,16 @@ export function findMatch(
   category: string,
   pool: { window: number },
 ): Promise<FoundMatch> {
-  return callFunction<FoundMatch>("find-match", { category, window: pool.window });
+  return callFunction<FoundMatch>("find-match", { category, window: pool.window, tzOffsetMinutes: matchClockOffset() });
+}
+
+/**
+ * The UTC offset a new match is started with. Every run submitted to it is held to this
+ * one, and it has to agree with the offsets on this machine's recent history uploads
+ * (src/core/verify/timeIntegrity.ts).
+ */
+export function matchClockOffset(): number {
+  return new Date().getTimezoneOffset();
 }
 
 /* ------------------------------------------------------------------------ duels ---- */
@@ -474,7 +483,7 @@ export function sendDuel(
   category: string,
   pool: { window: number },
 ): Promise<FoundMatch> {
-  return callFunction<FoundMatch>("send-duel", { to, category, window: pool.window });
+  return callFunction<FoundMatch>("send-duel", { to, category, window: pool.window, tzOffsetMinutes: matchClockOffset() });
 }
 
 export interface DuelAnswer {
@@ -498,7 +507,7 @@ export function answerDuel(
   duelId: string,
   action: "accept" | "decline" | "cancel",
 ): Promise<FoundMatch & DuelAnswer> {
-  return callFunction<FoundMatch & DuelAnswer>("answer-duel", { duelId, action });
+  return callFunction<FoundMatch & DuelAnswer>("answer-duel", { duelId, action, tzOffsetMinutes: matchClockOffset() });
 }
 
 /* ------------------------------------------------------------------ tournaments ---- */
@@ -550,7 +559,7 @@ export function tournamentAction(request: TournamentAction): Promise<{ ok: boole
  * the same path, with `tournament` saying which fixture it is.
  */
 export function playFixture(tournamentId: string, fixtureId: string, attempt: number): Promise<FoundMatch> {
-  return callFunction<FoundMatch>("play-fixture", { tournamentId, fixtureId, attempt });
+  return callFunction<FoundMatch>("play-fixture", { tournamentId, fixtureId, attempt, tzOffsetMinutes: matchClockOffset() });
 }
 
 /**
@@ -759,10 +768,10 @@ export async function submitRun(
   // only this machine can say what instant those digits mean. Without it the server
   // reads them in its own timezone and every run lands hours from where it belongs.
   //
-  // Safe to take from the client: it shifts nothing but the sender's own match window,
-  // and a wrong one puts their runs outside it, which is the check rejecting them
-  // rather than being fooled.
-  const tzOffsetMinutes = new Date().getTimezoneOffset();
+  // The offset for this file's own wall clock, the one its history upload carried. The
+  // server holds it to the clock the match started with and to the first upload of the
+  // run, so it is no longer a free choice (src/core/verify/timeIntegrity.ts).
+  const tzOffsetMinutes = runClockOffset(filename);
 
   return callFunction<SubmittedRun>("submit-run", {
     filename,

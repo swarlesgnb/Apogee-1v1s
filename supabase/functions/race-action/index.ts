@@ -22,6 +22,7 @@
 
 import { handler, HttpError, INITIAL_TTL_MS, json, readJson, requireCaller, sweepStaleMatches } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import { matchClock, recordMatchClock } from "../_shared/timeIntegrity.ts";
 import {
   namesFor,
   onlyFields,
@@ -117,7 +118,7 @@ Deno.serve(handler(async (req, admin) => {
     return json({ ok: true, race: await view(row) });
   }
 
-  const body = onlyFields(raw, ["action", "raceId"]);
+  const body = onlyFields(raw, ["action", "raceId", "tzOffsetMinutes"]);
   const raceId = requireId(body.raceId, "raceId");
   const { data: row, error: readError } = await admin.from("races").select(RACE_COLUMNS).eq("id", raceId).maybeSingle();
   if (readError) throw new HttpError(500, readError.message);
@@ -146,6 +147,10 @@ Deno.serve(handler(async (req, admin) => {
   // Retire the caller's own expired matches by the ordinary rule before race_start asks
   // whether both players are free.
   await sweepStaleMatches(admin, caller.playerId, updateRating);
+  // The accepter's UTC offset, pinned to the side race_start writes for them. The inviter's
+  // side is pinned by their first ranked run, which holdToMatchClock does for any side
+  // that arrives without one.
+  const clock = await matchClock(admin, caller.playerId, body);
 
   const { data: started, error } = await admin.rpc("race_start", {
     p_race: raceId,
@@ -154,6 +159,7 @@ Deno.serve(handler(async (req, admin) => {
   });
   if (error) throw sqlRefusal(error);
   const { inviteeMatchId, created } = started as { inviterMatchId: string; inviteeMatchId: string; created: boolean };
+  await recordMatchClock(admin, inviteeMatchId, caller.playerId, clock);
 
   const { data: fresh } = await admin.from("races").select(RACE_COLUMNS).eq("id", raceId).maybeSingle();
   const { data: match } = await admin

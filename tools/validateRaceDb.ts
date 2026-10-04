@@ -71,11 +71,14 @@ let raceId = "";
 console.log("\n── starting ─────────────────────────────────────");
 let aMatch = "", bMatch = "";
 {
-  const acc = await act("Bo", { action: "accept", raceId });
+  const acc = await act("Bo", { action: "accept", raceId, tzOffsetMinutes: 330 });
   check("Bo accepts and gets a match", acc.status === 200 && acc.body.race?.id === raceId && acc.body.scenarios.length === 3, JSON.stringify(acc.body).slice(0, 300));
   const r = await race(raceId);
   aMatch = r.inviter_match_id; bMatch = r.invitee_match_id;
   check("the race is live with a match for each", r.status === "live" && !!aMatch && !!bMatch && acc.body.matchId === bMatch);
+  const clocks = (await db.query<any>("select match_id, tz_offset_minutes from match_sides where match_id = any($1::uuid[])", [[aMatch, bMatch]])).rows;
+  check("the accepter's UTC offset is pinned to their side; the inviter's waits for their first run",
+    clocks.find((c) => c.match_id === bMatch)?.tz_offset_minutes === 330 && clocks.find((c) => c.match_id === aMatch)?.tz_offset_minutes == null, JSON.stringify(clocks));
   const ms = (await db.query<any>("select id, scenario_ids, created_at, rated, mode from matches where id = any($1::uuid[])", [[aMatch, bMatch]])).rows;
   check("same three, same start", JSON.stringify(ms[0].scenario_ids) === JSON.stringify(ms[1].scenario_ids) && String(ms[0].created_at) === String(ms[1].created_at));
   check("both unrated, both live mode", ms.every((m) => m.rated === false && m.mode === "live"));

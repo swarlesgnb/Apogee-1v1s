@@ -50,45 +50,66 @@ export function watchStatsFolder(dir: string, events: WatcherEvents): StatsWatch
     try {
       size = statSync(full).size;
     } catch {
-      // Deleted or briefly locked between events; drop it.
+      // Deleted between events; drop it.
       pending.delete(file);
       return;
     }
 
-    const grewOrLocked = size !== entry.size;
     const waitedTooLong = Date.now() - entry.since > MAX_WAIT_MS;
-
-    if (grewOrLocked && !waitedTooLong) {
+    const again = (): void => {
       entry.size = size;
       entry.timer = setTimeout(() => settle(file), SETTLE_MS);
+    };
+
+    if (size !== entry.size && !waitedTooLong) return again();
+
+    let result: ReturnType<typeof parseStatsFile>;
+    try {
+      result = parseStatsFile(file, readFileSync(full, "utf8"));
+    } catch (err) {
+      // Locked by the writer on Windows. Read again shortly, and only reported once the
+      // file has had longer than any run takes to be written.
+      if (!waitedTooLong) return again();
+      pending.delete(file);
+      events.onError?.(err instanceof Error ? err : new Error(String(err)));
       return;
     }
 
-    pending.delete(file);
+    // Steady by size but not whole by content: created empty and filled later, or a tail
+    // still to come. Looked at again rather than dropped, because a dropped file is a run
+    // the match never hears about. A run quit early never gets a Score line; it is given
+    // up on after MAX_WAIT_MS, silently, since quitting is normal and not an error.
+    if (!result.ok && !waitedTooLong) return again();
 
-    try {
-      const result = parseStatsFile(file, readFileSync(full, "utf8"));
-      // An unfinished run has no Score line. That is normal (the player quit early)
-      // and must not surface as an error.
-      if (result.ok) events.onRun?.(result.run, file);
-    } catch (err) {
-      events.onError?.(err instanceof Error ? err : new Error(String(err)));
-    }
+    pending.delete(file);
+    if (result.ok) events.onRun?.(result.run, file);
   };
 
   const schedule = (file: string): void => {
     if (!file.endsWith("Stats.csv")) return;
 
+    // The size at every event, so a file that is already whole settles after one quiet
+    // period. Starting from an unknown size made the first check always see growth and
+    // wait a second period: 800 ms before any run could be read, measured at 812 ms
+    // median from the file landing to the run on screen.
+    let size = -1;
+    try {
+      size = statSync(join(dir, file)).size;
+    } catch {
+      /* Not there yet, or locked: settle reads it again. */
+    }
+
     const existing = pending.get(file);
     if (existing) {
       clearTimeout(existing.timer);
+      existing.size = size;
       existing.timer = setTimeout(() => settle(file), SETTLE_MS);
       return;
     }
 
     pending.set(file, {
       timer: setTimeout(() => settle(file), SETTLE_MS),
-      size: -1,
+      size,
       since: Date.now(),
     });
   };
@@ -233,8 +254,37 @@ export function candidateStatsFolders(): string[] {
   return steamLibraries().map((library) => join(library, STATS_SUFFIX));
 }
 
-/** First candidate folder that exists, or null. */
+/**
+ * A stats folder named outright: `--stats <dir>` on the command line, else the
+ * APOGEE_STATS_DIR environment variable, else null.
+ *
+ * For running the app, `npm run smoke` and the flow tools against a folder that is not
+ * where KovaaK's keeps one, such as the synthetic fixture (tools/fixtures/syntheticStats.ts)
+ * on a machine with no KovaaK's at all. The same variable already points the preview
+ * build and the practice tools at a folder.
+ */
+export function statsFolderOverride(argv: readonly string[] = process.argv, env = process.env): string | null {
+  const at = argv.indexOf("--stats");
+  const named = at >= 0 ? argv[at + 1] : env.APOGEE_STATS_DIR;
+  return named && named.trim() ? named.trim() : null;
+}
+
+/**
+ * First candidate folder that exists, or null.
+ *
+ * A folder named by `statsFolderOverride` is the only candidate: when somebody says which
+ * folder to read, quietly reading a different one is the wrong answer, so a named folder
+ * that does not exist finds nothing.
+ */
 export function findStatsFolder(): string | null {
+  const named = statsFolderOverride();
+  if (named) {
+    try {
+      return statSync(named).isDirectory() ? named : null;
+    } catch {
+      return null;
+    }
+  }
   for (const candidate of candidateStatsFolders()) {
     try {
       if (statSync(candidate).isDirectory()) return candidate;
