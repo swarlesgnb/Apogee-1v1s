@@ -7825,7 +7825,7 @@ function renderSettled(s) {
     body.append(tr);
   });
   // A Shadow result, or an answer that settled a Flag (queue-board.js), says so.
-  window.apogeeQueueHooks?.paintSettled?.(s);
+  globalThis.apogeeQueueHooks?.paintSettled?.(s);
 }
 
 /**
@@ -9827,7 +9827,7 @@ function showRealMatch(match, data) {
   }
 
   // A Shadow match or an answer to a Flag (queue-board.js) draws its own opponent card.
-  window.apogeeQueueHooks?.paintMatch?.(match);
+  globalThis.apogeeQueueHooks?.paintMatch?.(match);
 
   startMatchClock(match.expiresAt);
 
