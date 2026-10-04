@@ -19,6 +19,8 @@ import { isAbandonedRun, runDurationSeconds } from "../../../src/core/stats/dura
 import { verifyRun } from "../../../src/core/verify/verifyRun.ts";
 import { matchServerRecord, recentScores } from "../../../src/core/verify/kovaaksClient.ts";
 import { wallClockToInstant } from "../../../src/core/ghost/zone.ts";
+import { futureMessage, isFutureDated, MAX_OFFSET_MINUTES, wallClock } from "../../../src/core/verify/timeIntegrity.ts";
+import { firstSeenPlayTime } from "./timeIntegrity.ts";
 import { dailyStreak, type DailyPoolEntry } from "../../../src/core/social/daily.ts";
 
 export interface VerifiedUpload {
@@ -68,9 +70,34 @@ export async function verifyUpload(
   const durationSeconds = runDurationSeconds(run.challengeStart, run.playedAt);
   const corrected = wallClockToInstant(upload.filename, zone);
   if (!corrected) throw new HttpError(400, `${upload.filename} has no timestamp in its name`);
+  // The rules submit-run and post-ghost apply (20261003000026): no corrected end later than
+  // the server's clock allows, and the offset the zone implied is stored with the run.
+  if (isFutureDated(corrected.getTime(), Date.now())) {
+    throw new HttpError(422, futureMessage(corrected.getTime(), Date.now()));
+  }
+  const wall = wallClock(upload.filename);
+  let appliedOffset = wall ? Math.round((corrected.getTime() - wall.ms) / 60_000) : null;
   run.playedAt = corrected;
 
   const scenario = await scenarioByName(admin, run.scenario);
+  // A performance uploaded before keeps the time it was first seen with. The zone is the
+  // client's word, so a run shifted into the day by naming another zone is judged at the
+  // time its first upload gave it, and lands outside the day if that is where it was played.
+  if (scenario) {
+    const first = await firstSeenPlayTime(admin, {
+      playerId: caller.playerId,
+      scenarioId: scenario.id,
+      challengeStart: run.challengeStart,
+      endedLocal: wall?.local ?? null,
+      score: run.score,
+      ranked: false,
+    });
+    if (first && first.playedAt.getTime() !== run.playedAt.getTime()) {
+      run.playedAt = first.playedAt;
+      const implied = wall ? Math.round((first.playedAt.getTime() - wall.ms) / 60_000) : null;
+      appliedOffset = implied !== null && Math.abs(implied) <= MAX_OFFSET_MINUTES ? implied : first.offset;
+    }
+  }
   let serverRecord = null;
   if (caller.kovaaksUsername) {
     try {
@@ -123,6 +150,7 @@ export async function verifyUpload(
       hit_count: run.hitCount,
       miss_count: run.missCount,
       played_at: run.playedAt.toISOString(),
+      tz_offset_minutes: appliedOffset,
       challenge_start: run.challengeStart,
       duration_seconds: durationSeconds,
       hash: run.hash,

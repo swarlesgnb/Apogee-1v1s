@@ -292,6 +292,33 @@ const yesterday = runFile(C, start - 30 * 60_000, 15);
 await refused('a run from before the day', body({ runs: [body().runs[0], body().runs[1], { filename: yesterday.filename, csv: yesterday.csv }] }), 422);
 await refused('a file that does not parse', body({ runs: [{ filename: 'x.csv', csv: 'nonsense' }, body().runs[1], body().runs[2]] }), 400);
 
+// The zone is the client's word, so the time-integrity rules submit-run applies hold here
+// too (20261003000026). A zone that puts a run ahead of the server's clock is refused.
+{
+  const fresh = runFile(C, now - 60_000, 16);
+  const r = await call('daily-submit', 'ana', body({ runs: [body().runs[0], body().runs[1], { filename: fresh.filename, csv: fresh.csv }], timeZone: 'Etc/GMT+12' }));
+  assert.equal(r.status, 422, JSON.stringify(r.body));
+  assert.match(r.body.error, /ahead of the server's clock/);
+  await nothingWritten('a zone that puts a run ahead of the server clock');
+  ok('refused a zone that puts a run ahead of the server clock (422)');
+}
+// And a run uploaded before keeps the time it was first seen with: played half an hour
+// before the day and uploaded then, it cannot be named into the day with another zone.
+{
+  const early = runFile(C, start - 30 * 60_000, 17);
+  const m = /(\d{4})\.(\d{2})\.(\d{2})-(\d{2})\.(\d{2})\.(\d{2}) Stats\.csv$/.exec(early.filename);
+  const wallMs = Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
+  const challengeStart = /Challenge Start:,([^\r\n]+)/.exec(early.csv)[1].trim();
+  await db.query(`insert into runs(player_id,scenario_name,score,played_at,created_at,tz_offset_minutes,challenge_start,csv_sha256,verification_tier)
+    values($1,$2,$3,$4,$4,0,$5,'early-c-first-sighting','consistent')`, [players.ana, C, early.score, new Date(wallMs).toISOString(), challengeStart]);
+  const r = await call('daily-submit', 'ana', body({ runs: [body().runs[0], body().runs[1], { filename: early.filename, csv: early.csv }], timeZone: 'Etc/GMT+1' }));
+  assert.equal(r.status, 422, JSON.stringify(r.body));
+  assert.match(r.body.error, /Not played during/);
+  await nothingWritten('a run first seen before the day, renamed into it by its zone');
+  await db.query("delete from runs where csv_sha256 = 'early-c-first-sighting'");
+  ok('refused a run first seen before the day, named into it by another zone (422)');
+}
+
 // Not the first run of the day: an earlier run on C is already on the server.
 await db.query(`insert into runs(player_id,scenario_name,score,played_at,created_at,csv_sha256,verification_tier)
   values($1,$2,1,$3,$3,'earlier-c','consistent')`, [players.ana, C, new Date(start + 30_000).toISOString()]);
