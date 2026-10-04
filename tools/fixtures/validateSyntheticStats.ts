@@ -16,23 +16,27 @@
  *   SHAPE       the history ends today with yesterday played, nothing is after `end`,
  *               season runs exist only inside the season, scores improve, and a seed
  *               gives the same bytes twice.
+ *   CACHE       the folder cache's sliced first read (`primeStatsFolder`) gives what a
+ *               plain read gives without holding the event loop, and its cache on disk
+ *               gives back exactly what was parsed, for the same folder and key only.
  *
  *   npm run validate:fixture
  */
 
-import { mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, utimesSync } from "node:fs";
+import { monitorEventLoopDelay } from "node:perf_hooks";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { buildSnapshot } from "../../src/core/report/snapshot.ts";
 import { scanStatsFolder } from "../../src/core/history/history.ts";
-import { readStatsFolder } from "../../src/core/stats/folderCache.ts";
+import { primeStatsFolder, readStatsFolder, saveDiskCache, useDiskCache } from "../../src/core/stats/folderCache.ts";
 import { isAbandonedRun, runDurationSeconds } from "../../src/core/stats/duration.ts";
 import { parseFilename, parseStatsFile, type ParsedRun } from "../../src/core/stats/parseStatsFile.ts";
 import type { ConsistencyContext, ScoreModel, WeaponScoreModel } from "../../src/core/verify/consistency.ts";
 import { verifyRun } from "../../src/core/verify/verifyRun.ts";
 import { MIN_RUNS_FOR_BASELINE } from "../../src/core/history/baseline.ts";
-import { catalog, PRESETS, writeStatsFolder, type PresetName } from "./syntheticStats.ts";
+import { appendRun, catalog, PRESETS, writeStatsFolder, type PresetName } from "./syntheticStats.ts";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
@@ -262,10 +266,70 @@ function validateDeterminism(root: string): void {
   check("another seed writes a different history", readdirSync(c).sort().join() !== fa.join());
 }
 
+/** A folder cache read, in a form two reads can be compared by. */
+function snapshotOf(rows: { file: string; run: unknown }[]): string {
+  return JSON.stringify([...rows].sort((a, b) => a.file.localeCompare(b.file)));
+}
+
+async function validateFolderCache(root: string): Promise<void> {
+  console.log("\n── folder cache: sliced first read, cache on disk ──");
+  const veteran = join(root, "veteran", "stats");
+  const regular = join(root, "regular", "stats");
+  const copy = join(root, "regular-copy", "stats");
+  const small = join(root, "new", "stats");
+  cpSync(regular, copy, { recursive: true, preserveTimestamps: true });
+
+  // Sliced first read of the big folder, with the event loop watched while it runs.
+  readStatsFolder(regular); // leave the veteran folder, so its read starts from nothing
+  const loop = monitorEventLoopDelay({ resolution: 5 });
+  loop.enable();
+  const started = performance.now();
+  await primeStatsFolder(veteran);
+  const primeMs = Math.round(performance.now() - started);
+  loop.disable();
+  const stall = Math.round(loop.max / 1e6);
+  console.log(`  primed ${PRESETS.veteran.runs.toLocaleString()} files in ${primeMs} ms, longest stall ${stall} ms`);
+  check("the sliced first read never holds the event loop for 250 ms", stall < 250, `${stall} ms`);
+  check("after it, a read of the folder returns every run", readStatsFolder(veteran).length === PRESETS.veteran.runs);
+
+  // The same files read plainly from another path, for comparison.
+  const plain = snapshotOf(readStatsFolder(copy));
+  await primeStatsFolder(regular);
+  check("a primed read gives exactly what a plain read gives", snapshotOf(readStatsFolder(regular)) === plain);
+
+  // The cache on disk.
+  const cacheFile = join(root, "stats-cache.json");
+  useDiskCache(cacheFile, "build-1");
+  readStatsFolder(small); // leave, so the next read of the copy starts from the disk cache
+  readStatsFolder(copy);
+  check("a first read writes the cache", saveDiskCache() && existsSync(cacheFile));
+  readStatsFolder(small);
+  const fromDisk = readStatsFolder(copy);
+  check("a later session gets every run back from the cache", snapshotOf(fromDisk) === plain);
+  check("and parsed nothing to get them", saveDiskCache() === false);
+
+  const added = appendRun(copy, { at: new Date(Date.now() - 5_000), seed: 3 });
+  // Written a moment ago reads as still being written; this one is finished.
+  utimesSync(join(copy, added.file), added.endedAt, added.endedAt);
+  const gone = fromDisk[0].file;
+  rmSync(join(copy, gone));
+  readStatsFolder(small);
+  const after = readStatsFolder(copy);
+  check("a run added since is read from its file", after.some((r) => r.file === added.file));
+  check("a run deleted since is not returned from the cache", !after.some((r) => r.file === gone));
+  check("the count follows the folder, not the cache", after.length === fromDisk.length);
+
+  useDiskCache(cacheFile, "build-2");
+  readStatsFolder(small);
+  readStatsFolder(copy);
+  check("another build's key reads as no cache, and parses again", saveDiskCache() === true);
+}
+
 const root = mkdtempSync(join(tmpdir(), "apogee-fixture-"));
 try {
   for (const name of ["new", "regular", "veteran"] as PresetName[]) validatePreset(name, root);
   validateDeterminism(root);
+  await validateFolderCache(root);
 } finally {
   rmSync(root, { recursive: true, force: true });
 }
