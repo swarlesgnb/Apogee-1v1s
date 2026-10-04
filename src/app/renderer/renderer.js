@@ -9679,6 +9679,10 @@ function paintActiveMatch() {
     "held",
     activeMatch.tournament
       ? "Tournament fixture"
+      : activeMatch.crown
+      ? (activeMatch.crown.claim ? "Claiming a Crown" : "Crown challenge")
+      : activeMatch.race
+      ? "Racing " + activeMatch.race.opponentName
       : activeMatch.duel?.to
       ? "Duel sent"
       : activeMatch.duel?.from
@@ -9733,10 +9737,17 @@ function showRealMatch(match, data) {
     // is what it is - but it is not waiting on a pool, it is waiting on a person, and
     // saying "no opponent yet" about somebody you just named would be nonsense.
     const sentTo = match.duel?.to ?? null;
-    $("oppName").textContent = sentTo || "No opponent yet";
-    $("oppTier").textContent = sentTo ? "duel sent" : "seeding the pool";
+    // A claim on a vacant Crown and a race leg are one-sided too, and neither feeds the pool.
+    const crownClaim = match.crown?.claim ? match.crown : null;
+    const raceWith = match.race?.opponentName ?? null;
+    $("oppName").textContent = crownClaim ? "Vacant Crown" : raceWith ? raceWith : sentTo || "No opponent yet";
+    $("oppTier").textContent = crownClaim ? crownClaim.name : raceWith ? "racing now, unrated" : sentTo ? "duel sent" : "seeding the pool";
     $("oppTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
-    $("oppAge").textContent = sentTo
+    $("oppAge").textContent = crownClaim
+      ? "the first qualifying run set to settle takes it"
+      : raceWith
+      ? "same three, same start; their rounds open as yours land"
+      : sentTo
       ? "play your 3, then they answer"
       : match.poolSize == null
         ? "match already in progress"
@@ -9762,8 +9773,9 @@ function showRealMatch(match, data) {
     const played = new Date(match.opponent.playedAt);
     const days = Math.max(0, Math.round((Date.now() - played.getTime()) / 86400000));
     $("oppAge").textContent =
+      (match.crown ? `holds the ${match.crown.name} · ` : "") +
       `stored run · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
-      ` · pool of ${match.poolSize}`;
+      (match.poolSize == null ? "" : ` · pool of ${match.poolSize}`);
 
     const p = match.winProbability;
     if (Number.isFinite(p)) {
@@ -12079,6 +12091,8 @@ if (HOST === "electron") {
       const leg = activeMatch.tournament;
       const ok = window.confirm(leg
         ? `Forfeit ${leg.label} against ${name}?\n\nThe fixture goes to them. Nothing is rated.`
+        : activeMatch.crown
+        ? `Forfeit this challenge for the ${activeMatch.crown.name}?\n\n${name} keeps it, and it uses today's challenge on this Crown. Nothing is rated.`
         : `Forfeit this match against ${name}?\n\n` +
           "Counts as a loss and lowers your rating. You can queue again right away.",
       );
@@ -12518,6 +12532,7 @@ function mountArcadeCommand() {
     mixtape: 'Build a practice playlist.',
     queue: 'Queue a ranked match.', seasonview: 'Season benchmarks and your next rank.',
     tournaments: 'Groups, brackets and fixtures.', result: 'Rounds and rating change from your last match.',
+    crowns: 'Hold a Crown per category and band, or race a friend now.',
     profile: 'Category strengths and weak spots.', quests: 'Current quests.',
     scenarios: 'Search every scenario.', ranks: 'Rank thresholds and where you sit.',
     consistency: 'How steady your recent scores are.', admin: 'Local appearance and app settings.',

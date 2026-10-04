@@ -167,6 +167,34 @@ export const LIMITS: Record<string, Limit> = {
    * Reasoned rather than measured: no open challenge exists yet.
    */
   "open-duel": { max: 20, windowSeconds: 300 },
+
+  /**
+   * 60 per 5 minutes, list-duels' number: a read the client repeats after every Crown
+   * action and on focus. It also does the board's reconcile work (lapses, expired
+   * challenges), all of it bounded per call. Reasoned rather than measured: no Crowns exist.
+   */
+  "list-crowns": { max: 60, windowSeconds: 300 },
+
+  /**
+   * 10 per 5 minutes, send-duel's number: each call can create a match. The real limit on
+   * challenges is the per-Crown cooldown in crown_open_challenge (one per player per Crown
+   * every 20 hours); this only caps a loop of refusals and resumes.
+   */
+  "challenge-crown": { max: 10, windowSeconds: 300 },
+
+  /**
+   * 20 per 5 minutes. An invitation is a write somebody else sees, but only one can be out
+   * at a time (races_one_outgoing), so this caps invite-cancel loops. Accept, decline and
+   * cancel are counted here too.
+   */
+  "race-action": { max: 20, windowSeconds: 300 },
+
+  /**
+   * 150 per 5 minutes. The client polls the live view every 4 seconds while a race or a
+   * Crown challenge is being played (75 calls in five minutes) and the invitation list every
+   * 30 seconds otherwise, so this is twice the busiest honest rate.
+   */
+  "race-status": { max: 150, windowSeconds: 300 },
 };
 
 /**
