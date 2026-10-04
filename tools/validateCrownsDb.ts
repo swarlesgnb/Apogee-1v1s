@@ -27,6 +27,7 @@
 
 import {
   check,
+  distinctChallengeStart,
   failed,
   fixtureSeason,
   freshDatabase,
@@ -376,9 +377,9 @@ console.log("\n── the SQL decides what the reducer decides ─────")
         for (const [i, sid] of ids.entries()) {
           const name = season.pools.get(1)!.find((s) => s.id === sid)!.name;
           const row = (await db.query<any>(
-            `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, verification_tier, match_id)
-             values ($1, $2, $3, clock_timestamp(), $4, $5, $6) returning id`,
-            [c.challengerId, name, 100 * (1 + score), `diff-run-${++fileSerial}`, tiers[i], c.matchId])).rows[0];
+            `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, verification_tier, match_id, challenge_start)
+             values ($1, $2, $3, clock_timestamp(), $4, $5, $6, $7) returning id`,
+            [c.challengerId, name, 100 * (1 + score), `diff-run-${++fileSerial}`, tiers[i], c.matchId, distinctChallengeStart(100_000 + fileSerial)])).rows[0];
           runIds.push(row.id);
         }
         const holderScore = ts.reign?.matchScore ?? 0;
