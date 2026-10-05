@@ -305,4 +305,10 @@ contextBridge.exposeInMainWorld("apogee", {
 
   /** Something went wrong; payload is a human-readable message. */
   onError: (handler) => subscribe("apogee:error", handler),
+
+  /** Where the in-app update stands (updater.ts UpdateState). */
+  getUpdate: () => ipcRenderer.invoke("apogee:getUpdate"),
+  onUpdate: (handler) => subscribe("apogee:update", handler),
+  /** Restart into a downloaded update. Does nothing unless one is ready. */
+  installUpdate: () => ipcRenderer.invoke("apogee:installUpdate"),
 });

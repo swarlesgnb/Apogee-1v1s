@@ -21,6 +21,7 @@ import { levelFor } from "../core/quests/progression.ts";
 import { recordGhost, recordMatch, rerollQuest, type QuestState, type QuestSync } from "../core/quests/board.ts";
 import { GhostService } from "./ghostService.ts";
 import { ShareCards } from "./shareCard.ts";
+import { Updater } from "./updater.ts";
 import {
   installCrashHandlers,
   attachRendererLogging,
@@ -246,6 +247,8 @@ function notify(message: string | null): void {
 function broadcast(channel: string, payload: unknown): void {
   if (window && !window.isDestroyed()) window.webContents.send(channel, payload);
 }
+
+const updater = new Updater((update) => broadcast("apogee:update", update));
 
 /**
  * Ask for attention when something happens behind the game.
@@ -2126,6 +2129,7 @@ app.whenReady().then(() => {
   }
 
   createWindow();
+  updater.start({ disabled: FRESH });
   installMenu({
     rescan: () => rebuild("menu rescan"),
     chooseFolder: () => void chooseStatsFolder().then((r) => { if (r && typeof r === "object") broadcast("apogee:error", r.error); }),
@@ -2174,6 +2178,9 @@ app.on("window-all-closed", () => {
 // ---------------------------------------------------------------------------
 // IPC: the entire surface the renderer is given.
 // ---------------------------------------------------------------------------
+
+ipcMain.handle("apogee:getUpdate", () => updater.current);
+ipcMain.handle("apogee:installUpdate", () => updater.install());
 
 ipcMain.handle("apogee:getState", () => ({
   /** Which bundle this window is running, so a stale one is visible rather than guessed at. */

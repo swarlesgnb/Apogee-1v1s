@@ -918,6 +918,30 @@ function setStatus(kind, text, path) {
  * replacing it: the app looks restarted while running the previous build. This is how
  * that shows up rather than being deduced an hour later.
  */
+/**
+ * The update chip in the top bar. Main downloads in the background (updater.ts); this
+ * only says so, and offers the restart once the new version is on disk. Idle, checking
+ * and a failed check show nothing: none of them is something the player can act on.
+ */
+function renderUpdate(update) {
+  const chip = $("updateChip");
+  if (!chip || !update) return;
+  chip.dataset.status = update.status;
+  if (update.status === "downloading") {
+    chip.hidden = false;
+    chip.disabled = true;
+    chip.textContent = `Downloading ${update.version} · ${update.percent}%`;
+    chip.title = `Apogee ${update.version} is downloading in the background. Keep playing.`;
+  } else if (update.status === "ready") {
+    chip.hidden = false;
+    chip.disabled = false;
+    chip.textContent = `Restart to update to ${update.version}`;
+    chip.title = `Apogee ${update.version} is ready. Restart now, or it installs the next time you quit.`;
+  } else {
+    chip.hidden = true;
+  }
+}
+
 function showBuild(build) {
   const el = $("buildStamp");
   if (!el) return;
@@ -12386,6 +12410,16 @@ if (HOST === "electron") {
   });
 
   var currentPath = "";
+  api.getUpdate?.().then(renderUpdate);
+  api.onUpdate?.(renderUpdate);
+  $("updateChip")?.addEventListener("click", () => {
+    const chip = $("updateChip");
+    if (chip.dataset.status !== "ready") return;
+    chip.disabled = true;
+    chip.textContent = "Restarting...";
+    api.installUpdate();
+  });
+
   api.getState().then((state) => {
     currentPath = state.statsDir || "";
     showBuild(state.build);

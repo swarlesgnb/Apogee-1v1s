@@ -52,3 +52,14 @@ nsis:
   createDesktopShortcut: true
   shortcutName: Apogee
   artifactName: ${productName}-${version}-setup.${ext}
+
+# Where installed copies look for updates (src/app/updater.ts). Written into the package
+# as app-update.yml; electron-updater reads latest.yml from the newest release. Building
+# never publishes: `npm run dist` passes --publish never, and a release goes up only by
+# hand, after validate:release and validatePackage, because publishing it is what ships
+# the update to everyone.
+publish:
+  provider: github
+  owner: swarlesgnb
+  repo: Apogee-1v1s
+  releaseType: release

@@ -57,7 +57,7 @@
     "build:icon": "node tools/buildIcon.mjs",
     "brand": "tsx tools/brand/buildBrand.ts && tsx tools/brand/renderShareCard.ts",
     "brand:cards": "tsx tools/brand/renderShareCard.ts",
-    "dist": "npm run build:icon && npm run build:app && electron-builder --win",
+    "dist": "npm run build:icon && npm run build:app && electron-builder --win --publish never",
     "smoke": "npm run build:app && electron . --smoke",
     "fresh": "npm run build:app && electron . --fresh",
     "fresh:nostats": "npm run build:app && electron . --fresh --no-stats",
@@ -130,6 +130,7 @@
   "main": "dist/app/main.cjs",
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",
+    "electron-updater": "^6.8.9",
     "three": "0.180.0"
   }
 }
