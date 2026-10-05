@@ -47,6 +47,7 @@ import {
   fetchActiveMatch,
   findMatch,
   fetchApexBoard,
+  fetchLeaderboard,
   isAdmin,
   refreshApex,
   refreshBaselines,
@@ -3985,6 +3986,21 @@ ipcMain.handle("apogee:apex", () => {
  * own row updated, and the most likely cause is the rate limit, which means their row
  * was written moments ago anyway.
  */
+ipcMain.handle("apogee:leaderboard", async (_e, { view, scenario } = {} as any) => {
+  if (!state.session) return { error: "Sign in to see the leaderboards." };
+  if (!["ladder", "movers", "scenario"].includes(view)) return { error: "unknown board" };
+  try {
+    return await fetchLeaderboard(view, typeof scenario === "string" ? scenario : undefined);
+  } catch (e) {
+    // A server without the function answers 404 with a gateway body, which is a fact
+    // about the deployment and not something to show a player as JSON.
+    if ((e as { status?: number }).status === 404) {
+      return { error: "Leaderboards aren't live on the server yet. Check back soon." };
+    }
+    return { error: e instanceof Error ? e.message : String(e) };
+  }
+});
+
 ipcMain.handle("apogee:apexBoard", async (_e, { category } = {} as any) => {
   if (!state.session) return { error: "sign in to see the board" };
 

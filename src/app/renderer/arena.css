@@ -81,6 +81,26 @@ html.preview .topbar-right { margin-left: auto; }
 .build { font-size: 10px; }
 /* Only ever on screen while an update is on its way or waiting, so it can afford to be
    seen: a restart nobody notices is an update nobody gets until they next quit. */
+.lb-views { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.lb-view { min-height: 34px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--rule-2);
+  background: transparent; color: var(--ink-dim); font: inherit; font-size: 13px; cursor: pointer; }
+.lb-view[aria-selected="true"] { color: var(--ink); border-color: var(--ink-dim); }
+.lb-scenario { min-height: 34px; margin-left: auto; max-width: 100%; border-radius: 8px;
+  border: 1px solid var(--rule-2); background: transparent; color: var(--ink); font: inherit; font-size: 13px; padding: 0 10px; }
+.lb-panel { padding: 8px 0 12px; }
+.lb-note { margin: 12px 24px; color: var(--ink-dim); font-size: 13px; }
+.lb-note:empty { display: none; }
+.lb-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.lb-table th { text-align: left; font-weight: 500; color: var(--ink-dim); padding: 8px 24px; border-bottom: 1px solid var(--rule); }
+.lb-table td { padding: 9px 24px; border-bottom: 1px solid var(--rule); font-variant-numeric: tabular-nums; }
+/* Stated outright: the app's general table rules right-align and set mono on every cell
+   after the first, which put names in the middle of the board. */
+.lb-table th, .lb-table td { text-align: left; font-family: var(--font); }
+.lb-table th.num, .lb-table td.num { text-align: right; font-family: var(--mono, inherit); }
+.lb-table tr.lb-you td { color: var(--ink); font-weight: 600; background: color-mix(in srgb, var(--up) 8%, transparent); }
+.lb-table tr.lb-gap td { color: var(--ink-dim); text-align: center; padding: 4px; border-bottom: 0; }
+.lb-section { margin: 18px 24px 6px; font-size: 13px; font-weight: 600; color: var(--ink); }
+.lb-tier { color: var(--ink-dim); font-size: 11px; }
 .update-chip[data-status="ready"] { color: var(--up); border-color: var(--up); }
 .update-chip[data-status="downloading"] { color: var(--ink-dim); cursor: default; }
 .queue-live { font-family: var(--font); font-size: 11px; text-transform: none; letter-spacing: 0;

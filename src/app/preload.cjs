@@ -127,6 +127,12 @@ contextBridge.exposeInMainWorld("apogee", {
   apexBoard: (category) => ipcRenderer.invoke("apogee:apexBoard", { category }),
 
   /**
+   * A leaderboard: view is "ladder", "movers" or "scenario" (with the scenario's name).
+   * Returns the page (core/leaderboard LeaderboardPage) or { error }.
+   */
+  leaderboard: (view, scenario) => ipcRenderer.invoke("apogee:leaderboard", { view, scenario }),
+
+  /**
    * Write the season's practice playlists into KovaaK's own Playlists folder. Pass an
    * array of names for a subset; omit it for all of them.
    * Returns { ok, dir, written, installed, note } or { error }.

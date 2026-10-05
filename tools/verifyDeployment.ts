@@ -573,6 +573,8 @@ async function main(): Promise<void> {
     // A ghost link refuses the caller's own code and is rate limited per player, and an
     // anonymous lookup would be an unmetered way to guess codes.
     "ghost-link",
+    // The boards name other players, which only the server may decide (list-duels).
+    "leaderboard",
   ];
   for (const name of authedFunctions) {
     const res = await fetch(`${fnBase}/${name}`, {
