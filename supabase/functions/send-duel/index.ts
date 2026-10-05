@@ -32,6 +32,7 @@ import {
   HttpError,
 } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import { matchClock } from "../_shared/timeIntegrity.ts";
 
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
 import { ANY_CATEGORY } from "../../../src/core/match/matchmaking.ts";
@@ -43,6 +44,8 @@ interface Body {
   to: string;
   category: string;
   window: number;
+  /** The PC's UTC offset now; every run in the match is held to it (_shared/timeIntegrity.ts). */
+  tzOffsetMinutes?: number;
 }
 
 Deno.serve(handler(async (req, admin) => {
@@ -102,6 +105,7 @@ Deno.serve(handler(async (req, admin) => {
 
   // Both ends of a duel are rated, so both ends meet the same bar as the queue.
   await requireEligible(admin, caller.playerId);
+  const clock = await matchClock(admin, caller.playerId, body);
 
   const { season, windowName, selectable } = await loadSeasonPool(admin, body.window);
 
@@ -141,6 +145,7 @@ Deno.serve(handler(async (req, admin) => {
     player_id: caller.playerId,
     rating_before: Number(rating?.rating ?? 1500),
     rd_before: Number(rating?.rd ?? 350),
+    ...clock,
   });
 
   if (sideError) throw new HttpError(500, sideError.message);

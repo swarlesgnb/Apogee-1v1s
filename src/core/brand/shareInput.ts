@@ -12,6 +12,7 @@
  * headline invites exactly the "but I won that" the void exists to prevent.
  */
 
+import { PLACEMENT_MIN } from "../match/shadow.ts";
 import type { CardRound, CardTier, ShareCardInput } from "./shareCard.ts";
 
 /** The parts of api.ts's SettledMatch a card reads. Structural, so core does not import the app. */
@@ -21,6 +22,10 @@ export interface SettledRecord {
   seeding?: boolean;
   rated?: boolean;
   tournament?: { name: string; label: string } | null;
+  /** A Crown challenge or a race leg (settle-match's `arena` note). Unrated, like a tournament leg. */
+  arena?: { kind: "crown" | "race"; race?: { opponentName: string } | null } | null;
+  /** A match played against a Shadow (src/core/match/shadow.ts): synthetic, unrated. */
+  shadow?: { label: string } | null;
   opponent?: { displayName: string } | null;
   category?: string;
   yourMatchScore: number | null;
@@ -44,6 +49,10 @@ export interface MatchRecord {
   at: number;
   /** A duel this player sent: one-sided like a seeding match, but somebody has been named. */
   sentDuel: boolean;
+  /** The code of an open challenge this player posted (open-duel): the card is the invitation. */
+  duelCode?: string | null;
+  /** An answer to somebody's open challenge: unrated, and the card says so. */
+  openChallenge?: boolean;
 }
 
 /** The parts of a booked ghost result a card reads (core/ghost GhostResult plus its kind's name). */
@@ -94,11 +103,13 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
   // Seeding is decided by the flag and a missing verdict together, as renderSettled
   // decides it: a seeding match sent with a verdict still has nobody on the other side.
   const seeding = s.seeding === true || s.verdict == null;
-  const rated = !seeding && !s.tournament && s.rated !== false;
+  const rated = !seeding && !s.tournament && !s.arena && s.rated !== false;
   const opponent = !seeding && s.opponent ? { name: s.opponent.displayName } : null;
 
   const rounds: CardRound[] = s.rounds.map((r) => {
-    const theirs = r.counted && finite(r.opponentDelta) ? r.opponentDelta : null;
+    // A Shadow's rounds are not a person's, and a card column of them would read as one.
+    // The Shadow is named in the kicker instead.
+    const theirs = !s.shadow && r.counted && finite(r.opponentDelta) ? r.opponentDelta : null;
     return {
       scenario: r.scenario,
       you: { score: finite(r.score) ? r.score : null, baseline: finite(r.baseline) ? r.baseline : null, delta: r.counted && finite(r.delta) ? r.delta : null },
@@ -109,7 +120,13 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
     };
   });
 
-  const mode = s.tournament ? `Tournament · ${s.tournament.label}` : seeding && rec.sentDuel ? "Duel sent" : null;
+  const mode = s.tournament ? `Tournament · ${s.tournament.label}`
+    : s.shadow ? `Shadow match, ${s.shadow.label} · unrated`
+    : rec.openChallenge ? "Open challenge · unrated"
+    : s.arena?.kind === "crown" ? "Crown challenge · unrated"
+    : s.arena?.kind === "race"
+      ? `Race${s.arena.race?.opponentName ? ` against ${s.arena.race.opponentName}` : ""} · unrated`
+    : seeding && rec.sentDuel ? "Duel sent" : null;
 
   return {
     kind: "match",
@@ -127,7 +144,8 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
     verdict: seeding ? null : (s.verdict as "win" | "loss" | "draw"),
     matchScore: { you: finite(s.yourMatchScore) ? s.yourMatchScore : null, them: seeding || !finite(s.theirMatchScore) ? null : s.theirMatchScore },
     rounds,
-    duelCode: null,
+    // Only on the poster's own seeding match: that is the run set the code answers.
+    duelCode: seeding && rec.duelCode ? rec.duelCode : null,
     playedAt: localDay(rec.at),
   };
 }
@@ -154,7 +172,390 @@ export function ghostCardInput(rec: GhostRecord, ctx: CardContext): ShareCardInp
   };
 }
 
-export const SHARE_SOURCES = ["match", "ghost"] as const;
+// ================================================================ the mechanic cards
+//
+// Four more cards, for the mechanics built in the fleet branches. Each has two types:
+//
+//   <Kind>Record     what main holds once the server has answered: the facts, no wording.
+//                    The engineer who owns the mechanic builds one from the response and
+//                    hands it to ShareCards.record<Kind>() in src/app/shareCard.ts.
+//   <Kind>CardInput  what the drawing takes (mechanicCards.ts). <kind>CardInput() makes one
+//                    from a record and the CardContext, or refuses with a reason.
+//
+// The renderer then asks for the card by name ("daily", "crown", "flag", "shadow"), a
+// shape and an action, exactly as it does for "match": it never sends a figure.
+
+export type MechanicCardKind = "daily" | "crown" | "flag" | "shadow";
+
+/** One settled round as main holds it; the other side's raw numbers only when the server sent them. */
+export interface SettledRound {
+  scenario: string;
+  score: number;
+  baseline: number;
+  delta: number | null;
+  opponentDelta: number | null;
+  /** Sent for the cards whose other side is a stored set (a crown, a flag); absent on settle-match. */
+  opponentScore?: number | null;
+  opponentBaseline?: number | null;
+  counted: boolean;
+  excludedReason: string | null;
+}
+
+/**
+ * Settled rounds as card rounds, as matchCardInput maps them: a round that did not count
+ * prints "Excluded" in place of a result, and a side whose raw numbers never reached main
+ * prints that, not a dash. A crown or a flag is played against a stored set, so the other
+ * side's raw score and baseline can be known; they print when they are sent.
+ */
+export function settledRounds(rounds: SettledRound[]): CardRound[] {
+  return rounds.map((r) => {
+    const theirs = r.counted && finite(r.opponentDelta) ? r.opponentDelta : null;
+    return {
+      scenario: r.scenario,
+      you: { score: finite(r.score) ? r.score : null, baseline: finite(r.baseline) ? r.baseline : null, delta: r.counted && finite(r.delta) ? r.delta : null },
+      // The server sends the opponent's improvement and nothing else; the card says so
+      // rather than printing a dash where their score would be.
+      them: theirs === null ? null : { score: finite(r.opponentScore) ? r.opponentScore : null, baseline: finite(r.opponentBaseline) ? r.opponentBaseline : null, delta: theirs },
+      excluded: r.counted ? null : "Excluded",
+    };
+  });
+}
+
+
+/**
+ * Where one daily scenario landed, in the social branch's own words (core/social/daily.ts
+ * `Glyph`): above, near or below the player's own baseline; "first" for a first run with
+ * no baseline yet (it stands as its own); "pending" for one not played.
+ */
+export type DailyMark = "above" | "near" | "below" | "first" | "pending";
+
+export const DAILY_MARKS: readonly DailyMark[] = ["above", "near", "below", "first", "pending"];
+
+/** Within this fraction of baseline either way is "near": core/social/daily.ts NEAR_BAND. */
+export const DAILY_NEAR_BAND = 0.01;
+
+/**
+ * Apogee Daily, as main holds it once the day's scenarios are played. There is no scenario
+ * name anywhere in this type, deliberately: the card is spoiler-free because it cannot be
+ * handed a name to print, not because it promises to leave one out. The fields are the
+ * Daily screen's (dailyService.ts `DailyScreen`), so a record is one line to build:
+ * `{ number, band: band.name, marks: rounds.map((r) => r.glyph), meanDelta, streak, provisional }`.
+ * No link: the Daily's landing URL runs to seventy characters, which no card can print
+ * legibly and no image can make clickable. The text paste carries it; the card carries
+ * the number and the band, which is what a reader types into the app.
+ */
+export interface DailyRecord {
+  /** The daily's number, counted from the first daily: Apogee Daily #3. */
+  number: number;
+  /** The band the draw was made for ("Intermediate"): each band has its own daily. */
+  band: string;
+  /** One mark per scenario, in draw order, as core/social/daily.ts glyphFor() gave it. */
+  marks: DailyMark[];
+  /** Mean gain over own baselines across the rounds that had one; null when every round was a first run. */
+  meanDelta: number | null;
+  /** Consecutive days with a finished daily, this one included. */
+  streak: number;
+  /** A measured round leaned on fewer earlier runs than a settled baseline needs. */
+  provisional?: boolean;
+  /** The day, "2026-10-03"; the card prints it when given. */
+  date?: string | null;
+  /** The near band the daily used; DAILY_NEAR_BAND when absent. */
+  nearBand?: number | null;
+  /** Share of today's players in the band this result beats, 0..100, once the board knows it. */
+  percentile?: number | null;
+}
+
+export interface DailyCardInput {
+  kind: "daily";
+  number: number;
+  band: string;
+  date: string | null;
+  season: string;
+  player: { name: string; tier?: CardTier | null };
+  /** One mark per scenario in draw order (1 to 6). */
+  marks: DailyMark[];
+  nearBand: number;
+  meanDelta: number | null;
+  streak: number;
+  provisional: boolean;
+  percentile: number | null;
+}
+
+/** A crown changing hands or holding, as main holds it after the crown match settles. */
+export interface CrownRecord {
+  event: "taken" | "defended";
+  /** The category the crown is held in, as the Crowns screen names it. */
+  category: string;
+  /** The band within it, as the Crowns screen names it ("Lunar", "1500-1650"); the card adds "band". */
+  band: string;
+  /** Taken: the holder it was taken from. Defended: the challenger who fell short. Null for a vacant crown. */
+  rival: { displayName: string } | null;
+  /** Successful defences in the current reign, this one included; 0 for a crown just taken. */
+  defences: number;
+  /** When the current reign began, ISO date. A crown just taken began today. */
+  heldSince?: string | null;
+  /** Taken: how many days the previous holder had held it. */
+  rivalReignDays?: number | null;
+  yourMatchScore: number | null;
+  theirMatchScore: number | null;
+  /**
+   * The deciding match from this player's side: you are the holder on a defence. Empty
+   * when the server sent only the two match scores (a defence read from its notice); the
+   * card then shows those two scores and no rounds.
+   */
+  rounds: SettledRound[];
+  /** When main received it, epoch ms. */
+  at: number;
+}
+
+export interface CrownCardInput {
+  kind: "crown";
+  event: "taken" | "defended";
+  season: string;
+  category: string;
+  band: string;
+  player: { name: string; tier: CardTier | null };
+  rival: { name: string } | null;
+  defences: number;
+  heldSince?: string | null;
+  rivalReignDays?: number | null;
+  matchScore: { you: number | null; them: number | null } | null;
+  rounds: CardRound[];
+  playedAt?: string | null;
+}
+
+/** A planted flag that somebody answered, as main holds it once the answer settles. */
+export interface FlagRecord {
+  /** From the planter's side: did the planted set hold? Void is refused. */
+  verdict: "win" | "loss" | "draw" | "void";
+  category?: string | null;
+  challenger: { displayName: string };
+  /** When the flag was planted and answered: ISO dates or epoch ms. */
+  plantedAt: string | number;
+  answeredAt: string | number;
+  rated?: boolean;
+  ratingAfter?: number | null;
+  ratingChange?: number | null;
+  yourMatchScore: number | null;
+  theirMatchScore: number | null;
+  /**
+   * The planted set (you) against the answer (them). Empty when the server sent only the
+   * two match scores, which is what the queue board sends for an answered Flag.
+   */
+  rounds: SettledRound[];
+  /** The planter's other flags still standing after this one settled. */
+  standing?: number | null;
+}
+
+export interface FlagCardInput {
+  kind: "flag";
+  verdict: "win" | "loss" | "draw";
+  season: string;
+  category: string | null;
+  player: { name: string; tier: CardTier | null; rating?: number | null; ratingChange?: number | null };
+  challenger: { name: string };
+  plantedAt: string;
+  answeredAt: string;
+  matchScore: { you: number | null; them: number | null } | null;
+  rounds: CardRound[];
+  standing?: number | null;
+}
+
+/**
+ * One Shadow result, in the queue's own terms (src/core/match/shadow.ts). A Shadow is not a
+ * player and has no rating: it is a day at a stated percentile of genuine three-scenario
+ * match scores, "a 49th-percentile day", fielded from a seven-rung ladder.
+ */
+export interface ShadowMatch {
+  /**
+   * How it went for the player. "forfeit" is a Shadow match abandoned or left to expire:
+   * the ladder and the placement both count it as a loss. "void" did not count.
+   */
+  verdict: "win" | "loss" | "draw" | "void" | "forfeit";
+  /** The Shadow fielded: the percentile of the genuine day it scored (2 to 98 on the ladder). */
+  percentile: number;
+  /** Known only for the match just settled (settle-match's `shadow.yourScore` / `shadowScore`). */
+  yourMatchScore?: number | null;
+  shadowScore?: number | null;
+}
+
+/** The placement read-out as the queue board serves it (core/match/shadow.ts `placement()`). */
+export interface ShadowPlacement {
+  /** Where the player's recent days sit among genuine days, 5 to 95. */
+  estimate: number;
+  /** How many decided Shadow results it was read from. */
+  decided: number;
+}
+
+/**
+ * A player's recent Shadow results, as main holds them after a Shadow match settles: the
+ * settle-match `shadow` body for the match just played, and the queue board's Shadow ladder
+ * (`shadow.recent`, `shadow.placement`, `shadow.streak`) read after it.
+ */
+export interface ShadowRecord {
+  category?: string | null;
+  /** In the order played, the match being shared last. Voids did not count and are dropped. */
+  series: ShadowMatch[];
+  /**
+   * The read-out the app shows: an estimate once there are PLACEMENT_MIN decided results;
+   * null before that, which the app words "Placement shows after 3 Shadow results";
+   * undefined when the board has not been read since the match, so the card says nothing.
+   */
+  placement?: ShadowPlacement | null;
+  /** Consecutive Shadow wins, newest first (queue board `shadow.streak`). */
+  streak?: number | null;
+  at: number;
+}
+
+/** What the Shadow card prints of the placement: the read-out, how far off it is, or nothing. */
+export type ShadowCardPlacement =
+  | { kind: "read"; estimate: number; decided: number }
+  | { kind: "pending"; decided: number; needed: number }
+  | null;
+
+export interface ShadowCardInput {
+  kind: "shadow";
+  season: string;
+  category: string | null;
+  player: { name: string; tier: CardTier | null };
+  /** In play order, the shared match last; at most SHADOW_CARD_MATCHES. No rating anywhere: a Shadow moves none. */
+  series: { verdict: "win" | "loss" | "draw" | "forfeit"; percentile: number; matchScore: { you: number | null; them: number | null } | null }[];
+  placement: ShadowCardPlacement;
+  streak: number;
+  playedAt?: string | null;
+}
+
+/** The most Shadow results a card shows: the queue board's `shadow.recent` sends eight. */
+export const SHADOW_CARD_MATCHES = 8;
+
+export type MechanicCardInput = DailyCardInput | CrownCardInput | FlagCardInput | ShadowCardInput;
+
+/** Any card the drawing takes: the result cards and the mechanic cards. */
+export type AnyCardInput = ShareCardInput | MechanicCardInput;
+
+export function isMechanicCard(input: AnyCardInput): input is MechanicCardInput {
+  return input.kind === "daily" || input.kind === "crown" || input.kind === "flag" || input.kind === "shadow";
+}
+
+const isoDay = (v: string | number | null | undefined): string | null => {
+  if (v == null) return null;
+  if (typeof v === "number") return Number.isFinite(v) ? localDay(v) : null;
+  return /^\d{4}-\d{2}-\d{2}/.test(v) ? v.slice(0, 10) : null;
+};
+const clean = (s: unknown, max = 64): string => String(s ?? "").replace(/[\u0000-\u001f\u007f]/g, "").trim().slice(0, max);
+const matchScore = (you: number | null | undefined, them: number | null | undefined) =>
+  finite(you) || finite(them) ? { you: finite(you) ? you : null, them: finite(them) ? them : null } : null;
+
+export function dailyCardInput(rec: DailyRecord, ctx: CardContext): DailyCardInput | Refusal {
+  if (!Number.isInteger(rec.number) || rec.number < 1) return { refused: "This daily has no number." };
+  if (!Array.isArray(rec.marks) || rec.marks.length < 1) return { refused: "This daily has no scenarios." };
+  if (rec.marks.length > 6) return { refused: "A daily card shows at most six scenarios." };
+  if (!rec.marks.every((m) => DAILY_MARKS.includes(m))) return { refused: "This daily has a mark the card does not know." };
+  if (rec.marks.every((m) => m === "pending")) return { refused: "Play today's daily to share it." };
+  const band = finite(rec.nearBand) && rec.nearBand > 0 && rec.nearBand < 0.5 ? rec.nearBand : DAILY_NEAR_BAND;
+  return {
+    kind: "daily",
+    number: rec.number,
+    band: clean(rec.band, 32),
+    date: isoDay(rec.date ?? null),
+    season: ctx.season,
+    player: { name: ctx.playerName, tier: ctx.tier },
+    marks: [...rec.marks],
+    nearBand: band,
+    meanDelta: finite(rec.meanDelta) ? rec.meanDelta : null,
+    streak: Number.isInteger(rec.streak) && rec.streak > 0 ? rec.streak : 1,
+    provisional: rec.provisional === true,
+    percentile: finite(rec.percentile) ? Math.max(0, Math.min(100, rec.percentile)) : null,
+  };
+}
+
+export function crownCardInput(rec: CrownRecord, ctx: CardContext): CrownCardInput | Refusal {
+  if (rec.event !== "taken" && rec.event !== "defended") return { refused: "Unknown crown event." };
+  if (!rec.rounds?.length && !(finite(rec.yourMatchScore) && finite(rec.theirMatchScore))) return { refused: "This crown result has no rounds or scores to show." };
+  if (rec.event === "defended" && !rec.rival) return { refused: "A defence needs the challenger it held off." };
+  return {
+    kind: "crown",
+    event: rec.event,
+    season: ctx.season,
+    category: clean(rec.category) || "Any",
+    band: clean(rec.band, 32),
+    player: { name: ctx.playerName, tier: ctx.tier },
+    rival: rec.rival ? { name: clean(rec.rival.displayName) } : null,
+    defences: Number.isInteger(rec.defences) && rec.defences > 0 ? rec.defences : 0,
+    heldSince: isoDay(rec.heldSince ?? null) ?? (rec.event === "taken" ? localDay(rec.at) : null),
+    rivalReignDays: finite(rec.rivalReignDays) && rec.rivalReignDays >= 0 ? Math.round(rec.rivalReignDays) : null,
+    matchScore: matchScore(rec.yourMatchScore, rec.theirMatchScore),
+    rounds: settledRounds(rec.rounds ?? []),
+    playedAt: localDay(rec.at),
+  };
+}
+
+export function flagCardInput(rec: FlagRecord, ctx: CardContext): FlagCardInput | Refusal {
+  if (rec.verdict === "void") return { refused: "A void answer did not count, so it has no card." };
+  if (!rec.rounds?.length && !(finite(rec.yourMatchScore) && finite(rec.theirMatchScore))) return { refused: "This flag has no rounds or scores to show." };
+  const plantedAt = isoDay(rec.plantedAt);
+  const answeredAt = isoDay(rec.answeredAt);
+  if (!plantedAt || !answeredAt) return { refused: "This flag is missing when it was planted or answered." };
+  const rated = rec.rated !== false;
+  return {
+    kind: "flag",
+    verdict: rec.verdict,
+    season: ctx.season,
+    category: rec.category && rec.category !== "Any" ? clean(rec.category) : null,
+    player: {
+      name: ctx.playerName,
+      tier: ctx.tier,
+      rating: rated && finite(rec.ratingAfter) ? rec.ratingAfter : null,
+      ratingChange: rated && finite(rec.ratingChange) ? rec.ratingChange : null,
+    },
+    challenger: { name: clean(rec.challenger?.displayName) || "Challenger" },
+    plantedAt,
+    answeredAt,
+    matchScore: matchScore(rec.yourMatchScore, rec.theirMatchScore),
+    rounds: settledRounds(rec.rounds ?? []),
+    standing: Number.isInteger(rec.standing) && (rec.standing as number) >= 0 ? rec.standing : null,
+  };
+}
+
+const SHADOW_VERDICTS = ["win", "loss", "draw", "forfeit"] as const;
+
+export function shadowCardInput(rec: ShadowRecord, ctx: CardContext): ShadowCardInput | Refusal {
+  const counted = (rec.series ?? []).filter((m) => m.verdict !== "void");
+  if (!counted.length) return { refused: "Play a Shadow match to share it." };
+  if (!counted.every((m) => (SHADOW_VERDICTS as readonly string[]).includes(m.verdict))) return { refused: "This Shadow result has a verdict the card does not know." };
+  if (!counted.every((m) => finite(m.percentile) && m.percentile >= 1 && m.percentile <= 99)) {
+    return { refused: "A Shadow is a day between the 1st and 99th percentile." };
+  }
+  // The card leads with the match being shared, and an abandoned one is not a result to post.
+  if (counted[counted.length - 1].verdict === "forfeit") return { refused: "An abandoned Shadow match has no card." };
+
+  // The read-out exactly as the app words it, or nothing when the record cannot say. A
+  // record that claims "not yet" with PLACEMENT_MIN results in hand is not repeated.
+  let placement: ShadowCardPlacement = null;
+  const p = rec.placement;
+  if (p && finite(p.estimate) && Number.isInteger(p.decided) && p.decided >= PLACEMENT_MIN) {
+    placement = { kind: "read", estimate: Math.max(1, Math.min(99, Math.round(p.estimate))), decided: p.decided };
+  } else if (p === null && counted.length < PLACEMENT_MIN) {
+    placement = { kind: "pending", decided: counted.length, needed: PLACEMENT_MIN };
+  }
+
+  return {
+    kind: "shadow",
+    season: ctx.season,
+    category: rec.category && rec.category !== "Any" ? clean(rec.category) : null,
+    player: { name: ctx.playerName, tier: ctx.tier },
+    series: counted.slice(-SHADOW_CARD_MATCHES).map((m) => ({
+      verdict: m.verdict as ShadowCardInput["series"][number]["verdict"],
+      percentile: Math.round(m.percentile),
+      matchScore: matchScore(m.yourMatchScore, m.shadowScore),
+    })),
+    placement,
+    streak: Number.isInteger(rec.streak) && (rec.streak as number) > 0 ? (rec.streak as number) : 0,
+    playedAt: localDay(rec.at),
+  };
+}
+
+export const SHARE_SOURCES = ["match", "ghost", "daily", "crown", "flag", "shadow"] as const;
 export const SHARE_LAYOUTS = ["landscape", "portrait"] as const;
 export const SHARE_ACTIONS = ["preview", "copy", "save"] as const;
 
@@ -181,8 +582,12 @@ export function parseShareRequest(raw: unknown): ShareRequest | string {
   return { source, layout, action };
 }
 
-/** "2026-09-30-victory.png", "2026-09-30-ghost-out-of-time.png". */
-export function shareFileName(input: ShareCardInput, headlineText: string): string {
+/** "2026-09-30-victory.png", "2026-09-30-ghost-out-of-time.png", "2026-10-03-daily-212.png", "2026-10-03-shadow-beaten.png". */
+export function shareFileName(input: AnyCardInput, headlineText: string): string {
   const slug = headlineText.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "result";
-  return `${input.playedAt ?? "apogee"}-${input.kind === "ghost" ? "ghost-" : ""}${slug}.png`;
+  const day = input.kind === "daily" ? input.date : input.kind === "flag" ? input.answeredAt : input.playedAt;
+  if (input.kind === "daily") return `${day ?? "apogee"}-daily-${input.number}.png`;
+  // "Shadow beaten" and "Shadow wins" name themselves; a level one becomes "shadow-level".
+  const prefix = input.kind === "ghost" ? "ghost-" : input.kind === "shadow" && !slug.startsWith("shadow") ? "shadow-" : "";
+  return `${day ?? "apogee"}-${prefix}${slug}.png`;
 }

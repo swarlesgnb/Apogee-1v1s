@@ -26,6 +26,8 @@ import {
   HttpError,
 } from "../_shared/apogee.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import { flagForRunSet, plannedFlag, prepareShadow, recordShadow, shadowForMatch, shadowView } from "../_shared/queue.ts";
+import { matchClock } from "../_shared/timeIntegrity.ts";
 
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
 import { ANY_CATEGORY, findOpponent, type StoredRunSet } from "../../../src/core/match/matchmaking.ts";
@@ -42,6 +44,8 @@ interface Body {
    * run set already banked under the old one.
    */
   window: number;
+  /** The PC's UTC offset now; every run in the match is held to it (_shared/timeIntegrity.ts). */
+  tzOffsetMinutes?: number;
 }
 
 /** Opponents faced this recently are deprioritised, so the ladder feels bigger. */
@@ -101,6 +105,7 @@ Deno.serve(handler(async (req, admin) => {
           }
         : null,
       seeding: !other,
+      shadow: await shadowForMatch(admin, liveMatch.matchId),
       resumed: true,
       winProbability: null,
       // Not counted on this path: the pool is only searched when looking for a new
@@ -115,6 +120,9 @@ Deno.serve(handler(async (req, admin) => {
   // whatever their history says, because refusing there would strand them in a match
   // they cannot see or abandon. What the bar is and why is in requireEligible.
   await requireEligible(admin, caller.playerId);
+  // The match clock, checked against the player's own recent uploads before anything is
+  // created, and written onto their side below.
+  const clock = await matchClock(admin, caller.playerId, body);
 
   const { season, windowName, selectable } = await loadSeasonPool(admin, body.window);
 
@@ -292,9 +300,10 @@ Deno.serve(handler(async (req, admin) => {
   // side and records it without touching the ladder.
   if (!result.opponent) {
     const seed = crypto.randomUUID();
-    const scenarioIds = selectScenarios(selectable, seed, {
-      category: body.category,
-    }).map((s) => s.id);
+    // Contested against a Shadow, and drawn from scenarios the player has baselines on
+    // first (src/core/match/shadow.ts). The side below is stored exactly as it always was.
+    const shadow = await prepareShadow(admin, caller.playerId, body.category, selectable);
+    const scenarioIds = shadow.scenarioIds(seed);
 
     const { data: seedMatch, error: seedError } = await admin
       .from("matches")
@@ -316,12 +325,15 @@ Deno.serve(handler(async (req, admin) => {
       throw new HttpError(500, seedError?.message ?? "could not create a seeding match");
     }
 
+    await recordShadow(admin, seedMatch.id, caller.playerId, shadow.plan);
+
     const { error: seedSideError } = await admin.from("match_sides").insert([
       {
         match_id: seedMatch.id,
         player_id: caller.playerId,
         rating_before: rating.rating,
         rd_before: rating.rd,
+        ...clock,
       },
     ]);
 
@@ -340,6 +352,8 @@ Deno.serve(handler(async (req, admin) => {
       })),
       opponent: null,
       seeding: true,
+      shadow: shadowView(shadow.plan),
+      flag: plannedFlag(windowName, body.category),
       winProbability: null,
       poolSize: runSets.length,
     });
@@ -397,7 +411,7 @@ Deno.serve(handler(async (req, admin) => {
   // provisional NULL against their NOT NULL constraints. Every seeding match is a
   // one-row insert, which is why this passed until the first two players met.
   const { error: sidesError } = await admin.from("match_sides").insert([
-    { match_id: match.id, player_id: caller.playerId, rating_before: rating.rating, rd_before: rating.rd },
+    { match_id: match.id, player_id: caller.playerId, rating_before: rating.rating, rd_before: rating.rd, ...clock },
     {
       match_id: match.id,
       player_id: opponent.playerId,
@@ -428,5 +442,6 @@ Deno.serve(handler(async (req, admin) => {
     },
     winProbability: winProbability(rating, opponent.rating),
     poolSize: runSets.length,
+    flag: await flagForRunSet(admin, opponent),
   });
 }));

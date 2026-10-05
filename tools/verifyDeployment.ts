@@ -573,6 +573,20 @@ async function main(): Promise<void> {
     // A ghost link refuses the caller's own code and is rate limited per player, and an
     // anonymous lookup would be an unmetered way to guess codes.
     "ghost-link",
+    // The Daily board and open challenges: an entry is a player's, a board places the
+    // caller, and a code lookup is metered per player like ghost-link.
+    "daily-submit",
+    "daily-board",
+    "open-duel",
+    // A Crown challenge and an accepted race create matches, the board carries the caller's
+    // own notices, and the live view applies a reveal rule that needs to know who is asking.
+    "list-crowns",
+    "challenge-crown",
+    "race-action",
+    "race-status",
+    // The queue board names who answered your Flags and reads your Shadow ladder; it is
+    // about the caller and means nothing without one.
+    "queue-board",
   ];
   for (const name of authedFunctions) {
     const res = await fetch(`${fnBase}/${name}`, {
@@ -661,6 +675,34 @@ async function main(): Promise<void> {
   // Refused outright, not an empty 200: with the grants revoked PostgREST answers a
   // permission error, and an empty list could only mean the table is empty today.
   check("clients CANNOT read ghost cards directly", ghostsAnon.status !== 200, `HTTP ${ghostsAnon.status}`);
+
+  // ---- crowns and races -------------------------------------------------------------
+  console.log("\n── crowns and races ─────────────────────────────");
+
+  // Served by list-crowns and race-status under the service role. A client that could read
+  // these could see every challenge outcome and every race's numbers, sealed or not.
+  for (const table of ["crowns", "crown_reigns", "crown_challenges", "races"]) {
+    const present = await rest(`${table}?select=*&limit=1`, SECRET!);
+    check(`the ${table} table exists`, present.status === 200, `HTTP ${present.status}`);
+    const anon = await rest(`${table}?select=*&limit=1`, ANON!);
+    check(`clients CANNOT read ${table} directly`, anon.status !== 200, `HTTP ${anon.status}`);
+  }
+  // Notices are readable by their owner through RLS; the anon key is nobody, so nothing.
+  const noticesAnon = await rest("crown_notices?select=id&limit=1", ANON!);
+  check("the anon key reads no Crown notices", noticesAnon.status !== 200 || noticesAnon.body.trim() === "[]",
+    `HTTP ${noticesAnon.status}`);
+
+  // ---- shadows and flags ------------------------------------------------------------
+  console.log("\n── shadows and flags ────────────────────────────");
+
+  // Written by find-match and settle-match, read by queue-board, all under the service role.
+  // A client that could read flags could see a planted score before answering it.
+  for (const table of ["match_shadows", "flags"]) {
+    const secret = await rest(`${table}?select=match_id&limit=1`, SECRET!);
+    check(`the ${table} table exists`, secret.status === 200, `HTTP ${secret.status}`);
+    const anon = await rest(`${table}?select=match_id&limit=1`, ANON!);
+    check(`clients CANNOT read ${table} directly`, anon.status !== 200, `HTTP ${anon.status}`);
+  }
 
   console.log();
   if (failures > 0) {

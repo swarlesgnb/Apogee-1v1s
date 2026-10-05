@@ -998,6 +998,23 @@ function paintFolderFound() {
   choose.classList.add("secondary");
 }
 
+/**
+ * Found and still being read. The window now paints before the first read of the folder
+ * is done (1.6 s on a 15,000-run folder, and far longer on a slow disk), and the card's
+ * default words, "Looking for your KovaaK's stats", said the folder had not been found.
+ */
+function paintFolderReading() {
+  if (current || !currentPath) return;
+  $("emptyHead").textContent = "Reading your KovaaK's stats…";
+  $("emptyText").textContent = "Found the folder. A long history takes a few seconds to read the first time.";
+  $("emptyPath").textContent = currentPath;
+  $("emptyPath").hidden = false;
+  $("emptyHelp").hidden = true;
+  const choose = $("emptyChoose");
+  choose.textContent = "Change folder";
+  choose.classList.add("secondary");
+}
+
 /** Not found: the button becomes the one thing to do, and the path is one click away. */
 function paintFolderMissing() {
   $("emptyHead").textContent = "Couldn't find your KovaaK's stats folder";
@@ -7439,9 +7456,9 @@ function stopMatchClock() {
 /**
  * The player's own best on a scenario a match is asking for, or null.
  *
- * A match round is won on the bigger improvement over your own baseline, so the number
- * that decides it is your own best - and the to-do list named three scenarios and left
- * the rest of the row empty. Matched on the scenario name first; a match round can carry
+ * A match round is won on the bigger improvement over your own baseline. The best is the
+ * player's own reference point for a scenario, and the to-do list named three scenarios
+ * and left the rest of the row empty. Matched on the scenario name first; a match round can carry
  * a display label with the window appended ("beanTS Larger int"), so a practice row whose
  * scenario name begins the label counts too. No match means nothing is drawn rather than
  * a zero, which would read as a best of nothing.
@@ -7470,15 +7487,31 @@ function renderTodo(arriving) {
     s.justDone = false;
     li.style.setProperty("--i", String(i));
     const mine = bestOn(s.label);
+    // The round is decided by how far the first run lands above the player's own baseline,
+    // not by beating their best. "to beat 2,652" beside a pool saying "0 with a baseline"
+    // read as a contradiction (flow audit #14), so the row names the best as a fact and,
+    // where there is no baseline yet, says so in the words the pool panel uses.
+    let bestTag = "";
+    if (mine) {
+      const left = mine.measured || !current ? null : needsFor(current, mine.scenario);
+      const baselineNote = mine.measured
+        ? ""
+        : " · " + (left ? left + (left === 1 ? " run" : " runs") + " to a baseline" : "no baseline");
+      bestTag =
+        '<span class="scen-best" title="' +
+        esc(
+          num(mine.runs) + (mine.runs === 1 ? " run" : " runs") + " on this scenario · " +
+          (mine.measured
+            ? "the round is scored on your first run against your baseline"
+            : "no baseline yet, so this round is scored against an estimate"),
+        ) +
+        '">best <b>' + esc(pts(mine.best)) + "</b>" + esc(baselineNote) + "</span>";
+    }
     li.innerHTML =
       '<span class="n">' + (s.tier === "rejected" ? "!" : s.done ? "✓" : i + 1) + "</span>" +
       "<span>" + esc(s.label) + "</span>" +
       (s.tier ? '<span class="tier-tag" title="' + esc(tierMeaning(s.tier)) + '">received · ' + esc(s.tier) + "</span>" : s.uploading ? '<span class="tier-tag">Submitting…</span>' : s.failed ? '<span class="tier-tag">Upload failed · retry</span>' : '<span class="tier-tag">Awaiting run</span>') +
-      (mine
-        ? '<span class="scen-best" title="' +
-          esc(num(mine.runs) + " runs on this scenario") +
-          '">to beat <b>' + esc(pts(mine.best)) + "</b></span>"
-        : "");
+      bestTag;
 
     // Each scenario opens itself. KovaaK's reads its playlists at startup, so a playlist
     // written mid-session is not in the menu; a deep link needs nothing on disk and
@@ -7824,6 +7857,8 @@ function renderSettled(s) {
       '<td class="' + (youWon ? "won-round" : "") + '">' + outcome + "</td>";
     body.append(tr);
   });
+  // A Shadow result, or an answer that settled a Flag (queue-board.js), says so.
+  globalThis.apogeeQueueHooks?.paintSettled?.(s);
 }
 
 /**
@@ -9679,6 +9714,10 @@ function paintActiveMatch() {
     "held",
     activeMatch.tournament
       ? "Tournament fixture"
+      : activeMatch.crown
+      ? (activeMatch.crown.claim ? "Claiming a Crown" : "Crown challenge")
+      : activeMatch.race
+      ? "Racing " + activeMatch.race.opponentName
       : activeMatch.duel?.to
       ? "Duel sent"
       : activeMatch.duel?.from
@@ -9733,10 +9772,17 @@ function showRealMatch(match, data) {
     // is what it is - but it is not waiting on a pool, it is waiting on a person, and
     // saying "no opponent yet" about somebody you just named would be nonsense.
     const sentTo = match.duel?.to ?? null;
-    $("oppName").textContent = sentTo || "No opponent yet";
-    $("oppTier").textContent = sentTo ? "duel sent" : "seeding the pool";
+    // A claim on a vacant Crown and a race leg are one-sided too, and neither feeds the pool.
+    const crownClaim = match.crown?.claim ? match.crown : null;
+    const raceWith = match.race?.opponentName ?? null;
+    $("oppName").textContent = crownClaim ? "Vacant Crown" : raceWith ? raceWith : sentTo || "No opponent yet";
+    $("oppTier").textContent = crownClaim ? crownClaim.name : raceWith ? "racing now, unrated" : sentTo ? "duel sent" : "seeding the pool";
     $("oppTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
-    $("oppAge").textContent = sentTo
+    $("oppAge").textContent = crownClaim
+      ? "the first qualifying run set to settle takes it"
+      : raceWith
+      ? "same three, same start; their rounds open as yours land"
+      : sentTo
       ? "play your 3, then they answer"
       : match.poolSize == null
         ? "match already in progress"
@@ -9762,8 +9808,9 @@ function showRealMatch(match, data) {
     const played = new Date(match.opponent.playedAt);
     const days = Math.max(0, Math.round((Date.now() - played.getTime()) / 86400000));
     $("oppAge").textContent =
+      (match.crown ? `holds the ${match.crown.name} · ` : "") +
       `stored run · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
-      ` · pool of ${match.poolSize}`;
+      (match.poolSize == null ? "" : ` · pool of ${match.poolSize}`);
 
     const p = match.winProbability;
     if (Number.isFinite(p)) {
@@ -9823,6 +9870,9 @@ function showRealMatch(match, data) {
         " plays the same three after you, and the fixture goes to whoever improves more."
       : leg.opponentName + " has played these three. Only your first run on each counts.";
   }
+
+  // A Shadow match or an answer to a Flag (queue-board.js) draws its own opponent card.
+  globalThis.apogeeQueueHooks?.paintMatch?.(match);
 
   startMatchClock(match.expiresAt);
 
@@ -11091,6 +11141,21 @@ function tnHostPanel() {
   );
   body.append(sum);
 
+  // Signed out, the server refuses to host (flow audit #15), so the button is the sign-in
+  // rather than a form that fails on submit. The fields stay live: seeing what a bracket of
+  // a given shape costs is worth something before signing in. It presses the rail's own
+  // button, as the empty state beside it does, so the two cannot behave differently.
+  if (HOST === "electron" && !signedIn) {
+    const rail = $("btnSignIn");
+    const canSignIn = !!rail && !rail.disabled;
+    const signIn = tnButton(canSignIn ? "Sign in to host" : "Sign-in unavailable", "primary", () => {
+      if (canSignIn) rail.click();
+    });
+    signIn.disabled = !canSignIn;
+    body.append(signIn, tnEl("p", "tn-sum", "Hosting needs a signed-in account: the server keeps the bracket and checks every fixture."));
+    return panel;
+  }
+
   const create = tnButton("Open it for entry", "primary", async () => {
     if (HOST !== "electron") {
       showNotice("Tournaments are hosted from the desktop app.");
@@ -12079,6 +12144,8 @@ if (HOST === "electron") {
       const leg = activeMatch.tournament;
       const ok = window.confirm(leg
         ? `Forfeit ${leg.label} against ${name}?\n\nThe fixture goes to them. Nothing is rated.`
+        : activeMatch.crown
+        ? `Forfeit this challenge for the ${activeMatch.crown.name}?\n\n${name} keeps it, and it uses today's challenge on this Crown. Nothing is rated.`
         : `Forfeit this match against ${name}?\n\n` +
           "Counts as a loss and lowers your rating. You can queue again right away.",
       );
@@ -12355,6 +12422,7 @@ if (HOST === "electron") {
   api.onScanning(({ scanning }) => {
     setStatus(scanning ? "scanning" : "ok", scanning ? "Scanning…" : "Watching", currentPath);
     if (!scanning) paintFolderFound();
+    else paintFolderReading();
   });
 
   api.onError((message) => {
@@ -12393,6 +12461,7 @@ if (HOST === "electron") {
         showError(state.lastError);
         paintFolderMissing();
       } else if (!state.scanning) paintFolderFound();
+      else paintFolderReading();
     }
   });
 } else {
@@ -12518,6 +12587,7 @@ function mountArcadeCommand() {
     mixtape: 'Build a practice playlist.',
     queue: 'Queue a ranked match.', seasonview: 'Season benchmarks and your next rank.',
     tournaments: 'Groups, brackets and fixtures.', result: 'Rounds and rating change from your last match.',
+    crowns: 'Hold a Crown per category and band, or race a friend now.',
     profile: 'Category strengths and weak spots.', quests: 'Current quests.',
     scenarios: 'Search every scenario.', ranks: 'Rank thresholds and where you sit.',
     consistency: 'How steady your recent scores are.', admin: 'Local appearance and app settings.',

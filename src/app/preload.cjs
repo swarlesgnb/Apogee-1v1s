@@ -36,6 +36,9 @@ contextBridge.exposeInMainWorld("apogee", {
    * Resolves { ok, png?, fileName, savedTo?, copied? } or { ok: false, error }.
    */
   shareCard: (source, layout, action) => ipcRenderer.invoke("apogee:shareCard", { source, layout, action }),
+  /** Which Shadow, Flag and Crown result a card is held for: { crown, flag, shadow } keys. */
+  shareRecords: () => ipcRenderer.invoke("apogee:shareRecords"),
+  onShareRecords: (handler) => subscribe("apogee:shareRecords", handler),
 
   /**
    * Start Steam sign-in. Opens the system browser and resolves once a session exists.
@@ -70,6 +73,13 @@ contextBridge.exposeInMainWorld("apogee", {
   // ---- matches -----------------------------------------------------------
   /** Ask the server for an opponent. Returns { match } or { error }. */
   findMatch: (category, pool) => ipcRenderer.invoke("apogee:findMatch", { category, pool }),
+  /**
+   * Shadows and Flags: what queueing `category` would do, your Flags and your Shadow ladder.
+   * `ack` lists answered Flags already shown, so each is announced once. Resolves { board }.
+   */
+  queueBoard: (args) => ipcRenderer.invoke("apogee:queueBoard", args ?? {}),
+  /** The board, pushed on launch, on focus and after every settled match. */
+  onQueueBoard: (handler) => subscribe("apogee:queueBoard", handler),
 
   /**
    * Derive thresholds for a scenario from its KovaaK's leaderboard.
@@ -243,6 +253,27 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Fires when the tournament list changes, and with null on sign-out. */
   onTournaments: (handler) => subscribe("apogee:tournaments", handler),
 
+  // ---- crowns and races ----------------------------------------------------
+  //
+  // Named fields only, as above. Nothing here carries a score or a result: Crowns and races
+  // are decided in SQL from settled matches.
+
+  /** The Crowns board and your unread notices. `seen` marks notice ids read first. */
+  crowns: (seen) => ipcRenderer.invoke("apogee:crowns", { seen }),
+  /** Claim a vacant Crown or challenge a held one. Hands back a match as findMatch does. */
+  challengeCrown: (category, window) => ipcRenderer.invoke("apogee:challengeCrown", { category, window }),
+  onCrowns: (handler) => subscribe("apogee:crowns", handler),
+  /** Race invitations in and out, the race being played, recent results. */
+  races: () => ipcRenderer.invoke("apogee:races"),
+  inviteRace: (to, category, window) => ipcRenderer.invoke("apogee:raceAction", { action: "invite", to, category, window }),
+  acceptRace: (raceId) => ipcRenderer.invoke("apogee:raceAction", { action: "accept", raceId }),
+  declineRace: (raceId) => ipcRenderer.invoke("apogee:raceAction", { action: "decline", raceId }),
+  cancelRace: (raceId) => ipcRenderer.invoke("apogee:raceAction", { action: "cancel", raceId }),
+  onRaces: (handler) => subscribe("apogee:races", handler),
+  /** The sealed live view of the race leg or Crown challenge being played. */
+  raceLive: () => ipcRenderer.invoke("apogee:raceLive"),
+  onLive: (handler) => subscribe("apogee:live", handler),
+
   /** Whether the signed-in player holds the admin role. Gates the editors, nothing else. */
   isAdmin: () => ipcRenderer.invoke("apogee:isAdmin"),
 
@@ -305,4 +336,22 @@ contextBridge.exposeInMainWorld("apogee", {
 
   /** Something went wrong; payload is a human-readable message. */
   onError: (handler) => subscribe("apogee:error", handler),
+
+  // ---- social (src/app/social.ts) -------------------------------------------
+  /** Apogee Daily: today's screen as main computed it, an action, and pushes when a run lands. */
+  daily: () => ipcRenderer.invoke("apogee:daily"),
+  dailyAction: (action) => ipcRenderer.invoke("apogee:dailyAction", action),
+  onDaily: (handler) => subscribe("apogee:daily", handler),
+  /**
+   * A challenge link waiting for the player: main parsed it and proposes it. Confirming
+   * names the proposal's id and nothing else, so the renderer cannot change what it says.
+   */
+  pendingLink: () => ipcRenderer.invoke("apogee:link"),
+  linkAction: (action) => ipcRenderer.invoke("apogee:linkAction", action),
+  onLink: (handler) => subscribe("apogee:link", handler),
+  /** Open challenges: { action: "create", category } | "mine" | "copy" | "cancel" with a code. */
+  openChallenge: (action) => ipcRenderer.invoke("apogee:openChallenge", action),
+  /** Discord presence, the one social preference: { discord, discordAvailable, discordConnected }. */
+  socialSettings: () => ipcRenderer.invoke("apogee:socialSettings"),
+  setSocialSettings: (patch) => ipcRenderer.invoke("apogee:setSocialSettings", patch),
 });

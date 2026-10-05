@@ -74,6 +74,9 @@ const mk = async (steam, name) => {
 const attacker = await mk("76561000000000001", "attacker");
 const victim = await mk("76561000000000002", "victim");
 const scen = (await db.query(`select id from scenarios limit 1`)).rows[0].id;
+// The server has the attacker under review, which is exactly the state they would most
+// like to erase (SEC-03 in docs/fleet/security.md).
+await db.exec(`update players set flags = '{"under_review": true, "suspect_runs": 3}'::jsonb where id = '${attacker}'`);
 
 await db.exec(`set role authenticated`);
 await db.exec(`set test.player_id = '${attacker}'`);
@@ -87,9 +90,15 @@ await attack("insert an ordinary run for myself, exactly as backfill sends it",
   `insert into runs (player_id, scenario_name, score, accuracy, avg_ttk, kills,
                      hit_count, miss_count, played_at, challenge_start, hash,
                      game_version, avg_fps, resolution, cm360, dpi, fov, csv_sha256,
-                     kill_rows)
+                     kill_rows, tz_offset_minutes)
    values ('${attacker}', 'x', 100, 0.9, 0.4, 10, 90, 10, now(), null, null,
-           null, 240, '2560x1440', 30, 800, 103, 'sha-ordinary', null)`, false);
+           null, 240, '2560x1440', 30, 800, 103, 'sha-ordinary', null, -60)`, false);
+
+// The wall clock is derived from played_at and the offset, never named by a client:
+// it is half of a run's identity (20261003000026).
+await attack("name my own run's wall clock (ended_local)",
+  `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, ended_local)
+   values ('${attacker}', 'x', 100, now(), 'sha-wall', '2020-01-01 00:00:00')`);
 
 // Granted columns only, so that what refuses this is runs_insert_self and not the
 // column grant getting there first - this is the one check in the file that proves the
@@ -149,6 +158,24 @@ await attack("update my own run's score after the fact",
 await attack("delete my own run",
   `delete from runs where player_id = '${attacker}'`);
 
+console.log("\n-- my own profile --");
+// Every column of players is server-owned: steam-auth writes the profile on sign-in, the
+// KovaaK's link is written by the function that verified it, and flags are moderation.
+// No client path updates the table, so no column is granted (SEC-03, SEC-07).
+await attack("rewrite my own steam_id (the anti-cheat join key)",
+  `update players set steam_id = '76561000000000099' where id = '${attacker}'`);
+await attack("rename myself to an HTML payload other players will see",
+  `update players set display_name = '<img src=x onerror=alert(1)>' where id = '${attacker}'`);
+await attack("clear my own moderation flags",
+  `update players set flags = '{}'::jsonb where id = '${attacker}'`);
+await attack("link a KovaaK's account myself",
+  `update players set kovaaks_username = 'someones_account' where id = '${attacker}'`);
+await attack("rewrite my own avatar and country",
+  `update players set avatar_url = 'https://evil.invalid/x.png', country = 'XX' where id = '${attacker}'`);
+await attack("create a second profile for myself",
+  `insert into players (id, steam_id, display_name) values (gen_random_uuid(), '76561000000000098', 'sock')`);
+await attack("delete my own profile", `delete from players where id = '${attacker}'`);
+
 console.log("\n-- the tables the security model depends on --");
 await attack("write my own rating", `update ratings set rating = 9999 where player_id = '${attacker}'`);
 await attack("insert a rating row", `insert into ratings (player_id, rating) values ('${victim}', 9999)`);
@@ -157,6 +184,15 @@ await attack("write a verified PB", `insert into verified_pbs (player_id, scenar
 await attack("make myself an admin", `insert into admins (player_id) values ('${attacker}')`);
 await attack("edit reference data (scenarios)", `update scenarios set world_record = 1 where id = ${scen}`);
 await attack("erase my own rate limit", `delete from rate_limits where player_id = '${attacker}'`);
+await attack("free a ranked performance for replay", `delete from ranked_run_fingerprints where player_id = '${attacker}'`);
+await attack("pre-claim a ranked performance",
+  `insert into ranked_run_fingerprints (player_id, scenario_id, challenge_start, score, first_run_id)
+   values ('${attacker}', ${scen}, '10:00:00.000', 1, gen_random_uuid())`);
+await attack("pin my match clock to an offset of my choosing",
+  `update match_sides set tz_offset_minutes = 300 where player_id = '${attacker}'`);
+await attack("forget a Steam sign-in nonce so it can be replayed", `delete from steam_openid_nonces`);
+await attack("plant a Steam sign-in attempt",
+  `insert into steam_signin_attempts (state_hash, port) values ('x', 50000)`);
 
 console.log("\n-- tournaments --");
 // A tournament somebody else hosts, created the way tournament-action does: by the server.
@@ -194,6 +230,102 @@ await attack("call the leg reservation directly",
 await attack("mark my real match unrated so a loss costs nothing",
   `update matches set rated = false where id = '${realMatch}'`);
 
+console.log("\n-- the Daily board and open challenges --");
+// A board entry and an open challenge somebody else made, the way the functions make them.
+await db.exec("reset role");
+await db.query(
+  `insert into daily_results (daily_number, window_index, player_id, season_name, scenario_names, run_ids,
+     scores, baselines, prior_runs, glyphs, mean_delta, provisional, lowest_tier, played_at)
+   values (3, 1, $1, 'Season 1', array['a','b','c'], array[gen_random_uuid(), gen_random_uuid(), gen_random_uuid()],
+     array[1,2,3], array[1,2,3], array[5,5,5], 'ANB', 0.01, false, 'consistent', now())`,
+  [victim],
+);
+await db.query(
+  `insert into duels (challenger_id, code, match_id, expires_at) values ($1, 'VCTM2345', $2, now() + interval '7 days')`,
+  [victim, realMatch],
+);
+await db.exec("set role authenticated");
+await db.exec("set test.player_id = '" + attacker + "'");
+
+await attack("put myself on a Daily board by writing the entry",
+  `insert into daily_results (daily_number, window_index, player_id, season_name, scenario_names, run_ids,
+     scores, baselines, prior_runs, glyphs, mean_delta, provisional, lowest_tier, played_at)
+   values (3, 1, '${attacker}', 'Season 1', array['a','b','c'], array[gen_random_uuid(), gen_random_uuid(), gen_random_uuid()],
+     array[9,9,9], array[1,1,1], array[5,5,5], 'AAA', 8, false, 'verified', now())`);
+await attack("raise a Daily mean after the fact", `update daily_results set mean_delta = 9`);
+await attack("delete somebody's Daily entry", `delete from daily_results`);
+await attack("post an open challenge without playing one",
+  `insert into duels (challenger_id, code, match_id, expires_at) values ('${attacker}', 'ATTK2345', '${realMatch}', now() + interval '7 days')`);
+await attack("turn somebody's open challenge into a named duel to me",
+  `update duels set challenged_id = '${attacker}', code = null where code = 'VCTM2345'`);
+await attack("record an answer to an open challenge without the function",
+  `insert into open_duel_answers (duel_id, player_id, match_id) select id, '${attacker}', match_id from duels where code = 'VCTM2345'`);
+await attack("mark an open challenge's answer rated by rewriting its match",
+  `update matches set rated = true where rated = false`);
+console.log("\n-- crowns and races --");
+// A Crown the victim holds and a notice addressed to them, created the way crown_resolve
+// would: by the server.
+await db.exec("reset role");
+const victimReign = (await db.query(
+  "insert into crown_reigns (category, window_index, cycle, holder_id, match_id, match_score, lowest_tier) values ('Precise Tracking', 1, 0, $1, $2, 0.05, 'verified') returning id",
+  [victim, realMatch],
+)).rows[0].id;
+await db.query("insert into crowns (category, window_index, reign_id, scenario_ids) values ('Precise Tracking', 1, $1, array[" + scen + "," + scen + "," + scen + "]::bigint[])", [victimReign]);
+const victimNotice = (await db.query(
+  "insert into crown_notices (player_id, kind, category, window_index, reign_id, other_name) values ($1, 'dethroned', 'Precise Tracking', 1, $2, 'someone') returning id",
+  [victim, victimReign],
+)).rows[0].id;
+const myNotice = (await db.query(
+  "insert into crown_notices (player_id, kind, category, window_index, other_name) values ($1, 'defended', 'Precise Tracking', 1, 'victim') returning id",
+  [attacker],
+)).rows[0].id;
+await db.exec("set role authenticated");
+await db.exec("set test.player_id = '" + attacker + "'");
+
+await attack("take a Crown by pointing it at a reign of my own",
+  `update crowns set reign_id = null where category = 'Precise Tracking'`);
+await attack("crown myself by writing a reign",
+  `insert into crown_reigns (category, window_index, cycle, holder_id, match_id, match_score, lowest_tier)
+   values ('Precise Tracking', 1, 0, '${attacker}', '${realMatch}', 9, 'verified')`);
+await attack("rewrite the holder of somebody else's reign",
+  `update crown_reigns set holder_id = '${attacker}' where id = '${victimReign}'`);
+await attack("pad my defences",
+  `update crown_reigns set defences = 99 where holder_id = '${attacker}'`);
+await attack("file a challenge naming myself the taker",
+  `insert into crown_challenges (match_id, category, window_index, cycle, challenger_id, outcome, decided_at)
+   values ('${realMatch}', 'Precise Tracking', 1, 0, '${attacker}', 'took', now())`);
+await attack("write a notice into the victim's inbox",
+  `insert into crown_notices (player_id, kind, category, window_index) values ('${victim}', 'dethroned', 'Precise Tracking', 1)`);
+await attack("mark the victim's notice read so they never see it",
+  `update crown_notices set seen_at = now() where id = '${victimNotice}'`);
+await attack("delete the victim's notice",
+  `delete from crown_notices where id = '${victimNotice}'`);
+await attack("even my own notice is not mine to edit",
+  `update crown_notices set other_name = 'x' where id = '${myNotice}'`);
+await attack("enter a race by writing it",
+  `insert into races (inviter_id, invitee_id, category, window_index, benchmark_name, difficulty, seed, scenario_ids, expires_at)
+   values ('${attacker}', '${victim}', 'x', 0, 'S', 'N', 's', array[1,2,3]::bigint[], now() + interval '1 hour')`);
+await attack("decide a race by writing its result",
+  `update races set status = 'finished', result = 'inviter'`);
+// The decisions themselves. A SELECT changes no rows, so only a refusal counts here.
+for (const [label, sql] of [
+  ["open a Crown challenge directly, with no cooldown", `select crown_open_challenge('Precise Tracking', 1, '${attacker}', 's', array[1,2,3]::bigint[], 'S', 'I', 480, 0, 604800)`],
+  ["call the Crown decision directly", `select crown_resolve('${realMatch}')`],
+  ["lapse every Crown on demand", "select crown_lapse_all(0)"],
+  ["reset a Crown on demand", "select crown_reset_off_pool('Precise Tracking', 1, 0)"],
+  ["start a race directly", `select race_start(gen_random_uuid(), '${attacker}', 480)`],
+  ["call the race decision directly", `select race_resolve('${realMatch}')`],
+  ["vacate a Crown through the internal helper", "select crown_vacate('Precise Tracking', 1, 'reset')"],
+]) {
+  try {
+    await db.query(sql);
+    findings++;
+    console.log("  HOLE     " + label + " -- the call went through");
+  } catch (e) {
+    console.log("  ok       " + label + " -- refused (" + String(e.message).split(String.fromCharCode(10))[0].slice(0, 55) + ")");
+  }
+}
+
 console.log("\n-- reading other people --");
 const readOthers = async (label, sql) => {
   try {
@@ -208,11 +340,22 @@ const readOthers = async (label, sql) => {
 await readOthers("another player's profile row", `select id, steam_id from players where id = '${victim}'`);
 await readOthers("another player's runs", `select id, score from runs where player_id = '${victim}'`);
 await readOthers("another player's baselines", `select * from baselines where player_id = '${victim}'`);
+// The ladder is public; the table is not. A world-readable ratings table was an ordered
+// list of every player_id (SEC-06). list-duels, find-match and apex-board serve it.
+await readOthers("every other player_id and rating via ratings",
+  `select player_id, rating from ratings where player_id <> '${attacker}'`);
+await readOthers("the ranked replay claims", `select * from ranked_run_fingerprints`);
+await readOthers("Steam sign-in nonces", `select * from steam_openid_nonces`);
 // Closed outright, not narrowed: list-tournaments builds the only view there is.
 await readOthers("a tournament's stored state", `select id, state from tournaments`);
 await readOthers("who entered which tournament", `select * from tournament_members`);
 await readOthers("which match is which fixture leg", `select * from tournament_legs`);
 await readOthers("the receipts behind a bracket", `select * from tournament_receipts`);
+// The board is a distribution daily-board builds; its rows and the answers behind open
+// challenges are the server's, and another player's challenge code is theirs to post.
+await readOthers("the Daily board's rows", `select player_id, mean_delta from daily_results`);
+await readOthers("who answered which open challenge", `select duel_id, player_id from open_duel_answers`);
+await readOthers("another player's open challenge and its code", `select code from duels where code is not null`);
 
 // A match the attacker has no side in. The participant policies used to query
 // match_sides from inside match_sides' own policy, which Postgres refuses as infinite
@@ -237,6 +380,20 @@ const readOwn = async (label, sql) => {
 };
 await readOwn("my own match", `select id from matches where id = '${realMatch}'`);
 await readOwn("my own side", `select player_id from match_sides where match_id = '${realMatch}'`);
+// The client's two real reads of the narrowed tables, exactly as they are written.
+await readOwn("my own profile, as session.ts reads it",
+  `select id, steam_id, display_name, avatar_url, kovaaks_username from players where id = '${attacker}'`);
+await readOwn("my own rating, as fetchStanding reads it",
+  `select rating, rd, matches_played from ratings where player_id = '${attacker}'`);
+
+// Crowns are served by list-crowns and races by race-status; the tables behind them are
+// closed. A notice is the one exception, and only to its owner.
+await readOthers("the Crown tables", `select category, reign_id from crowns`);
+await readOthers("who holds which Crown, raw", `select id, holder_id from crown_reigns`);
+await readOthers("every challenge and its outcome", `select match_id, outcome from crown_challenges`);
+await readOthers("the races table", `select id, inviter_id from races`);
+await readOthers("the victim's Crown notices", `select id from crown_notices where player_id = '${victim}'`);
+await readOwn("my own Crown notice", `select id, kind, other_name from crown_notices where id = '${myNotice}'`);
 
 // `attack` counts changed rows, and a SELECT changes none, so it would pass this even if
 // the call went through. Only a refusal counts.
@@ -256,8 +413,18 @@ const readOwnColumn = async (label, column) => {
 };
 await readOwnColumn("names the check that caught the run", "verification_notes");
 
-const ratings = await db.query(`select count(*)::int as n from ratings`);
-console.log(`  NOTE   ratings visible to me: ${ratings.rows[0].n} row(s) (policy is 'using (true)')`);
+// After every attack above, as the service role: the profile is as the server left it,
+// and moderation can still write it.
+await db.exec("reset role");
+const profile = (await db.query(`select steam_id, display_name, flags from players where id = '${attacker}'`)).rows[0];
+if (profile.steam_id !== "76561000000000001" || profile.display_name !== "attacker" || profile.flags?.under_review !== true) {
+  findings++;
+  console.log(`  HOLE   my profile changed: ${JSON.stringify(profile)}`);
+} else console.log("  ok     my profile is exactly as the server wrote it, flags included");
+try {
+  await db.query(`update players set flags = '{"under_review": false}'::jsonb where id = '${attacker}'`);
+  console.log("  ok     the server can still write moderation flags");
+} catch (e) { findings++; console.log(`  BROKEN the server cannot write flags: ${e.message}`); }
 
 console.log(`\n${findings === 0 ? "no holes found" : `${findings} finding(s)`}`);
 await db.close();

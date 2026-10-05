@@ -52,7 +52,18 @@ function clientEnv() {
     );
   }
 
+  // Optional, and not warned about: without it Discord Rich Presence is simply absent
+  // (src/app/discordPresence.ts). An application id is public by design, like the anon key.
+  let discordClientId = process.env.APOGEE_DISCORD_CLIENT_ID ?? "";
+  if (existsSync(envPath)) {
+    for (const line of readFileSync(envPath, "utf8").split(/\r?\n/)) {
+      const m = /^APOGEE_DISCORD_CLIENT_ID\s*=\s*(.*)$/.exec(line.trim());
+      if (m) discordClientId = m[1].trim();
+    }
+  }
+
   return {
+    __APOGEE_DISCORD_CLIENT_ID__: JSON.stringify(/^[0-9]{17,20}$/.test(discordClientId) ? discordClientId : ""),
     __APOGEE_SUPABASE_URL__: JSON.stringify(out.APOGEE_SUPABASE_URL),
     __APOGEE_SUPABASE_ANON_KEY__: JSON.stringify(out.APOGEE_SUPABASE_ANON_KEY),
     __APOGEE_STEAM_AUTH_URL__: JSON.stringify(out.APOGEE_STEAM_AUTH_URL),

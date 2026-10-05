@@ -20,7 +20,11 @@ import { dataFile, setDataDir, sourceDataDir } from "../core/dataDir.ts";
 import { levelFor } from "../core/quests/progression.ts";
 import { recordGhost, recordMatch, rerollQuest, type QuestState, type QuestSync } from "../core/quests/board.ts";
 import { GhostService } from "./ghostService.ts";
+import { ArenaService } from "./arena.ts";
 import { ShareCards } from "./shareCard.ts";
+import { installSocial } from "./social.ts";
+import { installQueueBoard } from "./queueBoard.ts";
+import { MechanicShares } from "./shareRecords.ts";
 import {
   installCrashHandlers,
   attachRendererLogging,
@@ -38,6 +42,7 @@ import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
 import { renderRankSheet } from "../core/report/rankSheet.ts";
 import { DARK_CHROME } from "../core/report/contrast.ts";
 import { scanStatsFolder, type ScenarioHistory } from "../core/history/history.ts";
+import { isPrimed, primeStatsFolder, saveDiskCache, useDiskCache } from "../core/stats/folderCache.ts";
 import { SignInCancelled, signInWithSteam } from "../core/sync/steamAuth.ts";
 import {
   fetchUploadedRuns,
@@ -76,7 +81,7 @@ import {
   signOut,
   type ApogeeSession,
 } from "./session.ts";
-import { candidateStatsFolders, findStatsFolder, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
+import { candidateStatsFolders, findStatsFolder, statsFolderOverride, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
 import { loadSettings, saveSettings, settingsPath, type WindowBounds } from "./settings.ts";
 import { installMenu } from "./menu.ts";
 import { launchKovaaks, writeMatchPlaylist } from "./playlist.ts";
@@ -116,6 +121,10 @@ const SMOKE = process.argv.includes("--smoke");
 // stats folder, for the screen a player sees when detection fails.
 const FRESH = process.argv.includes("--fresh");
 const NO_STATS = process.argv.includes("--no-stats");
+// `--allow-offline` lets `--smoke` pass on a build with no Supabase settings, which is the
+// only build a machine without the project's .env can make. It downgrades that one check
+// to a printed warning and nothing else; without the flag the check still fails.
+const ALLOW_OFFLINE = process.argv.includes("--allow-offline");
 if (SMOKE || FRESH) {
   const profile = mkdtempSync(join(app.getPath("temp"), SMOKE ? "apogee-smoke-" : "apogee-fresh-"));
   app.setPath("userData", profile);
@@ -133,8 +142,15 @@ if (SMOKE || FRESH) {
 declare const __APOGEE_BUILD__: string;
 const BUILD = typeof __APOGEE_BUILD__ === "string" ? __APOGEE_BUILD__ : "dev";
 
-/** Rebuilding scans the whole folder, so coalesce bursts of runs into one rebuild. */
-const REBUILD_DEBOUNCE_MS = 1200;
+/**
+ * Rebuilding scans the whole folder, so coalesce bursts of runs into one rebuild.
+ *
+ * Runs land a minute or more apart, and files that land together settle in the watcher
+ * within milliseconds of each other, so a short wait still makes a burst one rebuild. It
+ * was 1200 ms, which was most of the 2.3 s between a run landing and the queue screen
+ * counting it; the folder cache has since made a rescan read only the new files.
+ */
+const REBUILD_DEBOUNCE_MS = 300;
 
 interface State {
   statsDir: string | null;
@@ -234,8 +250,68 @@ const shareCards = new ShareCards({
     };
   },
   ghost: () => ghost.shareRecord(),
+  dailyRecord: () => social.daily.shareRecord(),
   window: () => window,
+  onRecords: (keys) => broadcast("apogee:shareRecords", keys),
 });
+/** The Shadow, Flag and Crown cards' records, from the server answers below (shareRecords.ts). */
+const mechanicShares = new MechanicShares(shareCards);
+
+/**
+ * Apogee Daily, challenge links, open challenges and Discord presence (social.ts). Local
+ * first like Ghost Mode: the Daily needs a stats folder and nothing else.
+ */
+const social = installSocial({
+  statsDir: () => state.statsDir,
+  signedIn: () => state.session !== null,
+  queueBand: () => state.snapshot?.benchmark.matchPool?.window ?? null,
+  broadcast,
+  notify: (message) => notify(message),
+  focus: () => {
+    if (!window || window.isDestroyed()) return;
+    if (window.isMinimized()) window.restore();
+    window.focus();
+  },
+  adoptMatch: (match) => adoptMatch(match),
+  matchVoided: (matchId) => {
+    if (state.match?.matchId !== matchId) return;
+    state.match = null;
+    state.submitted.clear();
+    broadcast("apogee:match", null);
+  },
+  ghostLink: async (code) => {
+    const r = await ghost.action({ type: "link", code });
+    return r.error ? { error: r.error } : {};
+  },
+  launch: (scenario) => launchKovaaks(scenario),
+  activity: () => {
+    const m = state.match;
+    const mode = !m ? "ranked" as const
+      : m.tournament ? "tournament" as const
+      : m.duel?.open ? "open" as const
+      : m.duel ? "duel" as const
+      : m.seeding ? "seeding" as const
+      : "ranked" as const;
+    return { match: m ? { id: m.matchId, category: m.category, mode } : null, ghost: ghost.presence() };
+  },
+  log,
+});
+
+/**
+ * Crowns and live races (arena.ts). The server decides both; this fetches the board, takes
+ * up the matches the server hands out through adoptMatch, and polls the sealed live view.
+ */
+const arena = new ArenaService({
+  session: () => state.session,
+  match: () => state.match,
+  adoptMatch: (match) => adoptMatch(match),
+  broadcast: (channel, payload) => broadcast(channel, payload),
+  focused: () => !!window && !window.isDestroyed() && window.isFocused(),
+  nudge: () => nudge(),
+  onCrowns: (board) => mechanicShares.crowns(board),
+});
+arena.registerIpc(ipcMain);
+arena.start();
 
 /** Show a neutral message, and keep it for a window that has not loaded yet. */
 function notify(message: string | null): void {
@@ -325,6 +401,9 @@ function rebuild(reason: string): void {
 }
 
 function scheduleRebuild(reason: string): void {
+  // While the first read of the folder is still going, the rebuild it ends with will see
+  // this too; one rebuilt here would parse the rest of the folder in one go.
+  if (state.statsDir && !isPrimed(state.statsDir)) return;
   if (rebuildTimer) clearTimeout(rebuildTimer);
   rebuildTimer = setTimeout(() => rebuild(reason), REBUILD_DEBOUNCE_MS);
 }
@@ -363,6 +442,12 @@ function startWatching(dir: string): void {
       } catch (err) {
         console.error("ghost run failed:", err);
       }
+      // Today's Apogee Daily reads the same run from the folder; its own try for the same reason.
+      try {
+        social.onRun(run);
+      } catch (err) {
+        console.error("daily run failed:", err);
+      }
 
       // If this scenario belongs to the active match, send it for verification without
       // being asked. Making the player click "submit" after every run would undo the
@@ -382,14 +467,31 @@ function startWatching(dir: string): void {
     },
   });
 
-  rebuild("initial scan");
-  try {
-    ghost.catchUp();
-  } catch (err) {
-    console.error("ghost catch-up failed:", err);
-  }
-  installScenarioFiles(dir);
-  refreshInstalledPlaylists(dir);
+  // The first read of the folder, a slice at a time, so the window paints and answers
+  // while it runs rather than after. Read in one go it held the main process for 2.0 s on
+  // a 15,000-run folder before the window could draw anything (docs/fleet/flow.md).
+  state.scanning = true;
+  broadcast("apogee:scanning", { scanning: true, reason: "initial scan" });
+  const reading = performance.now();
+  // What follows it is a turn each, so none of it adds to another's stall.
+  const turn = () => new Promise<void>((resolve) => setImmediate(resolve));
+  void primeStatsFolder(dir).then(async () => {
+    if (state.statsDir !== dir) return;
+    log(`initial read ${Math.round(performance.now() - reading)}ms`);
+    rebuild("initial scan");
+    await turn();
+    saveDiskCache();
+    await turn();
+    try {
+      ghost.catchUp();
+    } catch (err) {
+      console.error("ghost catch-up failed:", err);
+    }
+    await turn();
+    installScenarioFiles(dir);
+    await turn();
+    refreshInstalledPlaylists(dir);
+  });
 }
 
 /**
@@ -654,7 +756,12 @@ async function settleActiveMatch(attempt = 0): Promise<string | null> {
     const settled = await settleMatch(match.matchId);
     state.match = null;
     state.submitted.clear();
-    shareCards.recordSettled(settled, !!match.duel?.to);
+    shareCards.recordSettled(settled, !!match.duel?.to, Date.now(), {
+      duelCode: match.duel?.open ? match.duel.code ?? null : null,
+      openChallenge: !!match.duel?.open && settled.seeding !== true,
+    });
+    // A Shadow result or a Crown taken: their cards' records, beside the match card's.
+    mechanicShares.settled(settled, match.difficulty);
     // `sentDuel` rides along because a duel you sent settles exactly like a seeding match
     // (one side, nobody yet) and the payload cannot tell them apart. Ghost Mode's
     // "nobody in the pool yet" offer is wrong about somebody you just named.
@@ -675,6 +782,10 @@ async function settleActiveMatch(attempt = 0): Promise<string | null> {
     if (settled.tournament) void refreshTournaments("a fixture leg settled");
     // Duel buttons read the active match when drawn; redraw them now it is gone.
     void refreshDuels("match settled", true);
+    // A Crown challenge or race leg moved the board or decided a race.
+    arena.afterSettled(settled);
+    // A Shadow result moves the Shadow ladder and may have planted a Flag.
+    void queueBoard.refresh("match settled", true);
     return null;
   } catch (err) {
     const message = friendlyError(err);
@@ -783,9 +894,13 @@ function createWindow(): void {
       preload: join(here, "preload.cjs"),
       // The renderer is a view. It gets no Node, no remote module, and a locked-down
       // context; everything it needs arrives through the preload bridge.
+      //
+      // Sandboxed, preload included. preload.cjs requires only `electron`'s contextBridge
+      // and ipcRenderer, which a sandboxed preload has; the smoke probe below runs it with
+      // these same preferences and checks the bridge (docs/fleet/security.md).
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: false,
+      sandbox: true,
     },
   });
 
@@ -857,7 +972,7 @@ if (!HAS_LOCK) {
 } else if (!SMOKE) {
   // A second launch focuses the window that already exists, which is what someone
   // double-clicking the icon actually wants.
-  app.on("second-instance", () => {
+  app.on("second-instance", (_event, argv) => {
     console.log(
       `focusing the existing window, built ${BUILD}. A newer bundle will not load until ` +
         "this instance is closed.",
@@ -866,12 +981,22 @@ if (!HAS_LOCK) {
       if (window.isMinimized()) window.restore();
       window.focus();
     }
+    // A challenge link clicked while Apogee is open arrives as the second launch's argv.
+    // Parsed against the link grammar and only proposed; see social.ts.
+    social.receiveArgv(argv);
+  });
+  // macOS hands links over as an event rather than on the command line, and may do so
+  // before the app is ready; a link kept until the window asks for it is not lost.
+  app.on("open-url", (event, url) => {
+    event.preventDefault();
+    social.receive(url, "open-url");
   });
 }
 
 function runSmokeTest(): void {
   const found = findStatsFolder();
   const problems: string[] = [];
+  let offline = false;
 
   console.log(`stats folder : ${found ?? "NOT FOUND"}`);
   if (!found) {
@@ -908,7 +1033,9 @@ function runSmokeTest(): void {
   // surfaces here rather than the first time a human opens the app.
   const probe = new BrowserWindow({
     show: false,
-    webPreferences: { preload: join(here, "preload.cjs"), contextIsolation: true },
+    // The main window's preferences exactly, so a preload that breaks under the sandbox
+    // fails here.
+    webPreferences: { preload: join(here, "preload.cjs"), contextIsolation: true, nodeIntegration: false, sandbox: true },
   });
 
   probe.webContents.on("did-fail-load", (_e, code, desc) => {
@@ -936,8 +1063,10 @@ function runSmokeTest(): void {
 
     // A build with no Supabase settings still runs, but sign-in cannot work, and that
     // is worth failing the smoke test over rather than discovering when a user clicks.
+    // Only an explicit --allow-offline says otherwise, and the summary line repeats it.
     if (!isConfigured()) {
-      problems.push("built without Supabase settings; fill in .env and rebuild");
+      if (ALLOW_OFFLINE) offline = true;
+      else problems.push("built without Supabase settings; fill in .env and rebuild");
     }
 
     // A control that exists but is invisible or disabled is not a working control, so
@@ -960,7 +1089,9 @@ function runSmokeTest(): void {
     if (!button.present) problems.push("the sign-in button is not in the DOM");
     else if (button.hidden || button.display === "none" || button.visibility === "hidden") {
       problems.push("the sign-in button is present but not visible");
-    } else if (button.disabled) {
+    } else if (button.disabled && !(offline && button.text === "Sign-in unavailable")) {
+      // Disabled is what an unconfigured build is meant to show, so --allow-offline accepts
+      // exactly that state and no other: a disabled button saying anything else still fails.
       problems.push(`the sign-in button is disabled (${button.text})`);
     } else if (!button.listeners) {
       // A button that is present, visible and enabled with nothing bound to it looks
@@ -971,7 +1102,9 @@ function runSmokeTest(): void {
       problems.push("the sign-in button is present but nothing is bound to it");
     }
 
-    console.log(`supabase     : ${isConfigured() ? "configured" : "MISSING"}`);
+    console.log(
+      `supabase     : ${isConfigured() ? "configured" : offline ? "MISSING (allowed by --allow-offline)" : "MISSING"}`,
+    );
     console.log(`sign-in      : ${hasSignIn ? "wired" : "MISSING"}`);
     console.log(
       `button       : ${
@@ -1946,10 +2079,14 @@ function runSmokeTest(): void {
         new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true, cancelable: true }));
       const moved = gridSel.window === 1 && document.body.dataset.screen === screenBefore;
 
-      // The search finds a scenario from the first few letters of its name.
-      const named = seasonDraft.scenarios.find((x) => x.scenario && x.scenario.length > 6);
-      gridOpenSearch(named.scenario.slice(0, 6));
-      const found = gridSearchHits.some((o) => o.name === named.scenario);
+      // The search finds a scenario from the first few letters of its name. It searches the
+      // scenarios it can offer, and by the letters that tell one apart: every season name
+      // starts "Apogee ", so six letters of one matched all 164 and the forty shown were
+      // whichever sorted first, and none of them is on offer until it has been played.
+      const named = seasonAvailable.find((o) => /^[A-Za-z0-9+]+ [A-Za-z0-9]{3}/.test(o.name));
+      const term = named ? named.name.replace(/^(\S+ \S{3}).*$/, "$1") : "";
+      gridOpenSearch(term);
+      const found = !!named && gridSearchHits.some((o) => o.name === named.name);
       gridCloseSearch(false);
 
       // Move a scenario into another family's slot in the same difficulty. It keeps the
@@ -2057,7 +2194,10 @@ function runSmokeTest(): void {
       console.error("FAIL:\n  " + problems.join("\n  "));
       app.exit(1);
     } else {
-      console.log("OK: desktop client boots, finds stats, and renders");
+      console.log(
+        "OK: desktop client boots, finds stats, and renders" +
+          (offline ? " (offline: no Supabase settings, sign-in untested; allowed by --allow-offline)" : ""),
+      );
       app.exit(0);
     }
   });
@@ -2114,6 +2254,8 @@ async function restoreSignedIn(attempt = 0): Promise<void> {
   // action - so a duel that arrives mid-session appears when the player next does
   // something, which is the honest limit of it until there is a reason to poll.
   void refreshDuels("session restored");
+  // A Flag answered while the app was shut is the news this launch exists to tell.
+  void queueBoard.refresh("session restored", true);
   // Same reasoning: a fixture that became yours to play while the app was shut.
   void refreshTournaments("session restored");
 }
@@ -2126,6 +2268,9 @@ app.whenReady().then(() => {
   }
 
   createWindow();
+  social.registerProtocol();
+  // A first launch from a challenge link carries it on the command line.
+  social.receiveArgv(process.argv);
   installMenu({
     rescan: () => rebuild("menu rescan"),
     chooseFolder: () => void chooseStatsFolder().then((r) => { if (r && typeof r === "object") broadcast("apogee:error", r.error); }),
@@ -2151,8 +2296,17 @@ app.whenReady().then(() => {
   // A folder the player picked themselves wins over auto-detection. Someone with two
   // Steam libraries, or a stats folder copied off another machine, told us the answer
   // once and should not be asked again every launch.
+  // A folder named on the command line (`--stats`, or APOGEE_STATS_DIR) beats both: it is
+  // somebody saying which folder to read this time, without changing the remembered one.
+  // Every parse of the stats folder is kept between launches, keyed by this build, so a
+  // relaunch reads only the runs it has not seen (stats/folderCache.ts).
+  useDiskCache(join(app.getPath("userData"), "stats-cache.json"), BUILD);
   const remembered = loadSettings().statsDir;
-  const found = NO_STATS ? null : remembered && existsSync(remembered) ? remembered : findStatsFolder();
+  const found = NO_STATS
+    ? null
+    : statsFolderOverride()
+      ? findStatsFolder()
+      : remembered && existsSync(remembered) ? remembered : findStatsFolder();
 
   if (found) {
     startWatching(found);
@@ -2168,12 +2322,30 @@ app.whenReady().then(() => {
 
 app.on("window-all-closed", () => {
   watcher?.close();
+  social.dispose();
+  saveDiskCache();
   if (process.platform !== "darwin") app.quit();
 });
 
 // ---------------------------------------------------------------------------
 // IPC: the entire surface the renderer is given.
 // ---------------------------------------------------------------------------
+
+/**
+ * Resolves once the first read of the stats folder is done, and at once after that.
+ *
+ * The handlers that read the whole history wait on it. Run while the read was still going,
+ * they parsed the rest of the folder in one go on the main process: the Season screen's
+ * practice list did, 1.2 s, at launch, which froze the window that had just painted.
+ */
+async function statsRead(): Promise<void> {
+  const dir = state.statsDir;
+  if (!dir || isPrimed(dir)) return;
+  await primeStatsFolder(dir);
+  // Each on a turn of its own: resumed together, the handlers that waited ran back to back
+  // as one stall of their own when the read finished.
+  await new Promise<void>((resolve) => setImmediate(resolve));
+}
 
 ipcMain.handle("apogee:getState", () => ({
   /** Which bundle this window is running, so a stale one is visible rather than guessed at. */
@@ -2190,7 +2362,8 @@ ipcMain.handle("apogee:getState", () => ({
   notice: state.notice,
 }));
 
-ipcMain.handle("apogee:expedition", () => {
+ipcMain.handle("apogee:expedition", async () => {
+  await statsRead();
   try {
     return expedition().view(state.statsDir, true);
   } catch (err) {
@@ -2198,6 +2371,7 @@ ipcMain.handle("apogee:expedition", () => {
   }
 });
 ipcMain.handle("apogee:expeditionAction", async (_e, action: unknown) => {
+  await statsRead();
   try {
     if (action && typeof action === "object" && (action as { type?: unknown }).type === "launch") {
       const view = expedition().view(state.statsDir, true);
@@ -2213,7 +2387,8 @@ ipcMain.handle("apogee:expeditionAction", async (_e, action: unknown) => {
   } catch (e) { return { error: e instanceof Error ? e.message : String(e) }; }
 });
 
-ipcMain.handle("apogee:ghost", () => {
+ipcMain.handle("apogee:ghost", async () => {
+  await statsRead();
   try {
     return ghost.view();
   } catch (err) {
@@ -2221,6 +2396,7 @@ ipcMain.handle("apogee:ghost", () => {
   }
 });
 ipcMain.handle("apogee:ghostAction", async (_e, action: unknown) => {
+  await statsRead();
   try {
     return await ghost.action(action);
   } catch (err) {
@@ -2237,6 +2413,10 @@ ipcMain.handle("apogee:shareCard", async (_e, request: unknown) => {
     return { ok: false, error: friendlyError(err) };
   }
 });
+
+// Which Shadow, Flag and Crown result main holds a card for, so a screen offers Share beside
+// that result only. Pushed as apogee:shareRecords whenever one changes.
+ipcMain.handle("apogee:shareRecords", () => shareCards.recordKeys());
 
 // ---------------------------------------------------------------------------
 // Steam sign-in
@@ -2282,6 +2462,7 @@ ipcMain.handle("apogee:signIn", async () => {
     state.lastError = null;
     broadcast("apogee:session", session);
     void refreshDuels("signed in");
+    void queueBoard.refresh("signed in", true);
     void refreshTournaments("signed in");
     void keepHistoryCurrent("signed in");
     return { session };
@@ -2469,6 +2650,9 @@ async function refreshDuels(reason: string, force = false): Promise<void> {
     console.warn(`could not read duels (${reason}):`, err instanceof Error ? err.message : err);
   }
 }
+
+/** Shadows and Flags: what queueing would do, your Flags, and their news (queueBoard.ts). */
+const queueBoard = installQueueBoard({ signedIn: () => Boolean(state.session), broadcast, onBoard: (board) => mechanicShares.queueBoard(board) });
 
 ipcMain.handle("apogee:duels", async () => {
   if (!state.session) return { error: "Sign in with Steam to play ranked." };
@@ -2914,7 +3098,8 @@ ipcMain.handle("apogee:importAdminOverrides", async () => {
  * refused by the ascending rule and leave the season unsaveable until every cell was
  * filled, which turns adding one scenario into a chore about all of them.
  */
-ipcMain.handle("apogee:availableScenarios", () => {
+ipcMain.handle("apogee:availableScenarios", async () => {
+  await statsRead();
   try {
     const season = loadSeason();
     const already = new Set(season.scenarios.map((s) => s.scenario));
@@ -3891,7 +4076,8 @@ const APEX_UNSAMPLED =
   "No KovaaK's leaderboard for this season's scenarios yet, so there is nothing to place " +
   "you against. Apex points start once the boards are sampled.";
 
-ipcMain.handle("apogee:apex", () => {
+ipcMain.handle("apogee:apex", async () => {
+  await statsRead();
   let season;
   try {
     season = loadSeason();
@@ -4006,7 +4192,8 @@ ipcMain.handle("apogee:apexBoard", async (_e, { category } = {} as any) => {
   }
 });
 
-ipcMain.handle("apogee:practice", () => {
+ipcMain.handle("apogee:practice", async () => {
+  await statsRead();
   let season;
   try {
     season = loadSeason();

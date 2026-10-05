@@ -343,7 +343,8 @@
     let callout = document.getElementById('ghostSeedCallout');
     // A duel you sent settles as a one-sided match too; there is somebody, they just have
     // not played yet, so the empty-pool offer would be untrue.
-    const seeding = s && (s.seeding || s.verdict == null) && !s.tournament && !s.sentDuel;
+    // A Shadow match had an opponent too (queue-board.js draws it), so the offer is untrue there.
+    const seeding = s && (s.seeding || s.verdict == null) && !s.tournament && !s.sentDuel && !s.shadow;
     if (!seeding) { callout?.remove(); return; }
     if (!callout) {
       callout = document.createElement('div');

@@ -1,0 +1,53 @@
+/* Social: the challenge-link prompt, the "Links & Discord" menu and the open-challenge
+   panel. Built from the client's own tokens; the prompt is the one place the app covers the
+   screen, because a link arrives from outside and must be answered before anything else. */
+
+/* the prompt */
+.sl-overlay { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 24px; background: color-mix(in srgb, var(--ground, #090c12) 72%, transparent); backdrop-filter: blur(2px); }
+.sl-overlay[hidden] { display: none; }
+.sl-dialog { width: min(520px, 100%); display: grid; gap: 12px; padding: 24px 26px; border-radius: 16px; background: var(--panel); border: 1px solid var(--rule-2, var(--rule)); box-shadow: 0 24px 60px #0008; }
+.sl-kicker { display: flex; align-items: center; gap: 8px; color: var(--brand); font: 10px var(--mono, monospace); letter-spacing: .16em; text-transform: uppercase; }
+.sl-kicker svg, .sl-menu > summary svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.sl-dialog h2 { margin: 0; font: 600 28px/1.1 var(--display); letter-spacing: -.03em; color: var(--ink); }
+.sl-lines { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; color: var(--ink-mid); font-size: 13px; line-height: 1.45; }
+.sl-lines li:first-child { color: var(--ink); font-size: 14px; }
+.sl-wait { margin: 0; color: var(--ink-dim); font-size: 13px; }
+.sl-error { margin: 0; padding: 10px 12px; border-radius: 8px; border: 1px solid color-mix(in srgb, var(--warn) 50%, transparent); color: var(--warn); font-size: 13px; }
+.sl-fine { margin: 4px 0 0; color: var(--ink-dim); font-size: 11px; }
+.sl-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+.sl-actions button, .sl-open button, .sl-result-link button, .sl-paste button { cursor: pointer; font: 13px var(--font); color: var(--ink-mid); background: var(--well); border: 1px solid var(--rule-2, var(--rule)); border-radius: 8px; padding: 9px 15px; }
+.sl-actions button:hover:not(:disabled), .sl-open button:hover:not(:disabled), .sl-result-link button:hover, .sl-paste button:hover { color: var(--ink); border-color: var(--rule-3, var(--rule-2)); }
+.sl-actions button:disabled, .sl-open button:disabled { opacity: .45; cursor: default; }
+.sl-actions .sl-primary, .sl-open .sl-go { color: var(--brand-ink, #151c15); background: var(--brand); border-color: var(--brand); font-weight: 600; }
+.sl-actions .sl-primary:hover:not(:disabled), .sl-open .sl-go:hover:not(:disabled) { color: var(--brand-ink, #151c15); filter: brightness(1.06); }
+
+/* the menu */
+.sl-menu-body { left: auto; right: 0; width: min(340px, 80vw); border-radius: 6px; font-size: 12px; color: var(--ink-mid); }
+.sl-menu-body strong { display: block; font: 600 22px var(--display); color: var(--ink); margin-bottom: 6px; }
+.sl-paste { display: grid; gap: 6px; }
+.sl-paste label { font-size: 12px; }
+.sl-paste-row { display: flex; gap: 6px; }
+.sl-paste input { flex: 1; min-width: 0; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--rule-2, var(--rule)); background: var(--well); color: var(--ink); font: 12px var(--mono, monospace); }
+.sl-paste-msg { margin: 0; min-height: 1em; color: var(--warn); font-size: 11px; }
+.sl-toggle { display: flex; gap: 8px; align-items: center; cursor: pointer; color: var(--ink); }
+.sl-toggle input { accent-color: var(--brand); width: 16px; height: 16px; }
+.sl-discord-note { margin: 0; color: var(--ink-dim); font-size: 11px; line-height: 1.45; }
+
+/* the open-challenge panel */
+.sl-lede { margin: 0 0 12px; color: var(--ink-dim); font-size: 13px; line-height: 1.5; max-width: 72ch; }
+.sl-cats { margin-bottom: 12px; }
+.sl-open-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.sl-status { font-size: 12px; color: var(--ink-dim); }
+.sl-status.ok { color: var(--up); }
+.sl-status.bad { color: var(--warn); }
+.sl-mine { list-style: none; margin: 14px 0 0; padding: 0; display: grid; }
+.sl-mine-row { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 10px 0; border-top: 1px solid var(--rule); }
+.sl-mine-row b { font: 600 14px var(--mono, monospace); color: var(--ink); letter-spacing: .06em; }
+.sl-mine-row span { color: var(--ink-mid); font-size: 12px; margin-left: 8px; }
+.sl-mine-row small { display: block; color: var(--ink-dim); font-size: 11px; margin-top: 3px; }
+.sl-mine-act { display: flex; gap: 6px; flex-shrink: 0; }
+
+/* your settled challenge */
+.sl-result-link { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 14px; padding: 12px 16px; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--brand) 40%, transparent); background: color-mix(in srgb, var(--brand) 9%, transparent); color: var(--ink-mid); font-size: 13px; }
+.sl-result-link b { color: var(--ink); }
+.sl-result-link code { font: 600 13px var(--mono, monospace); color: var(--brand); letter-spacing: .06em; }
