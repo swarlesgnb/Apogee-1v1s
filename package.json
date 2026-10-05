@@ -74,6 +74,7 @@
     "audit:look": "node tools/auditLook.mjs",
     "verify:deployment": "tsx tools/verifyDeployment.ts",
     "count:triples": "tsx tools/countTriples.ts",
+    "reset:ratings": "tsx tools/softResetRatings.ts",
     "activity": "tsx tools/activity.ts",
     "build:site": "tsx tools/buildSite.ts",
     "grant:admin": "tsx tools/grantAdmin.ts",

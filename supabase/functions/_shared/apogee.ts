@@ -18,6 +18,8 @@ import {
   queueEligibility,
 } from "../../../src/core/match/eligibility.ts";
 import type { SelectableScenario } from "../../../src/core/match/scenarioSelection.ts";
+import type { Rating } from "../../../src/core/rating/glicko2.ts";
+import { seasonStanding, seedRating } from "../../../src/core/rating/seed.ts";
 
 import { createClient, type SupabaseClient } from "jsr:@supabase/supabase-js@2";
 
@@ -426,7 +428,7 @@ export async function requireEligible(
 }
 
 export interface SeasonPool {
-  season: { id: string; name: string; status: string; windows: string[] | null };
+  season: { id: string; name: string; status: string; windows: string[] | null; window_size: number | null };
   windowName: string;
   selectable: SelectableScenario[];
 }
@@ -756,4 +758,61 @@ export const INITIAL_TTL_MS = IDLE_ALLOWANCE_MS + LAUNCH_ALLOWANCE_MS;
 /** When a match should expire, given the moment the last run finished. */
 export function deadlineAfterRun(lastRunEndedAt: Date): Date {
   return new Date(lastRunEndedAt.getTime() + IDLE_ALLOWANCE_MS);
+}
+
+/**
+ * The rating a player without one starts at, written so settlement reads the same one.
+ *
+ * Seeded from where their verified PBs sit on this season's thresholds (core/rating/
+ * seed.ts). Written here rather than only returned, because settle-match reads the
+ * ratings row and would otherwise settle a seeded player's first match from the 1500 a
+ * missing row defaults to. A row somebody else wrote first wins: on conflict the seed is
+ * dropped and the stored row is read back.
+ */
+export async function seedRatingRow(
+  admin: SupabaseClient,
+  seasonId: string,
+  windowSize: number | null,
+  playerId: string,
+): Promise<Rating> {
+  const [scenarioResult, pbResult] = await Promise.all([
+    admin
+      .from("season_scenarios")
+      .select("scenario_id, family, window_index, rank_maxes")
+      .eq("season_id", seasonId),
+    admin.from("verified_pbs").select("scenario_id, score").eq("player_id", playerId),
+  ]);
+  if (scenarioResult.error) throw new HttpError(500, scenarioResult.error.message);
+  if (pbResult.error) throw new HttpError(500, pbResult.error.message);
+
+  const standing = seasonStanding(
+    (scenarioResult.data ?? []).map((s: any) => ({
+      scenarioId: Number(s.scenario_id),
+      family: s.family ?? null,
+      windowIndex: Number(s.window_index ?? 0),
+      rankMaxes: (s.rank_maxes ?? []).map(Number),
+    })),
+    new Map((pbResult.data ?? []).map((p: any) => [Number(p.scenario_id), Number(p.score)])),
+    windowSize,
+  );
+  const seeded = seedRating(standing?.standing ?? null);
+
+  const { error: insertError } = await admin
+    .from("ratings")
+    .upsert(
+      { player_id: playerId, rating: seeded.rating, rd: seeded.rd, volatility: seeded.volatility },
+      { onConflict: "player_id", ignoreDuplicates: true },
+    );
+  if (insertError) throw new HttpError(500, insertError.message);
+
+  const { data: row, error: readError } = await admin
+    .from("ratings")
+    .select("rating, rd, volatility")
+    .eq("player_id", playerId)
+    .maybeSingle();
+  if (readError) throw new HttpError(500, readError.message);
+
+  return row
+    ? { rating: Number(row.rating), rd: Number(row.rd), volatility: Number(row.volatility) }
+    : seeded;
 }

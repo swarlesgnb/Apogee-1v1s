@@ -23,6 +23,7 @@ import {
   requireCaller,
   requireEligible,
   runSetId,
+  seedRatingRow,
   sweepStaleMatches,
   HttpError,
 } from "../_shared/apogee.ts";
@@ -35,7 +36,7 @@ import {
   shouldPlantFresh,
   type OpponentBank,
 } from "../../../src/core/match/matchmaking.ts";
-import { defaultRating, updateRating, winProbability, type Rating } from "../../../src/core/rating/glicko2.ts";
+import { updateRating, winProbability, type Rating } from "../../../src/core/rating/glicko2.ts";
 
 interface Body {
   /** A skill, a sub-category, or "Any". */
@@ -131,13 +132,16 @@ Deno.serve(handler(async (req, admin) => {
     .eq("player_id", caller.playerId)
     .maybeSingle();
 
+  // A first queue seeds the rating from verified PBs rather than starting everybody at
+  // 1500, because rounds are decided on raw score and a strong newcomer at 1500 would
+  // spend their placements beating people they were never meant to meet.
   const rating: Rating = ratingRow
     ? {
         rating: Number(ratingRow.rating),
         rd: Number(ratingRow.rd),
         volatility: Number(ratingRow.volatility),
       }
-    : defaultRating();
+    : await seedRatingRow(admin, season.id, season.window_size ?? null, caller.playerId);
 
   // ---- candidate opponents: every ranked round somebody left behind ---------------
   //

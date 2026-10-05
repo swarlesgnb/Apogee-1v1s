@@ -124,6 +124,11 @@ round and not the match.
 
 ### The sandbagging exploit, and the fix
 
+Ranked no longer decides on baselines, so this no longer moves a rating. It still
+governs ghost matches and the "against your usual" line every result shows. The ranked
+equivalent, tanking a rating to face weaker players, is closed by seeding ratings from
+verified PBs (§4).
+
 This is the serious flaw in a baseline-normalized system, and it must be designed
 against from the start rather than patched later.
 
