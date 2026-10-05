@@ -109,6 +109,13 @@ export const LIMITS: Record<string, Limit> = {
   "list-tournaments": { max: 60, windowSeconds: 300 },
 
   /**
+   * 60 per 5 minutes, the price of the other boards. Each tab and each scenario picked is
+   * one call, so flicking through a dozen scenarios twice is well inside it; a scenario
+   * board is the heaviest read here, which is why it is not looser.
+   */
+  "leaderboard": { max: 60, windowSeconds: 300 },
+
+  /**
    * 30 per 5 minutes. Entering, checking in and out, and a host sorting a roster of
    * sixteen are a few calls each; nothing here is expensive, but every one is a write.
    */

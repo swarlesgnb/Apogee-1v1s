@@ -3,6 +3,26 @@
 What still stands between the local candidate and a public release, and how to re-check
 it. The solo campaign rules are in [the solo guide](solo-expedition.md).
 
+## 0.4.4, 2026-10-05
+
+- Installer: `release/Apogee-0.4.4-setup.exe`
+- SHA-256: `86426c6fddb404f8e6a78259a3010b5c970e5a747c93b3f0527d0412b1bd893d`
+- Notes: `release/notes-0.4.4.md`
+- Carries in-app updates and the leaderboards. The first version with the updater, so
+  players install it by hand once and every later release reaches them through the app;
+  from here, publishing a release with its `latest.yml` is what ships an update. The
+  package carries `app-update.yml` and no `node_modules`. The server side is migration 24
+  and the `leaderboard` function, which have to be live before this goes out, or the
+  screen reports that the boards are not live yet.
+- `validatePackage` passed 179 of 179, and the unpacked build booted in `--smoke` from a
+  temporary directory. Unsigned (`Get-AuthenticodeSignature` reports NotSigned).
+- `validate:release` passed 32 of 38. The six failures are 0.4.3's, unchanged, and
+  `audit:look` reports the same single tell.
+- Not yet published: on the build machine every Apogee build, back to rc.4, crashes its
+  renderer at launch when the executable is named `Apogee.exe` and runs when renamed;
+  the same bundle under plain Electron is fine. Unresolved, and not shown to be specific
+  to that machine.
+
 ## 0.4.3, 2026-10-05
 
 - Installer: `release/Apogee-0.4.3-setup.exe`

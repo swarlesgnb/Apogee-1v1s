@@ -838,6 +838,18 @@ export function fetchApexBoard(category: string): Promise<ApexBoardPage> {
   return callFunction<ApexBoardPage>("apex-board", { category });
 }
 
+export type { LeaderboardPage, LeaderboardView } from "../core/leaderboard/leaderboard.ts";
+import type { LeaderboardPage, LeaderboardView } from "../core/leaderboard/leaderboard.ts";
+
+/**
+ * One of the boards: the rating ladder, this week's movers, or a scenario's best scores.
+ * A function rather than selects for the same reason as the apex board: the rows name
+ * other players, and only the server decides what a client sees about them.
+ */
+export function fetchLeaderboard(view: LeaderboardView, scenario?: string): Promise<LeaderboardPage> {
+  return callFunction<LeaderboardPage>("leaderboard", scenario ? { view, scenario } : { view });
+}
+
 /**
  * Recompute the caller's own apex standing so the board has something current to show.
  *

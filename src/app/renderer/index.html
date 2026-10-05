@@ -3107,6 +3107,12 @@
         <span class="tab-label" data-copy="nav.tab.tournaments">Tournaments</span>
       </button>
 
+      <button class="tab" role="tab" aria-selected="false" data-screen="leaderboards">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V12h4v9m4 0V4h4v17m4 0V9h-4"/><path d="M3 21h18"/></svg>
+        <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.leaderboards">Leaderboards</span>
+      </button>
+
       <button class="tab" role="tab" aria-selected="false" data-screen="result">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v7a4 4 0 0 1-8 0V3Zm4 11v6m-4 1h8M8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4"/></svg>
         <span class="tab-key"></span>
@@ -3329,6 +3335,7 @@
             <path class="slash" d="M16 9.6l5.2 4.8m0-4.8L16 14.4"/>
           </svg>
         </button>
+        <button type="button" class="queue-live update-chip" id="updateChip" hidden></button>
         <span class="build" id="buildStamp" title="Which bundle this window is running"></span>
       </div>
     </header>
@@ -3606,6 +3613,26 @@
 
             <div id="tnIndex"></div>
             <div id="tnDetail" hidden></div>
+          </section>
+
+          <!-- ---------------------------------------------- leaderboards -->
+          <section class="screen" id="screen-leaderboards">
+            <div class="screen-head">
+              <h1 data-copy="leaderboards.title">Leaderboards</h1>
+              <p data-copy="leaderboards.lede">Where you stand against everyone who plays: the rating ladder, this week's movers, and the best score on every Season 1 scenario.</p>
+            </div>
+
+            <div class="lb-views" role="tablist" aria-label="Board">
+              <button type="button" class="lb-view" role="tab" data-lb="ladder" aria-selected="true">Ladder</button>
+              <button type="button" class="lb-view" role="tab" data-lb="movers" aria-selected="false">This week</button>
+              <button type="button" class="lb-view" role="tab" data-lb="scenario" aria-selected="false">Scenarios</button>
+              <select id="lbScenario" class="lb-scenario" aria-label="Scenario" hidden></select>
+            </div>
+
+            <div class="panel lb-panel">
+              <p class="lb-note" id="lbNote"></p>
+              <div id="lbBody"></div>
+            </div>
           </section>
 
           <!-- ---------------------------------------------- result -->

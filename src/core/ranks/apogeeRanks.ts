@@ -41,8 +41,8 @@ export interface RankTheme {
   tiers: RankTier[];
 }
 
-/** Matches PLAN.md §4: no visible rank until placements are done. */
-export const PLACEMENT_MATCHES = 10;
+import { PLACEMENT_MATCHES } from "./placement.ts";
+export { PLACEMENT_MATCHES };
 
 export function loadRankTheme(path?: string | URL): RankTheme {
   const target = path ?? dataFile("apogee_ranks.json");

@@ -918,6 +918,30 @@ function setStatus(kind, text, path) {
  * replacing it: the app looks restarted while running the previous build. This is how
  * that shows up rather than being deduced an hour later.
  */
+/**
+ * The update chip in the top bar. Main downloads in the background (updater.ts); this
+ * only says so, and offers the restart once the new version is on disk. Idle, checking
+ * and a failed check show nothing: none of them is something the player can act on.
+ */
+function renderUpdate(update) {
+  const chip = $("updateChip");
+  if (!chip || !update) return;
+  chip.dataset.status = update.status;
+  if (update.status === "downloading") {
+    chip.hidden = false;
+    chip.disabled = true;
+    chip.textContent = `Downloading ${update.version} · ${update.percent}%`;
+    chip.title = `Apogee ${update.version} is downloading in the background. Keep playing.`;
+  } else if (update.status === "ready") {
+    chip.hidden = false;
+    chip.disabled = false;
+    chip.textContent = `Restart to update to ${update.version}`;
+    chip.title = `Apogee ${update.version} is ready. Restart now, or it installs the next time you quit.`;
+  } else {
+    chip.hidden = true;
+  }
+}
+
 function showBuild(build) {
   const el = $("buildStamp");
   if (!el) return;
@@ -9935,6 +9959,7 @@ $("queueBtn").addEventListener("click", async () => {
 /* ------------------------------------------------------------------ account */
 
 function renderSession(session, configured) {
+  myPlayerId = session ? session.playerId ?? null : null;
   const btn = $("btnSignIn");
   const panel = $("signedIn");
   if (!btn || !panel) return;
@@ -11809,6 +11834,170 @@ function tnScreenShown(shown) {
 document.querySelectorAll(".tab").forEach((tab) =>
   tab.addEventListener("click", () => tnScreenShown(tab.dataset.screen === "tournaments")));
 
+// ---------------------------------------------------------------------------
+// leaderboards
+// ---------------------------------------------------------------------------
+
+/**
+ * The signed-in player's id, so their own row can be picked out of a board. `var`, not
+ * `let`: renderSession sets it and can run before this line has.
+ */
+var myPlayerId = null;
+
+const lbState = { view: "ladder", scenario: null, loading: 0 };
+
+document.querySelectorAll(".tab").forEach((tab) =>
+  tab.addEventListener("click", () => { if (tab.dataset.screen === "leaderboards") lbOpen(); }));
+
+document.querySelectorAll(".lb-view").forEach((btn) =>
+  btn.addEventListener("click", () => {
+    lbState.view = btn.dataset.lb;
+    document.querySelectorAll(".lb-view").forEach((b) => b.setAttribute("aria-selected", String(b === btn)));
+    lbLoad();
+  }));
+
+$("lbScenario")?.addEventListener("change", (e) => {
+  lbState.scenario = e.target.value;
+  lbLoad();
+});
+
+/** Fill the scenario picker from the season, grouped by category, starting on the match window. */
+function lbFillScenarios() {
+  const select = $("lbScenario");
+  if (!select || select.options.length > 0) return;
+  const all = practice && Array.isArray(practice.scenarios) ? practice.scenarios : [];
+  const byCategory = new Map();
+  for (const s of all) byCategory.set(s.category, [...(byCategory.get(s.category) ?? []), s]);
+  for (const [category, list] of byCategory) {
+    const group = document.createElement("optgroup");
+    group.label = category;
+    for (const s of list) {
+      const opt = document.createElement("option");
+      opt.value = s.scenario;
+      // A family's four difficulties share a label, so the window is named beside it.
+      const windowName = lastSnapshot?.benchmark?.windows?.[s.window];
+      opt.textContent = (s.label || s.scenario) + (windowName ? " · " + windowName : "");
+      group.append(opt);
+    }
+    select.append(group);
+  }
+  // Start on a scenario ranked matches actually hand out, which is the board most people
+  // will want first.
+  const pool = lastSnapshot?.benchmark?.matchPool?.window;
+  const first = all.find((s) => s.window === pool) ?? all[0];
+  if (first) select.value = lbState.scenario = first.scenario;
+}
+
+function lbOpen() {
+  lbFillScenarios();
+  lbLoad();
+}
+
+async function lbLoad() {
+  const body = $("lbBody");
+  const note = $("lbNote");
+  if (!body || !note) return;
+  $("lbScenario").hidden = lbState.view !== "scenario";
+
+  if (!api) {
+    note.textContent = "Leaderboards are read from the live ladder, so they need the desktop app and a Steam sign-in.";
+    body.textContent = "";
+    return;
+  }
+  if (lbState.view === "scenario" && !lbState.scenario) {
+    note.textContent = "Season scenarios appear here once your stats folder has been read.";
+    body.textContent = "";
+    return;
+  }
+
+  // A newer request supersedes an older one, so switching boards quickly never paints
+  // the previous board over the one asked for last.
+  const ticket = ++lbState.loading;
+  note.textContent = "Loading...";
+  const page = await api.leaderboard(lbState.view, lbState.view === "scenario" ? lbState.scenario : undefined);
+  if (ticket !== lbState.loading) return;
+
+  if (!page || page.error) {
+    note.textContent = page?.error || "The leaderboard could not be loaded.";
+    body.textContent = "";
+    return;
+  }
+  note.textContent = "";
+  if (page.view === "ladder") lbLadder(page, body, note);
+  else if (page.view === "movers") lbMovers(page, body, note);
+  else lbScenarioBoard(page, body, note);
+}
+
+/** A table from rows, with the caller's own row marked and, if it is further down, appended after a gap. */
+function lbTable(head, rows, you, cells) {
+  const mark = (r) => myPlayerId && r.playerId === myPlayerId ? ' class="lb-you"' : "";
+  const tr = (r) => "<tr" + mark(r) + ">" + cells(r).join("") + "</tr>";
+  return '<table class="lb-table"><thead><tr>' + head.join("") + "</tr></thead><tbody>" +
+    rows.map(tr).join("") +
+    (you ? '<tr class="lb-gap"><td colspan="' + head.length + '">⋯</td></tr>' + tr(you) : "") +
+    "</tbody></table>";
+}
+
+function lbLadder(page, body, note) {
+  if (page.rows.length === 0) {
+    note.textContent = "Nobody has finished a rated match yet. The first one puts you at the top.";
+    body.textContent = "";
+    return;
+  }
+  note.textContent = `${page.players} ${page.players === 1 ? "player has" : "players have"} played a rated match. ` +
+    "Ordered by rating minus two deviations, so a rating has to be proven to rank high; " +
+    "players still placing are listed after everyone placed.";
+  body.innerHTML = lbTable(
+    ["<th>#</th>", "<th>Player</th>", '<th class="num">Rating</th>', '<th class="num">Matches</th>'],
+    page.rows, page.you,
+    (r) => [
+      "<td>" + (r.position ?? "–") + "</td>",
+      "<td>" + esc(r.displayName) + (r.position === null ? ' <span class="lb-tier">placing, ' + r.placementLeft + " to go</span>" : "") + "</td>",
+      '<td class="num">' + r.rating + ' <span class="lb-tier">±' + r.rd + "</span></td>",
+      '<td class="num">' + r.matchesPlayed + "</td>",
+    ],
+  );
+}
+
+function lbMovers(page, body, note) {
+  const empty = !page.climbers.length && !page.winners.length && !page.streaks.length;
+  note.textContent = empty
+    ? "No movers yet this week. Three rated matches in seven days puts you on the board."
+    : "The last seven days of rated matches. Climbers and wins need three matches in the week.";
+  const section = (title, rows, value, emptyText) =>
+    '<div class="lb-section">' + title + "</div>" +
+    (rows.length
+      ? lbTable(["<th>Player</th>", '<th class="num">' + value.label + "</th>", '<th class="num">Matches</th>'], rows, null,
+          (r) => ["<td>" + esc(r.displayName) + "</td>", '<td class="num">' + value.cell(r) + "</td>", '<td class="num">' + r.matches + "</td>"])
+      : '<p class="lb-note">' + emptyText + "</p>");
+  body.innerHTML = empty ? "" :
+    section("Biggest climbers", page.climbers, { label: "Rating", cell: (r) => "+" + r.change }, "Nobody has climbed yet this week.") +
+    section("Most wins", page.winners, { label: "Wins", cell: (r) => r.wins }, "No wins yet this week.") +
+    section("Win streaks", page.streaks, { label: "Streak", cell: (r) => r.streak + " in a row" }, "No live streaks of two or more.");
+}
+
+function lbScenarioBoard(page, body, note) {
+  if (page.rows.length === 0) {
+    note.textContent = "Nobody has a counted run on this scenario yet.";
+    body.textContent = "";
+    return;
+  }
+  const mine = page.rows.some((r) => r.playerId === myPlayerId) || page.you;
+  note.textContent = `${page.players} ${page.players === 1 ? "player" : "players"}, each by their best run. ` +
+    "Verified runs match KovaaK's own server record; consistent runs passed every check but have no server record to compare. " +
+    (mine ? "" : Number.isFinite(page.yourBest) ? `Your best here is ${pts(page.yourBest)}.` : "You have no counted run here yet.");
+  body.innerHTML = lbTable(
+    ["<th>#</th>", "<th>Player</th>", '<th class="num">Score</th>', "<th>Run</th>"],
+    page.rows, page.you,
+    (r) => [
+      "<td>" + r.position + "</td>",
+      "<td>" + esc(r.displayName) + "</td>",
+      '<td class="num">' + pts(r.score) + "</td>",
+      '<td><span class="lb-tier">' + esc(r.tier) + " · " + esc(new Date(r.playedAt).toLocaleDateString()) + "</span></td>",
+    ],
+  );
+}
+
 // Before anything can paint over them. Everything below reads these as the value to
 // go back to, so they have to be taken while they are still the only value there is.
 captureCopyDefaults();
@@ -12386,6 +12575,16 @@ if (HOST === "electron") {
   });
 
   var currentPath = "";
+  api.getUpdate?.().then(renderUpdate);
+  api.onUpdate?.(renderUpdate);
+  $("updateChip")?.addEventListener("click", () => {
+    const chip = $("updateChip");
+    if (chip.dataset.status !== "ready") return;
+    chip.disabled = true;
+    chip.textContent = "Restarting...";
+    api.installUpdate();
+  });
+
   api.getState().then((state) => {
     currentPath = state.statsDir || "";
     showBuild(state.build);

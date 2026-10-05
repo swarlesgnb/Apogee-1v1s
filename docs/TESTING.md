@@ -21,7 +21,7 @@ timestamps and your Steam id. Not your files, not your inputs, not your screen.
 
 ## 1. Install
 
-Download `Apogee-0.4.3-setup.exe` from the release page and run it.
+Download `Apogee-0.4.4-setup.exe` from the release page and run it.
 
 Windows will show a blue **Windows protected your PC** box, because the installer is not
 code-signed. Click **More info**, then **Run anyway**. A signing certificate is a few

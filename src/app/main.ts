@@ -21,6 +21,7 @@ import { levelFor } from "../core/quests/progression.ts";
 import { recordGhost, recordMatch, rerollQuest, type QuestState, type QuestSync } from "../core/quests/board.ts";
 import { GhostService } from "./ghostService.ts";
 import { ShareCards } from "./shareCard.ts";
+import { Updater } from "./updater.ts";
 import {
   installCrashHandlers,
   attachRendererLogging,
@@ -46,6 +47,7 @@ import {
   fetchActiveMatch,
   findMatch,
   fetchApexBoard,
+  fetchLeaderboard,
   isAdmin,
   refreshApex,
   refreshBaselines,
@@ -246,6 +248,8 @@ function notify(message: string | null): void {
 function broadcast(channel: string, payload: unknown): void {
   if (window && !window.isDestroyed()) window.webContents.send(channel, payload);
 }
+
+const updater = new Updater((update) => broadcast("apogee:update", update));
 
 /**
  * Ask for attention when something happens behind the game.
@@ -2126,6 +2130,7 @@ app.whenReady().then(() => {
   }
 
   createWindow();
+  updater.start({ disabled: FRESH });
   installMenu({
     rescan: () => rebuild("menu rescan"),
     chooseFolder: () => void chooseStatsFolder().then((r) => { if (r && typeof r === "object") broadcast("apogee:error", r.error); }),
@@ -2174,6 +2179,9 @@ app.on("window-all-closed", () => {
 // ---------------------------------------------------------------------------
 // IPC: the entire surface the renderer is given.
 // ---------------------------------------------------------------------------
+
+ipcMain.handle("apogee:getUpdate", () => updater.current);
+ipcMain.handle("apogee:installUpdate", () => updater.install());
 
 ipcMain.handle("apogee:getState", () => ({
   /** Which bundle this window is running, so a stale one is visible rather than guessed at. */
@@ -3978,6 +3986,21 @@ ipcMain.handle("apogee:apex", () => {
  * own row updated, and the most likely cause is the rate limit, which means their row
  * was written moments ago anyway.
  */
+ipcMain.handle("apogee:leaderboard", async (_e, { view, scenario } = {} as any) => {
+  if (!state.session) return { error: "Sign in to see the leaderboards." };
+  if (!["ladder", "movers", "scenario"].includes(view)) return { error: "unknown board" };
+  try {
+    return await fetchLeaderboard(view, typeof scenario === "string" ? scenario : undefined);
+  } catch (e) {
+    // A server without the function answers 404 with a gateway body, which is a fact
+    // about the deployment and not something to show a player as JSON.
+    if ((e as { status?: number }).status === 404) {
+      return { error: "Leaderboards aren't live on the server yet. Check back soon." };
+    }
+    return { error: e instanceof Error ? e.message : String(e) };
+  }
+});
+
 ipcMain.handle("apogee:apexBoard", async (_e, { category } = {} as any) => {
   if (!state.session) return { error: "sign in to see the board" };
 
