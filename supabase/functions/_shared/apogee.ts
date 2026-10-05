@@ -434,7 +434,7 @@ export interface SeasonPool {
 }
 
 /**
- * The season everybody is playing, and the scenarios in one of its windows.
+ * The season everybody is playing. Intermediate also draws from Novice for variety.
  *
  * The season owns the pool (PLAN.md §14), so this reads `season_scenarios` rather than a
  * benchmark's membership table. Published wins over draft even when the draft is newer:
@@ -464,13 +464,21 @@ export async function loadSeasonPool(
     throw new HttpError(503, "no season is loaded: push one with npm run push:season");
   }
 
-  const windowName: string = season.windows?.[windowIndex] ?? `window ${windowIndex + 1}`;
+  if (!Number.isInteger(windowIndex) || !season.windows?.[windowIndex]) {
+    throw new HttpError(400, "choose a valid season difficulty");
+  }
+  const windowName: string = season.windows[windowIndex];
+  // Novice variants add variety to Intermediate. Match records and opponent banks
+  // retain the selected window, so the two sides still answer the same queue and set.
+  const noviceIndex = season.windows.findIndex((name: string) => name.toLowerCase() === "novice");
+  const includeNovice = windowName.toLowerCase() === "intermediate" && noviceIndex >= 0;
+  const poolWindows = [...new Set([windowIndex, ...(includeNovice ? [noviceIndex] : [])])];
 
   const { data: pool, error: poolError } = await admin
     .from("season_scenarios")
     .select("scenario_id, window_index, category, scenarios!inner(id, name, aim_type, sub_category)")
     .eq("season_id", season.id)
-    .eq("window_index", windowIndex);
+    .in("window_index", poolWindows);
 
   if (poolError) throw new HttpError(500, poolError.message);
 
