@@ -1,6 +1,6 @@
 /**
  * Look a ghost card's code up as an invitation: what somebody needs to race the sender's
- * three live runs as a ghost of their own (docs/overnight/mechanics.md, "Ghost links").
+ * three live runs as a ghost of their own (docs/design/mechanics.md, "Ghost links").
  *
  * The answer is `linkFromRow` in src/core/ghost/links.ts and nothing more: the three
  * scenarios, the sender's display name, and per scenario the sender's live score and the

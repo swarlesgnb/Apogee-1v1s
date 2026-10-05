@@ -1024,7 +1024,7 @@ function runSmokeTest(): void {
     );
     // Ghost Mode round trip: the bridge answers, main builds the screen, and the page drew
     // it. A missing handler here is the "No handler registered" of a stale bundle, which
-    // is the failure CLAUDE.md warns makes every button do nothing.
+    // is the failure that makes every button do nothing.
     const ghostProbe = await probe.webContents.executeJavaScript(`(async () => {
       if (typeof window.apogee?.ghost !== "function") return { bridged: false };
       const screen = await window.apogee.ghost();

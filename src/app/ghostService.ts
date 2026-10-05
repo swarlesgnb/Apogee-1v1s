@@ -4,7 +4,7 @@
  * The rules live in core/ghost/ghost.ts and are pure; this holds the match between
  * launches, feeds it the runs the watcher sees, runs its clock, and hands the renderer a
  * finished view. The renderer draws that view and sends actions. It computes no verdict,
- * no margin and no deadline (docs/overnight/mechanics.md, "main decides").
+ * no margin and no deadline (docs/design/mechanics.md, "main decides").
  *
  * Kept out of main.ts on purpose: main.ts is where every other screen is wired, and the
  * less of this lives there, the less a change to first-run flow and a change here can
@@ -220,7 +220,7 @@ export class GhostService {
   /**
    * A watcher run as the core wants it. Duration comes from one parse: `Challenge Start:`
    * and the filename's clock are both local wall-clock readings of the same file, so
-   * their difference is right whatever the timezone (CLAUDE.md). `at` is that filename
+   * their difference is right whatever the timezone. `at` is that filename
    * clock read on this machine, the same frame `Date.now()` is in.
    */
   private incoming(run: Pick<ParsedRun, "scenario" | "score" | "playedAt" | "challengeStart">): IncomingRun | null {
