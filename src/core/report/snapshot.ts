@@ -25,7 +25,7 @@ import {
 import { computeBaseline, scanStatsFolder, type ScenarioHistory } from "../history/history.ts";
 import { windowCoverage, type WindowCoverage } from "../history/coverage.ts";
 import { selectScenarios, type SelectableScenario } from "../match/scenarioSelection.ts";
-import { explainVerdict, settleMatch, type RoundSubmission } from "../match/settle.ts";
+import { explainVerdict, roundTally, settleMatch, type RoundSubmission } from "../match/settle.ts";
 import { boardView, playStreak, syncBoard, type BoardView, type QuestState, type QuestSync } from "../quests/board.ts";
 import { ghostReady } from "../ghost/ghost.ts";
 import { defaultRating, updateRating, winProbability } from "../rating/glicko2.ts";
@@ -471,7 +471,9 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
     });
   }
 
-  const settlement = settleMatch({ playerRounds, opponentRounds });
+  // Rounds, the format a real ranked match is settled in, because this is the screen a
+  // new player reads to learn what a match is.
+  const settlement = settleMatch({ playerRounds, opponentRounds, format: "rounds" });
   const opponentRating = { rating: rating.rating - 40, rd: 85, volatility: 0.06 };
 
   // With no stored board (the CLI exporter, the preview) this issues today's afresh, which
@@ -582,8 +584,11 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
       ratingWeight: settlement.ratingWeight,
       playerMatchScore: settlement.player.matchScore,
       opponentMatchScore: settlement.opponent.matchScore,
+      roundTally: roundTally(settlement),
       rounds: settlement.player.rounds.map((r, i) => ({
         label: variantLabel(r.scenarioName),
+        result: r.score > (settlement.opponent.rounds[i]?.score ?? 0) ? "won"
+          : r.score < (settlement.opponent.rounds[i]?.score ?? 0) ? "lost" : "tied",
         you: { score: r.score, baseline: Math.round(r.baseline), delta: r.delta },
         them: {
           score: settlement.opponent.rounds[i]?.score ?? 0,

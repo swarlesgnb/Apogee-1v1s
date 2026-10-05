@@ -43,6 +43,7 @@
     "validate:aimtypes": "tsx src/core/season/validateAimTypes.ts",
     "validate:standing": "tsx src/core/season/validateStanding.ts",
     "compare:baselines": "tsx src/core/history/compareBaselines.ts",
+    "compare:formats": "tsx src/core/match/compareFormats.ts",
     "measure:coldstart": "tsx src/core/history/coldStart.ts",
     "snapshot": "tsx src/core/report/exportSnapshot.ts",
     "ui": "npm run build:cosmic && tsx src/core/report/exportSnapshot.ts && tsx tools/buildUiPreview.ts",

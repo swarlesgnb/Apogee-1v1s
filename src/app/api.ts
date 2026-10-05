@@ -733,6 +733,10 @@ export interface SettledMatch {
   ratingWeight: number;
   yourMatchScore: number | null;
   theirMatchScore: number | null;
+  /** How the match was decided. Absent from servers older than the rounds format. */
+  format?: "rounds" | "mean-delta";
+  /** Rounds won, lost and tied. Null outside the rounds format and on a void. */
+  roundTally?: { won: number; lost: number; tied: number } | null;
   ratingBefore: number;
   ratingAfter: number;
   ratingChange: number;
@@ -742,6 +746,10 @@ export interface SettledMatch {
     baseline: number;
     delta: number | null;
     opponentDelta: number | null;
+    /** The opponent's raw score, which is what decides a round. */
+    opponentScore?: number | null;
+    /** What decided this round, rounds format only. */
+    result?: "won" | "lost" | "tied" | null;
     counted: boolean;
     excludedReason: string | null;
     verificationTier: string;

@@ -168,6 +168,41 @@ assert.equal((await handler(request())).body.alreadySettled,true);
 assert.equal(commits,1);assert.deepEqual(await snapshot(duelMatch),finished);
 console.log('PASS: actual settlement handler and shared helpers atomically rate both duel sides at half weight and return stored results on retry');
 
+// The same handler on a side that carries raw scores, which is every side since
+// migration 20261005000023: decided round by round on raw score, at full weight. The
+// stored deltas are chosen to disagree with the raw result, so a match decided on them
+// instead would come out the other way.
+const roundsMatch=await match();
+await db.query(`update match_sides set rating_before=1500,rd_before=350,deltas='{-0.5,0.9,-0.5}',scores='{105,120,100}',match_score=-0.03,
+submitted_at='2000-01-02Z' where match_id=$1 and player_id=$2`,[roundsMatch,players[1]]);
+for(const [i,s] of scenarios.entries()) await db.query(`insert into runs(player_id,scenario_name,score,played_at,csv_sha256,verification_tier,match_id,duration_seconds)
+  values($1,$2,110,$3,$4,'consistent',$5,60)`,[players[0],s.name,`2026-10-03T16:0${i}:00Z`,'rounds-round-'+i,roundsMatch]);
+const roundsRequest=new Request('https://local.invalid/settle-match',{method:'POST',body:JSON.stringify({matchId:roundsMatch})});
+const byRounds=(await handler(roundsRequest)).body;
+assert.equal(byRounds.format,'rounds');assert.equal(byRounds.verdict,'win');assert.equal(byRounds.ratingWeight,1);
+assert.deepEqual(byRounds.roundTally,{won:2,lost:1,tied:0});
+assert.deepEqual(byRounds.rounds.map(r=>r.result),['won','lost','won']);
+assert.deepEqual(byRounds.rounds.map(r=>r.opponentScore),[105,120,100]);
+const storedRounds=(await db.query('select scores from match_sides where match_id=$1 and player_id=$2',[roundsMatch,players[0]])).rows[0];
+assert.deepEqual(storedRounds.scores.map(Number),[110,110,110],'the caller\'s raw scores are stored for whoever draws these rounds next');
+console.log('PASS: a side with raw scores settles 2-1 on rounds at full weight, against deltas that say otherwise, and stores its own scores');
+
+// A side copied whole without its scores - a tournament's second leg, written by
+// open_fixture_leg, always is one - finds them on the original it shares an owner and
+// submitted_at with.
+const original=await match();
+await db.query(`update match_sides set scores='{120,120,90}',deltas='{0,0,0}',match_score=0,submitted_at='2000-01-03Z'
+  where match_id=$1 and player_id=$2`,[original,players[1]]);
+const copied=await match();
+await db.query(`update match_sides set rating_before=1500,rd_before=350,deltas='{0.9,0.9,-0.5}',match_score=0.43,
+submitted_at='2000-01-03Z' where match_id=$1 and player_id=$2`,[copied,players[1]]);
+for(const [i,s] of scenarios.entries()) await db.query(`insert into runs(player_id,scenario_name,score,played_at,csv_sha256,verification_tier,match_id,duration_seconds)
+  values($1,$2,110,$3,$4,'consistent',$5,60)`,[players[0],s.name,`2026-10-04T16:0${i}:00Z`,'copied-round-'+i,copied]);
+const byOriginal=(await handler(new Request('https://local.invalid/settle-match',{method:'POST',body:JSON.stringify({matchId:copied})}))).body;
+assert.equal(byOriginal.format,'rounds');assert.deepEqual(byOriginal.rounds.map(r=>r.opponentScore),[120,120,90]);
+assert.equal(byOriginal.verdict,'loss');assert.deepEqual(byOriginal.roundTally,{won:1,lost:2,tied:0});
+console.log('PASS: a side copied without scores is settled on rounds from its original\'s scores');
+
 const {forfeitMatch,commitMatchResult,prepareChallengerRating}=globalThis.atomicShared;
 const ratingStub=(before,games)=>({...before,rating:before.rating+(games[0].score===1?10:-10)});
 const queueForfeit=await match();

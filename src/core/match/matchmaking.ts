@@ -57,7 +57,9 @@ export interface BankRound {
   /** `runs.id`. Null only for a side stored before run ids were recorded. */
   runId: string | null;
   scenarioId: number;
-  /** Frozen at play time. */
+  /** The raw score, which is what a round is decided on. */
+  score: number;
+  /** Frozen at play time. Shown, not compared. */
   delta: number;
   /** True when its baseline was a fallback. */
   provisional: boolean;
@@ -160,7 +162,7 @@ export function offerableRounds(criteria: MatchmakingCriteria, bank: OpponentBan
   for (const round of bank.rounds) {
     if (round.difficulty !== criteria.difficulty) continue;
     if (!inCategory.has(round.scenarioId)) continue;
-    if (!Number.isFinite(round.delta)) continue;
+    if (!Number.isFinite(round.score) || !Number.isFinite(round.delta)) continue;
     if (round.runId && criteria.facedRunIds?.has(round.runId)) continue;
     if (criteria.facedSideIds?.has(round.sideId)) continue;
 

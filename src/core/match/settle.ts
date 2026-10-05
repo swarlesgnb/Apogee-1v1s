@@ -1,17 +1,28 @@
 /**
  * Settle a match.
  *
- * The format (PLAN.md §3): three scenarios from a category, each scored as a
- * delta against the player's own baseline, averaged. Higher average wins.
+ * Two formats, and the ranked ladder uses the first.
+ *
+ * **Rounds (ranked, duels, tournaments, the demo match).** Both sides play the same
+ * three scenarios, one attempt each. Each scenario is a round, won by the higher raw
+ * score; the side that wins more rounds wins the match. Equal rounds won is a draw.
+ *
+ * **Mean delta (ghost matches).** Each scenario is scored as a delta against the
+ * player's own baseline, the deltas are averaged, and the higher average wins.
  *
  *     delta_i     = (score_i - baseline_i) / baseline_i
  *     matchScore  = mean(delta_1, delta_2, delta_3)
  *
- * Normalising against each player's own baseline is what lets any two players have a
- * real contest: the question becomes "who showed up sharper today" rather than "who
- * has more hours on this scenario". The cost is legibility: **you can score higher and
- * still lose**, so every consumer of this module must show raw scores, baselines and
- * deltas together. Hiding the working is how players conclude the app is broken.
+ * Ranked used to be mean delta, on the theory that normalising against each player's own
+ * baseline lets any two players have a real contest. Real play showed what it costs: a
+ * player's baseline catches up with them, so after a first win a second needed something
+ * close to a PB, and because the delta does not depend on how good anybody is, rating
+ * stopped tracking skill and improving stopped being rewarded. Raw rounds with Glicko
+ * matchmaking give an even contest the ordinary way, by pairing people of similar
+ * strength (PLAN.md §3).
+ *
+ * Deltas are still computed and stored in both formats. In rounds they are the
+ * "against your usual" line on the result screen and decide nothing.
  */
 
 import type { VerificationTier } from "../verify/verifyRun.ts";
@@ -51,20 +62,31 @@ export interface SideOutcome {
 
 export type MatchVerdict = "win" | "loss" | "draw" | "void";
 
+export type MatchFormat = "rounds" | "mean-delta";
+
 export interface SettlementInput {
   playerRounds: RoundSubmission[];
   opponentRounds: RoundSubmission[];
+  /** Defaults to mean delta, which is what ghost matches were measured against. */
+  format?: MatchFormat;
 }
+
+/** One round of a rounds-format match, from the player's side. */
+export type RoundResult = "won" | "lost" | "tied";
 
 export interface Settlement {
   player: SideOutcome;
   opponent: SideOutcome;
   verdict: MatchVerdict;
+  format: MatchFormat;
+  /** Per counted round in scenario order, rounds format only. Null on a void. */
+  roundResults: RoundResult[] | null;
   /** Why the match was voided, when it was. */
   voidReason?: string;
   /**
-   * Weight to apply to the rating update, 0..1. Reduced when either side relied on
-   * provisional baselines, so a placement-quality match cannot swing a settled rating.
+   * Weight to apply to the rating update, 0..1. Zero on a void. In mean delta, reduced
+   * when either side relied on provisional baselines, so a placement-quality match cannot
+   * swing a settled rating; in rounds a baseline decides nothing, so it is never reduced.
    */
   ratingWeight: number;
 }
@@ -89,7 +111,7 @@ export function computeDelta(score: number, baseline: number): number | null {
  * stored, because that stored run set is exactly what the next player is matched
  * against.
  */
-export function settleSide(rounds: RoundSubmission[]): SideOutcome {
+export function settleSide(rounds: RoundSubmission[], format: MatchFormat = "mean-delta"): SideOutcome {
   const outcomes: RoundOutcome[] = rounds.map((round) => {
     if (round.verificationTier === "rejected") {
       return {
@@ -114,6 +136,14 @@ export function settleSide(rounds: RoundSubmission[]): SideOutcome {
     }
 
     const delta = computeDelta(round.score, round.baseline);
+
+    // In rounds the baseline decides nothing, so a missing one costs the round its
+    // "against your usual" line and nothing else. Excluding it would void the match over
+    // a number the result never reads.
+    if (delta === null && format === "rounds") {
+      return { ...round, delta: null, counted: true };
+    }
+
     if (delta === null) {
       return {
         ...round,
@@ -127,9 +157,10 @@ export function settleSide(rounds: RoundSubmission[]): SideOutcome {
   });
 
   const counted = outcomes.filter((r) => r.counted);
+  const withDelta = counted.filter((r) => r.delta !== null);
   const matchScore =
-    counted.length > 0
-      ? counted.reduce((sum, r) => sum + (r.delta ?? 0), 0) / counted.length
+    withDelta.length > 0
+      ? withDelta.reduce((sum, r) => sum + (r.delta ?? 0), 0) / withDelta.length
       : null;
 
   return {
@@ -141,20 +172,18 @@ export function settleSide(rounds: RoundSubmission[]): SideOutcome {
 }
 
 export function settleMatch(input: SettlementInput): Settlement {
-  const player = settleSide(input.playerRounds);
-  const opponent = settleSide(input.opponentRounds);
+  const format = input.format ?? "mean-delta";
+  const player = settleSide(input.playerRounds, format);
+  const opponent = settleSide(input.opponentRounds, format);
+  const voided = (voidReason: string): Settlement => ({
+    player, opponent, verdict: "void", format, roundResults: null, voidReason, ratingWeight: 0,
+  });
 
   // A match is only meaningful if both sides completed the same rounds. Anything else
   // is voided rather than guessed at, since a partial match that still moved rating would
   // be a straightforward way to farm a favourable result.
   if (player.countedRounds === 0 || opponent.countedRounds === 0) {
-    return {
-      player,
-      opponent,
-      verdict: "void",
-      voidReason: "one side has no countable rounds",
-      ratingWeight: 0,
-    };
+    return voided("one side has no countable rounds");
   }
 
   if (player.countedRounds !== opponent.countedRounds) {
@@ -165,19 +194,36 @@ export function settleMatch(input: SettlementInput): Settlement {
       (r) => r.abandoned,
     );
 
-    return {
-      player,
-      opponent,
-      verdict: "void",
-      voidReason:
-        abandonedRounds.length > 0
-          ? `a scenario was left before it finished (${abandonedRounds
-              .map((r) => r.scenarioName)
-              .join(", ")})`
-          : `sides completed different numbers of rounds ` +
-            `(${player.countedRounds} vs ${opponent.countedRounds})`,
-      ratingWeight: 0,
-    };
+    return voided(
+      abandonedRounds.length > 0
+        ? `a scenario was left before it finished (${abandonedRounds
+            .map((r) => r.scenarioName)
+            .join(", ")})`
+        : `sides completed different numbers of rounds ` +
+          `(${player.countedRounds} vs ${opponent.countedRounds})`,
+    );
+  }
+
+  if (format === "rounds") {
+    // Equal counts are not enough here, because rounds are compared pairwise: one side
+    // missing round 1 and the other round 2 would compare a scenario against nothing.
+    // Mean delta never noticed, since an average does not care which rounds it averages.
+    const misaligned = player.rounds.some((r, i) => r.counted !== opponent.rounds[i]?.counted);
+    if (misaligned) return voided("the sides counted different scenarios");
+
+    // Raw score against raw score on the same scenario, so nothing needs normalising.
+    const roundResults: RoundResult[] = [];
+    for (const [i, mine] of player.rounds.entries()) {
+      if (!mine.counted) continue;
+      const theirs = opponent.rounds[i].score;
+      roundResults.push(mine.score > theirs ? "won" : mine.score < theirs ? "lost" : "tied");
+    }
+
+    const won = roundResults.filter((r) => r === "won").length;
+    const lost = roundResults.filter((r) => r === "lost").length;
+    const verdict: MatchVerdict = won > lost ? "win" : won < lost ? "loss" : "draw";
+
+    return { player, opponent, verdict, format, roundResults, ratingWeight: 1 };
   }
 
   const a = player.matchScore ?? 0;
@@ -190,7 +236,17 @@ export function settleMatch(input: SettlementInput): Settlement {
   const ratingWeight =
     player.provisional || opponent.provisional ? PROVISIONAL_WEIGHT : 1;
 
-  return { player, opponent, verdict, ratingWeight };
+  return { player, opponent, verdict, format, roundResults: null, ratingWeight };
+}
+
+/** Rounds won, lost and tied, from the player's side. All zero outside rounds format. */
+export function roundTally(settlement: Settlement): { won: number; lost: number; tied: number } {
+  const results = settlement.roundResults ?? [];
+  return {
+    won: results.filter((r) => r === "won").length,
+    lost: results.filter((r) => r === "lost").length,
+    tied: results.filter((r) => r === "tied").length,
+  };
 }
 
 /** Glicko-2 score for a verdict, from the player's perspective. */
@@ -203,12 +259,20 @@ export function verdictToScore(verdict: MatchVerdict): number {
 /**
  * A one-line explanation of the result, in the player's own terms.
  *
- * Exists because "you scored more and lost" is a real and legitimate outcome of this
- * format, and it has to be explained the moment it happens rather than discovered.
+ * Exists because "you scored more and lost" is a real and legitimate outcome of the mean
+ * delta format, and it has to be explained the moment it happens rather than discovered.
+ * In rounds the tally is the whole explanation.
  */
 export function explainVerdict(settlement: Settlement): string {
   if (settlement.verdict === "void") {
     return `Match void: ${settlement.voidReason ?? "incomplete"}.`;
+  }
+
+  if (settlement.format === "rounds") {
+    const { won, lost, tied } = roundTally(settlement);
+    const score = `${won}–${lost}${tied > 0 ? `, ${tied} tied` : ""}`;
+    if (settlement.verdict === "draw") return `Draw, ${score} on rounds.`;
+    return `You ${settlement.verdict === "win" ? "win" : "lose"} ${score} on rounds.`;
   }
 
   const you = settlement.player.matchScore ?? 0;

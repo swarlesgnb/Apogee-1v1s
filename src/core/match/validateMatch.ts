@@ -243,6 +243,69 @@ function main(): void {
   check("the same score unflagged is a loss, not a void", playedBadly.verdict === "loss",
     `${playedBadly.verdict}, ${playedBadly.player.countedRounds} rounds counted`);
 
+  // ---- rounds: what ranked is settled on -------------------------------------------
+  console.log("\n── settlement: rounds ───────────────────────────");
+
+  const rounds = (mine: number[], theirs: number[]) => settleMatch({
+    format: "rounds",
+    playerRounds: mine.map((s, i) => round("verified", s, 100, i + 1)),
+    opponentRounds: theirs.map((s, i) => round("verified", s, 100, i + 1)),
+  });
+
+  const twoOne = rounds([110, 90, 105], [100, 100, 100]);
+  check("two rounds of three win", twoOne.verdict === "win");
+  check("the tally is per round", JSON.stringify(twoOne.roundResults) === '["won","lost","won"]',
+    JSON.stringify(twoOne.roundResults));
+  check("the explanation states the tally", explainVerdict(twoOne).includes("2–1"), explainVerdict(twoOne));
+  check("three of three win", rounds([101, 101, 101], [100, 100, 100]).verdict === "win");
+  check("one round of three loses", rounds([110, 90, 90], [100, 100, 100]).verdict === "loss");
+
+  // A blowout on one scenario is one round, not the match. This is the property the
+  // format exists for, so it is asserted directly.
+  const blowout = rounds([500, 99, 99], [100, 100, 100]);
+  check("a blowout on one scenario does not carry the other two", blowout.verdict === "loss");
+
+  check("a tied round counts for nobody", rounds([110, 90, 100], [100, 100, 100]).verdict === "draw");
+  check("one round won and two tied is a win", rounds([110, 100, 100], [100, 100, 100]).verdict === "win");
+
+  // Scoring above your own usual decides nothing here; only the raw scores do.
+  const sharper = settleMatch({
+    format: "rounds",
+    playerRounds: [round("verified", 900, 800, 1), round("verified", 900, 800, 2), round("verified", 900, 800, 3)],
+    opponentRounds: [round("verified", 950, 1000, 1), round("verified", 950, 1000, 2), round("verified", 950, 1000, 3)],
+  });
+  check("beating your baseline does not beat a higher score", sharper.verdict === "loss");
+
+  const provisionalRounds = settleMatch({
+    format: "rounds",
+    playerRounds: [round("verified", 110, 100, 1, true)],
+    opponentRounds: [round("verified", 105, 100, 1)],
+  });
+  check("a provisional baseline does not reduce weight in rounds", provisionalRounds.ratingWeight === 1);
+
+  const zeroBaseline = settleMatch({
+    format: "rounds",
+    playerRounds: [round("verified", 110, 0, 1), round("verified", 110, 100, 2), round("verified", 110, 100, 3)],
+    opponentRounds: [round("verified", 100, 100, 1), round("verified", 100, 100, 2), round("verified", 100, 100, 3)],
+  });
+  check("a missing baseline still counts the round in rounds",
+    zeroBaseline.verdict === "win" && zeroBaseline.player.rounds[0].counted && zeroBaseline.player.rounds[0].delta === null);
+
+  const misaligned = settleMatch({
+    format: "rounds",
+    playerRounds: [round("rejected", 110, 100, 1), round("verified", 110, 100, 2), round("verified", 110, 100, 3)],
+    opponentRounds: [round("verified", 100, 100, 1), round("rejected", 100, 100, 2), round("verified", 100, 100, 3)],
+  });
+  check("sides that counted different scenarios void", misaligned.verdict === "void" && misaligned.ratingWeight === 0,
+    misaligned.voidReason);
+
+  const crashedRounds = settleMatch({
+    format: "rounds",
+    playerRounds: [{ ...round("verified", 12, 100, 1), abandoned: true }, round("verified", 110, 100, 2), round("verified", 110, 100, 3)],
+    opponentRounds: [round("verified", 100, 100, 1), round("verified", 100, 100, 2), round("verified", 100, 100, 3)],
+  });
+  check("a crash still voids rather than loses in rounds", crashedRounds.verdict === "void");
+
   // ---- against real history ----------------------------------------------------
   console.log("\n── deltas from real play ────────────────────────");
 
@@ -298,6 +361,7 @@ function main(): void {
   const bankRound = (owner: string, scenarioId: number, over: Partial<BankRound> = {}): BankRound => ({
     runId: `${owner}-run-${scenarioId}`,
     scenarioId,
+    score: 1000,
     delta: 0.01,
     provisional: false,
     difficulty: "Intermediate",

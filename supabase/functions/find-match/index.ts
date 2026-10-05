@@ -156,7 +156,7 @@ Deno.serve(handler(async (req, admin) => {
   const { data: candidates } = await admin
     .from("match_sides")
     .select(
-      "match_id, player_id, run_ids, deltas, provisional, submitted_at, " +
+      "match_id, player_id, run_ids, deltas, scores, provisional, submitted_at, " +
         "players!inner(display_name), " +
         "matches!inner(difficulty, window_index, scenario_ids, created_at)",
     )
@@ -264,6 +264,9 @@ Deno.serve(handler(async (req, admin) => {
     const scenarioIds: number[] = c.matches.scenario_ids ?? [];
     const runIds: string[] = c.run_ids ?? [];
     const deltas: number[] = (c.deltas ?? []).map(Number);
+    // Empty for a side whose runs could not be found when scores were backfilled
+    // (migration 20261005000023). Those rounds cannot be decided, so they are not offered.
+    const scores: number[] = (c.scores ?? []).map(Number);
 
     let bank = banks.get(c.player_id);
     if (!bank) {
@@ -277,10 +280,11 @@ Deno.serve(handler(async (req, admin) => {
     }
 
     for (const [i, scenarioId] of scenarioIds.entries()) {
-      if (!inPool.has(scenarioId) || deltas[i] === undefined) continue;
+      if (!inPool.has(scenarioId) || deltas[i] === undefined || scores[i] === undefined) continue;
       bank.rounds.push({
         runId: runIds[i] ?? null,
         scenarioId,
+        score: scores[i],
         delta: deltas[i],
         provisional: !!c.provisional,
         difficulty: c.matches.difficulty ?? windowName,
@@ -435,6 +439,7 @@ Deno.serve(handler(async (req, admin) => {
       player_id: opponent.playerId,
       run_ids: rounds.map((r) => r.runId).filter((id): id is string => id !== null),
       deltas: opponentDeltas,
+      scores: rounds.map((r) => r.score),
       match_score: opponentDeltas.reduce((sum, d) => sum + d, 0) / opponentDeltas.length,
       provisional: rounds.some((r) => r.provisional),
       rating_before: opponent.rating.rating,
