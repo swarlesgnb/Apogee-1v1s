@@ -73,11 +73,11 @@ export function matchesCategory(scenario: SelectableScenario, category: string):
 /**
  * Choose scenarios for a match.
  *
- * Scenarios either player warmed up on today are deprioritised rather than excluded:
- * a sub-category pool holds only two scenarios, so excluding outright would often make
- * selection impossible. Where the pool is smaller than the required count, scenarios
- * repeat, which is expected for a sub-category queue and makes it a deliberate
- * specialist choice.
+ * Recently played scenarios are deprioritised rather than excluded: the pool handed in
+ * can be one opponent's offer rather than a whole window (matchmaking.ts drawRounds), and
+ * excluding outright would often leave fewer than three. Where the pool is smaller than
+ * the required count, scenarios repeat; matchmaking refuses such a draw rather than play
+ * it.
  */
 export function selectScenarios(
   pool: SelectableScenario[],

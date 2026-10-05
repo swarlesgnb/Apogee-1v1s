@@ -31,6 +31,7 @@ import { isAbandonedRun } from "../../../src/core/stats/duration.ts";
 import { updateRating, type Rating } from "../../../src/core/rating/glicko2.ts";
 import {
   explainVerdict,
+  roundTally,
   settleMatch,
   settleSide,
   verdictToScore,
@@ -65,7 +66,7 @@ Deno.serve(handler(async function settleRequest(req, admin) {
 
   const { data: sides, error: sidesError } = await admin
     .from("match_sides")
-    .select("match_id, player_id, run_ids, deltas, match_score, result, provisional, rating_before, rd_before, rating_after, rd_after, submitted_at")
+    .select("match_id, player_id, run_ids, deltas, scores, match_score, result, provisional, rating_before, rd_before, rating_after, rd_after, submitted_at")
     .eq("match_id", matchId);
 
   if (sidesError) throw new HttpError(500, sidesError.message);
@@ -249,11 +250,13 @@ Deno.serve(handler(async function settleRequest(req, admin) {
   // side is what the next player to queue will be matched against, and until it has a
   // match_score the candidate query in find-match cannot see it.
   if (seeding) {
-    const side = settleSide(playerRounds);
+    // Rounds, the format whoever draws these rounds will be settled in.
+    const side = settleSide(playerRounds, "rounds");
     const receipt = await commitMatchResult(admin, matchId, "settled", [{
       player_id: caller.playerId,
       run_ids: playerRounds.map((_, i) => firstByScenario.get(scenarioIds[i])!.id),
       deltas: side.rounds.map((r) => r.delta ?? 0), match_score: side.matchScore,
+      scores: playerRounds.map((r) => r.score),
       result: null, provisional: side.provisional,
     }]);
     if (!receipt.committed) return settleRequest(req, admin);
@@ -310,20 +313,33 @@ Deno.serve(handler(async function settleRequest(req, admin) {
     });
   }
 
-  // The opponent's deltas were frozen when they played. Reconstruct their side from
-  // those rather than re-deriving, which is what makes an async match reproducible.
+  // The opponent's rounds were frozen when they played. Reconstruct their side from what
+  // was stored rather than re-deriving, which is what makes an async match reproducible.
   const opponentDeltas: number[] = (theirs!.deltas ?? []).map(Number);
-  const opponentRounds: RoundSubmission[] = scenarioIds.map((scenarioId, i) => ({
-    scenarioId,
-    scenarioName: playerRounds[i].scenarioName,
-    // A synthetic score/baseline pair reproducing the frozen delta exactly.
-    score: 1 + (opponentDeltas[i] ?? 0),
-    baseline: 1,
-    provisional: !!theirs!.provisional,
-    verificationTier: "consistent",
-  }));
+  const opponentScores = await frozenScores(admin, theirs!, scenarioIds.length);
 
-  const settlement = settleMatch({ playerRounds, opponentRounds });
+  // Rounds when the raw scores are there, which is every match created since they were
+  // stored. A copy that predates them and whose original cannot be found either is still
+  // settled, by the mean-delta rule it was created under, rather than voided for a gap
+  // that is nobody's doing.
+  const format = opponentScores ? "rounds" : "mean-delta";
+
+  const opponentRounds: RoundSubmission[] = scenarioIds.map((scenarioId, i) => {
+    const delta = opponentDeltas[i] ?? 0;
+    const score = opponentScores ? opponentScores[i] : 1 + delta;
+    return {
+      scenarioId,
+      scenarioName: playerRounds[i].scenarioName,
+      // The baseline that reproduces the frozen delta exactly from the stored score.
+      score,
+      baseline: 1 + delta > 0 ? score / (1 + delta) : score,
+      provisional: !!theirs!.provisional,
+      verificationTier: "consistent",
+    };
+  });
+
+  const settlement = settleMatch({ playerRounds, opponentRounds, format });
+  const tally = roundTally(settlement);
 
   // ---- rating ---------------------------------------------------------------------
   const { data: myRatingRow, error: ratingError } = await admin
@@ -366,6 +382,7 @@ Deno.serve(handler(async function settleRequest(req, admin) {
     player_id: caller.playerId,
     run_ids: playerRounds.map((_, i) => firstByScenario.get(scenarioIds[i])!.id),
     deltas: settlement.player.rounds.map((r) => r.delta ?? 0),
+    scores: playerRounds.map((r) => r.score),
     match_score: settlement.player.matchScore,
     result: settlement.verdict === "void" ? null : settlement.verdict,
     provisional: settlement.player.provisional,
@@ -424,6 +441,10 @@ Deno.serve(handler(async function settleRequest(req, admin) {
     ratingWeight: settlement.ratingWeight,
     yourMatchScore: settlement.player.matchScore,
     theirMatchScore: settlement.opponent.matchScore,
+    format: settlement.format,
+    // Rounds won, lost and tied. Null outside the rounds format, so the client does not
+    // print "0–0" over a match that was decided some other way.
+    roundTally: settlement.format === "rounds" && settlement.verdict !== "void" ? tally : null,
     ratingBefore: Math.round(before.rating),
     ratingAfter: Math.round(after.rating),
     ratingChange: Math.round(after.rating - before.rating),
@@ -433,9 +454,45 @@ Deno.serve(handler(async function settleRequest(req, admin) {
       baseline: Math.round(r.baseline),
       delta: r.delta,
       opponentDelta: opponentDeltas[i] ?? null,
+      opponentScore: opponentScores ? opponentScores[i] : null,
+      // What decided this round. Null under mean delta, where no round is decided alone.
+      result: settlement.format === "rounds" && r.counted && settlement.verdict !== "void"
+        ? (r.score > opponentRounds[i].score ? "won" : r.score < opponentRounds[i].score ? "lost" : "tied")
+        : null,
       counted: r.counted,
       excludedReason: r.excludedReason ?? null,
       verificationTier: r.verificationTier,
     })),
   });
 }));
+
+/**
+ * The opponent's raw score per round, or null when it cannot be known.
+ *
+ * Read from the side itself when it has them. A side copied whole - a duel answer, a
+ * tournament's second leg, or anything copied before scores were stored - keeps its
+ * original's owner and submitted_at (runSetId), so the original is found that way. A
+ * find-match copy assembled from several sittings always carries its own, because its
+ * submitted_at names only the latest of them.
+ */
+async function frozenScores(
+  admin: any,
+  side: { player_id: string; submitted_at: string | null; scores?: unknown[] | null },
+  rounds: number,
+): Promise<number[] | null> {
+  const own = (side.scores ?? []).map(Number);
+  if (own.length === rounds && own.every(Number.isFinite)) return own;
+  if (!side.submitted_at) return null;
+
+  const { data, error } = await admin
+    .from("match_sides")
+    .select("scores")
+    .eq("player_id", side.player_id)
+    .eq("submitted_at", side.submitted_at)
+    .neq("scores", "{}")
+    .limit(1);
+
+  if (error) throw new HttpError(500, error.message);
+  const found = ((data ?? [])[0]?.scores ?? []).map(Number);
+  return found.length === rounds && found.every(Number.isFinite) ? found : null;
+}

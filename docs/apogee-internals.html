@@ -515,9 +515,10 @@
                 <div class="step-title">When all three land, the match settles</div>
                 <div class="step-where">supabase/functions/settle-match</div>
                 <p class="step-note">
-                  Deltas recomputed from stored rows, compared against the opponent's
-                  frozen deltas, verdict decided. Idempotent: calling twice cannot apply
-                  the rating change twice.
+                  Each round decided on raw score against the opponent's frozen score on
+                  the same scenario; whoever takes more rounds wins. Deltas are recomputed
+                  for display. Idempotent: calling twice cannot apply the rating change
+                  twice.
                 </p>
               </div>
             </div>
@@ -610,29 +611,35 @@
         </div>
       </div>
 
-      <h3>2. Delta — how you did today</h3>
+      <h3>2. Rounds — how a ranked match is decided</h3>
       <div class="exhibit">
         <div class="exhibit-head">
           <span>Definition</span>
           <span class="src">src/core/match/settle.ts</span>
         </div>
         <div class="exhibit-body">
-<pre>delta      = (score − baseline) / baseline
-matchScore = mean(delta₁, delta₂, delta₃)     higher wins</pre>
+<pre>round_i = score_i vs opponent_score_i       higher takes it, equal is tied
+match   = more rounds taken wins            2–1, 3–0, 1–0 with two tied
+
+delta   = (score − baseline) / baseline     shown as "against your usual", decides nothing</pre>
         </div>
       </div>
       <p>
-        Normalising against each player's own baseline is what lets any two players have
-        a real contest. The question stops being "who has more hours on this scenario"
-        and becomes "who showed up sharper today".
+        Ranked launched on mean delta, the higher average improvement over your own baseline
+        winning. It measured almost nothing about who was better (<code>npm run
+        compare:formats</code>; PLAN.md §3 has the table), so a rating could not learn from
+        it and getting better was not rewarded. Raw rounds with rating-based matchmaking
+        give an even match the ordinary way: by pairing people of similar strength.
       </p>
       <div class="note trap">
-        <div class="note-label">The cost, and it is real</div>
+        <div class="note-label">Ghost matches still use deltas</div>
         <p>
-          <strong>You can score higher and still lose.</strong> That is intended, and it
-          reads as broken unless it is explained the moment it happens. Every
-          result screen shows raw scores, baselines and deltas together, and
-          <code>explainVerdict()</code> names the case in words when it occurs.
+          <code>settleMatch()</code> takes a <code>format</code>. Ranked, duels,
+          tournaments and the demo match pass <code>"rounds"</code>; ghost matches use the
+          default <code>"mean-delta"</code>, because against somebody's own history "who
+          showed up sharper" is the real question. A side copied before raw scores were
+          stored, whose original cannot be found either, is settled on mean delta rather
+          than voided.
         </p>
       </div>
 
@@ -1053,11 +1060,22 @@ void            ended with nothing rated</pre>
 
       <h3>An empty pool still gives you a match</h3>
       <p>
-        Queueing with nobody to play returns a <em>seeding match</em>: the same three
-        seeded scenarios, no opponent, nothing rated. The run set is scored and stored, and
-        that is what the next player is matched against. Without it the pool could never
-        receive its first entry, which on an async-first ladder is the difference between a
-        cold start and no start.
+        Queueing with nobody to play returns a <em>seeding match</em>: three seeded
+        scenarios, no opponent, nothing rated. Its rounds are scored and stored, and the next
+        player can be matched against them. Without it the pool could never receive its
+        first entry, which on an async-first ladder is the difference between a cold start
+        and no start.
+      </p>
+      <p>
+        An opponent is a <em>bank of rounds</em>: every attempt they have played in the
+        window, not one stored match. The three scenarios are drawn from what that opponent
+        can answer, avoiding the caller's last three matches where it can, and a round the
+        caller has already faced is never offered again. Matches used to be answered with one
+        stored match whole, and the caller's side carried the same three scenarios back into
+        the pool, so a category's first seeding match decided what nearly everyone played.
+        When every opponent can offer little but what the caller just played, a seeding
+        match drawn away from it plants fresh scenarios instead
+        (<code>shouldPlantFresh</code> in <code>src/core/match/matchmaking.ts</code>).
       </p>
       <p class="note">
         <span class="note-label">In the UI</span>

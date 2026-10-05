@@ -98,7 +98,7 @@ Deno.serve(handler(async (req, admin) => {
   // playing and, on accept, the frozen opponent this match is built from.
   const { data: theirSide } = await admin
     .from("match_sides")
-    .select("player_id, deltas, match_score, provisional, rating_before, rd_before, submitted_at")
+    .select("player_id, run_ids, deltas, scores, match_score, provisional, rating_before, rd_before, submitted_at")
     .eq("match_id", row.match_id)
     .eq("player_id", row.challenger_id)
     .maybeSingle();
@@ -230,7 +230,9 @@ Deno.serve(handler(async (req, admin) => {
       {
         match_id: match.id,
         player_id: row.challenger_id,
+        run_ids: theirSide.run_ids,
         deltas: theirSide.deltas,
+        scores: theirSide.scores,
         match_score: theirSide.match_score,
         provisional: theirSide.provisional,
         rating_before: theirSide.rating_before,

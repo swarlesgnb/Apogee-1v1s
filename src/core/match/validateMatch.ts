@@ -14,7 +14,15 @@ import { readFileSync } from "node:fs";
 
 import { computeBaseline, scanStatsFolder } from "../history/history.ts";
 import { defaultRating, updateRating, type Rating } from "../rating/glicko2.ts";
-import { findOpponent, scoreCandidate, type StoredRunSet } from "./matchmaking.ts";
+import {
+  findOpponent,
+  offerableRounds,
+  scoreCandidate,
+  shouldPlantFresh,
+  type BankRound,
+  type MatchmakingCriteria,
+  type OpponentBank,
+} from "./matchmaking.ts";
 import {
   availableCategories,
   seededRandom,
@@ -235,6 +243,69 @@ function main(): void {
   check("the same score unflagged is a loss, not a void", playedBadly.verdict === "loss",
     `${playedBadly.verdict}, ${playedBadly.player.countedRounds} rounds counted`);
 
+  // ---- rounds: what ranked is settled on -------------------------------------------
+  console.log("\n── settlement: rounds ───────────────────────────");
+
+  const rounds = (mine: number[], theirs: number[]) => settleMatch({
+    format: "rounds",
+    playerRounds: mine.map((s, i) => round("verified", s, 100, i + 1)),
+    opponentRounds: theirs.map((s, i) => round("verified", s, 100, i + 1)),
+  });
+
+  const twoOne = rounds([110, 90, 105], [100, 100, 100]);
+  check("two rounds of three win", twoOne.verdict === "win");
+  check("the tally is per round", JSON.stringify(twoOne.roundResults) === '["won","lost","won"]',
+    JSON.stringify(twoOne.roundResults));
+  check("the explanation states the tally", explainVerdict(twoOne).includes("2–1"), explainVerdict(twoOne));
+  check("three of three win", rounds([101, 101, 101], [100, 100, 100]).verdict === "win");
+  check("one round of three loses", rounds([110, 90, 90], [100, 100, 100]).verdict === "loss");
+
+  // A blowout on one scenario is one round, not the match. This is the property the
+  // format exists for, so it is asserted directly.
+  const blowout = rounds([500, 99, 99], [100, 100, 100]);
+  check("a blowout on one scenario does not carry the other two", blowout.verdict === "loss");
+
+  check("a tied round counts for nobody", rounds([110, 90, 100], [100, 100, 100]).verdict === "draw");
+  check("one round won and two tied is a win", rounds([110, 100, 100], [100, 100, 100]).verdict === "win");
+
+  // Scoring above your own usual decides nothing here; only the raw scores do.
+  const sharper = settleMatch({
+    format: "rounds",
+    playerRounds: [round("verified", 900, 800, 1), round("verified", 900, 800, 2), round("verified", 900, 800, 3)],
+    opponentRounds: [round("verified", 950, 1000, 1), round("verified", 950, 1000, 2), round("verified", 950, 1000, 3)],
+  });
+  check("beating your baseline does not beat a higher score", sharper.verdict === "loss");
+
+  const provisionalRounds = settleMatch({
+    format: "rounds",
+    playerRounds: [round("verified", 110, 100, 1, true)],
+    opponentRounds: [round("verified", 105, 100, 1)],
+  });
+  check("a provisional baseline does not reduce weight in rounds", provisionalRounds.ratingWeight === 1);
+
+  const zeroBaseline = settleMatch({
+    format: "rounds",
+    playerRounds: [round("verified", 110, 0, 1), round("verified", 110, 100, 2), round("verified", 110, 100, 3)],
+    opponentRounds: [round("verified", 100, 100, 1), round("verified", 100, 100, 2), round("verified", 100, 100, 3)],
+  });
+  check("a missing baseline still counts the round in rounds",
+    zeroBaseline.verdict === "win" && zeroBaseline.player.rounds[0].counted && zeroBaseline.player.rounds[0].delta === null);
+
+  const misaligned = settleMatch({
+    format: "rounds",
+    playerRounds: [round("rejected", 110, 100, 1), round("verified", 110, 100, 2), round("verified", 110, 100, 3)],
+    opponentRounds: [round("verified", 100, 100, 1), round("rejected", 100, 100, 2), round("verified", 100, 100, 3)],
+  });
+  check("sides that counted different scenarios void", misaligned.verdict === "void" && misaligned.ratingWeight === 0,
+    misaligned.voidReason);
+
+  const crashedRounds = settleMatch({
+    format: "rounds",
+    playerRounds: [{ ...round("verified", 12, 100, 1), abandoned: true }, round("verified", 110, 100, 2), round("verified", 110, 100, 3)],
+    opponentRounds: [round("verified", 100, 100, 1), round("verified", 100, 100, 2), round("verified", 100, 100, 3)],
+  });
+  check("a crash still voids rather than loses in rounds", crashedRounds.verdict === "void");
+
   // ---- against real history ----------------------------------------------------
   console.log("\n── deltas from real play ────────────────────────");
 
@@ -276,107 +347,261 @@ function main(): void {
   console.log("\n── matchmaking ──────────────────────────────────");
 
   const now = new Date("2026-08-16T12:00:00Z");
-  const makeSet = (over: Partial<StoredRunSet> & { id: string }): StoredRunSet => ({
-    playerId: `p-${over.id}`,
-    displayName: over.id,
-    category: "Clicking",
-    difficulty: "Intermediate",
-    scenarioIds: [1, 2, 3],
-    deltas: [0.01, 0.02, 0.03],
-    matchScore: 0.02,
-    rating: defaultRating(),
-    createdAt: now,
+
+  // A window of its own: eight Clicking scenarios over two sub-skills and four Tracking.
+  const window: SelectableScenario[] = [
+    ...[1, 2, 3, 4].map((id) => ({ id, name: `click-${id}`, aimType: "Clicking", subCategory: "Static" })),
+    ...[5, 6, 7, 8].map((id) => ({ id, name: `click-${id}`, aimType: "Clicking", subCategory: "Dynamic" })),
+    ...[9, 10, 11, 12].map((id) => ({ id, name: `track-${id}`, aimType: "Tracking", subCategory: "Precise" })),
+  ];
+
+  const at = (r: number) => ({ rating: r, rd: 60, volatility: 0.06 });
+
+  // One round per scenario, all from one sitting unless overridden.
+  const bankRound = (owner: string, scenarioId: number, over: Partial<BankRound> = {}): BankRound => ({
+    runId: `${owner}-run-${scenarioId}`,
+    scenarioId,
+    score: 1000,
+    delta: 0.01,
     provisional: false,
+    difficulty: "Intermediate",
+    playedAt: now,
+    sideId: `${owner}@side`,
+    ...over,
+  });
+  const makeBank = (id: string, scenarioIds = [1, 2, 3, 4, 5, 6], over: Partial<OpponentBank> = {}): OpponentBank => ({
+    playerId: id,
+    displayName: id,
+    rating: defaultRating(),
+    rounds: scenarioIds.map((s) => bankRound(id, s)),
     ...over,
   });
 
-  const me = { playerId: "me", rating: { rating: 1500, rd: 60, volatility: 0.06 },
-    category: "Clicking", difficulty: "Intermediate", now };
+  const me: MatchmakingCriteria = {
+    playerId: "me", rating: at(1500), category: "Clicking", difficulty: "Intermediate",
+    pool: window, seed: "match-1", now,
+  };
 
-  const poolSets = [
-    makeSet({ id: "even", rating: { rating: 1505, rd: 60, volatility: 0.06 } }),
-    makeSet({ id: "much-stronger", rating: { rating: 2100, rd: 60, volatility: 0.06 } }),
-    makeSet({ id: "much-weaker", rating: { rating: 900, rd: 60, volatility: 0.06 } }),
-  ];
-
-  const found = findOpponent(me, poolSets);
-  check("the closest-rated opponent is chosen", found.opponent?.id === "even",
-    found.opponent?.id);
+  const found = findOpponent(me, [
+    makeBank("even", undefined, { rating: at(1505) }),
+    makeBank("much-stronger", undefined, { rating: at(2100) }),
+    makeBank("much-weaker", undefined, { rating: at(900) }),
+  ]);
+  check("the closest-rated opponent is chosen", found.opponent?.playerId === "even",
+    found.opponent?.playerId);
   check("the pairing is near even",
     Math.abs((found.candidate?.winProbability ?? 0) - 0.5) < 0.1,
     `${found.candidate?.winProbability.toFixed(3)}`);
+  check("a match is three distinct scenarios",
+    new Set(found.candidate?.rounds.map((r) => r.scenarioId)).size === 3);
 
-  const ownOnly = findOpponent(me, [makeSet({ id: "mine", playerId: "me" })]);
-  check("a player is never matched against themselves", ownOnly.opponent === null);
+  const again = findOpponent(me, [makeBank("even", undefined, { rating: at(1505) })]);
+  check("the draw is reproducible from the seed",
+    JSON.stringify(again.candidate?.rounds.map((r) => r.runId)) ===
+      JSON.stringify(found.candidate?.rounds.map((r) => r.runId)));
 
-  const wrongCat = findOpponent(me, [makeSet({ id: "t", category: "Tracking" })]);
-  check("a different category is not offered", wrongCat.opponent === null);
+  check("a player is never matched against themselves",
+    findOpponent(me, [makeBank("me")]).opponent === null);
 
-  const wrongDiff = findOpponent(me, [makeSet({ id: "d", difficulty: "Advanced" })]);
-  check("a different difficulty is not offered", wrongDiff.opponent === null);
+  check("a different category is not offered",
+    findOpponent(me, [makeBank("t", [9, 10, 11, 12])]).opponent === null);
 
-  // Queueing Any means "I will play whatever", and the match is played on the opponent's
-  // three scenarios anyway - so holding Any to its own bucket split the pool seven ways
-  // and left the option most people pick as the emptiest one. It is a wildcard over
-  // categories and nothing else: difficulty still has to agree, because a window is a
-  // different set of thresholds rather than a different taste.
-  const anyone = { ...me, category: "Any" };
-  const anyFound = findOpponent(anyone, [makeSet({ id: "t", category: "Tracking" })]);
-  check("queueing Any is matched across categories", anyFound.opponent?.id === "t",
-    anyFound.opponent?.id ?? "none");
+  const mixed = findOpponent(me, [makeBank("mixed", [1, 2, 3, 9, 10, 11])]);
+  check("a category queue draws only that category's scenarios from a mixed bank",
+    (mixed.candidate?.rounds ?? []).length === 3 &&
+      mixed.candidate!.rounds.every((r) => r.scenarioId <= 8),
+    mixed.candidate?.rounds.map((r) => r.scenarioId).join(","));
 
-  const anyWrongDiff = findOpponent(anyone, [
-    makeSet({ id: "d", category: "Tracking", difficulty: "Advanced" }),
-  ]);
-  check("queueing Any still respects the difficulty", anyWrongDiff.opponent === null);
+  const subQueue = findOpponent({ ...me, category: "Static" }, [makeBank("s", [1, 2, 3, 4, 5, 6])]);
+  check("a sub-skill queue draws only that sub-skill",
+    (subQueue.candidate?.rounds ?? []).every((r) => r.scenarioId <= 4) && subQueue.candidate?.rounds.length === 3);
 
-  const anySelf = findOpponent(anyone, [makeSet({ id: "mine", playerId: "me", category: "Tracking" })]);
-  check("queueing Any is still never matched against yourself", anySelf.opponent === null);
+  const hard = makeBank("d");
+  hard.rounds = hard.rounds.map((r) => ({ ...r, difficulty: "Advanced" }));
+  check("a different difficulty is not offered", findOpponent(me, [hard]).opponent === null);
 
-  // The other direction stays closed: somebody who asked for Clicking is not handed a
-  // set of Tracking scenarios because its owner happened to queue Any.
-  const asked = findOpponent(me, [makeSet({ id: "a", category: "Any" })]);
-  check("asking for a category is not answered with an Any run set", asked.opponent === null);
+  check("rounds on scenarios outside the window are never offered",
+    findOpponent(me, [makeBank("gone", [1, 2, 97, 98, 99])]).opponent === null);
 
-  // A run set already played against is excluded outright, not merely deprioritised.
+  // Queueing Any means "I will play whatever". It is a wildcard over categories and
+  // nothing else: difficulty still has to agree, because a window is a different set of
+  // thresholds rather than a different taste.
+  const anyone: MatchmakingCriteria = { ...me, category: "Any" };
+  check("queueing Any is matched across categories",
+    findOpponent(anyone, [makeBank("t", [9, 10, 11])]).opponent?.playerId === "t");
+  check("queueing Any still respects the difficulty",
+    findOpponent(anyone, [hard]).opponent === null);
+  check("queueing Any is still never matched against yourself",
+    findOpponent(anyone, [makeBank("me", [9, 10, 11])]).opponent === null);
+
+  // Three scenarios, not three rounds. Two attempts at one scenario answer one round.
+  const doubled = makeBank("doubled", [1, 2]);
+  doubled.rounds.push(bankRound("doubled", 2, { runId: "doubled-run-2b", playedAt: new Date("2026-08-10") }));
+  check("fewer than three distinct scenarios cannot answer a match",
+    findOpponent(me, [doubled]).opponent === null);
+
+  // The most recent attempt answers, because each round was one attempt that counted
+  // when it was played - the same single attempt the caller is about to make.
+  const twice = makeBank("twice", [1, 2, 3]);
+  twice.rounds.push(bankRound("twice", 1, { runId: "twice-old", delta: 0.4, playedAt: new Date("2026-08-01") }));
+  const twiceRound = offerableRounds(me, twice).get(1);
+  check("the most recent attempt at a scenario is the one offered", twiceRound?.runId === "twice-run-1",
+    twiceRound?.runId ?? "none");
+
+  // A round already played against is excluded outright, not merely deprioritised.
   //
   // `recentOpponentIds` keys on the player and costs 25, which is the right shape for
-  // "you two have met lately" and the wrong one for "these are the same three scenarios
-  // against the same frozen numbers". Replaying an identical match is not a slightly
-  // worse pairing, it is not a match: the answer is already known, and on a thin pool
-  // the penalty is paid gladly because there is nothing else to spend it on.
-  const faced = { ...me, facedRunSetIds: new Set(["seen"]) };
-  const onlyFaced = findOpponent(faced, [makeSet({ id: "seen" })]);
-  check("a run set already played against is never offered again", onlyFaced.opponent === null);
+  // "you two have met lately" and the wrong one for "the same attempt against the same
+  // frozen number". Replaying a round is not a slightly worse pairing, it is a known
+  // answer, and on a thin pool the penalty is paid gladly because there is nothing else
+  // to spend it on.
+  const facedAll: MatchmakingCriteria = {
+    ...me,
+    facedRunIds: new Set(["seen-run-1", "seen-run-2", "seen-run-3"]),
+  };
+  check("rounds already played against are never offered again",
+    findOpponent(facedAll, [makeBank("seen", [1, 2, 3])]).opponent === null);
 
-  const facedOrNew = findOpponent(faced, [
-    makeSet({ id: "seen", rating: { rating: 1500, rd: 60, volatility: 0.06 } }),
-    makeSet({ id: "fresh", rating: { rating: 1900, rd: 60, volatility: 0.06 } }),
+  const partlyFaced = findOpponent(facedAll, [makeBank("seen", [1, 2, 3, 4, 5, 6])]);
+  check("the same opponent's unplayed rounds are still offered",
+    partlyFaced.opponent?.playerId === "seen" &&
+      partlyFaced.candidate!.rounds.every((r) => !facedAll.facedRunIds!.has(r.runId!)),
+    partlyFaced.candidate?.rounds.map((r) => r.runId).join(","));
+
+  const legacy = findOpponent({ ...me, facedSideIds: new Set(["old@side"]) }, [makeBank("old", [1, 2, 3])]);
+  check("a side faced before copies kept run ids is still excluded", legacy.opponent === null);
+
+  const facedOrNew = findOpponent(facedAll, [
+    makeBank("seen", [1, 2, 3], { rating: at(1500) }),
+    makeBank("fresh", [1, 2, 3], { rating: at(1900) }),
   ]);
   check("a worse pairing is preferred over one already played",
-    facedOrNew.opponent?.id === "fresh", facedOrNew.opponent?.id ?? "none");
+    facedOrNew.opponent?.playerId === "fresh", facedOrNew.opponent?.playerId ?? "none");
 
-  // Same player, different sitting. The person penalty still applies and still is not
-  // an exclusion, so a small pool keeps working.
-  const sameOpponentNewSet = findOpponent(
-    { ...me, facedRunSetIds: new Set(["seen"]), recentOpponentIds: new Set(["them"]) },
-    [makeSet({ id: "later", playerId: "them" })],
-  );
-  check("the same opponent's newer run set is still offered",
-    sameOpponentNewSet.opponent?.id === "later", sameOpponentNewSet.opponent?.id ?? "none");
+  // Same person, rounds not yet faced. The person penalty applies and is not an
+  // exclusion, so a small pool keeps working.
+  const sameOpponent = findOpponent({ ...facedAll, recentOpponentIds: new Set(["seen"]) },
+    [makeBank("seen", [1, 2, 3, 4, 5, 6])]);
+  check("a recent opponent's unplayed rounds are still offered", sameOpponent.opponent?.playerId === "seen");
 
   check("an empty pool returns no opponent", findOpponent(me, []).opponent === null);
 
-  const stale = scoreCandidate(me, makeSet({ id: "old", createdAt: new Date("2026-01-01") }));
-  const recent = scoreCandidate(me, makeSet({ id: "new" }));
-  check("older run sets are less preferred", stale.score > recent.score,
-    `${stale.score.toFixed(1)} vs ${recent.score.toFixed(1)}`);
+  // ---- variety ------------------------------------------------------------------
+  const recent: MatchmakingCriteria = { ...me, playedRecently: new Set([1, 2, 3]) };
+  const avoided = findOpponent(recent, [makeBank("wide", [1, 2, 3, 4, 5, 6])]);
+  check("scenarios just played are avoided when the opponent can",
+    avoided.candidate?.fresh === 3 && avoided.candidate.rounds.every((r) => r.scenarioId > 3),
+    avoided.candidate?.rounds.map((r) => r.scenarioId).join(","));
 
-  const repeat = scoreCandidate(
-    { ...me, recentOpponentIds: new Set(["p-even"]) },
-    makeSet({ id: "even" }),
+  const narrow = makeBank("narrow", [1, 2, 3]);
+  const wide = makeBank("wide", [4, 5, 6]);
+  const staleOffer = scoreCandidate(recent, narrow, narrow.rounds);
+  const freshOffer = scoreCandidate(recent, wide, wide.rounds);
+  check("an offer of scenarios just played costs more", staleOffer.score > freshOffer.score,
+    `${staleOffer.score.toFixed(1)} vs ${freshOffer.score.toFixed(1)}`);
+
+  // Fairness still leads: three stale scenarios against an even opponent beat three
+  // fresh ones against somebody 400 points away.
+  const evenButStale = findOpponent(recent, [
+    makeBank("narrow", [1, 2, 3], { rating: at(1500) }),
+    makeBank("far", [4, 5, 6], { rating: at(1900) }),
+  ]);
+  check("fairness outweighs staleness", evenButStale.opponent?.playerId === "narrow",
+    evenButStale.opponent?.playerId ?? "none");
+
+  const onlyStale = findOpponent(recent, [makeBank("narrow", [1, 2, 3])]);
+  check("an offer of only scenarios just played plants fresh ones instead",
+    shouldPlantFresh(recent, onlyStale));
+  check("a mostly fresh offer is played, not replaced", !shouldPlantFresh(recent, avoided));
+
+  // A sub-skill window the caller has worked all the way through has nothing fresh to
+  // plant, and replacing the match with an unrated one would be the worse kind of boring.
+  const exhausted: MatchmakingCriteria = { ...me, category: "Static", playedRecently: new Set([1, 2, 3, 4]) };
+  check("nothing is planted when the window has nothing fresh",
+    !shouldPlantFresh(exhausted, findOpponent(exhausted, [makeBank("narrow", [1, 2, 3])])));
+
+  const oldRounds = makeBank("old", [1, 2, 3]);
+  oldRounds.rounds = oldRounds.rounds.map((r) => ({ ...r, playedAt: new Date("2026-01-01") }));
+  const newRounds = makeBank("new", [1, 2, 3]);
+  const staleAge = scoreCandidate(me, oldRounds, oldRounds.rounds);
+  const recentAge = scoreCandidate(me, newRounds, newRounds.rounds);
+  check("older rounds are less preferred", staleAge.score > recentAge.score,
+    `${staleAge.score.toFixed(1)} vs ${recentAge.score.toFixed(1)}`);
+
+  const repeat = scoreCandidate({ ...me, recentOpponentIds: new Set(["new"]) }, newRounds, newRounds.rounds);
+  check("a recent opponent is penalised", repeat.score > recentAge.score);
+
+  // ---- the repeat that shipped -------------------------------------------------------
+  //
+  // Six players take turns queueing Clicking, starting from one seeding match. Under the
+  // old rule the caller played the opponent's stored three and banked them again, so one
+  // set of three was all the category ever played; that is reproduced here first, so the
+  // check below is measured against the failure rather than against nothing.
+  const PLAYERS_IN_LOOP = 6;
+  const QUEUES = 30;
+  const clicking = window.filter((s) => s.aimType === "Clicking");
+
+  const simulate = (oldRule: boolean) => {
+    const playedBy = new Map<string, number[][]>();
+    const banks = new Map<string, OpponentBank>();
+    const triples: string[] = [];
+
+    const bank = (id: string) => {
+      if (!banks.has(id)) banks.set(id, makeBank(id, [], { rating: at(1500) }));
+      return banks.get(id)!;
+    };
+    const play = (id: string, n: number, scenarioIds: number[]) => {
+      for (const s of scenarioIds) {
+        bank(id).rounds.push(bankRound(id, s, {
+          runId: `${id}-q${n}-${s}`, sideId: `${id}@q${n}`, playedAt: new Date(now.getTime() + n * 60_000),
+        }));
+      }
+      playedBy.set(id, [...(playedBy.get(id) ?? []), scenarioIds]);
+      triples.push([...scenarioIds].sort((x, y) => x - y).join(","));
+    };
+
+    play("p0", 0, selectScenarios(clicking, "seed-0", { category: "Clicking" }).map((s) => s.id));
+
+    for (let n = 1; n <= QUEUES; n++) {
+      const id = `p${n % PLAYERS_IN_LOOP}`;
+      const criteria: MatchmakingCriteria = {
+        ...me, playerId: id, seed: `queue-${n}`,
+        playedRecently: new Set((playedBy.get(id) ?? []).slice(-3).flat()),
+        now: new Date(now.getTime() + n * 60_000),
+      };
+
+      if (oldRule) {
+        // Whoever banked a set most recently, with the set they banked.
+        const last = [...banks.values()].filter((b) => b.playerId !== id)
+          .flatMap((b) => b.rounds).sort((a, b) => b.playedAt.getTime() - a.playedAt.getTime())[0];
+        const set = last ? bank(last.sideId.split("@")[0]).rounds.filter((r) => r.sideId === last.sideId) : [];
+        play(id, n, set.map((r) => r.scenarioId));
+        continue;
+      }
+
+      const result = findOpponent(criteria, [...banks.values()]);
+      if (!result.candidate || shouldPlantFresh(criteria, result)) {
+        const names = new Set(clicking.filter((s) => criteria.playedRecently!.has(s.id)).map((s) => s.name));
+        play(id, n, selectScenarios(clicking, `queue-${n}`, { category: "Clicking", playedRecently: names }).map((s) => s.id));
+      } else {
+        play(id, n, result.candidate.rounds.map((r) => r.scenarioId));
+      }
+    }
+    return { triples: new Set(triples), scenarios: new Set(triples.flatMap((t) => t.split(","))) };
+  };
+
+  const oldRule = simulate(true);
+  const newRule = simulate(false);
+  console.log(
+    `  ${QUEUES} queues: old rule ${oldRule.triples.size} distinct set(s) of three, ` +
+      `${oldRule.scenarios.size} scenario(s); now ${newRule.triples.size} sets, ` +
+      `${newRule.scenarios.size} of ${clicking.length} scenarios`,
   );
-  check("a recent opponent is penalised", repeat.score > recent.score);
+  check("the old rule is reproduced: one set of three, forever", oldRule.triples.size === 1);
+  check("matches now draw many different sets of three", newRule.triples.size >= QUEUES / 3,
+    `${newRule.triples.size} distinct`);
+  check("every scenario in the window gets played", newRule.scenarios.size === clicking.length,
+    `${newRule.scenarios.size} of ${clicking.length}`);
 
   // ---- a simulated season ------------------------------------------------------
   console.log("\n── simulated season (does the ladder sort?) ─────");

@@ -71,36 +71,63 @@ The entire post-play half of that loop is automatic. That is the product.
 ## 3. Match format
 
 The player chooses a category (or "Any"). Apogee selects three scenarios from
-that category at the player's difficulty tier. Both sides play all three.
+that category in the season's match window. Both sides play all three, one attempt each.
 
-For each scenario, Apogee computes a delta: how far the player scored above or below
-their own established baseline on that scenario.
+Each scenario is a round, and the higher raw score takes it. Whoever takes more rounds
+wins; equal rounds is a draw.
 
 ```
-delta_i  =  (score_i − baseline_i) / baseline_i
+round_i  =  score_i  vs  opponent_score_i        higher wins, equal is tied
 
-match_score  =  mean(delta_1, delta_2, delta_3)
-
-higher match_score wins
+match    =  more rounds won wins                  2-1, 3-0, 1-0 with two tied
 ```
 
-### Why normalized rather than raw score
+A delta against the player's own baseline is still computed for every round and shown
+on the result screen as "against your usual". It decides nothing. Ghost matches
+(`src/core/ghost`) are still decided on mean delta, because a ghost is somebody's own
+history, and there "who showed up sharper" is the real question.
 
-Raw score is simpler but produces a dead ladder. The higher-ranked player wins
-essentially every match, rank converges within a week, and every match after that is a
-formality. Worse, raw score punishes scenario familiarity rather than skill: 500 hours
-on Frogtagon beats genuine talent that has never seen it.
+### Why raw rounds, after launching on normalized deltas
 
-Normalizing against each player's own baseline means the question is *"who showed up
-sharper today"*, which any two players can meaningfully contest. It also makes the
-third-best player in the world and a Gold player both able to have a real match.
+Ranked launched on mean delta: each round scored as `(score − baseline) / baseline`, the
+higher average winning. The argument was that raw score makes a dead ladder (the
+stronger player always wins) and rewards hours on a scenario over skill, while a delta
+asks "who showed up sharper today", which any two players can contest.
 
-The cost is legibility: "I scored more and still lost" is a real experience and
-must be handled in the UI, not hidden. Every match result screen shows both raw scores
-and both deltas side by side, always, with the baseline visible. If players can't see
-why they lost, they will assume the app is broken.
+The first week of real play said otherwise. A player's baseline catches up with them,
+so after one win a second needed something close to a PB, and queueing again stopped
+feeling worth it. Measured against real history (`npm run compare:formats`: one player
+at two moments on the same scenario, strength being the production baseline at each),
+the stronger side's chance of winning a three-scenario match:
+
+| skill gap | best-of-3 raw | mean delta |
+|---|---|---|
+| under 2% | 66.8% | 60.6% |
+| 2-5% | 77.6% | 50.6% |
+| 5-10% | 90.0% | 47.5% |
+| 10-20% | 96.4% | 38.4% |
+| 20% and over | 100.0% | 13.9% |
+
+Under mean delta, being better was worth almost nothing, and past a 5% gap it was a
+handicap: the weaker side wins because it is still improving faster than its own median.
+A rating fed by that result cannot learn who is better, so matchmaking on it could not
+make even matches, and getting better was not rewarded.
+
+Both original objections have answers now. The dead ladder only happens when anybody
+can be drawn against anybody; Glicko matchmaking (§4) pairs players of similar rating,
+and at a small gap raw rounds are close to a contest. Familiarity stopped being an
+argument when the pool became Apogee's own scenarios (§14): nobody has 500 hours on
+them.
+
+Best of three rather than a summed score, so one scenario that suits somebody is one
+round and not the match.
 
 ### The sandbagging exploit, and the fix
+
+Ranked no longer decides on baselines, so this no longer moves a rating. It still
+governs ghost matches and the "against your usual" line every result shows. The ranked
+equivalent, tanking a rating to face weaker players, is closed by seeding ratings from
+verified PBs (§4).
 
 This is the serious flaw in a baseline-normalized system, and it must be designed
 against from the start rather than patched later.
@@ -248,10 +275,24 @@ would have drawn three scenarios from a pool of four.
 
 ### Scenario selection is seeded, not random
 
-Both sides of a match must get the same three scenarios. The scenario set is derived
-from a seeded PRNG keyed on the match ID, so it is reproducible, auditable, and
-cannot be rerolled by a client. Weighting avoids scenarios either player played in the
-last 24h where possible, to reduce warm-up advantage.
+Both sides of a match must get the same three scenarios. The set is drawn by a seeded
+PRNG with a server-generated seed, so it is reproducible, auditable, and cannot be
+rerolled by a client.
+
+An async opponent (§6) is a **bank of rounds**, not one stored match: every attempt they
+have played in this window, each frozen when it was played. The three scenarios are
+drawn from what that opponent can answer, preferring scenarios the caller has not played
+in their last three matches, and a round the caller has already faced is never offered
+again.
+
+It was one stored match at launch, and that shipped a repeat bug. The caller played the
+opponent's exact three, then banked those same three as a new stored match, so a
+category's first seeding match decided what nearly everyone in it played from then on.
+`npm run validate:match` reproduces it (thirty queues, one set of three) beside the
+current rule (fifteen sets, every scenario in the window), and `npm run count:triples`
+counts distinct sets on the live project. Fresh scenarios still have to enter somebody's
+bank, so when every opponent could offer little but what the caller just played, and the
+window has better, the caller gets a seeding match drawn away from it.
 
 ---
 

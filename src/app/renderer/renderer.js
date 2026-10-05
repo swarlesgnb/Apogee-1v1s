@@ -838,9 +838,16 @@ function renderCommandFocus(data) {
   $('commandFocusOpen').onclick = () => openScreen('profile');
 }
 
-/** Presentation of stored deltas only. Missing and excluded rounds never imply a loss. */
+/**
+ * Who took a round. The server's own call when it made one (rounds format, decided on raw
+ * score); otherwise read from the stored deltas, which is how a mean-delta match and the
+ * demo are shown. Missing and excluded rounds never imply a loss.
+ */
 function roundPresentation(round) {
   if (!round.counted) return { label: 'Excluded', tone: 'neutral' };
+  if (round.result === 'won') return { label: 'Won', tone: 'win' };
+  if (round.result === 'lost') return { label: 'Lost', tone: 'loss' };
+  if (round.result === 'tied') return { label: 'Draw', tone: 'neutral' };
   if (!Number.isFinite(round.delta)) return { label: 'Unavailable', tone: 'neutral' };
   if (!Number.isFinite(round.opponentDelta)) return { label: 'Recorded', tone: 'neutral' };
   if (round.delta === round.opponentDelta) return { label: 'Draw', tone: 'neutral' };
@@ -858,11 +865,18 @@ function renderDebrief(rounds, provenance) {
     const card = document.createElement('article');
     card.className = 'debrief-round ' + outcome.tone;
     card.style.setProperty('--round-index', String(i));
-    const own = r.counted && Number.isFinite(r.delta) ? pct(r.delta) : "—";
-    const other = r.counted && Number.isFinite(r.opponentDelta) ? pct(r.opponentDelta) : "—";
+    // Raw scores when the round was decided on them, deltas when it was not.
+    const raw = Number.isFinite(r.opponentScore);
+    const own = !r.counted ? "—" : raw ? pts(r.score) : Number.isFinite(r.delta) ? pct(r.delta) : "—";
+    const other = !r.counted ? "—" : raw ? pts(r.opponentScore) : Number.isFinite(r.opponentDelta) ? pct(r.opponentDelta) : "—";
+    const note = !r.counted
+      ? r.excludedReason || 'Not included in settlement'
+      : raw
+        ? (Number.isFinite(r.delta) ? pct(r.delta) + ' against your usual' : 'Higher score takes the round')
+        : 'Improvement over baseline';
     card.innerHTML = '<div class="debrief-round-head"><span>ROUND ' + String(i + 1).padStart(2, '0') + '</span><b>' + outcome.label + '</b></div>' +
       '<h3>' + esc(r.scenario) + '</h3><div class="debrief-comparison"><span><small>You</small><strong>' + own + '</strong></span><span><small>Opponent</small><strong>' + other + '</strong></span></div>' +
-      '<p>' + esc(!r.counted ? r.excludedReason || 'Not included in settlement' : 'Improvement over baseline') + '</p>';
+      '<p>' + esc(note) + '</p>';
     host.append(card);
   });
 }
@@ -1226,10 +1240,9 @@ function renderClimb(data) {
 /**
  * Which difficulty a match draws from, and whether the player is measured on it.
  *
- * A match is decided on delta against your own baseline, so a difficulty with no history
- * behind it cannot be graded: half rating weight at best, void at worst. With several
- * difficulties in a season, nothing on screen said which one the player was about to be
- * handed.
+ * A round is decided on raw score, so a scenario with no history behind it is one the
+ * player would meet cold against somebody who has played it. With several difficulties
+ * in a season, nothing on screen said which one the player was about to be handed.
  */
 /**
  * The scenarios a match can actually draw, and your best on each.
@@ -1412,18 +1425,18 @@ function renderPool(data) {
   if (short.length === 0) {
     note.className = "pool-note";
     note.innerHTML =
-      `Matches draw from <b>${esc(name)}</b>. Baselines on ${measured} of ${total} ` +
+      `Matches draw from <b>${esc(name)}</b>. You have history on ${measured} of ${total} ` +
       `scenarios.`;
     return;
   }
 
   note.className = "pool-note warn";
   note.innerHTML =
-    `Matches draw from <b>${esc(name)}</b>. Baselines on only ` +
+    `Matches draw from <b>${esc(name)}</b>. You have history on only ` +
     `${measured} of ${total} scenarios` +
     `${short.length < relevant.length ? ` (short in ${esc(short.map((c) => c.category).join(", "))})` : ""}. ` +
-    `A scenario without a baseline is scored against an estimate, which halves the ` +
-    `match's weight and can void it. Play a few runs on those first.`;
+    `Rounds go to the higher score, so any of the others you are handed, you play cold. ` +
+    `A few runs on them first.`;
 
   // "Those" were named only in the folded Scenario pool panel at the foot of the page, so
   // the sentence pointed at a list nobody could see from here.
@@ -7439,8 +7452,8 @@ function stopMatchClock() {
 /**
  * The player's own best on a scenario a match is asking for, or null.
  *
- * A match round is won on the bigger improvement over your own baseline, so the number
- * that decides it is your own best - and the to-do list named three scenarios and left
+ * A match round is won on the higher score, so the number worth knowing going in is your
+ * own best - and the to-do list named three scenarios and left
  * the rest of the row empty. Matched on the scenario name first; a match round can carry
  * a display label with the window appended ("beanTS Larger int"), so a practice row whose
  * scenario name begins the label counts too. No match means nothing is drawn rather than
@@ -7514,18 +7527,20 @@ function renderTodo(arriving) {
 
 function renderResult(data) {
   const m = data.match;
-  renderDebrief(m.rounds.map(r => ({ scenario: r.label, counted: true, delta: r.you.delta, opponentDelta: r.them.delta })), 'Example match · synthetic opponent and rating movement');
+  renderDebrief(m.rounds.map(r => ({ scenario: r.label, counted: true, result: r.result, score: r.you.score, opponentScore: r.them.score, delta: r.you.delta, opponentDelta: r.them.delta })), 'Example match · synthetic opponent and rating movement');
   const won = m.verdict === "win";
 
   $("verdictBig").textContent =
     won ? "Victory" : m.verdict === "draw" ? "Draw" : "Defeat";
   $("verdictBig").style.color =
     won ? "var(--up)" : m.verdict === "draw" ? "var(--ink)" : "var(--down)";
-  $("verdictScores").textContent =
-    pct(m.playerMatchScore) + " vs " + pct(m.opponentMatchScore) + " against baseline" +
-    (m.ratingWeight < 1 ? "   ·   reduced weight (provisional baselines)" : "");
+  $("verdictScores").textContent = m.roundTally
+    ? `${m.roundTally.won}–${m.roundTally.lost} on rounds` + (m.roundTally.tied > 0 ? `, ${m.roundTally.tied} tied` : "") +
+      (Number.isFinite(m.playerMatchScore) ? `   ·   you ${pct(m.playerMatchScore)} against your usual` : "")
+    : pct(m.playerMatchScore) + " vs " + pct(m.opponentMatchScore) + " against baseline";
   renderScoreline(m.rounds.map((r) => ({
     counted: true,
+    result: r.result,
     delta: r.you.delta,
     opponentDelta: r.them.delta,
   })));
@@ -7538,7 +7553,7 @@ function renderResult(data) {
   settled(body);
   body.textContent = "";
   m.rounds.forEach((r) => {
-    const youWon = r.you.delta > r.them.delta;
+    const youWon = r.result ? r.result === "won" : r.you.delta > r.them.delta;
     const tr = document.createElement("tr");
     tr.innerHTML =
       "<td>" + esc(r.label) + "</td>" +
@@ -7546,7 +7561,7 @@ function renderResult(data) {
       '<td class="' + (r.you.delta >= 0 ? "up" : "down") + '">' + pct(r.you.delta) + "</td>" +
       "<td>" + pts(r.them.score) + '<div class="base">base ' + num(r.them.baseline) + "</div></td>" +
       '<td class="' + (r.them.delta >= 0 ? "up" : "down") + '">' + pct(r.them.delta) + "</td>" +
-      '<td class="' + (youWon ? "won-round" : "") + '">' + (r.you.delta === r.them.delta ? "draw" : youWon ? "won" : "lost") + "</td>";
+      '<td class="' + (youWon ? "won-round" : "") + '">' + (r.result === "tied" || (!r.result && r.you.delta === r.them.delta) ? "draw" : youWon ? "won" : "lost") + "</td>";
     body.append(tr);
   });
 }
@@ -7565,8 +7580,8 @@ function renderNoResultYet() {
   // Nothing has been played, so there are no rounds to score.
   if ($("scoreline")) $("scoreline").hidden = true;
   $("explain").textContent =
-    "Each round goes to the bigger improvement over baseline, so players of any rank " +
-    "can be matched.";
+    "Each round goes to the higher score, and you are matched with players near your " +
+    "rating. Win 2 of 3.";
   settled($("roundsBody"));
   $("roundsBody").textContent = "";
   // A table of headers over no rows looked like a result that failed to load.
@@ -7764,9 +7779,13 @@ function renderSettled(s) {
       (s.tournament ? s.tournament.label + ", they answer next" : "no opponent yet")
     : isVoid
       ? (s.voidReason || "match could not be settled")
-      : (Number.isFinite(s.yourMatchScore) ? pct(s.yourMatchScore) : "unavailable") + " vs " + (Number.isFinite(s.theirMatchScore) ? pct(s.theirMatchScore) : "unavailable") +
-        " against baseline" +
-        (s.ratingWeight < 1 ? `   ·   ${Math.round(s.ratingWeight * 100)}% weight (provisional)` : "");
+      : s.roundTally
+        ? `${s.roundTally.won}–${s.roundTally.lost} on rounds` +
+          (s.roundTally.tied > 0 ? `, ${s.roundTally.tied} tied` : "") +
+          (Number.isFinite(s.yourMatchScore) ? `   ·   you ${pct(s.yourMatchScore)} against your usual` : "")
+        : (Number.isFinite(s.yourMatchScore) ? pct(s.yourMatchScore) : "unavailable") + " vs " + (Number.isFinite(s.theirMatchScore) ? pct(s.theirMatchScore) : "unavailable") +
+          " against baseline" +
+          (s.ratingWeight < 1 ? `   ·   ${Math.round(s.ratingWeight * 100)}% weight (provisional)` : "");
 
   renderScoreline(s.rounds);
 
@@ -7793,9 +7812,11 @@ function renderSettled(s) {
   body.textContent = "";
   const table = body.closest?.(".rounds-wrap");
   if (table) table.hidden = false;
-  // The server does not send the opponent's raw scores, so that column was a dash on
-  // every real result. Their improvement, which decides the round, is still shown.
-  body.closest?.("table")?.classList.add("no-them");
+  // Older results carry no opponent raw scores, and a column of dashes says nothing, so
+  // it is hidden unless at least one round has one. Rounds-format results always do,
+  // because the raw score is what decided each round.
+  const theirScores = (s.rounds || []).some((r) => Number.isFinite(r.opponentScore));
+  body.closest?.("table")?.classList.toggle("no-them", !theirScores);
   (s.rounds || []).forEach((r) => {
     const yours = r.delta;
     // Null means there is nobody on the other side, which is not the same as an
@@ -7817,7 +7838,7 @@ function renderSettled(s) {
         "</div></td>" +
       '<td class="' + (Number.isFinite(yours) ? yours >= 0 ? "up" : "down" : "") + '">' +
         (r.counted && Number.isFinite(yours) ? pct(yours) : "—") + "</td>" +
-      "<td>—</td>" +
+      "<td>" + (r.counted && Number.isFinite(r.opponentScore) ? pts(r.opponentScore) : "—") + "</td>" +
       (hasOpponent
         ? '<td class="' + (theirs >= 0 ? "up" : "down") + '">' + pct(theirs) + "</td>"
         : "<td>—</td>") +
@@ -9740,9 +9761,11 @@ function showRealMatch(match, data) {
       ? "play your 3, then they answer"
       : match.poolSize == null
         ? "match already in progress"
-        : match.poolSize === 0
-          ? "you are first in this category"
-          : `pool of ${match.poolSize}, none close enough to your rating`;
+        : match.planting
+          ? "fresh scenarios: everyone else offered ones you just played"
+          : match.poolSize === 0
+            ? "you are first in this category"
+            : `${match.poolSize} in the pool, none with 3 scenarios you haven't faced`;
 
     // No odds to show against nobody, and a half-filled bar would imply a coin flip.
     $("oddsBar").innerHTML =
@@ -9762,8 +9785,8 @@ function showRealMatch(match, data) {
     const played = new Date(match.opponent.playedAt);
     const days = Math.max(0, Math.round((Date.now() - played.getTime()) / 86400000));
     $("oppAge").textContent =
-      `stored run · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
-      ` · pool of ${match.poolSize}`;
+      `stored rounds · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
+      ` · ${match.poolSize} in the pool`;
 
     const p = match.winProbability;
     if (Number.isFinite(p)) {
@@ -11451,8 +11474,8 @@ function tnNextPanel(view, nameOf) {
         ? opp + " is playing their 3 now. You play the same 3 next."
         : next.leg === 1
           ? "You play first: 3 scenarios, first run on each counts. " + opp +
-            " then plays the same 3. Bigger improvement over baseline wins."
-          : opp + " has played their 3. Same 3 for you. Bigger improvement over baseline wins.";
+            " then plays the same 3. Higher score takes each round; win 2 of 3."
+          : opp + " has played their 3. Same 3 for you. Higher score takes each round; win 2 of 3.";
   left.append(tnEl("p", null, copy));
 
   if (next.action !== "wait") {
@@ -11745,7 +11768,7 @@ function tnRules(view) {
       g + " groups, snake-seeded. Everyone in a group plays everyone else once, and the top " +
       q + " of each go through to a " + view.playoffSpots + "-player knockout."],
     ["One fixture, one match",
-      "Each fixture is a standard Apogee match: 3 scenarios, scored against your own baselines, won by the bigger improvement. One player goes first; the other plays the same 3 after."],
+      "Each fixture is a standard Apogee match: 3 scenarios, higher score takes each round, win 2 of 3. One player goes first; the other plays the same 3 after."],
     ["Points",
       "Win 3, draw 1, loss 0. Level on points goes to the results between the players who are level, then wins, then seed, and the table marks it when the seed decided. Raw scores never decide anything."],
     ["Replays",
