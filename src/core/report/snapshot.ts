@@ -421,11 +421,12 @@ export function buildSnapshot(options: SnapshotOptions): Snapshot | null {
   // `matchPool`), not from the whole ladder: showing a beginner an Advanced scenario in
   // the demo match would advertise a match they will never be handed.
   const poolWindow = season ? matchPoolWindow(season) : -1;
+  const poolWindows = season ? matchPoolFor(season).windows ?? [poolWindow] : [];
 
   let nextId = 1;
   const pool: SelectableScenario[] = difficulty.categories.flatMap((cat) =>
     cat.scenarios
-      .filter((s) => poolWindow < 0 || (s.window ?? 0) === poolWindow)
+      .filter((s) => poolWindow < 0 || poolWindows.includes(s.window ?? 0))
       .map((s) => {
         const family = labelFor(s.name);
         return {

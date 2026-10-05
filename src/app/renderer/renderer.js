@@ -1292,7 +1292,8 @@ function renderDraw(data) {
 
   const everyCategory = selectedCategory === null || selectedCategory === "Any";
   const rows = all.filter(
-    (s) => s.window === window && (everyCategory || s.category === selectedCategory),
+    (s) => (data.benchmark.matchPool.windows ?? [window]).includes(s.window) &&
+      (everyCategory || s.category === selectedCategory),
   );
   if (rows.length === 0) {
     box.hidden = true;
@@ -1327,7 +1328,8 @@ function renderDraw(data) {
 
     const nm = document.createElement("span");
     nm.className = "nm";
-    nm.textContent = r.label;
+    nm.textContent = r.label + ((data.benchmark.matchPool.windows ?? [window]).length > 1
+      ? " · " + (data.benchmark.windows?.[r.window] ?? "") : "");
     nm.title = r.scenario;
 
     const sk = document.createElement("span");
@@ -1438,7 +1440,7 @@ function renderPool(data) {
   // The category being queued, or every category when queueing Any.
   const relevant = coverage.filter(
     (c) =>
-      c.window === pool.window &&
+      (pool.windows ?? [pool.window]).includes(c.window) &&
       (selectedCategory === "Any" || selectedCategory === null || c.category === selectedCategory),
   );
 
