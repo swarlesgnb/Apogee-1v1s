@@ -19,6 +19,7 @@
  */
 
 import { existsSync, readFileSync } from "node:fs";
+import { rankedPoolWindows } from "../match/poolWindows.ts";
 
 import { dataFile } from "../dataDir.ts";
 import { ENERGY_PER_RANK } from "../benchmarks/energy.ts";
@@ -187,6 +188,8 @@ export interface SeasonScenario {
  * population is large enough to justify banding it by rank.
  */
 export interface MatchPool {
+  /** All scenario windows the selected queue can draw from. */
+  windows?: number[];
   /** Index into `Season.windows`. */
   window: number;
 }
@@ -242,7 +245,8 @@ export interface Season {
 
 /** The pool matches draw from, for a season that may not name one. */
 export function matchPoolFor(season: Season): MatchPool {
-  return season.matchPool ?? DEFAULT_MATCH_POOL;
+  const pool = season.matchPool ?? DEFAULT_MATCH_POOL;
+  return { ...pool, windows: rankedPoolWindows(season.windows ?? [], pool.window) };
 }
 
 /** True when this season grades families across windows rather than flat scenarios. */
@@ -257,7 +261,8 @@ export function matchPoolWindow(season: Season): number {
 
 /** Display name for the window matches are drawn from. */
 export function matchPoolName(season: Season): string {
-  return season.windows?.[matchPoolWindow(season)] ?? `window ${matchPoolWindow(season) + 1}`;
+  return (matchPoolFor(season).windows ?? [matchPoolWindow(season)])
+    .map(window => season.windows?.[window] ?? `window ${window + 1}`).join(" + ");
 }
 
 /** Where the committed season lives. */

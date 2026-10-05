@@ -18,6 +18,7 @@ import {
   queueEligibility,
 } from "../../../src/core/match/eligibility.ts";
 import type { SelectableScenario } from "../../../src/core/match/scenarioSelection.ts";
+import { rankedPoolWindows } from "../../../src/core/match/poolWindows.ts";
 import type { Rating } from "../../../src/core/rating/glicko2.ts";
 import { seasonStanding, seedRating } from "../../../src/core/rating/seed.ts";
 
@@ -470,9 +471,7 @@ export async function loadSeasonPool(
   const windowName: string = season.windows[windowIndex];
   // Novice variants add variety to Intermediate. Match records and opponent banks
   // retain the selected window, so the two sides still answer the same queue and set.
-  const noviceIndex = season.windows.findIndex((name: string) => name.toLowerCase() === "novice");
-  const includeNovice = windowName.toLowerCase() === "intermediate" && noviceIndex >= 0;
-  const poolWindows = [...new Set([windowIndex, ...(includeNovice ? [noviceIndex] : [])])];
+  const poolWindows = rankedPoolWindows(season.windows, windowIndex);
 
   const { data: pool, error: poolError } = await admin
     .from("season_scenarios")
