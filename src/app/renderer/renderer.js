@@ -9740,9 +9740,11 @@ function showRealMatch(match, data) {
       ? "play your 3, then they answer"
       : match.poolSize == null
         ? "match already in progress"
-        : match.poolSize === 0
-          ? "you are first in this category"
-          : `pool of ${match.poolSize}, none close enough to your rating`;
+        : match.planting
+          ? "fresh scenarios: everyone else offered ones you just played"
+          : match.poolSize === 0
+            ? "you are first in this category"
+            : `${match.poolSize} in the pool, none with 3 scenarios you haven't faced`;
 
     // No odds to show against nobody, and a half-filled bar would imply a coin flip.
     $("oddsBar").innerHTML =
@@ -9762,8 +9764,8 @@ function showRealMatch(match, data) {
     const played = new Date(match.opponent.playedAt);
     const days = Math.max(0, Math.round((Date.now() - played.getTime()) / 86400000));
     $("oppAge").textContent =
-      `stored run · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
-      ` · pool of ${match.poolSize}`;
+      `stored rounds · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
+      ` · ${match.poolSize} in the pool`;
 
     const p = match.winProbability;
     if (Number.isFinite(p)) {

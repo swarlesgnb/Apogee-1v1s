@@ -248,10 +248,24 @@ would have drawn three scenarios from a pool of four.
 
 ### Scenario selection is seeded, not random
 
-Both sides of a match must get the same three scenarios. The scenario set is derived
-from a seeded PRNG keyed on the match ID, so it is reproducible, auditable, and
-cannot be rerolled by a client. Weighting avoids scenarios either player played in the
-last 24h where possible, to reduce warm-up advantage.
+Both sides of a match must get the same three scenarios. The set is drawn by a seeded
+PRNG with a server-generated seed, so it is reproducible, auditable, and cannot be
+rerolled by a client.
+
+An async opponent (§6) is a **bank of rounds**, not one stored match: every attempt they
+have played in this window, each frozen when it was played. The three scenarios are
+drawn from what that opponent can answer, preferring scenarios the caller has not played
+in their last three matches, and a round the caller has already faced is never offered
+again.
+
+It was one stored match at launch, and that shipped a repeat bug. The caller played the
+opponent's exact three, then banked those same three as a new stored match, so a
+category's first seeding match decided what nearly everyone in it played from then on.
+`npm run validate:match` reproduces it (thirty queues, one set of three) beside the
+current rule (fifteen sets, every scenario in the window), and `npm run count:triples`
+counts distinct sets on the live project. Fresh scenarios still have to enter somebody's
+bank, so when every opponent could offer little but what the caller just played, and the
+window has better, the caller gets a seeding match drawn away from it.
 
 ---
 

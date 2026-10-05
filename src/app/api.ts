@@ -280,6 +280,12 @@ export interface FoundMatch {
     provisional: boolean;
   } | null;
   seeding?: boolean;
+  /**
+   * A seeding match handed out although an opponent existed, because every opponent
+   * could offer little but scenarios this player just played (matchmaking.ts
+   * shouldPlantFresh). Absent from a resumed match, which cannot know.
+   */
+  planting?: boolean;
   /** True when this is a match the player already had, handed back rather than created. */
   resumed?: boolean;
   /**
@@ -289,7 +295,10 @@ export interface FoundMatch {
    */
   submittedScenarioIds?: number[];
   winProbability: number | null;
-  /** Null when the pool was not searched, which is the case for a resumed match. */
+  /**
+   * How many opponents have rounds in this window. Null when the pool was not searched,
+   * which is the case for a resumed match.
+   */
   poolSize: number | null;
   /**
    * Set when this match came from a duel rather than the queue, naming whoever is on the

@@ -1053,11 +1053,22 @@ void            ended with nothing rated</pre>
 
       <h3>An empty pool still gives you a match</h3>
       <p>
-        Queueing with nobody to play returns a <em>seeding match</em>: the same three
-        seeded scenarios, no opponent, nothing rated. The run set is scored and stored, and
-        that is what the next player is matched against. Without it the pool could never
-        receive its first entry, which on an async-first ladder is the difference between a
-        cold start and no start.
+        Queueing with nobody to play returns a <em>seeding match</em>: three seeded
+        scenarios, no opponent, nothing rated. Its rounds are scored and stored, and the next
+        player can be matched against them. Without it the pool could never receive its
+        first entry, which on an async-first ladder is the difference between a cold start
+        and no start.
+      </p>
+      <p>
+        An opponent is a <em>bank of rounds</em>: every attempt they have played in the
+        window, not one stored match. The three scenarios are drawn from what that opponent
+        can answer, avoiding the caller's last three matches where it can, and a round the
+        caller has already faced is never offered again. Matches used to be answered with one
+        stored match whole, and the caller's side carried the same three scenarios back into
+        the pool, so a category's first seeding match decided what nearly everyone played.
+        When every opponent can offer little but what the caller just played, a seeding
+        match drawn away from it plants fresh scenarios instead
+        (<code>shouldPlantFresh</code> in <code>src/core/match/matchmaking.ts</code>).
       </p>
       <p class="note">
         <span class="note-label">In the UI</span>
