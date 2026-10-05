@@ -3,7 +3,7 @@
  *
  * Shared so the two answer with one shape. The card carries no rating, rank or season
  * standing, because a ghost result moved none of them and a card implying otherwise is
- * "I scored more and lost" pointed at strangers (docs/overnight/mechanics.md, "Share card").
+ * "I scored more and lost" pointed at strangers (docs/design/mechanics.md, "Share card").
  */
 
 import { type SupabaseClient } from "jsr:@supabase/supabase-js@2";

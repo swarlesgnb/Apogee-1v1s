@@ -1,4 +1,4 @@
--- Ghost Mode's shareable results (docs/overnight/mechanics.md, "Server layer").
+-- Ghost Mode's shareable results (docs/design/mechanics.md, "Server layer").
 --
 -- A ghost match is played and judged on the client, against the player's own past runs,
 -- and moves nothing here: no rating, no season standing, no pool entry. What the client

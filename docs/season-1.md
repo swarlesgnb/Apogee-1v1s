@@ -126,7 +126,7 @@ run.
 ## Deploying it
 
 The file the app loads is `seasons/season-1.json` (`SEASON_FILE` in
-`src/core/season/season.ts`). Rylee runs, in this order:
+`src/core/season/season.ts`). To ship it, run in this order:
 
 ```
 npx supabase db push --yes     nothing new for this, but it keeps the usual order

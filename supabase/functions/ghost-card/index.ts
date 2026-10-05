@@ -3,7 +3,7 @@
  *
  * Signed-in callers only for now: no `verify_jwt = false` in config.toml. That is enough
  * for viewing a card in the app and keeps a public scrape surface closed until there is
- * a web page for cards to be seen on (docs/overnight/mechanics.md, "Server layer").
+ * a web page for cards to be seen on (docs/design/mechanics.md, "Server layer").
  *
  * The code is the only handle a card has. It names the player by display name, which is
  * what a card shared on purpose is for, and hands out no player id, no Steam id and
