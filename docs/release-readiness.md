@@ -3,6 +3,27 @@
 What still stands between the local candidate and a public release, and how to re-check
 it. The solo campaign rules are in [the solo guide](solo-expedition.md).
 
+## 0.4.3, 2026-10-05
+
+- Installer: `release/Apogee-0.4.3-setup.exe`
+- SHA-256: `3f2039f53c60ca03c612f655368c626c5f17d2b560024c99abe639c44e375957`
+- Notes: `release/notes-0.4.3.md`
+- Carries ranked best of three on raw score, scenarios drawn from the opponent's bank
+  of rounds, ratings seeded from verified PBs, Ghost Mode with friend codes, share cards,
+  the first-run fixes, ranked run reservation and atomic settlement. No scenario file
+  changed. The server side is migration 23, `sync:reference`, every function redeployed
+  and `reset:ratings -- --apply`, all run before this build. 0.4.2 clients against that
+  server label rounds by delta while the verdict is decided on raw score, so this
+  version should go out promptly.
+- `validatePackage` passed 179 of 179, and the unpacked build booted in `--smoke` from a
+  temporary directory. Unsigned (`Get-AuthenticodeSignature` reports NotSigned).
+- `validate:release` passed 31 of 37. All six failures predate this version's changes:
+  `validate:standing` ("a scored family earns points"), `validate:quests` (`new_scenario`
+  completes on nearly every day it is played) and `validate:season-files` (InvadersTS
+  angular speed) fail identically on 930efe4; `validate:expedition-ui` (the queue action
+  sits 1048.5px down at 1440x1080) was documented as failing with PR #5; `audit:look` and
+  `beta` (41 unsampled Expert boards) are 0.4.2's.
+
 ## 0.4.2, 2026-09-28
 
 - Installer: `release/Apogee-0.4.2-setup.exe`
