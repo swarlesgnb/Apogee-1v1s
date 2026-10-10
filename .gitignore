@@ -21,3 +21,6 @@ supabase/.temp/
 # gh-pages branch rather than from here.
 site/
 media/
+
+# The Discord bot's own state (links, XP, stardust). Per-machine and holds Discord ids.
+discord/.data/
