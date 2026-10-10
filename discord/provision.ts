@@ -102,6 +102,19 @@ function currentSignature(ch: GuildChannel): string {
   );
 }
 
+/**
+ * A same-named channel outside every blueprint category: Discord's starter #general sits
+ * in "Text Channels". Without this, creating ARENA first makes the category-scoped lookup
+ * miss it and a second #general appears beside the one people already know.
+ */
+function stray(guild: Guild, name: string, kind: "text" | "voice"): GuildChannel | undefined {
+  const ours = new Set(CATEGORIES.map((c) => findCategory(guild, c.name)?.id).filter((id) => id !== undefined));
+  const type = kind === "voice" ? ChannelType.GuildVoice : ChannelType.GuildText;
+  return guild.channels.cache.find(
+    (c) => c.type === type && c.name === name && !(c.parentId && ours.has(c.parentId)),
+  ) as GuildChannel | undefined;
+}
+
 export async function provision(guild: Guild, opts: { dryRun: boolean; log: Log }): Promise<number> {
   const { dryRun, log } = opts;
   let changes = 0;
@@ -197,7 +210,7 @@ export async function provision(guild: Guild, opts: { dryRun: boolean; log: Log 
 
     for (const [i, ch] of cat.channels.entries()) {
       const want = overwrites(guild, ch.access);
-      const existing = findChannel(guild, ch.key);
+      const existing = findChannel(guild, ch.key) ?? stray(guild, ch.name, ch.kind);
       if (!existing) {
         change(`create #${ch.name} in ${cat.name}`);
         if (!dryRun) {
