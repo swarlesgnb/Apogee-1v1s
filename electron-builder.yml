@@ -53,6 +53,24 @@ nsis:
   shortcutName: Apogee
   artifactName: ${productName}-${version}-setup.${ext}
 
+# KovaaK's has no native Linux build but runs under Proton, so Linux players exist and
+# their stats land in an ordinary folder (watcher.ts knows where). AppImage because it is
+# the one Linux format electron-updater can replace in place, and it needs no root to
+# install. A native build rather than the Windows one under Wine: under Wine the Windows
+# build would look for Steam inside the Wine prefix rather than the Linux library Proton
+# actually uses, and neither Electron nor Chromium supports running under Wine.
+linux:
+  target: AppImage
+  # The single 1024px source; electron-builder cuts the hicolor sizes from it. The
+  # build/icons set is named icon-<n>.png, which it does not recognise as sizes.
+  icon: build/icon.png
+  category: Game
+  # Without this the window's app id is "Apogee" while the launcher is apogee.desktop,
+  # and the dock shows a second, iconless entry next to the pinned one.
+  syncDesktopName: true
+  synopsis: Ranked 1v1 for KovaaK's
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
 # Where installed copies look for updates (src/app/updater.ts). Written into the package
 # as app-update.yml; electron-updater reads latest.yml from the newest release. Building
 # never publishes: `npm run dist` passes --publish never, and a release goes up only by

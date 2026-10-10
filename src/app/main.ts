@@ -480,7 +480,7 @@ async function chooseStatsFolder(): Promise<string | { error: string } | null> {
   const chosen = resolveStatsFolder(result.filePaths[0]);
   if (!chosen) {
     return {
-      error: "That folder has no KovaaK's stats. It is usually Steam\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats.",
+      error: `That folder has no KovaaK's stats. It is usually ${join("Steam", "steamapps", "common", "FPSAimTrainer", "FPSAimTrainer", "stats")}.`,
     };
   }
 

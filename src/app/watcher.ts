@@ -17,7 +17,8 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { watch, statSync, readFileSync, type FSWatcher } from "node:fs";
+import { watch, statSync, readFileSync, realpathSync, type FSWatcher } from "node:fs";
+import { homedir } from "node:os";
 import { join } from "node:path";
 
 import { parseStatsFile, type ParsedRun } from "../core/stats/parseStatsFile.ts";
@@ -145,6 +146,23 @@ function steamRoots(): string[] {
     if (programFiles) roots.push(join(programFiles, "Steam"));
   }
 
+  if (process.platform === "linux") {
+    // KovaaK's has no Linux build; it runs under Proton, which installs it into the Linux
+    // Steam library like any other game, so the stats folder sits at the same suffix
+    // below one of these. ~/.steam/steam and ~/.steam/root are the symlinks Steam keeps to
+    // whichever real root it uses; Flatpak and Snap Steam live in their own sandboxes.
+    const home = homedir();
+    roots.push(
+      join(home, ".steam", "steam"),
+      join(home, ".steam", "root"),
+      join(home, ".local", "share", "Steam"),
+      join(home, ".var", "app", "com.valvesoftware.Steam", ".local", "share", "Steam"),
+      join(home, ".var", "app", "com.valvesoftware.Steam", "data", "Steam"),
+      join(home, "snap", "steam", "common", ".local", "share", "Steam"),
+    );
+    return unique(roots);
+  }
+
   // Kept as a floor under the two lookups above: a machine with a broken registry value
   // and a stock install is still found.
   roots.push(
@@ -176,13 +194,23 @@ function unique(paths: string[]): string[] {
     // Uppercase the drive letter only: the rest of the path is shown to the player and
     // should read the way it does in Explorer.
     const tidy = join(path).replace(/^([a-z]):/, (_, drive: string) => `${drive.toUpperCase()}:`);
-    const key = tidy.toLowerCase();
+    // Linux paths are case-sensitive, so case is never folded there; instead the
+    // ~/.steam symlinks are resolved, or every library would be probed twice.
+    const key = process.platform === "win32" ? tidy.toLowerCase() : canonical(tidy);
     if (seen.has(key)) continue;
     seen.add(key);
     out.push(tidy);
   }
 
   return out;
+}
+
+function canonical(path: string): string {
+  try {
+    return realpathSync(path);
+  } catch {
+    return path;
+  }
 }
 
 /**
