@@ -19,6 +19,7 @@
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { app } from "electron";
 
 import { parseFilename } from "../core/stats/parseStatsFile.ts";
 import { log } from "./crashLog.ts";
@@ -257,6 +258,72 @@ export async function uploadRecentRuns(
 // matches
 // ---------------------------------------------------------------------------
 
+/**
+ * Which ranked engine this build queues, settles and abandons on.
+ *
+ * Ranked v2 (src/core/rating/ranked.ts) runs behind its own three functions, admin-only,
+ * while it is tested against the live ladder without anybody on a release being moved
+ * onto it. A development build - unpackaged, `npm run dev` or `npm start` - asks for v2;
+ * a packaged release never does. APOGEE_RANKED=v1 or =v2 overrides either way.
+ *
+ * Asking is not getting. When the server says this account is not a tester, or the v2
+ * functions are not deployed yet, the build falls back to v1 for the rest of the session
+ * and says why in the log and the status bar, so a development build is never left
+ * unable to play ranked.
+ */
+export type RankedEngine = "v1" | "v2";
+
+/** The refusals find-match-v2 and its siblings give (_shared/rankedV2.ts). */
+const RANKED_V2_CLOSED = "ranked v2 is only open to testers";
+const RANKED_V2_UNMIGRATED = "ranked v2's migration is not applied";
+
+let rankedV2Off: string | null = null;
+
+function wantsRankedV2(): boolean {
+  const forced = process.env.APOGEE_RANKED?.trim().toLowerCase();
+  if (forced === "v1") return false;
+  if (forced === "v2") return true;
+  // `app` is absent outside Electron (a validator importing this module), which is never
+  // a development build of the app.
+  return app?.isPackaged === false;
+}
+
+/** What this session is actually on, and why not v2 when it asked for it. */
+export function rankedEngine(): { engine: RankedEngine; wanted: RankedEngine; reason: string | null } {
+  const wanted: RankedEngine = wantsRankedV2() ? "v2" : "v1";
+  return { engine: wanted === "v2" && !rankedV2Off ? "v2" : "v1", wanted, reason: rankedV2Off };
+}
+
+/** Why a v2 call means "use v1 instead", or null when it was an ordinary failure. */
+function rankedV2Refusal(err: unknown): string | null {
+  if (!(err instanceof ApiError)) return null;
+  if (err.status === 403 && err.message === RANKED_V2_CLOSED) return "this account is not a ranked v2 tester";
+  // A 5xx message is wrapped in a sentence by callFunction, so this one is found inside it.
+  if (err.status === 503 && err.message.includes(RANKED_V2_UNMIGRATED)) {
+    return "the ranked v2 migration is not applied (npx supabase db push)";
+  }
+  // The gateway's own 404, not a function's "no such match": its body is not JSON with an
+  // `error`, so callFunction passes the raw text through.
+  if (err.status === 404 && /Requested function was not found/i.test(err.message)) {
+    return "the ranked v2 functions are not deployed (npm run deploy:ranked-v2)";
+  }
+  return null;
+}
+
+async function callRanked<T>(name: "find-match" | "settle-match" | "abandon-match", body: unknown): Promise<T> {
+  if (wantsRankedV2() && !rankedV2Off) {
+    try {
+      return await callFunction<T>(`${name}-v2`, body);
+    } catch (err) {
+      const refusal = rankedV2Refusal(err);
+      if (!refusal) throw err;
+      rankedV2Off = refusal;
+      log(`ranked v2 off for this session: ${refusal}`);
+    }
+  }
+  return callFunction<T>(name, body);
+}
+
 export interface MatchScenario {
   id: number;
   name: string;
@@ -288,6 +355,13 @@ export interface FoundMatch {
   planting?: boolean;
   /** True when this is a match the player already had, handed back rather than created. */
   resumed?: boolean;
+  /** Which ranked engine created it. Absent from v1, which predates the column. */
+  engine?: number;
+  /**
+   * What each result would do to this player's rating, from ranked v2 only: the server's
+   * own calculation, so the number shown is the number settlement applies.
+   */
+  stakes?: { result: string; change: number }[] | null;
   /**
    * Scenarios this player already has a run in for this match, known only for a match
    * recovered from the server. Without it a restart forgot which of the three were
@@ -334,7 +408,7 @@ export function findMatch(
   category: string,
   pool: { window: number },
 ): Promise<FoundMatch> {
-  return callFunction<FoundMatch>("find-match", { category, window: pool.window });
+  return callRanked<FoundMatch>("find-match", { category, window: pool.window });
 }
 
 /* ------------------------------------------------------------------------ duels ---- */
@@ -656,7 +730,7 @@ export interface AbandonResult {
  * open on the server and the player unable to queue at all.
  */
 export function abandonMatch(): Promise<AbandonResult> {
-  return callFunction<AbandonResult>("abandon-match", {});
+  return callRanked<AbandonResult>("abandon-match", {});
 }
 
 export interface SubmittedRun {
@@ -740,6 +814,13 @@ export interface SettledMatch {
   ratingBefore: number;
   ratingAfter: number;
   ratingChange: number;
+  /** Ranked v2: which engine's rules settled it, and how the result was read. */
+  engine?: number;
+  ratingModel?: "match" | "rounds";
+  /** Ranked v2: the rating the opponent's rounds were played at, which is what was faced. */
+  opponentRating?: number;
+  /** Ranked v2: this void spent the week's one free early exit. */
+  freeAbandon?: { used: true; nextFreeAt: string | null } | null;
   rounds: {
     scenario: string;
     score: number;
@@ -757,7 +838,7 @@ export interface SettledMatch {
 }
 
 export function settleMatch(matchId: string): Promise<SettledMatch> {
-  return callFunction<SettledMatch>("settle-match", { matchId });
+  return callRanked<SettledMatch>("settle-match", { matchId });
 }
 
 // ---------------------------------------------------------------------------

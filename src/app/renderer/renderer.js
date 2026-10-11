@@ -942,6 +942,26 @@ function renderUpdate(update) {
   }
 }
 
+/**
+ * What each result would do to the rating, from ranked v2's server-side stakes. Nothing
+ * is worked out here: the numbers are the server's, so what is shown is what applies.
+ */
+function renderStakes(stakes) {
+  const el = $("matchStakes");
+  if (!el) return;
+  if (!Array.isArray(stakes) || stakes.length === 0) {
+    el.hidden = true;
+    el.replaceChildren();
+    return;
+  }
+  el.hidden = false;
+  el.innerHTML = stakes
+    .map((s) => "<span>" + esc(s.result) + " <b>" + (s.change > 0 ? "+" : s.change < 0 ? "−" : "±") +
+      esc(String(Math.abs(s.change))) + "</b></span>")
+    .join("");
+  el.title = "Rating change for each result, rounds won to rounds lost";
+}
+
 function showBuild(build) {
   const el = $("buildStamp");
   if (!el) return;
@@ -955,6 +975,25 @@ function showBuild(build) {
     ? "build " + build
     : "build " + when.toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
   el.title = "Bundle built " + build;
+}
+
+/**
+ * Which ranked engine this session is on, shown only when it is not simply v1: a
+ * development build asks for ranked v2 (api.ts rankedEngine), and whether it got it, or
+ * why not, is worth seeing without opening the log.
+ */
+function showRankedEngine(ranked) {
+  const el = $("rankedEngine");
+  if (!el) return;
+  if (!ranked || ranked.wanted !== "v2") {
+    el.hidden = true;
+    return;
+  }
+  el.hidden = false;
+  el.textContent = ranked.engine === "v2" ? "ranked v2" : "ranked v1";
+  el.title = ranked.engine === "v2"
+    ? "Development build: queueing, settling and abandoning on ranked v2"
+    : "Development build asked for ranked v2 and fell back: " + (ranked.reason || "unknown");
 }
 
 function showError(message) {
@@ -9798,6 +9837,7 @@ function showRealMatch(match, data) {
       '<div style="flex:1;background:' + esc(me.tier.color) + ';opacity:.25"></div>';
     $("oddsYou").textContent = "unrated";
     $("oddsThem").textContent = "no rating change";
+    renderStakes(null);
   } else {
     // A rating does not identify a tier without the live population distribution.
     const oppTier = { color: "#b6c7dd" };
@@ -9814,6 +9854,8 @@ function showRealMatch(match, data) {
       `stored rounds · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
       ` · ${match.poolSize} in the pool`;
 
+    renderStakes(match.stakes);
+
     const p = match.winProbability;
     if (Number.isFinite(p)) {
       drawOdds(p, me.tier.color);
@@ -9825,6 +9867,11 @@ function showRealMatch(match, data) {
       $("oddsThem").textContent = "";
     }
   }
+
+  // A v1 match never says which engine made it; a dev build may have fallen back to v1
+  // since the window opened, so the status bar is asked again rather than assumed.
+  if (match.engine === 2) showRankedEngine({ wanted: "v2", engine: "v2", reason: null });
+  else void api.getState().then((s) => showRankedEngine(s.ranked));
 
   // Rows already played stay played: a repaint used to flip them back to "Awaiting run",
   // and a match recovered after a restart asked again for runs the server already had.
@@ -12590,6 +12637,7 @@ if (HOST === "electron") {
   api.getState().then((state) => {
     currentPath = state.statsDir || "";
     showBuild(state.build);
+    showRankedEngine(state.ranked);
     renderSession(state.session, state.configured);
     // onSession was the only place this was shown, so a session restored before this
     // window subscribed, or a reload, left the upload panel hidden while signed in.
