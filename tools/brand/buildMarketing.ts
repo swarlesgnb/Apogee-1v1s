@@ -42,11 +42,12 @@ const OUT = join(root, "assets", "brand", "marketing");
 export const SHOTS_DIR = join(OUT, "shots");
 
 /**
- * The mechanics a poster may name. The fleet brief fixes seven working names; the arena
- * branch built Crowns and Live race, not Draft, so Draft has its glyph and no poster. Keep
- * this list to what actually merged, and every poster follows it on the next run.
+ * The mechanics a poster may name. Keep this list to what actually ships, and every
+ * poster follows it on the next run. Shadows, Flags, Crowns and live races were built
+ * against ranked v1's scoring and wait on branch fleet/mechanics-v1 until they are refit
+ * to ranked v2, so only the Daily and challenge links are named for now.
  */
-export const FEATURED: MechanicId[] = ["shadow", "flag", "daily", "link", "crown", "race"];
+export const FEATURED: MechanicId[] = ["daily", "link"];
 
 /** Statements the product already makes true. Nothing here claims a mechanic. */
 export const TAGLINES = {
