@@ -23,15 +23,14 @@ import {
   loadSeasonPool,
   readJson,
   requireCaller,
-  sweepStaleMatches,
 } from "../_shared/apogee.ts";
+import { sweepStaleMatches } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { loadTournament, onlyFields, reconcile, requireUuid } from "../_shared/tournament.ts";
 
 import { getReadyFixtures } from "../../../src/core/tournament/tournament.ts";
 import { fixtureLabelFor } from "../../../src/core/tournament/view.ts";
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
-import { updateRating } from "../../../src/core/rating/glicko2.ts";
 
 /** What the SQL refusals map to. Their messages are already worded for the player. */
 const STATUS_FOR: Record<string, number> = { TN403: 403, TN404: 404, TN409: 409 };
@@ -68,7 +67,7 @@ Deno.serve(handler(async (req, admin) => {
 
   // Retire this player's expired matches first, charged by the ordinary rule. The live
   // one, if any, is judged inside tournament_open_leg: it may be this very leg.
-  await sweepStaleMatches(admin, caller.playerId, updateRating);
+  await sweepStaleMatches(admin, caller.playerId);
 
   const { season, windowName, selectable } = await loadSeasonPool(admin, row.window_index);
   const seed = crypto.randomUUID();

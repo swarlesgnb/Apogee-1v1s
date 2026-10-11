@@ -1007,7 +1007,7 @@ function pressureClick(f: Family, spec: PressureSpec, description: string) {
       // at 7,000-10,000, which a slow drift crosses in order; a dash crosses both windows the
       // wrong way round and hung behind the player. So it arms as soon as its spawn block
       // lifts and bursts within 3,000, and it checks every 0.1 s - the rate Voltaic's Ground
-      // bots use - so even Expert's dash (about 1,040 units a check on the full steps, and less
+      // bots use - so even Expert's dash (about 520 units a check on the full steps, and less
       // on Dynamic Clicking's gentler ones) cannot cross the window unseen, nor reach Depart's
       // 1,000, which would throw it back out.
       setProfile(sce, "Weapon Ability Profile", "Damage Self Only", { AIMinTargDist: 0, AIMaxTargDist: 1000000 });
@@ -1241,10 +1241,10 @@ export const FAMILIES: Family[] = [
       anchor: "cA fuglaapressure",
       modelClass: "click",
       focus: "Pop them before they reach you; every one that does costs you.",
-      why: "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. The dash takes about 1.7 seconds to arrive at Novice and gets about 1.1x faster each band, and the player has three rounds before a reload, and the game itself runs faster each band too, its timescale up 0.1 a band.",
+      why: "Speed clicking under pressure, on fuglaa's design: balloons that dash at the player and burst on arrival, so a target left alive costs score rather than only time. Ten balloons at a time on a dash that takes about 3.4 seconds to arrive at Novice, getting about 1.1x faster each band: the playtest found five on a 1.7-second dash all but impossible to balance, so it trades speed for count, and the player has three rounds before a reload, and the game itself runs faster each band too, its timescale up 0.1 a band.",
       learnsFrom: ["cA fuglaapressure", "fuglaaPressure"],
     },
-    (f) => pressureClick(f, { alive: 5, deg: 1.6, timescale: 1.0, timescaleStep: 0.2, range: 18160, approach: 5000, magazine: 3 }, "Balloons that come for you: pop each one before it reaches you. Every hit costs score."),
+    (f) => pressureClick(f, { alive: 10, deg: 1.6, timescale: 1.0, timescaleStep: 0.2, range: 18160, approach: 2500, magazine: 3 }, "Balloons that come for you: pop each one before it reaches you. Every hit costs score."),
   ),
   family(
     {

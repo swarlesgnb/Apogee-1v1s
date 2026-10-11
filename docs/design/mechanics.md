@@ -143,7 +143,7 @@ output if they differ.
   `last_week_best`) of the runs on the most recent local calendar day at least 7 (or 30) days
   before the start. A *session* is one local calendar day. All timestamps involved are the
   bare local wall clock parsed from filenames, compared only with each other, so the
-  timezone rule in CLAUDE.md is not engaged on the local path. The server layer is
+  timezone rule (docs/apogee-internals.html) is not engaged on the local path. The server layer is
   different (see below).
 - **The baseline** for each scenario is frozen at draw time too, from
   `computeBaseline(history)` over runs before the start. Freezing both means a run played
@@ -272,7 +272,7 @@ Pure, no `node:fs`, so the server layer can import it the way
   verdict, no margin and no deadline. (Mixtape keeps its engine in the renderer,
   `mixtape-engine.js`; Ghost does not follow it, because a ghost result feeds the quest
   board, which lives in main.)
-- A running window keeps its old bundle (CLAUDE.md): test with `npm run dev`, and check
+- A running window keeps its old bundle (docs/apogee-internals.html): test with `npm run dev`, and check
   `npm run doctor` before believing a "button does nothing".
 
 ### Server layer (for sharing; needs a deploy)
@@ -335,7 +335,7 @@ alter table ghost_results enable row level security;
   `verify_jwt = false` in `supabase/config.toml`), which is enough for in-app viewing and
   keeps a public scrape surface closed until a web card page exists.
 
-**Deploy order** stays the one in CLAUDE.md, and Rylee runs it:
+**Deploy order** stays the usual one:
 `! npx supabase db push --yes`, then `! npm run deploy:functions`, then
 `! npm run verify:deployment`. Until then Share stays disabled with a line saying so.
 

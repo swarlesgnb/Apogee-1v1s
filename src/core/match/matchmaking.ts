@@ -21,6 +21,7 @@
  */
 
 import { winProbability, type Rating } from "../rating/glicko2.ts";
+import { performanceRating, type RoundStrength } from "../rating/ranked.ts";
 import { matchesCategory, selectScenarios, type SelectableScenario } from "./scenarioSelection.ts";
 
 /**
@@ -68,6 +69,11 @@ export interface BankRound {
   playedAt: Date;
   /** The stored side it came from (`runSetId`), for history recorded before run ids. */
   sideId: string;
+  /**
+   * The owner's rating when they played it, from that side's `rating_before`. Read only
+   * when the criteria ask for `strength: "at-play"` (ranked.ts says why).
+   */
+  strength?: RoundStrength;
 }
 
 /** Everything one opponent has left behind that could answer a match. */
@@ -107,6 +113,17 @@ export interface MatchmakingCriteria {
    * whose copied side was written before copies recorded their run ids.
    */
   facedSideIds?: Set<string>;
+  /**
+   * Which rating an opponent's rounds are judged by.
+   *
+   *   current   the owner's rating now. The first version, and the default.
+   *   at-play   the owner's rating when they played those rounds (performanceRating).
+   *
+   * Settlement rates against whatever this picked, because find-match writes it onto the
+   * copied side, so matchmaking and the rating change can never disagree about who the
+   * opponent was.
+   */
+  strength?: "current" | "at-play";
 }
 
 export interface Candidate {
@@ -117,6 +134,8 @@ export interface Candidate {
   fresh: number;
   score: number;
   winProbability: number;
+  /** The rating these rounds are played against: `criteria.strength` applied. */
+  opponentRating: Rating;
   reasons: string[];
 }
 
@@ -213,7 +232,11 @@ export function scoreCandidate(
   const now = criteria.now ?? new Date();
   const reasons: string[] = [];
 
-  const p = winProbability(criteria.rating, bank.rating);
+  const opponentRating =
+    criteria.strength === "at-play"
+      ? performanceRating(rounds.map((r) => r.strength ?? { rating: null, rd: null }), bank.rating)
+      : bank.rating;
+  const p = winProbability(criteria.rating, opponentRating);
   const fairness = Math.abs(p - 0.5) * FAIRNESS_WEIGHT;
   let score = fairness;
 
@@ -242,7 +265,7 @@ export function scoreCandidate(
     reasons.push(`${stale} scenario(s) played recently`);
   }
 
-  return { bank, rounds, fresh: rounds.length - stale, score, winProbability: p, reasons };
+  return { bank, rounds, fresh: rounds.length - stale, score, winProbability: p, opponentRating, reasons };
 }
 
 export interface MatchmakingResult {

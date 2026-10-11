@@ -1024,7 +1024,7 @@ function runSmokeTest(): void {
     );
     // Ghost Mode round trip: the bridge answers, main builds the screen, and the page drew
     // it. A missing handler here is the "No handler registered" of a stale bundle, which
-    // is the failure CLAUDE.md warns makes every button do nothing.
+    // is the failure that makes every button do nothing.
     const ghostProbe = await probe.webContents.executeJavaScript(`(async () => {
       if (typeof window.apogee?.ghost !== "function") return { bridged: false };
       const screen = await window.apogee.ghost();
@@ -1689,6 +1689,25 @@ function runSmokeTest(): void {
         rematch && !rematch.failed ? `offered as "${rematch.label}", hidden on void and seeding` : "MISSING"
       }`,
     );
+
+    // The stakes line: painted from the server's numbers, hidden when there are none (a
+    // match from before v2, a seeding match), and a change of zero or below never printed as "+".
+    const stakes = await probe.webContents.executeJavaScript(`(() => {
+      if (typeof renderStakes !== "function") return null;
+      const el = document.getElementById("matchStakes");
+      renderStakes([{ result: "3-0", change: 35 }, { result: "2-1", change: 3 },
+        { result: "1-2", change: -29 }, { result: "0-3", change: -62 }]);
+      const shown = { hidden: el.hidden, text: el.textContent };
+      renderStakes(null);
+      return { ...shown, clears: el.hidden && el.textContent === "" };
+    })()`).catch((err) => ({ failed: String(err && err.message ? err.message : err) }));
+
+    const wantStakes = "3-0 +352-1 +31-2 −290-3 −62";
+    if (stakes === null) problems.push("nothing paints a match's stakes");
+    else if (stakes.failed) problems.push(`the stakes line threw: ${stakes.failed}`);
+    else if (stakes.hidden || stakes.text !== wantStakes) problems.push(`the stakes line reads "${stakes.text}"`);
+    else if (!stakes.clears) problems.push("the stakes line stays up for a match without stakes");
+    console.log(`stakes       : ${stakes && !stakes.failed ? "4 results, signed, cleared for v1 and seeding" : "MISSING"}`);
 
     console.log(
       `duels        : ${

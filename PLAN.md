@@ -302,10 +302,82 @@ Glicko-2, not Elo. Elo assumes regular play against a known-strength pool. Apoge
 has sparse, asynchronous, bursty play with a small early population, exactly the case
 Glicko-2's rating deviation (RD) was designed for.
 
-- New players start at 1500 / RD 350 and converge fast during placements.
-- RD widens with inactivity, so a returning player's rating moves quickly again.
+- New players start where their verified PBs put them (`src/core/rating/seed.ts`), or
+  at 1500 / RD 350 with too few, and converge fast during placements.
 - 10 placement matches before a visible rank is assigned.
-- Rating periods batch nightly.
+- Results are applied per match, each as its own rating period. Two things this list
+  used to promise were never true of the code: rating periods were never batched
+  nightly, and RD never widened with inactivity. The second was measured below and is
+  deliberately not applied.
+
+### Ranked v2: measured, then made the ladder
+
+Ranked v2 changes how a result moves a rating and how an opponent is found. It ran
+first behind three admin-only functions that only development builds called, against
+the live ladder, and then replaced v1 in find-match, settle-match and abandon-match
+themselves, so every client already installed moved onto it without an update.
+
+A match records the engine that created it (`matches.engine`: 1 before v2, 2 for every
+queued match since), and settlement, forfeits and the expiry sweep apply the rules of
+the engine that created it. A match open at the switch therefore finished under v1's
+rules, and duels and tournament legs, which are still created as engine 1, keep them:
+one result each, and leaving early always voids. There is one implementation of ending
+a match (`_shared/rankedV2.ts`), and the duel, fixture and tournament paths use it too,
+so a v2 match cannot be cleared through one of them for less than it costs in the queue.
+
+What decided the rating policy is `npm run compare:ladders`: the production matchmaking
+and rating code run over a simulated async season - only the caller rated, opponents as
+frozen rounds, players who improve, take breaks and arrive late - with one run's noise
+taken from the corpus (a robust spread of 5.5%, consecutive runs correlated at about
+0.06). Each policy is scored by log loss on every rated match, predicted from the
+ratings when it was handed out, in four worlds that vary what one stats folder cannot
+measure:
+
+| policy | as assumed | fast improvers | tight field | skill wanders away |
+|---|---|---|---|---|
+| v1 | 0.6598 | 0.6639 | 0.6808 | 0.6670 |
+| rounds as games | 0.6532 | 0.6548 | 0.6780 | 0.6623 |
+| **rounds + rated as they played (v2)** | **0.6518** | **0.6549** | **0.6765** | **0.6593** |
+| rounds + idle RD growth | 0.6544 | 0.6534 | 0.6785 | 0.6628 |
+
+- **Rounds as games.** A 3-0 and a 2-1 were the same win. Each round is now its own
+  Glicko-2 game in one rating period, so a sweep moves a rating further than a split.
+  Better than v1 on all twelve world-and-seed pairs (`compare:ladders` prints them
+  paired, since every policy plays the same seeds).
+- **Rated as they played.** An async opponent is a performance frozen when it was
+  played, and was rated as its owner's rating today. Players improve, so old rounds
+  carried a stronger label than whoever played them. v2 rates them at the owner's rating
+  when they played (`rating_before` of that side). On top of rounds, better on 9 of 12
+  pairs, and it loses the one world it does not win by 0.0002. An owner can no longer relabel rounds already banked by moving their
+  current rating.
+- **Idle RD growth: rejected.** Glicko-2's own step for a player who sat out, run at the
+  default volatility and a day per period, was better on 6 of 12 pairs - a coin flip -
+  and worse on average in three worlds of four, including the one where skill moves while
+  a player is away. It stays in `ranked.ts`
+  so it can be measured again.
+
+Three things v2 fixes that no simulation scores:
+
+- **Leaving a scenario early was free.** A short run voids the match, because a crash
+  and a quit write the same file, so quitting the second scenario after a bad first one
+  was the one exit that cost nothing. v2 allows one free void a week and after that
+  counts the round as lost. Honest early endings are about one run in 7,000
+  (`validate:duration`), so one a week covers them.
+- **A finished match nobody settled stayed open for ever.** The sweep forfeits expired
+  matches and rightly refuses one whose runs are in, and then nothing settled it. v2's
+  sweep settles it.
+- **The pool could not see the ladder.** find-match reads the newest 600 sides of any
+  rating, about half of them copies it then discards. v2 reads originals only, nearest
+  the caller's rating first (`ranked_pool_rounds`), and creates the match with its sides
+  in one transaction that also holds the one-open-match rule (`open_ranked_match`), so a
+  double click cannot open two.
+
+And one thing for the player: the match screen shows what every result would do to their
+rating before they play, computed by the function settlement uses.
+
+`npm run validate:ranked` re-derives the corpus numbers above and checks v2 beats v1 on
+every seed; `validate:ranked-boundaries` runs both new SQL functions and find-match,
+settle-match and abandon-match, unmodified, against Postgres, with nobody an admin.
 
 ### Rank tiers: Apogee's own
 

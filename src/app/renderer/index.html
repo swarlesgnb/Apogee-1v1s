@@ -1172,6 +1172,11 @@
     display: flex; justify-content: space-between; margin-top: 7px;
     font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
   }
+  .match-stakes {
+    display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 7px;
+    font-family: var(--mono); font-size: var(--t-xs); color: var(--ink-dim);
+  }
+  .match-stakes b { font-weight: 600; color: var(--ink); }
 
   /* ---------------------------------------------------------- to-do */
 
@@ -3538,6 +3543,7 @@
                 <div class="odds">
                   <div class="odds-bar" id="oddsBar"></div>
                   <div class="odds-labels"><span id="oddsYou"></span><span id="oddsThem"></span></div>
+                  <div class="match-stakes" id="matchStakes" hidden></div>
                 </div>
 
                 <div class="todo">

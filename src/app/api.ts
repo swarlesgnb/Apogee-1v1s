@@ -288,6 +288,13 @@ export interface FoundMatch {
   planting?: boolean;
   /** True when this is a match the player already had, handed back rather than created. */
   resumed?: boolean;
+  /** Which ranked engine created it: 2 for ranked v2, 1 or absent for a match from before. */
+  engine?: number;
+  /**
+   * What each result would do to this player's rating, for a contested v2 match: the
+   * server's own calculation, so the number shown is the number settlement applies.
+   */
+  stakes?: { result: string; change: number }[] | null;
   /**
    * Scenarios this player already has a run in for this match, known only for a match
    * recovered from the server. Without it a restart forgot which of the three were
@@ -740,6 +747,13 @@ export interface SettledMatch {
   ratingBefore: number;
   ratingAfter: number;
   ratingChange: number;
+  /** Ranked v2: which engine's rules settled it, and how the result was read. */
+  engine?: number;
+  ratingModel?: "match" | "rounds";
+  /** Ranked v2: the rating the opponent's rounds were played at, which is what was faced. */
+  opponentRating?: number;
+  /** Ranked v2: this void spent the week's one free early exit. */
+  freeAbandon?: { used: true; nextFreeAt: string | null } | null;
   rounds: {
     scenario: string;
     score: number;

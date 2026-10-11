@@ -3,7 +3,7 @@
  *
  * A ghost card's share code (post-ghost mints it) doubles as an invitation: anyone with it
  * races the sender's three live runs as a ghost of their own. This is the growth loop in
- * docs/overnight/mechanics.md ("Follow-up 1"): the sender needs to be a player, the
+ * docs/design/mechanics.md ("Follow-up 1"): the sender needs to be a player, the
  * recipient needs a library and a sign-in, and nothing either side does moves a rating.
  *
  * Scoring is ranked's (PLAN.md §3), not a raw-score race: each round is each side's delta

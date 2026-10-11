@@ -942,6 +942,26 @@ function renderUpdate(update) {
   }
 }
 
+/**
+ * What each result would do to the rating, from the server's stakes. Nothing
+ * is worked out here: the numbers are the server's, so what is shown is what applies.
+ */
+function renderStakes(stakes) {
+  const el = $("matchStakes");
+  if (!el) return;
+  if (!Array.isArray(stakes) || stakes.length === 0) {
+    el.hidden = true;
+    el.replaceChildren();
+    return;
+  }
+  el.hidden = false;
+  el.innerHTML = stakes
+    .map((s) => "<span>" + esc(s.result) + " <b>" + (s.change > 0 ? "+" : s.change < 0 ? "−" : "±") +
+      esc(String(Math.abs(s.change))) + "</b></span>")
+    .join("");
+  el.title = "Rating change for each result, rounds won to rounds lost";
+}
+
 function showBuild(build) {
   const el = $("buildStamp");
   if (!el) return;
@@ -9798,6 +9818,7 @@ function showRealMatch(match, data) {
       '<div style="flex:1;background:' + esc(me.tier.color) + ';opacity:.25"></div>';
     $("oddsYou").textContent = "unrated";
     $("oddsThem").textContent = "no rating change";
+    renderStakes(null);
   } else {
     // A rating does not identify a tier without the live population distribution.
     const oppTier = { color: "#b6c7dd" };
@@ -9813,6 +9834,8 @@ function showRealMatch(match, data) {
     $("oppAge").textContent =
       `stored rounds · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
       ` · ${match.poolSize} in the pool`;
+
+    renderStakes(match.stakes);
 
     const p = match.winProbability;
     if (Number.isFinite(p)) {

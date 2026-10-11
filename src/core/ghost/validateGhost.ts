@@ -1,7 +1,7 @@
 /**
  * Validate Ghost Mode against the real stats folder.
  *
- * Every number docs/overnight/mechanics.md quotes is re-derived here, through the code the
+ * Every number docs/design/mechanics.md quotes is re-derived here, through the code the
  * app runs, rather than carried over from the one-off script that first produced them:
  *
  *   - the corpus is really there, and is counted rather than assumed;

@@ -49,6 +49,8 @@ export interface RoundOutcome extends RoundSubmission {
   delta: number | null;
   counted: boolean;
   excludedReason?: string;
+  /** Left early and counted as lost rather than dropped (`abandonedRoundsLose`). */
+  forfeited?: boolean;
 }
 
 export interface SideOutcome {
@@ -69,6 +71,15 @@ export interface SettlementInput {
   opponentRounds: RoundSubmission[];
   /** Defaults to mean delta, which is what ghost matches were measured against. */
   format?: MatchFormat;
+  /**
+   * Count a round left before it finished as lost, instead of dropping it and voiding the
+   * match. Rounds format only.
+   *
+   * Dropping is right for a crash and wrong for a choice, and the file cannot tell them
+   * apart. Settlement decides which to assume (settle-match allows one void a week under v2);
+   * this only carries the decision out.
+   */
+  abandonedRoundsLose?: boolean;
 }
 
 /** One round of a rounds-format match, from the player's side. */
@@ -111,7 +122,11 @@ export function computeDelta(score: number, baseline: number): number | null {
  * stored, because that stored run set is exactly what the next player is matched
  * against.
  */
-export function settleSide(rounds: RoundSubmission[], format: MatchFormat = "mean-delta"): SideOutcome {
+export function settleSide(
+  rounds: RoundSubmission[],
+  format: MatchFormat = "mean-delta",
+  abandonedRoundsLose = false,
+): SideOutcome {
   const outcomes: RoundOutcome[] = rounds.map((round) => {
     if (round.verificationTier === "rejected") {
       return {
@@ -119,6 +134,18 @@ export function settleSide(rounds: RoundSubmission[], format: MatchFormat = "mea
         delta: null,
         counted: false,
         excludedReason: "run failed verification",
+      };
+    }
+
+    // Left early, where settlement has decided to treat that as a choice rather than a
+    // crash (`abandonedRoundsLose`): counted, and lost. Otherwise, the paragraph below.
+    if (round.abandoned && abandonedRoundsLose && format === "rounds") {
+      return {
+        ...round,
+        delta: null,
+        counted: true,
+        forfeited: true,
+        excludedReason: "left before the scenario finished, so the round is lost",
       };
     }
 
@@ -173,8 +200,8 @@ export function settleSide(rounds: RoundSubmission[], format: MatchFormat = "mea
 
 export function settleMatch(input: SettlementInput): Settlement {
   const format = input.format ?? "mean-delta";
-  const player = settleSide(input.playerRounds, format);
-  const opponent = settleSide(input.opponentRounds, format);
+  const player = settleSide(input.playerRounds, format, input.abandonedRoundsLose);
+  const opponent = settleSide(input.opponentRounds, format, input.abandonedRoundsLose);
   const voided = (voidReason: string): Settlement => ({
     player, opponent, verdict: "void", format, roundResults: null, voidReason, ratingWeight: 0,
   });
@@ -215,7 +242,13 @@ export function settleMatch(input: SettlementInput): Settlement {
     const roundResults: RoundResult[] = [];
     for (const [i, mine] of player.rounds.entries()) {
       if (!mine.counted) continue;
-      const theirs = opponent.rounds[i].score;
+      const other = opponent.rounds[i];
+      if (mine.forfeited || other.forfeited) {
+        // A partial run's score is not a score: whoever left loses the round outright.
+        roundResults.push(mine.forfeited && other.forfeited ? "tied" : mine.forfeited ? "lost" : "won");
+        continue;
+      }
+      const theirs = other.score;
       roundResults.push(mine.score > theirs ? "won" : mine.score < theirs ? "lost" : "tied");
     }
 

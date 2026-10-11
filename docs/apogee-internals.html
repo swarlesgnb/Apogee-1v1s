@@ -1232,6 +1232,33 @@ leg 2 void                 replay (a playoff draw replays too)</pre>
         only ones a match is ever played on.
       </p>
 
+      <h3>Ranked v2</h3>
+      <p>
+        The second rating engine, tested on the live ladder behind admin-only functions and
+        then made the ladder: <code>find-match</code>, <code>settle-match</code> and
+        <code>abandon-match</code> run it for everybody. Every match records the engine that
+        created it, and is settled, forfeited and swept by that engine's rules, so a match
+        from before the switch, a duel and a tournament leg all come out as they would have
+        under v1.
+      </p>
+      <p>
+        What changes: each round counts as its own game, so a 3-0 moves a rating further
+        than a 2-1; an async opponent is rated at the rating they played those rounds at,
+        not today's; leaving a scenario early voids for free once a week and loses the round
+        after that; a finished match nobody settled is settled by the sweep instead of
+        staying open; the pool is read nearest-rating-first; the match and its sides are
+        created in one transaction; and the match screen shows what each result would do to
+        the rating before anybody plays.
+      </p>
+      <p class="note">
+        <span class="note-label">Measured</span>
+        <code>npm run compare:ladders</code> runs the production matchmaking and rating code
+        over a simulated async ladder and scores each policy by how well it predicts
+        results. v2 beats v1 in all four worlds it tries. Glicko-2's idle RD growth, the
+        obvious third change, was a coin flip (better on 6 of 12 seeded runs) and was left out. PLAN.md §4
+        has the table.
+      </p>
+
       <h3>Timestamps are the sharp edge</h3>
       <p>
         KovaaK's writes a bare local wall clock into the filename and records no offset

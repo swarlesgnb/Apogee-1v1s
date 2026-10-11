@@ -20,7 +20,10 @@
 
 import { type SupabaseClient } from "jsr:@supabase/supabase-js@2";
 
-import { forfeitMatch, HttpError } from "./apogee.ts";
+import { HttpError } from "./apogee.ts";
+// rankedV2.ts imports afterLegSettled from here in turn. Both are only called, never read
+// at load, so the cycle is harmless.
+import { forfeitMatch } from "./rankedV2.ts";
 
 import { recordResult } from "../../../src/core/tournament/tournament.ts";
 import type { Tournament } from "../../../src/core/tournament/types.ts";
@@ -31,7 +34,6 @@ import {
   type LegSummary,
   type TournamentView,
 } from "../../../src/core/tournament/view.ts";
-import { updateRating } from "../../../src/core/rating/glicko2.ts";
 
 export interface TournamentRow {
   id: string;
@@ -303,7 +305,7 @@ export async function reconcile(admin: SupabaseClient, tournamentId: string): Pr
     let status: string = raw.matches?.status;
     const expiresAt = raw.matches?.expires_at ? new Date(raw.matches.expires_at).getTime() : null;
     if ((status === "open" || status === "awaiting_runs") && expiresAt !== null && expiresAt < Date.now()) {
-      await forfeitMatch(admin, raw.match_id, raw.player_id, updateRating);
+      await forfeitMatch(admin, raw.match_id, raw.player_id);
       const { data: again } = await admin.from("matches").select("status").eq("id", raw.match_id).maybeSingle();
       status = again?.status ?? status;
     }

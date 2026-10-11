@@ -4,7 +4,7 @@
  * The ladder needs a second player and, at launch, there is not one (PLAN.md §15). A ghost
  * match needs nobody: three scenarios from the player's own KovaaK's library, each raced
  * against a score frozen from an earlier session of theirs, scored the way a ranked match
- * is. It moves a quest and a streak and never a rating (docs/overnight/mechanics.md).
+ * is. It moves a quest and a streak and never a rating (docs/design/mechanics.md).
  *
  * Why the library and not the season pool: the pool is Apogee's own scenarios, which
  * nobody outside the project has played, so a pool-only ghost has nothing to be built
@@ -65,7 +65,7 @@ export interface IncomingRun {
   at: number;
   /**
    * Seconds of play, `runDurationSeconds` over one parse: the start and the end have to
-   * be read in the same frame (CLAUDE.md, "Timestamps are the sharp edge"). Null when it
+   * be read in the same frame (docs/apogee-internals.html, on timestamps). Null when it
    * cannot be derived.
    */
   durationSeconds: number | null;
