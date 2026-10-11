@@ -12,8 +12,12 @@
   if (!root) return;
   const bridge = window.apogee || {};
   const e = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const pct = (v) => (Number.isFinite(v) ? `${v > 0 ? '+' : v < 0 ? '−' : '±'}${Math.abs(v * 100).toFixed(1)}%` : '–');
-  const tone = (v) => (!Number.isFinite(v) ? '' : v > 0.0005 ? 'up' : v < -0.0005 ? 'down' : '');
+  /** A raw score as KovaaK's prints it: whole numbers plain, otherwise one decimal. */
+  const fmt = (v) => {
+    if (!Number.isFinite(v)) return '–';
+    const digits = Math.abs(v - Math.round(v)) < 0.05 ? 0 : 1;
+    return v.toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  };
   const span = (ms) => {
     const m = Math.max(1, Math.round(ms / 60000));
     const d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60), mm = m % 60;
@@ -28,7 +32,7 @@
       <div>
         <div class="mode-tag">Compete · Unrated</div>
         <h1>Crowns</h1>
-        <p>One Crown for each category and band. Play its three scenarios; beat the holder's score against your own baselines and it is yours until somebody beats you. Nothing is rated.</p>
+        <p>One Crown for each category and band. Play its three scenarios; win more of the three rounds than the holder, raw score against raw score, and it is yours until somebody out-rounds you. Nothing is rated.</p>
       </div>
       <svg class="cr-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" aria-hidden="true"><path d="M4 17.5h16L21 7l-5 4.2L12 4.5 8 11.2 3 7Z"/><path d="M4 20.5h16"/></svg>
     </div>
@@ -112,20 +116,23 @@
     const held = c.status === 'held';
     const ends = c.reignEndsAt ? Date.parse(c.reignEndsAt) - now() : null;
     const detail = open === c.key;
-    const history = (c.history || []).map((h) => `<li>${e(h.holder)} · ${e(pct(h.bar))} · ${h.defences} defence${h.defences === 1 ? '' : 's'} · ${
-      h.endReason === 'dethroned' ? `taken by ${e(h.endedBy || 'a challenger')}` : h.endReason === 'lapsed' ? 'held to the 7-day limit' : 'reset'}</li>`).join('');
+    const history = (c.history || []).map((h) => `<li>${e(h.holder)} · ${h.defences} defence${h.defences === 1 ? '' : 's'} · ${
+      h.endReason === 'dethroned' ? `taken by ${e(h.endedBy || 'a challenger')}${h.takenOn ? `, ${e(h.takenOn)} on rounds` : ''}` : h.endReason === 'lapsed' ? 'held to the 7-day limit' : 'reset'}</li>`).join('');
     return `<article class="cr-card ${held ? 'held' : 'vacant'} ${c.holder?.you ? 'yours' : ''} ${c.action.kind === 'playing' ? 'playing' : ''}" data-key="${e(c.key)}" aria-label="${e(c.name)}">
       <div class="cr-card-top">${GLYPH(held)}<span>${e(c.band)}</span>${c.live > 0 ? `<span class="cr-pill live" title="Challenges being played now">${c.live} playing</span>` : ''}</div>
       <div class="cr-holder" title="${e(c.holder?.name || 'Vacant')}">${held ? e(c.holder.name) + (c.holder.you ? ' (you)' : '') : 'Vacant'}</div>
       ${held
-        ? `<div class="cr-bar"><b class="${tone(c.bar)}">${e(pct(c.bar))}</b><span>to beat</span></div>
+        ? `${c.holder.you
+             ? `<div class="cr-bar rounds"><b>Your ${c.rounds}</b><span>scores are the bar</span></div>`
+             : `<div class="cr-bar rounds" title="${e(c.toTake || '')}"><b>Out-round</b><span>${c.rounds} sealed scores</span></div>`}
            <div class="cr-meta"><strong>${e(span(now() - Date.parse(c.heldSince)))}</strong> held · <strong>${c.defences}</strong> defence${c.defences === 1 ? '' : 's'}<br>
-             <span class="cr-pill ${c.tier === 'verified' ? 'verified' : ''}" title="The weakest verification tier among the holder's three runs">${c.tier === 'verified' ? 'Verified' : 'Consistent'}</span>${c.provisional ? ' <span class="cr-pill" title="At least one round used a provisional baseline">provisional</span>' : ''}
+             <span class="cr-pill ${c.tier === 'verified' ? 'verified' : ''}" title="The weakest verification tier among the holder's three runs">${c.tier === 'verified' ? 'Verified' : 'Consistent'}</span>
              ${ends != null && ends > 0 ? ` · lapses in ${e(span(ends))}` : ''}</div>`
         : `<div class="cr-meta">${c.scenarios ? 'Three drawn for this cycle. The first qualifying run set to settle takes it.' : 'Nothing drawn yet. The first claim draws its three.'}</div>`}
       ${actionButton(c)}
       <button type="button" class="cr-more" data-cr="toggle" aria-expanded="${detail}">${detail ? 'Less' : 'Scenarios and history'}</button>
       ${detail ? `<div class="cr-detail">
+        ${c.toTake ? `<span class="k">To take it</span><span>${e(c.toTake)}</span>` : ''}
         <span class="k">Scenarios</span>
         ${c.scenarios ? `<ol>${c.scenarios.map((s) => `<li>${e(s)}</li>`).join('')}</ol>` : '<span>Drawn by the first claim.</span>'}
         <span class="k">Previous holders</span>
@@ -155,7 +162,8 @@
     const held = board.crowns.filter((c) => c.status === 'held').length;
     els.board.innerHTML = `<div class="cr-board" role="list" aria-label="Crowns by category and band">${head}${rows}</div>
       <p class="cr-rules"><b>${held} of ${board.crowns.length}</b> Crowns held${board.holding ? `, <b>${board.holding}</b> by you` : ''}.
-        A challenger needs a higher match score than the holder; a draw is a defence. Every run must be Verified or Consistent.
+        A challenger takes a Crown by winning more of the three rounds than the holder, raw score against raw score; a tie on rounds is a defence.
+        The holder's scores stay sealed until your run on each scenario lands. Every run must be Verified or Consistent.
         One challenge per Crown every ${e(board.rules.cooldownHours)} hours. A reign lasts at most ${e(board.rules.reignCapDays)} days, then the Crown falls vacant on three new scenarios.</p>`;
   }
 
@@ -177,8 +185,14 @@
     el.id = 'arenaResult';
     const kind = crown ? crown.outcome : note.race?.verdict === 'win' ? 'took' : 'race';
     el.className = `cr-result ${e(kind)}`;
-    const figures = crown && crown.challengerScore != null
-      ? `<span class="cr-figures">you ${e(pct(crown.challengerScore))}${crown.holderScore != null ? ` · ${e(crown.holderName || 'holder')} ${e(pct(crown.holderScore))}` : ''}${crown.defences != null && crown.outcome === 'defended' ? ` · ${crown.defences} defence${crown.defences === 1 ? '' : 's'} this reign` : ''}</span>`
+    // Each round's two raw scores, as the decision used them. None of the holder's numbers
+    // is sealed by now: every round of the challenger's has landed.
+    const RESULT = { won: 'Won', lost: 'Lost', tied: 'Level' };
+    const figures = crown && crown.rounds
+      ? `<div class="cr-rounds" role="table" aria-label="Rounds against ${e(crown.holderName || 'the holder')}">
+          <div class="head" role="row"><span>Scenario</span><span>You</span><span>${e(crown.holderName || 'Holder')}</span><span>Round</span></div>
+          ${crown.rounds.map((r) => `<div role="row"><span class="name" title="${e(r.scenario)}">${e(r.scenario)}</span><b>${e(fmt(r.you))}</b><b>${e(fmt(r.holder))}</b><span class="res ${e(r.result)}">${RESULT[r.result] || ''}</span></div>`).join('')}
+        </div>${crown.defences != null && crown.outcome === 'defended' ? `<span class="cr-figures">${crown.defences} defence${crown.defences === 1 ? '' : 's'} this reign</span>` : ''}`
       : '';
     el.innerHTML = `${GLYPH(kind === 'took')}
       <h3>${e(note.headline)}</h3>
@@ -206,7 +220,7 @@
       const m = result.match;
       say(m.crown?.claim
         ? `Claiming the ${m.crown.name}. Play the three on the Play screen; the first qualifying run set to settle takes it.`
-        : `Challenging ${m.crown?.holderName || 'the holder'} for the ${m.crown?.name || 'Crown'}. Beat ${pct(m.crown?.bar)} against your own baselines.`);
+        : `Challenging ${m.crown?.holderName || 'the holder'} for the ${m.crown?.name || 'Crown'}. Win more of the ${m.crown?.rounds || 3} rounds than they did, raw score against raw score; each of their scores opens when your run on it lands.`);
       if (typeof window.openScreen === 'function') window.openScreen('queue');
     } finally {
       busy = null;

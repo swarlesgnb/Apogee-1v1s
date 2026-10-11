@@ -7857,13 +7857,15 @@ function renderSettled(s) {
   // run-on mono string with a middot in it.
   $("ratingMove").innerHTML = s.tournament
     ? 'unrated<span class="after">tournament</span>'
+    : s.arena
+    ? `unrated<span class="after">${s.arena.kind === "race" ? "race" : "crown"}</span>`
     : isSeeding
     ? 'not rated<span class="after">seeding</span>'
     : isVoid ? 'no change<span class="after">void</span>'
     : !Number.isFinite(change) ? 'unavailable<span class="after">rating change</span>'
     : `${change >= 0 ? "+" : "−"}${Math.abs(change)}` +
       `<span class="after">rating ${esc(Number.isFinite(s.ratingAfter) ? String(s.ratingAfter) : "unavailable")}</span>`;
-  $("ratingMove").style.color = isSeeding || isVoid || s.tournament
+  $("ratingMove").style.color = isSeeding || isVoid || s.tournament || s.arena
     ? "var(--ink-dim)"
     : change > 0 ? "var(--up)" : change < 0 ? "var(--down)" : "var(--ink-mid)";
 

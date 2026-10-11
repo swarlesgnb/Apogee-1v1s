@@ -33,39 +33,48 @@
 
   // ---- the live bar ----------------------------------------------------------------
 
-  /**
-   * Half the bar is this much of a margin, on a square-root scale. A three-round match score
-   * spreads about 4.5 points either way (docs/overnight/mechanics.md), so most leads are a
-   * point or two; drawn linearly they were a sliver, and eight points is decisive.
-   */
-  const SCALE = 0.08;
+  /** A raw score as KovaaK's prints it: whole numbers plain, otherwise one decimal. */
+  const fmt = (v) => (Number.isFinite(v)
+    ? v.toLocaleString('en-US', { maximumFractionDigits: Math.abs(v - Math.round(v)) < 0.05 ? 0 : 1, minimumFractionDigits: Math.abs(v - Math.round(v)) < 0.05 ? 0 : 1 })
+    : '–');
+  const RESULT = { won: 'Won', lost: 'Lost', tied: 'Level' };
 
+  /**
+   * The bar is the round tally: one cell per round, filled in as each is decided on raw
+   * score. A round the other side has landed and you have not is drawn sealed.
+   */
   function liveHtml(view) {
     const seen = opened.get(view.matchId) || new Set();
     const fresh = new Set();
     const lanes = view.rounds.map((r, i) => {
-      const you = r.you.landed ? (r.you.counted ? `<span class="${tone(r.you.delta)}">${e(pct(r.you.delta))}</span>` : '<span class="wait">not counted</span>') : '<span class="wait">to play</span>';
+      const you = r.you.landed
+        ? (r.you.counted
+          ? `<b>${e(fmt(r.you.score))}</b>${Number.isFinite(r.you.delta) ? `<small class="${tone(r.you.delta)}" title="Against your usual: information, not the result">${e(pct(r.you.delta))}</small>` : ''}`
+          : '<span class="wait">not counted</span>')
+        : '<span class="wait">to play</span>';
       let them;
       if (!r.them.landed) them = `<span class="wait">${view.kind === 'crown' ? '–' : 'not yet'}</span>`;
       else if (r.them.sealed) them = '<span class="sealed" title="Opens when your run on this scenario lands">sealed</span>';
       else if (r.them.counted === false) them = '<span class="wait">not counted</span>';
       else {
-        them = `<span class="${tone(r.them.delta)}">${e(pct(r.them.delta))}</span>`;
+        them = `<b>${e(fmt(r.them.score))}</b>`;
         if (!seen.has(i)) fresh.add(i);
       }
-      return `<div class="ar-lane ${fresh.has(i) ? 'fresh' : ''}"><span class="name" title="${e(r.scenario)}">${e(r.scenario)}</span><span class="you">${you}</span><span class="them">${them}</span></div>`;
+      const result = r.result ? `<span class="ar-res ${r.result}">${RESULT[r.result]}</span>` : '<span class="ar-res"></span>';
+      return `<div class="ar-lane ${fresh.has(i) ? 'fresh' : ''}"><span class="name" title="${e(r.scenario)}">${e(r.scenario)}</span><span class="you">${you}</span><span class="them">${them}</span>${result}</div>`;
     }).join('');
     for (const i of fresh) seen.add(i);
     opened.set(view.matchId, seen);
-    const m = Number.isFinite(view.margin) ? Math.max(-SCALE, Math.min(SCALE, view.margin)) : 0;
-    const width = Math.sqrt(Math.abs(m) / SCALE) * 50;
-    const left = m >= 0 ? 50 : 50 - width;
-    const themLabel = view.kind === 'crown' ? `${view.them.name}'s run set` : view.them.name;
+    const t = view.tally || { won: 0, lost: 0, tied: 0 };
+    const decided = t.won + t.lost + t.tied;
+    const lead = t.won > t.lost ? 'up' : t.won < t.lost ? 'down' : '';
+    const cells = view.rounds.map((r) => `<i class="${r.result || (r.them.sealed ? 'sealed' : 'open')}" title="${e(r.scenario)}"></i>`).join('');
+    const themLabel = view.kind === 'crown' ? `${view.them.name}'s scores` : view.them.name;
     return `<div class="ar-live" role="group" aria-label="${e(view.title)}, live">
-      <div class="ar-live-head"><strong>${e(view.title)}</strong><span>${view.kind === 'crown' ? 'each of the holder’s rounds opens when yours lands' : 'each of their rounds opens when yours lands'}</span></div>
-      <div class="ar-tug-labels"><span>You${view.you.matchScore != null ? ` <b>${e(pct(view.you.matchScore))}</b>` : ''}</span><b class="${tone(view.margin)}">${Number.isFinite(view.margin) ? `${e(pct(view.margin))} over ${view.marginRounds}` : 'no round open yet'}</b><span>${e(themLabel)}${view.them.matchScore != null ? ` <b>${e(pct(view.them.matchScore))}</b>` : ''}</span></div>
-      <div class="ar-tug" role="img" aria-label="${e(view.status)}"><i class="${m >= 0 ? 'ahead' : 'behind'}" style="left:${left}%;width:${width}%"></i></div>
-      <div class="ar-lanes"><div class="ar-lanes-head"><span>Scenario</span><span>You</span><span>${view.kind === 'crown' ? 'Holder' : 'Them'}</span></div>${lanes}</div>
+      <div class="ar-live-head"><strong>${e(view.title)}</strong><span>${view.kind === 'crown' ? 'each of the holder’s scores opens when your run on it lands' : 'each of their scores opens when your run on it lands'}</span></div>
+      <div class="ar-tug-labels"><span>You <b>${t.won}</b></span><b class="${lead}">${decided ? `${t.won}–${t.lost}${t.tied ? `, ${t.tied} level` : ''} on rounds` : 'no round decided yet'}</b><span>${e(themLabel)} <b>${t.lost}</b></span></div>
+      <div class="ar-rounds" role="img" aria-label="${e(view.status)}">${cells}</div>
+      <div class="ar-lanes"><div class="ar-lanes-head"><span>Scenario</span><span>You</span><span>${view.kind === 'crown' ? 'Holder' : 'Them'}</span><span>Round</span></div>${lanes}</div>
       <p class="ar-status">${e(view.status)}</p>
     </div>`;
   }

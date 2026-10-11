@@ -119,8 +119,10 @@ app.whenReady().then(async () => {
   await run(`document.querySelector('.scroll').scrollTop=0;true`);
   assert.equal(await run(`document.querySelectorAll('#crownsRoot .ar-lane').length`), 3, 'three lanes');
   assert.equal(await run(`document.querySelectorAll('#crownsRoot .ar-lane .sealed').length`), 1, 'the holder round you have not played is sealed');
-  assert.ok(!(await run(`document.querySelector('#crownsRoot .ar-lane .sealed').closest('.ar-lane').textContent.includes('2.9')`)), 'and shows no number');
-  assert.ok(await run(`document.querySelector('#crownsRoot .ar-tug i').classList.contains('ahead')`), 'ahead on the revealed rounds');
+  assert.ok(!(await run(`document.querySelector('#crownsRoot .ar-lane .sealed').closest('.ar-lane').textContent.includes('941')`)), 'and shows no number');
+  assert.ok(await run(`!/941/.test(document.getElementById('crownsRoot').textContent)`), "the sealed holder score is nowhere on the screen");
+  assert.ok(await run(`document.querySelectorAll('#crownsRoot .ar-rounds i.won').length===1 && document.querySelectorAll('#crownsRoot .ar-rounds i.lost').length===1`), 'one round won and one lost on raw score');
+  assert.ok(await run(`/3,120/.test(document.querySelector('#crownsRoot .ar-lane').textContent)`), "an opened round shows the holder's raw score");
   await settle(); await noNaN('live crown');
   await shot('crowns-3-challenge-live');
 
@@ -144,7 +146,7 @@ app.whenReady().then(async () => {
   await wait(300);
   await run(`document.querySelector('.scroll').scrollTop=0;true`);
   assert.equal(await run(`document.querySelectorAll('#crownsRoot .ar-lane .sealed').length`), 1, "Wren's round you have not played is sealed");
-  assert.ok(!(await run(`document.querySelector('#crownsRoot .ar-lane .sealed').closest('.ar-lane').textContent.includes('2.7')`)), 'and carries no number');
+  assert.ok(!(await run(`document.querySelector('#crownsRoot .ar-lane .sealed').closest('.ar-lane').textContent.includes('1,530')`)), 'and carries no number');
   assert.ok(await run(`document.querySelector('#crownsRoot .ar-status').textContent.includes('each opens when yours lands')`), 'the status names the sealed round');
   await settle(); await noNaN('live race');
   await shot('crowns-5-race-live');
@@ -179,6 +181,7 @@ app.whenReady().then(async () => {
     await wait(300);
     assert.ok(await run(`document.getElementById('arenaResult')?.classList.contains(${JSON.stringify(kind)})`), `the ${kind} result is drawn`);
     assert.ok(await run(`document.getElementById('arenaResult').textContent.includes(${JSON.stringify(settled.arena.headline)})`), 'with its headline');
+    assert.equal(await run(`document.querySelectorAll('#arenaResult .cr-rounds > div:not(.head)').length`), 3, 'and each round with both raw scores');
     await run(`document.querySelector('.scroll').scrollTop=0;true`);
     await settle();
     await fits(kind);
