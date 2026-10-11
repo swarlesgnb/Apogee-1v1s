@@ -33,11 +33,11 @@
 };
   var NAMES = {"shadow":"Shadow","flag":"Flag","daily":"Daily","link":"Challenge link","crown":"Crown","draft":"Draft","race":"Live race"};
   var LINES = {
-  "shadow": "A typical player's day to beat when nobody is in your band. Unrated.",
-  "flag": "Your set stays planted as an open challenge, and settles when someone answers.",
+  "shadow": "A percentile score to beat on each scenario when nobody is in your band. Unrated.",
+  "flag": "Your banked rounds stay in the pool, and you hear how they did when someone plays them.",
   "daily": "One draw a day, the same for everyone.",
   "link": "A link that opens a duel or a ghost race against you.",
-  "crown": "Hold a category and band until someone beats your set.",
+  "crown": "Hold a category and band until someone takes more rounds from your set.",
   "draft": "Pick and ban scenarios before the match starts.",
   "race": "Both players at once, every round revealed as it lands."
 };

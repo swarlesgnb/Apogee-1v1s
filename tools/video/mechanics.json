@@ -4,7 +4,7 @@
     {
       "id": "shadow",
       "name": "Shadow",
-      "line": "A typical player's day to beat when nobody is in your band. Unrated.",
+      "line": "A percentile score to beat on each scenario when nobody is in your band. Unrated.",
       "card": {
         "glyph": "shadow",
         "eyebrow": "New in Apogee",
@@ -12,7 +12,7 @@
           "Shadow"
         ],
         "sub": [
-          "A typical player's day to beat when nobody is in your band. Unrated."
+          "A percentile score to beat on each scenario when nobody is in your band. Unrated."
         ],
         "rule": true
       },
@@ -27,7 +27,7 @@
             "Shadow"
           ],
           "sub": [
-            "A typical player's day to beat when nobody is in your band. Unrated."
+            "A percentile score to beat on each scenario when nobody is in your band. Unrated."
           ]
         }
       },
@@ -35,7 +35,7 @@
         "do": "caption",
         "index": "New",
         "text": "Shadow",
-        "sub": "A typical player's day to beat when nobody is in your band. Unrated."
+        "sub": "A percentile score to beat on each scenario when nobody is in your band. Unrated."
       },
       "stills": {
         "title16x9": "assets/brand/motion/shadow/title-16x9.png",
@@ -46,7 +46,7 @@
     {
       "id": "flag",
       "name": "Flag",
-      "line": "Your set stays planted as an open challenge, and settles when someone answers.",
+      "line": "Your banked rounds stay in the pool, and you hear how they did when someone plays them.",
       "card": {
         "glyph": "flag",
         "eyebrow": "New in Apogee",
@@ -54,7 +54,7 @@
           "Flag"
         ],
         "sub": [
-          "Your set stays planted as an open challenge, and settles when someone answers."
+          "Your banked rounds stay in the pool, and you hear how they did when someone plays them."
         ],
         "rule": true
       },
@@ -69,7 +69,7 @@
             "Flag"
           ],
           "sub": [
-            "Your set stays planted as an open challenge, and settles when someone answers."
+            "Your banked rounds stay in the pool, and you hear how they did when someone plays them."
           ]
         }
       },
@@ -77,7 +77,7 @@
         "do": "caption",
         "index": "New",
         "text": "Flag",
-        "sub": "Your set stays planted as an open challenge, and settles when someone answers."
+        "sub": "Your banked rounds stay in the pool, and you hear how they did when someone plays them."
       },
       "stills": {
         "title16x9": "assets/brand/motion/flag/title-16x9.png",
@@ -172,7 +172,7 @@
     {
       "id": "crown",
       "name": "Crown",
-      "line": "Hold a category and band until someone beats your set.",
+      "line": "Hold a category and band until someone takes more rounds from your set.",
       "card": {
         "glyph": "crown",
         "eyebrow": "New in Apogee",
@@ -180,7 +180,7 @@
           "Crown"
         ],
         "sub": [
-          "Hold a category and band until someone beats your set."
+          "Hold a category and band until someone takes more rounds from your set."
         ],
         "rule": true
       },
@@ -195,7 +195,7 @@
             "Crown"
           ],
           "sub": [
-            "Hold a category and band until someone beats your set."
+            "Hold a category and band until someone takes more rounds from your set."
           ]
         }
       },
@@ -203,7 +203,7 @@
         "do": "caption",
         "index": "New",
         "text": "Crown",
-        "sub": "Hold a category and band until someone beats your set."
+        "sub": "Hold a category and band until someone takes more rounds from your set."
       },
       "stills": {
         "title16x9": "assets/brand/motion/crown/title-16x9.png",

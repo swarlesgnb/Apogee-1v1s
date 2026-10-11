@@ -62,7 +62,7 @@ export const MECHANICS: readonly Mechanic[] = [
   {
     id: "shadow",
     name: "Shadow",
-    line: "A typical player's day to beat when nobody is in your band. Unrated.",
+    line: "A percentile score to beat on each scenario when nobody is in your band. Unrated.",
     // An eclipse: a body and its equal passing behind it. The shadowed crescent is filled
     // because two outlined circles read as "overlap", not "shadow", at 16px.
     icon:
@@ -79,7 +79,7 @@ export const MECHANICS: readonly Mechanic[] = [
   {
     id: "flag",
     name: "Flag",
-    line: "Your set stays planted as an open challenge, and settles when someone answers.",
+    line: "Your banked rounds stay in the pool, and you hear how they did when someone plays them.",
     icon: '<path d="M7 21V3.5"/><path d="M7 4.5h12l-3 4 3 4H7"/><path d="M4.5 21h5"/>',
     emblem:
       face("M31 21h21l-5 7H31Z", 0.48, false) +
@@ -124,7 +124,7 @@ export const MECHANICS: readonly Mechanic[] = [
   {
     id: "crown",
     name: "Crown",
-    line: "Hold a category and band until someone beats your set.",
+    line: "Hold a category and band until someone takes more rounds from your set.",
     icon: '<path d="M4.5 17 3 7.5l5 3.5 4-6 4 6 5-3.5L19.5 17Z"/><path d="M5 20.5h14"/>',
     emblem:
       face("M25 49 22 29l9.5 7L40 23l8.5 13 9.5-7-3 20Z", 0.28) +
