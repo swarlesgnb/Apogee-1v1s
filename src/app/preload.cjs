@@ -70,6 +70,13 @@ contextBridge.exposeInMainWorld("apogee", {
   // ---- matches -----------------------------------------------------------
   /** Ask the server for an opponent. Returns { match } or { error }. */
   findMatch: (category, pool) => ipcRenderer.invoke("apogee:findMatch", { category, pool }),
+  /**
+   * Shadows and Flags: what queueing `category` would do, your Flags and your Shadow ladder.
+   * `ack` lists answered Flags already shown, so each is announced once. Resolves { board }.
+   */
+  queueBoard: (args) => ipcRenderer.invoke("apogee:queueBoard", args ?? {}),
+  /** The board, pushed on launch, on focus and after every settled match. */
+  onQueueBoard: (handler) => subscribe("apogee:queueBoard", handler),
 
   /**
    * Derive thresholds for a scenario from its KovaaK's leaderboard.
