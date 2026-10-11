@@ -319,19 +319,16 @@ export interface FoundMatch {
    * first against nobody, and `opponentName` answers it with the same three afterwards.
    */
   tournament?: TournamentLeg | null;
-  /** The synthetic opponent of a match the pool had nobody for (fleet/queue). Never its score. */
+  /** The synthetic opponent of a match the pool had nobody for (fleet/queue). Never its scores. */
   shadow?: ShadowInfo | null;
-  /** The Flag this match will plant, or the open Flag it answers. */
-  flag?: { willPlant?: boolean; answering?: boolean; band?: string; category?: string; ttlDays?: number; line: string } | null;
 }
 
 export interface ShadowInfo {
   percentile: number;
-  /** "a 53rd-percentile day". */
+  /** "a 58th-percentile score on each". */
   label: string;
   rung: number;
   ordinal: number;
-  skill: string;
   synthetic: true;
 }
 
@@ -345,32 +342,17 @@ export interface TournamentLeg {
   opponentName: string;
 }
 
-/**
- * Queue for a match.
- *
- * `pool` names the window of the season's own pool the match is drawn from. It comes from
- * the snapshot rather than being assumed here, because the season decides it - and it is a
- * window index rather than a difficulty name so that renaming a window is a display change
- * and never a change to what the server resolves.
- */
 /* ------------------------------------------------------------ shadows and flags ---- */
 
-export interface QueueBoardFlag {
-  id: string;
+/** Somebody played your banked rounds, and the match settled. Unrated for you. */
+export interface BankNews {
+  matchId: string;
+  settledAt: string;
+  by: string;
   category: string;
-  band: string;
-  status: "open" | "answered" | "expired";
-  plantedAt: string;
-  expiresAt: string;
-  daysLeft: number;
-  answeredAt: string | null;
-  answeredBy: string | null;
-  /** The planter's verdict, once answered. */
-  verdict: "win" | "loss" | "draw" | null;
-  ratingChange: number | null;
-  yourScore: number | null;
-  theirScore: number | null;
-  seen: boolean;
+  theirResult: "win" | "loss" | "draw" | null;
+  /** Rounds each way, when the raw scores say so unambiguously. */
+  tally: { theirs: number; yours: number; tied: number } | null;
   line: string;
 }
 
@@ -381,35 +363,44 @@ export interface QueueBoard {
     category: string;
     window: number;
     band: string;
-    outcome: "shadow" | "opponent" | "live" | "ineligible";
+    outcome: "shadow" | "plant" | "opponent" | "live" | "ineligible";
     opponents?: number;
     shadow?: ShadowInfo;
-    flag?: { willPlant: boolean; band: string; category: string; ttlDays: number; line: string };
-    measured: { full: number; some: number; total: number };
+    /** Scenarios in this category the next Shadow has a committed score on, of `total`. */
+    scored: number;
+    total: number;
     line: string;
   } | null;
   shadow: {
     next: ShadowInfo;
-    placement: { estimate: number; decided: number; wins: number; losses: number; draws: number } | null;
-    streak: number;
-    played: number;
-    recent: { ordinal: number; percentile: number; label: string; result: string; decidedAt: string | null }[];
+    standing: { highestBeaten: number | null; lostAbove: number | null; roundsWon: number; roundsContested: number; streak: number; played: number };
+    recent: { ordinal: number; percentile: number; label: string; result: string; tally: string | null; decidedAt: string | null }[];
   };
   activeShadow: (ShadowInfo & { matchId: string }) | null;
-  flags: QueueBoardFlag[];
-  /** Answered flags the planter has not been told about yet. */
-  news: string[];
+  /** Unread news about your banked rounds, newest first. */
+  news: BankNews[];
+  /** The last week of it, read or not, for the panel. */
+  recentBank: BankNews[];
+  /** The newest settledAt in `news`: send it back as `ack` once shown. */
+  newsThrough: string | null;
 }
 
 /**
- * The queue screen's read: what queueing would do, your Flags and your Shadow ladder.
- *
- * `ack` marks answered-flag news as seen, so a result is announced once.
+ * The queue screen's read: what queueing would do, your Shadow ladder, and who played your
+ * banked rounds. `ack` (a `newsThrough`) marks that news read, so it is said once.
  */
-export function fetchQueueBoard(request: { category?: string; window?: number; ack?: string[] }): Promise<QueueBoard> {
+export function fetchQueueBoard(request: { category?: string; window?: number; ack?: string }): Promise<QueueBoard> {
   return callFunction<QueueBoard>("queue-board", request);
 }
 
+/**
+ * Queue for a match.
+ *
+ * `pool` names the window of the season's own pool the match is drawn from. It comes from
+ * the snapshot rather than being assumed here, because the season decides it - and it is a
+ * window index rather than a difficulty name so that renaming a window is a display change
+ * and never a change to what the server resolves.
+ */
 export function findMatch(
   category: string,
   pool: { window: number },
@@ -807,10 +798,14 @@ export interface SettledMatch {
   rated?: boolean;
   /** The fixture this was a leg of, when it was one. */
   tournament?: { id: string; name: string; label: string; leg: 1 | 2 } | null;
-  /** A match against a Shadow: how it went. Unrated whatever the verdict. */
-  shadow?: (ShadowInfo & { verdict: "win" | "loss" | "draw" | "void" | "forfeit" | null; yourScore: number | null; shadowScore: number | null; comparable?: number; rounds?: number }) | null;
-  /** The Flag a Shadow match planted, or the Flag this answer settled. */
-  flag?: { id?: string; status?: string; answered?: boolean; band?: string; category?: string; expiresAt?: string; line: string } | null;
+  /** A match against a Shadow: how it went on rounds. Unrated whatever the verdict. */
+  shadow?: (ShadowInfo & {
+    verdict: "win" | "loss" | "draw" | "void" | "forfeit" | null;
+    tally: { won: number; lost: number; tied: number } | null;
+    contested?: number;
+    rounds?: number;
+    scores?: (number | null)[];
+  }) | null;
   /**
    * Who it was against, so the result can offer a rematch.
    *

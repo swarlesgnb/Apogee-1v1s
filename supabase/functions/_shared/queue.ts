@@ -411,11 +411,14 @@ export async function queueBoard(admin: SupabaseClient, playerId: string, body: 
     }
   }
 
-  const [records, news, liveId] = await Promise.all([
+  // The last week whether read or not, for the panel; unread is what the toast says.
+  const weekAgo = new Date(now.getTime() - NEWS_DEFAULT_DAYS * 86_400_000).toISOString();
+  const [records, recentBank, liveId] = await Promise.all([
     shadowRecords(admin, playerId),
-    bankNews(admin, playerId, seenThrough),
+    bankNews(admin, playerId, seenThrough < weekAgo ? seenThrough : weekAgo),
     liveMatchId(admin, playerId),
   ]);
+  const news = recentBank.filter((n) => new Date(n.settledAt) > new Date(seenThrough));
 
   const nextPlan = planShadow(SHADOW_SCORES, playerId, records, []);
   const standing = shadowStanding(records);
@@ -464,6 +467,7 @@ export async function queueBoard(admin: SupabaseClient, playerId: string, body: 
     shadow,
     activeShadow: activeShadow && liveId ? { matchId: liveId, ...activeShadow } : null,
     news,
+    recentBank: recentBank.slice(0, 8),
     /** The newest settledAt in `news`; sent back as `ack` once shown. */
     newsThrough: news[0]?.settledAt ?? null,
   };

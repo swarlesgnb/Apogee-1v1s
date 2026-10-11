@@ -71,8 +71,9 @@ contextBridge.exposeInMainWorld("apogee", {
   /** Ask the server for an opponent. Returns { match } or { error }. */
   findMatch: (category, pool) => ipcRenderer.invoke("apogee:findMatch", { category, pool }),
   /**
-   * Shadows and Flags: what queueing `category` would do, your Flags and your Shadow ladder.
-   * `ack` lists answered Flags already shown, so each is announced once. Resolves { board }.
+   * Shadows and Flags: what queueing `category` would do, your Shadow ladder, and who played
+   * your banked rounds. `ack` is the board's newsThrough once shown, so news is said once.
+   * Resolves { board }.
    */
   queueBoard: (args) => ipcRenderer.invoke("apogee:queueBoard", args ?? {}),
   /** The board, pushed on launch, on focus and after every settled match. */

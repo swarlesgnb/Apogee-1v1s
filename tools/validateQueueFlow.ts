@@ -251,6 +251,7 @@ assert.equal(news.shadow.standing.highestBeaten, first.found.shadow.percentile);
 screens.ownerNews = news;
 const acked = ok(await queueBoard(A, { ack: news.newsThrough }), "ack");
 assert.deepEqual(acked.news, [], "said once");
+assert.equal(acked.recentBank.length, 1, "and still listed in the week's panel");
 assert.equal(ok(await queueBoard(A, {}), "after ack").news.length, 0);
 assert.equal(ok(await queueBoard(B, {}), "player board").news.length, 0, "nobody has played kestrel's rounds");
 pass(`owner's board on next launch: "${news.news[0].line}", then quiet once acknowledged`);
