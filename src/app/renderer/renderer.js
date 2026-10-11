@@ -1056,6 +1056,23 @@ function paintFolderFound() {
   choose.classList.add("secondary");
 }
 
+/**
+ * Found and still being read. The window now paints before the first read of the folder
+ * is done (1.6 s on a 15,000-run folder, and far longer on a slow disk), and the card's
+ * default words, "Looking for your KovaaK's stats", said the folder had not been found.
+ */
+function paintFolderReading() {
+  if (current || !currentPath) return;
+  $("emptyHead").textContent = "Reading your KovaaK's stats…";
+  $("emptyText").textContent = "Found the folder. A long history takes a few seconds to read the first time.";
+  $("emptyPath").textContent = currentPath;
+  $("emptyPath").hidden = false;
+  $("emptyHelp").hidden = true;
+  const choose = $("emptyChoose");
+  choose.textContent = "Change folder";
+  choose.classList.add("secondary");
+}
+
 /** Not found: the button becomes the one thing to do, and the path is one click away. */
 function paintFolderMissing() {
   $("emptyHead").textContent = "Couldn't find your KovaaK's stats folder";
@@ -11164,6 +11181,21 @@ function tnHostPanel() {
   );
   body.append(sum);
 
+  // Signed out, the server refuses to host (flow audit #15), so the button is the sign-in
+  // rather than a form that fails on submit. The fields stay live: seeing what a bracket of
+  // a given shape costs is worth something before signing in. It presses the rail's own
+  // button, as the empty state beside it does, so the two cannot behave differently.
+  if (HOST === "electron" && !signedIn) {
+    const rail = $("btnSignIn");
+    const canSignIn = !!rail && !rail.disabled;
+    const signIn = tnButton(canSignIn ? "Sign in to host" : "Sign-in unavailable", "primary", () => {
+      if (canSignIn) rail.click();
+    });
+    signIn.disabled = !canSignIn;
+    body.append(signIn, tnEl("p", "tn-sum", "Hosting needs a signed-in account: the server keeps the bracket and checks every fixture."));
+    return panel;
+  }
+
   const create = tnButton("Open it for entry", "primary", async () => {
     if (HOST !== "electron") {
       showNotice("Tournaments are hosted from the desktop app.");
@@ -12592,6 +12624,7 @@ if (HOST === "electron") {
   api.onScanning(({ scanning }) => {
     setStatus(scanning ? "scanning" : "ok", scanning ? "Scanning…" : "Watching", currentPath);
     if (!scanning) paintFolderFound();
+    else paintFolderReading();
   });
 
   api.onError((message) => {
@@ -12640,6 +12673,7 @@ if (HOST === "electron") {
         showError(state.lastError);
         paintFolderMissing();
       } else if (!state.scanning) paintFolderFound();
+      else paintFolderReading();
     }
   });
 } else {

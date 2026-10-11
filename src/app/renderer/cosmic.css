@@ -229,7 +229,11 @@ dialog::backdrop { background:#03070ee8; }
   #screen-expedition .exp-welcome p { grid-column:1; font-size:11px; max-width:74ch; }
   .exp-welcome .exp-main-action { grid-column:2; grid-row:1/4; align-self:center; margin:0; }
 }
-@media(min-width:761px) and (max-height:800px) {
+/* The lobby's compact hero reaches up to a maximised 1080p window (1032px tall under a
+   Windows taskbar). From 801px up the full hero put Find opponent 1047px down, below the
+   fold at 1440x1015 and at the default 1280x880 window. The tighter rules further down
+   stay at 800px. See docs/fleet/flow.md. */
+@media(min-width:761px) and (max-height:1060px) {
   .content { padding-top:18px; }
   .preview-note { margin-bottom:12px; }
   #screen-queue .queue-heading { grid-template-columns:minmax(0,1fr) minmax(270px,.9fr); padding:0 0 12px; gap:20px; }

@@ -2,7 +2,14 @@
  * Photograph every screen a brand-new player can reach, in the real bundled client.
  *
  *   npm run build:app
- *   npx electron tools/flowScreens.cjs [--no-stats] [--out .cache/flow/after]
+ *   npx electron tools/flowScreens.cjs [--no-stats] [--stats <dir>] [--early] [--out .cache/flow/after]
+ *
+ * `--stats <dir>` points it at a folder of its own, such as the synthetic fixture
+ * (tools/fixtures/syntheticStats.ts), on a machine with no KovaaK's. `--early` also
+ * photographs the window the moment it loads, while the folder is still being read.
+ * It ends by measuring where the queue button sits against the window at the sizes a
+ * player has (fit.json): with the checklist and the one-off notice out of the way, the
+ * state of anybody past their first session.
  *
  * Runs dist/app/main.cjs itself rather than the single-file preview, because the first-run
  * flow is mostly main's decisions - folder detection, sign-in state, what the queue is
@@ -62,6 +69,7 @@ async function shot(win, name) {
 async function drive(win) {
   win.setSize(1280, 820);
   const run = (js) => win.webContents.executeJavaScript(js, true);
+  if (process.argv.includes("--early")) await shot(win, "00a-reading");
   // Long enough for the first stats rebuild on the real corpus to land.
   await wait(noStats ? 2500 : 9000);
   await shot(win, "00-first-launch");
@@ -93,10 +101,43 @@ async function drive(win) {
   })()`);
   writeFileSync(join(out, prefix + "queue-text.txt"), text.join("\n"));
 
+  if (!noStats) {
+    await run(`openScreen("tournaments"); (() => { const h = document.querySelector(".tn-host"); if (h) h.scrollIntoView({ block: "end" }); })()`);
+    await shot(win, "03-tournaments-host");
+  }
+  if (!noStats) await fit(win, run);
   if (!noStats) await loop(win, run);
 
   if (errors.length) console.log("renderer errors:\n  " + errors.slice(0, 10).join("\n  "));
   app.exit(0);
+}
+
+/**
+ * Where the queue's one button sits at the window sizes players have. The checklist is
+ * hidden and the notice dismissed first, so this is the lobby of somebody past their first
+ * session; a first launch puts both above it on purpose. Content size, not window size:
+ * the window chrome differs between machines, and what fits is a question about the
+ * viewport. 1440x1015 is a 1440x1080 window under the Windows title bar, where an
+ * earlier UI suite failed (docs/overnight/performance-fair-play.md).
+ */
+async function fit(win, run) {
+  await run(`openScreen("queue"); document.getElementById("setupHide")?.click();
+    document.querySelector("#banner .banner-close")?.click(); document.querySelector('.scroll').scrollTop = 0`);
+  const sizes = [[1280, 880], [1440, 1015], [1440, 1080], [1920, 1032], [1280, 720]];
+  const results = [];
+  for (const [w, h] of sizes) {
+    win.setContentSize(w, h);
+    await wait(500);
+    const r = await run(`(() => { document.querySelector('.scroll').scrollTop = 0;
+      const b = document.getElementById("queueBtn").getBoundingClientRect();
+      return { bottom: Math.round(b.bottom * 10) / 10, height: innerHeight }; })()`);
+    results.push({ size: w + "x" + h, ...r, fits: r.bottom <= r.height });
+    console.log(`  fit ${w}x${h}: button bottom ${r.bottom} of ${r.height} ${r.bottom <= r.height ? "fits" : "BELOW THE FOLD"}`);
+    await shot(win, `fit-${w}x${h}`);
+  }
+  writeFileSync(join(out, prefix + "fit.json"), JSON.stringify(results, null, 2));
+  win.setSize(1280, 820);
+  await wait(400);
 }
 
 /**
