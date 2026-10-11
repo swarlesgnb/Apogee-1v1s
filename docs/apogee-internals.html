@@ -1232,6 +1232,34 @@ leg 2 void                 replay (a playoff draw replays too)</pre>
         only ones a match is ever played on.
       </p>
 
+      <h3>Ranked v2 runs beside it</h3>
+      <p>
+        A second engine, tested on the live ladder without moving anybody onto it.
+        <code>find-match-v2</code>, <code>settle-match-v2</code> and
+        <code>abandon-match-v2</code> answer admins only, a development build asks for them
+        and a release never does, and a dev build that is refused falls back to v1 and says
+        so on the status bar. Every match records the engine that created it, and the v2
+        functions settle each one by that engine's rules, so a v1 match settled through v2
+        comes out as it would have under v1.
+      </p>
+      <p>
+        What changes: each round counts as its own game, so a 3-0 moves a rating further
+        than a 2-1; an async opponent is rated at the rating they played those rounds at,
+        not today's; leaving a scenario early voids for free once a week and loses the round
+        after that; a finished match nobody settled is settled by the sweep instead of
+        staying open; the pool is read nearest-rating-first; the match and its sides are
+        created in one transaction; and the match screen shows what each result would do to
+        the rating before anybody plays.
+      </p>
+      <p class="note">
+        <span class="note-label">Measured</span>
+        <code>npm run compare:ladders</code> runs the production matchmaking and rating code
+        over a simulated async ladder and scores each policy by how well it predicts
+        results. v2 beats v1 in all four worlds it tries. Glicko-2's idle RD growth, the
+        obvious third change, was a coin flip (better on 6 of 12 seeded runs) and was left out. PLAN.md §4
+        has the table.
+      </p>
+
       <h3>Timestamps are the sharp edge</h3>
       <p>
         KovaaK's writes a bare local wall clock into the filename and records no offset
@@ -1596,6 +1624,8 @@ npm run verify:deployment     prove it against the live project</pre>
         It once listed four of five, and the missing one sat on a stale bundle for weeks
         with nothing to indicate it. If you add a function, add it to that script and to
         the anonymous-caller checks in <code>verifyDeployment</code> in the same commit.
+        Ranked v2's three are in it too, through <code>deploy:ranked-v2</code>: admin-gated,
+        they change nothing for players, and leaving them out is how one goes stale.
       </p>
       <p>
         <code>WARNING: Docker is not running</code> during a deploy is noise. Docker is
