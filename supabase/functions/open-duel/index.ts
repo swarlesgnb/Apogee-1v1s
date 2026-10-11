@@ -38,6 +38,7 @@ import {
 } from "../_shared/apogee.ts";
 import { forfeitMatch, sweepStaleMatches } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import { matchClock } from "../_shared/timeIntegrity.ts";
 
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
 import { ANY_CATEGORY } from "../../../src/core/match/matchmaking.ts";
@@ -60,6 +61,8 @@ interface Body {
   code?: unknown;
   category?: unknown;
   window?: unknown;
+  /** The client's UTC offset, pinned to the side it opens (see _shared/timeIntegrity.ts). */
+  tzOffsetMinutes?: unknown;
 }
 
 interface DuelRow {
@@ -161,6 +164,7 @@ async function create(admin: SupabaseAdmin, caller: Caller, body: Body) {
   // The challenger's three are an ordinary seeding match that joins the pool, so the
   // challenger meets the queue's bar, as a named duel's sender does.
   await requireEligible(admin, caller.playerId);
+  const clock = await matchClock(admin, caller.playerId, body);
 
   const { season, windowName, selectable } = await loadSeasonPool(admin, body.window);
   const seed = crypto.randomUUID();
@@ -192,6 +196,7 @@ async function create(admin: SupabaseAdmin, caller: Caller, body: Body) {
     player_id: caller.playerId,
     rating_before: Number(rating?.rating ?? 1500),
     rd_before: Number(rating?.rd ?? 350),
+    ...clock,
   });
   if (sideError) throw new HttpError(500, sideError.message);
 
@@ -268,6 +273,7 @@ async function accept(admin: SupabaseAdmin, caller: Caller, body: Body) {
     throw new HttpError(410, "That challenge was posted on scenarios this season no longer has.");
   }
 
+  const clock = await matchClock(admin, caller.playerId, body);
   const { data: myRating } = await admin.from("ratings").select("rating, rd").eq("player_id", caller.playerId).maybeSingle();
   const expiresAt = new Date(Date.now() + INITIAL_TTL_MS).toISOString();
   const { data: created, error: matchError } = await admin
@@ -299,6 +305,7 @@ async function accept(admin: SupabaseAdmin, caller: Caller, body: Body) {
       player_id: caller.playerId,
       rating_before: Number(myRating?.rating ?? 1500),
       rd_before: Number(myRating?.rd ?? 350),
+      ...clock,
     },
     {
       match_id: created.id,
