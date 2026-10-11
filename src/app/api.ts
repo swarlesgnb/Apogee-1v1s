@@ -319,6 +319,17 @@ export interface FoundMatch {
    * first against nobody, and `opponentName` answers it with the same three afterwards.
    */
   tournament?: TournamentLeg | null;
+  /** The synthetic opponent of a match the pool had nobody for (fleet/queue). Never its scores. */
+  shadow?: ShadowInfo | null;
+}
+
+export interface ShadowInfo {
+  percentile: number;
+  /** "a 58th-percentile score on each". */
+  label: string;
+  rung: number;
+  ordinal: number;
+  synthetic: true;
 }
 
 export interface TournamentLeg {
@@ -329,6 +340,57 @@ export interface TournamentLeg {
   label: string;
   leg: 1 | 2;
   opponentName: string;
+}
+
+/* ------------------------------------------------------------ shadows and flags ---- */
+
+/** Somebody played your banked rounds, and the match settled. Unrated for you. */
+export interface BankNews {
+  matchId: string;
+  settledAt: string;
+  by: string;
+  category: string;
+  theirResult: "win" | "loss" | "draw" | null;
+  /** Rounds each way, when the raw scores say so unambiguously. */
+  tally: { theirs: number; yours: number; tied: number } | null;
+  line: string;
+}
+
+export interface QueueBoard {
+  now: string;
+  /** What queueing this category would do, when one was asked about. */
+  preview: {
+    category: string;
+    window: number;
+    band: string;
+    outcome: "shadow" | "plant" | "opponent" | "live" | "ineligible";
+    opponents?: number;
+    shadow?: ShadowInfo;
+    /** Scenarios in this category the next Shadow has a committed score on, of `total`. */
+    scored: number;
+    total: number;
+    line: string;
+  } | null;
+  shadow: {
+    next: ShadowInfo;
+    standing: { highestBeaten: number | null; lostAbove: number | null; roundsWon: number; roundsContested: number; streak: number; played: number };
+    recent: { ordinal: number; percentile: number; label: string; result: string; tally: string | null; decidedAt: string | null }[];
+  };
+  activeShadow: (ShadowInfo & { matchId: string }) | null;
+  /** Unread news about your banked rounds, newest first. */
+  news: BankNews[];
+  /** The last week of it, read or not, for the panel. */
+  recentBank: BankNews[];
+  /** The newest settledAt in `news`: send it back as `ack` once shown. */
+  newsThrough: string | null;
+}
+
+/**
+ * The queue screen's read: what queueing would do, your Shadow ladder, and who played your
+ * banked rounds. `ack` (a `newsThrough`) marks that news read, so it is said once.
+ */
+export function fetchQueueBoard(request: { category?: string; window?: number; ack?: string }): Promise<QueueBoard> {
+  return callFunction<QueueBoard>("queue-board", request);
 }
 
 /**
@@ -736,6 +798,14 @@ export interface SettledMatch {
   rated?: boolean;
   /** The fixture this was a leg of, when it was one. */
   tournament?: { id: string; name: string; label: string; leg: 1 | 2 } | null;
+  /** A match against a Shadow: how it went on rounds. Unrated whatever the verdict. */
+  shadow?: (ShadowInfo & {
+    verdict: "win" | "loss" | "draw" | "void" | "forfeit" | null;
+    tally: { won: number; lost: number; tied: number } | null;
+    contested?: number;
+    rounds?: number;
+    scores?: (number | null)[];
+  }) | null;
   /**
    * Who it was against, so the result can offer a rematch.
    *

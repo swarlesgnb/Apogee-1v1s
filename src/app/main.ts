@@ -23,6 +23,7 @@ import { GhostService } from "./ghostService.ts";
 import { ShareCards } from "./shareCard.ts";
 import { Updater } from "./updater.ts";
 import { installSocial } from "./social.ts";
+import { installQueueBoard } from "./queueBoard.ts";
 import {
   installCrashHandlers,
   attachRendererLogging,
@@ -762,6 +763,8 @@ async function settleActiveMatch(attempt = 0): Promise<string | null> {
     if (settled.tournament) void refreshTournaments("a fixture leg settled");
     // Duel buttons read the active match when drawn; redraw them now it is gone.
     void refreshDuels("match settled", true);
+    // A Shadow result moves the Shadow ladder and may have planted a Flag.
+    void queueBoard.refresh("match settled", true);
     return null;
   } catch (err) {
     const message = friendlyError(err);
@@ -2249,6 +2252,8 @@ async function restoreSignedIn(attempt = 0): Promise<void> {
   // action - so a duel that arrives mid-session appears when the player next does
   // something, which is the honest limit of it until there is a reason to poll.
   void refreshDuels("session restored");
+  // A Flag answered while the app was shut is the news this launch exists to tell.
+  void queueBoard.refresh("session restored", true);
   // Same reasoning: a fixture that became yours to play while the app was shut.
   void refreshTournaments("session restored");
 }
@@ -2454,6 +2459,7 @@ ipcMain.handle("apogee:signIn", async () => {
     state.lastError = null;
     broadcast("apogee:session", session);
     void refreshDuels("signed in");
+    void queueBoard.refresh("signed in", true);
     void refreshTournaments("signed in");
     void keepHistoryCurrent("signed in");
     return { session };
@@ -2641,6 +2647,9 @@ async function refreshDuels(reason: string, force = false): Promise<void> {
     console.warn(`could not read duels (${reason}):`, err instanceof Error ? err.message : err);
   }
 }
+
+/** Shadows and Flags: what queueing would do, your Flags, and their news (queueBoard.ts). */
+const queueBoard = installQueueBoard({ signedIn: () => Boolean(state.session), broadcast });
 
 ipcMain.handle("apogee:duels", async () => {
   if (!state.session) return { error: "Sign in with Steam to play ranked." };

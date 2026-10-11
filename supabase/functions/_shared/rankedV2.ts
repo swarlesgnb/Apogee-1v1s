@@ -32,6 +32,7 @@ import {
   type RatingProposal,
 } from "./apogee.ts";
 import { afterLegSettled } from "./tournament.ts";
+import { markShadowVoid, settleShadowMatch, shadowResultFor } from "./queue.ts";
 
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 import { isAbandonedRun } from "../../../src/core/stats/duration.ts";
@@ -269,6 +270,7 @@ export async function settleForPlayer(
         seeding: !theirs,
         rated,
         tournament: rated ? null : await afterLegSettled(admin, matchId),
+        shadow: theirs ? null : await shadowResultFor(admin, matchId),
         verdict: match.status === "void" ? "void" : mine.result,
         yourMatchScore: mine.match_score != null ? Number(mine.match_score) : null,
         theirMatchScore: theirs?.match_score != null ? Number(theirs.match_score) : null,
@@ -351,6 +353,8 @@ export async function settleForPlayer(
         if (error) throw new HttpError(500, error.message);
         freeAbandon = { used: true, nextFreeAt: new Date(Date.now() + ABANDON_WINDOW_MS).toISOString() };
       }
+      // A Shadow match voided this way is no result, not the loss an abandon is (queue.ts).
+      if (seeding) await markShadowVoid(admin, matchId);
       const receipt = await commitMatchResult(admin, matchId, "void", [{ player_id: playerId, result: null }]);
       if (!receipt.committed) return again();
 
@@ -438,6 +442,11 @@ export async function settleForPlayer(
   // side is what the next player to queue will be matched against. Scored as rounds, the
   // format whoever draws these rounds will be settled in.
   if (seeding) {
+    // Played against a Shadow: judged on raw rounds and stored in one commit (queue.ts).
+    // Null for a duel's or a fixture's first leg, which carry no Shadow.
+    const shadowed = await settleShadowMatch(admin, { matchId, match, playerId, scenarioIds, playerRounds, runIds });
+    if (shadowed) return shadowed.retry ? again() : { status: 200, body: shadowed.body };
+
     const side = settleSide(playerRounds, "rounds");
     const receipt = await commitMatchResult(admin, matchId, "settled", [{
       player_id: playerId, run_ids: runIds,
