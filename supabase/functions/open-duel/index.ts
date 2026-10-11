@@ -25,7 +25,6 @@
 import { type SupabaseClient } from "jsr:@supabase/supabase-js@2";
 
 import {
-  forfeitMatch,
   handler,
   INITIAL_TTL_MS,
   isOffPool,
@@ -34,15 +33,15 @@ import {
   readJson,
   requireCaller,
   requireEligible,
-  sweepStaleMatches,
   HttpError,
   type Caller,
 } from "../_shared/apogee.ts";
+import { forfeitMatch, sweepStaleMatches } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
 import { ANY_CATEGORY } from "../../../src/core/match/matchmaking.ts";
-import { updateRating, winProbability } from "../../../src/core/rating/glicko2.ts";
+import { winProbability } from "../../../src/core/rating/glicko2.ts";
 import {
   canAnswerOpenDuel,
   isOpenDuelCode,
@@ -156,7 +155,7 @@ async function create(admin: SupabaseAdmin, caller: Caller, body: Body) {
   // another wildcard queue can draw it.
   if (category === ANY_CATEGORY) throw new HttpError(400, "pick a category to challenge in");
 
-  const live = await sweepStaleMatches(admin, caller.playerId, updateRating);
+  const live = await sweepStaleMatches(admin, caller.playerId);
   if (live) throw new HttpError(409, "finish or abandon your current match before posting a challenge");
 
   // The challenger's three are an ordinary seeding match that joins the pool, so the
@@ -260,7 +259,7 @@ async function accept(admin: SupabaseAdmin, caller: Caller, body: Body) {
   }
 
   // One match at a time, the queue's rule.
-  const live = await sweepStaleMatches(admin, caller.playerId, updateRating);
+  const live = await sweepStaleMatches(admin, caller.playerId);
   if (live) throw new HttpError(409, "finish or abandon your current match before answering a challenge");
 
   // Posted before the pool was rebuilt: nothing to launch any more. Closed for good.
@@ -371,7 +370,7 @@ async function cancel(admin: SupabaseAdmin, caller: Caller, body: Body) {
     .eq("player_id", caller.playerId)
     .maybeSingle();
   if (side && side.match_score == null) {
-    await forfeitMatch(admin, row.match_id, caller.playerId, updateRating);
+    await forfeitMatch(admin, row.match_id, caller.playerId);
     return { ok: true, status: "cancelled", matchVoided: row.match_id };
   }
   return { ok: true, status: "cancelled" };
