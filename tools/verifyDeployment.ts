@@ -575,6 +575,11 @@ async function main(): Promise<void> {
     "ghost-link",
     // The boards name other players, which only the server may decide (list-duels).
     "leaderboard",
+    // Ranked v2 (npm run deploy:ranked-v2). Admin-gated behind the session, so an
+    // anonymous caller is refused before the gate is ever reached.
+    "find-match-v2",
+    "settle-match-v2",
+    "abandon-match-v2",
   ];
   for (const name of authedFunctions) {
     const res = await fetch(`${fnBase}/${name}`, {
