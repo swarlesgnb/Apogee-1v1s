@@ -54,6 +54,11 @@ export interface CardRound {
    * "Left early"). Overrides the deltas, the way roundPresentation() checks `counted` first.
    */
   excluded?: string | null;
+  /**
+   * The round as the server decided it on raw score (a Crown challenge). Overrides the
+   * deltas, which decide nothing there.
+   */
+  result?: "won" | "lost" | "tied" | null;
 }
 
 export interface ShareCardInput {
@@ -158,6 +163,7 @@ export function roundDigits(r: CardRound): number {
  */
 export function roundOutcome(r: CardRound): "won" | "lost" | "draw" | "recorded" | "unavailable" | "excluded" {
   if (r.excluded) return "excluded";
+  if (r.result) return r.result === "tied" ? "draw" : r.result;
   const a = r.you.delta;
   const b = r.them?.delta;
   if (a == null || !Number.isFinite(a)) return "unavailable";
@@ -232,6 +238,7 @@ function setLine(input: ShareCardInput): string {
 
 function ruleLine(input: ShareCardInput): string {
   if (input.kind === "ghost") return "Raw scores from KovaaK's stats. The ghost is a past session, on the same baseline.";
+  if (input.rounds.some((r) => r.result)) return "Raw scores from KovaaK's stats. A round goes to the higher raw score.";
   return input.rounds.some((r) => r.them)
     ? "Raw scores from KovaaK's stats. A round goes to whoever beat their own baseline by more."
     : "Raw scores from KovaaK's stats, against the player's own baseline.";

@@ -23,6 +23,7 @@ import {
   liveSide,
   namesFor,
   onlyFields,
+  reignScores,
   requireId,
   scenarioNamesFor,
   type MatchRow,
@@ -30,7 +31,7 @@ import {
 
 import { RACE_INVITE_TTL_MS, sealView, verdictFor, type LiveSide } from "../../../src/core/race/race.ts";
 import { buildRaceBoard, liveStatus, RACE_COLUMNS, raceRowFromDb, type LiveView } from "../../../src/core/race/view.ts";
-import { CROWN_DRAW_EPSILON, crownName } from "../../../src/core/crowns/crowns.ts";
+import { crownName } from "../../../src/core/crowns/crowns.ts";
 
 Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
@@ -100,37 +101,36 @@ Deno.serve(handler(async (req, admin) => {
   async function crownLive(matchId: string): Promise<LiveView> {
     const { data: ch } = await admin
       .from("crown_challenges")
-      .select("match_id, category, window_index, challenger_id, outcome, challenger_score, holder_score")
+      .select("match_id, category, window_index, challenger_id, reign_id, judged_reign_id, outcome, rounds_won, rounds_lost")
       .eq("match_id", matchId)
       .maybeSingle();
     if (!ch || ch.challenger_id !== caller.playerId) throw new HttpError(404, "That is not a race or a challenge of yours.");
     const match = await readMatch(matchId);
     const scenarioNames = await scenarioNamesFor(admin, match.scenario_ids);
-    const { data: sides } = await admin
-      .from("match_sides")
-      .select("player_id, deltas, match_score")
-      .eq("match_id", matchId);
-    const holderSide = (sides ?? []).find((s: any) => s.player_id !== caller.playerId) ?? null;
-    const names = await namesFor(admin, [caller.playerId, holderSide?.player_id]);
+    // The holder's scores live on the reign, not in this match: the copied holder side
+    // carries none, so this is the only place they come from, round by round.
+    const holder = await reignScores(admin, ch.judged_reign_id ?? ch.reign_id);
+    const names = await namesFor(admin, [caller.playerId, holder?.holderId]);
     const you = await liveSide(admin, match, caller.playerId, names.get(caller.playerId) ?? "you", scenarioNames);
-    const them: LiveSide = holderSide
-      ? frozenSide(holderSide, match.scenario_ids, names.get(holderSide.player_id) ?? "the holder", scenarioNames)
+    const them: LiveSide = holder
+      ? frozenSide(holder.scores, match.scenario_ids, names.get(holder.holderId) ?? "the holder", scenarioNames)
       : {
           name: "Vacant",
           terminal: true,
           void: false,
-          matchScore: null,
           rounds: match.scenario_ids.map((sid) => ({
             scenarioId: sid, scenario: scenarioNames.get(sid) ?? `scenario ${sid}`,
-            landed: false, delta: null, counted: false, provisional: false, tier: null,
+            landed: false, score: null, delta: null, counted: false, provisional: false, tier: null,
           })),
         };
-    const sealed = sealView(you, them);
+    // A holder score opens when the challenger's run on that scenario lands, and not because
+    // the challenge has ended: a challenge abandoned after one round must not show the other
+    // two, or abandoning would be a way to read the bar before the next attempt.
+    const sealed = sealView({ ...you, terminal: false }, them);
     let verdict: LiveView["verdict"] = null;
     if (ch.outcome === "took") verdict = "win";
-    else if (ch.outcome === "defended") {
-      verdict = Math.abs(Number(ch.challenger_score) - Number(ch.holder_score)) < CROWN_DRAW_EPSILON ? "draw" : "loss";
-    } else if (ch.outcome) verdict = "void";
+    else if (ch.outcome === "defended") verdict = ch.rounds_won != null && ch.rounds_won === ch.rounds_lost ? "draw" : "loss";
+    else if (ch.outcome) verdict = "void";
     return {
       ...sealed,
       kind: "crown",
@@ -139,7 +139,7 @@ Deno.serve(handler(async (req, admin) => {
       title: crownName(ch.category, match.difficulty),
       verdict,
       byForfeit: ch.outcome === "forfeit",
-      status: holderSide || verdict ? liveStatus(sealed, verdict, "crown") : "Vacant: the first qualifying run set to settle takes it.",
+      status: holder || verdict ? liveStatus(sealed, verdict, "crown") : "Vacant: the first qualifying run set to settle takes it.",
     };
   }
 

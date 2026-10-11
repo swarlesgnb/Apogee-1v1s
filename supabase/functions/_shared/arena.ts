@@ -6,10 +6,11 @@
  *
  *   SEASON CELLS  which (category, band) pairs can hold a Crown, read from the season pool
  *                 through loadSeasonPool, the same reader find-match uses.
- *   LIVE SIDES    one side of a match as the live view needs it, round by round. A side
- *                 still being played is measured the way settle-match will measure it:
- *                 first run per scenario in server receipt order, the baseline as it stood
- *                 when the match began, an abandoned run not counted.
+ *   LIVE SIDES    one side of a match as the live view needs it, round by round: the raw
+ *                 score each round is decided on, and the "against your usual" delta as
+ *                 information. A side still being played is read the way settlement will
+ *                 read it: first run per scenario in server receipt order, an abandoned or
+ *                 rejected run not counted, the baseline as it stood when the match began.
  *   NOTES         the sentence a result screen shows about a Crown challenge or a race, built
  *                 from the rows the database decided, never from the client.
  *
@@ -130,9 +131,10 @@ const terminal = (status: string) => status === "settled" || status === "void";
  * One side of one match, round by round.
  *
  * A finished side is read from what settle-match stored, which is the authority. A side
- * still being played is computed here the way settle-match will compute it, so the bar a
- * player watches is the number their result will show, unless a verified best changes the
- * baseline floor between now and settlement.
+ * still being played is read here the way settlement will read it (first run per scenario,
+ * abandoned or rejected runs not counted), so the raw score a round shows is the one the
+ * result is decided on. The delta beside it is information and can still move if a
+ * verified best changes the baseline floor before settlement.
  */
 export async function liveSide(
   admin: SupabaseClient,
@@ -158,16 +160,16 @@ export async function liveSide(
   }
 
   const done = terminal(match.status);
-  let stored: { deltas: number[]; match_score: number | null } | null = null;
+  let stored: { deltas: number[]; scores: number[] } | null = null;
   if (done) {
     const { data: side, error: sideError } = await admin
       .from("match_sides")
-      .select("deltas, match_score")
+      .select("deltas, scores")
       .eq("match_id", match.id)
       .eq("player_id", playerId)
       .maybeSingle();
     if (sideError) throw new HttpError(500, sideError.message);
-    stored = side ? { deltas: (side.deltas ?? []).map(Number), match_score: side.match_score == null ? null : Number(side.match_score) } : null;
+    stored = side ? { deltas: (side.deltas ?? []).map(Number), scores: (side.scores ?? []).map(Number) } : null;
   }
 
   let expected = new Map<number, number | null>();
@@ -180,55 +182,70 @@ export async function liveSide(
     ids.map(async (sid, i): Promise<LiveRound> => {
       const run = first.get(sid);
       const scenario = scenarioNames.get(sid) ?? run?.scenario_name ?? `scenario ${sid}`;
-      if (!run) return { scenarioId: sid, scenario, landed: false, delta: null, counted: false, provisional: false, tier: null };
+      if (!run) return { scenarioId: sid, scenario, landed: false, score: null, delta: null, counted: false, provisional: false, tier: null };
       const tier = run.verification_tier as RunTier;
       if (done) {
         const counted = match.status === "settled" && tier !== "rejected" && stored != null;
-        return { scenarioId: sid, scenario, landed: true, delta: counted ? stored!.deltas[i] ?? null : null, counted, provisional: false, tier };
+        return {
+          scenarioId: sid, scenario, landed: true,
+          score: counted ? stored!.scores[i] ?? Number(run.score) : null,
+          delta: counted ? stored!.deltas[i] ?? null : null, counted, provisional: false, tier,
+        };
       }
       const abandoned = isAbandonedRun(
         run.duration_seconds == null ? null : Number(run.duration_seconds),
         expected.get(sid) ?? null,
       );
       if (tier === "rejected" || abandoned) {
-        return { scenarioId: sid, scenario, landed: true, delta: null, counted: false, provisional: false, tier };
+        return { scenarioId: sid, scenario, landed: true, score: null, delta: null, counted: false, provisional: false, tier };
       }
       const baseline = await baselineFor(admin, playerId, sid, run.scenario_name, baselineFromScores, {
         at: match.created_at,
         matchId: match.id,
       });
       const value = baseline.runCount > 0 ? baseline.value : Number(run.score);
+      // In rounds a missing baseline costs the round its "against your usual" line and nothing
+      // else, as settleSide's rounds format has it.
       const delta = computeDelta(Number(run.score), value);
-      return { scenarioId: sid, scenario, landed: true, delta, counted: delta != null, provisional: baseline.provisional, tier };
+      return { scenarioId: sid, scenario, landed: true, score: Number(run.score), delta, counted: true, provisional: baseline.provisional, tier };
     }),
   );
 
-  return { name, rounds, terminal: done, void: match.status === "void", matchScore: stored?.match_score ?? null };
+  return { name, rounds, terminal: done, void: match.status === "void" };
 }
 
-/** A stored run set copied into a match: every round landed long ago, deltas frozen. */
+/** A Crown holder's three, frozen when they played: every round landed, raw scores fixed. */
 export function frozenSide(
-  side: { deltas: number[] | null; match_score: number | null },
+  scores: number[] | null,
   scenarioIds: number[],
   name: string,
   scenarioNames: Map<number, string>,
 ): LiveSide {
-  const deltas = (side.deltas ?? []).map(Number);
+  const raw = (scores ?? []).map(Number);
   return {
     name,
     terminal: true,
     void: false,
-    matchScore: side.match_score == null ? null : Number(side.match_score),
     rounds: scenarioIds.map((sid, i) => ({
       scenarioId: Number(sid),
       scenario: scenarioNames.get(Number(sid)) ?? `scenario ${sid}`,
       landed: true,
-      delta: Number.isFinite(deltas[i]) ? deltas[i] : null,
-      counted: Number.isFinite(deltas[i]),
+      score: Number.isFinite(raw[i]) ? raw[i] : null,
+      delta: null,
+      counted: Number.isFinite(raw[i]),
       provisional: false,
       tier: null,
     })),
   };
+}
+
+/** A reign's raw scores. The Crown tables are closed to clients; this reads them as the service role. */
+export async function reignScores(admin: SupabaseClient, reignId: string | null | undefined): Promise<{ holderId: string; scores: number[]; defences: number } | null> {
+  if (!reignId) return null;
+  const { data, error } = await admin.from("crown_reigns").select("holder_id, scores, defences").eq("id", reignId).maybeSingle();
+  if (error) throw new HttpError(500, error.message);
+  if (!data) return null;
+  return { holderId: data.holder_id, scores: (data.scores ?? []).map(Number), defences: Number(data.defences) };
 }
 
 export async function scenarioNamesFor(admin: SupabaseClient, ids: number[]): Promise<Map<number, string>> {
@@ -250,26 +267,23 @@ export async function namesFor(admin: SupabaseClient, ids: (string | null | unde
 export async function crownNote(admin: SupabaseClient, matchId: string): Promise<CrownResultNote | null> {
   const { data: ch, error } = await admin
     .from("crown_challenges")
-    .select("match_id, category, window_index, reign_id, judged_reign_id, outcome, challenger_score, holder_score, reason")
+    .select("match_id, category, window_index, challenger_id, reign_id, judged_reign_id, outcome, reason")
     .eq("match_id", matchId)
     .maybeSingle();
   if (error) throw new HttpError(500, error.message);
   if (!ch) return null;
 
-  const { data: match } = await admin.from("matches").select("difficulty").eq("id", matchId).maybeSingle();
-  let holderName: string | null = null;
-  let defences: number | null = null;
-  if (ch.judged_reign_id) {
-    const { data: reign } = await admin
-      .from("crown_reigns")
-      .select("holder_id, defences")
-      .eq("id", ch.judged_reign_id)
-      .maybeSingle();
-    if (reign) {
-      holderName = (await namesFor(admin, [reign.holder_id])).get(reign.holder_id) ?? null;
-      defences = Number(reign.defences);
-    }
-  }
+  const { data: match } = await admin.from("matches").select("difficulty, scenario_ids").eq("id", matchId).maybeSingle();
+  const scenarioIds: number[] = (match?.scenario_ids ?? []).map(Number);
+  const { data: side } = await admin
+    .from("match_sides")
+    .select("scores")
+    .eq("match_id", matchId)
+    .eq("player_id", ch.challenger_id)
+    .maybeSingle();
+  const judged = await reignScores(admin, ch.judged_reign_id);
+  const holderName = judged ? (await namesFor(admin, [judged.holderId])).get(judged.holderId) ?? null : null;
+  const names = await scenarioNamesFor(admin, scenarioIds);
   return crownResultNote({
     outcome: (ch.outcome ?? "pending") as CrownResultNote["outcome"],
     category: ch.category,
@@ -278,9 +292,11 @@ export async function crownNote(admin: SupabaseClient, matchId: string): Promise
     claim: ch.reign_id == null,
     holderName,
     judgedAgainstNewHolder: ch.judged_reign_id != null && ch.judged_reign_id !== ch.reign_id,
-    challengerScore: ch.challenger_score == null ? null : Number(ch.challenger_score),
-    holderScore: ch.holder_score == null ? null : Number(ch.holder_score),
-    defences,
+    scenarios: scenarioIds.map((id) => names.get(id) ?? `scenario ${id}`),
+    // The challenger has landed every round by now, so the holder's scores are no longer sealed.
+    challengerScores: side?.scores?.length ? side.scores.map(Number) : null,
+    holderScores: judged?.scores ?? null,
+    defences: judged?.defences ?? null,
     reason: ch.reason ?? null,
   });
 }
@@ -299,7 +315,7 @@ export interface RaceNote {
 export async function raceNote(admin: SupabaseClient, matchId: string, viewerId: string): Promise<RaceNote | null> {
   const { data: rows, error } = await admin
     .from("races")
-    .select("id, inviter_id, invitee_id, status, result, by_forfeit, inviter_match_id, invitee_match_id")
+    .select("id, inviter_id, invitee_id, status, result, by_forfeit, inviter_match_id, invitee_match_id, inviter_rounds, invitee_rounds, tied_rounds")
     .or(`inviter_match_id.eq.${matchId},invitee_match_id.eq.${matchId}`)
     .limit(1);
   if (error) throw new HttpError(500, error.message);
@@ -310,6 +326,12 @@ export async function raceNote(admin: SupabaseClient, matchId: string, viewerId:
   const opponentName = (await namesFor(admin, [otherId])).get(otherId) ?? "your opponent";
   const verdict = race.status === "finished" ? verdictFor(race.result as RaceResult, inviter) : null;
   const forfeit = !!race.by_forfeit;
+  const mineWon = inviter ? race.inviter_rounds : race.invitee_rounds;
+  const theirsWon = inviter ? race.invitee_rounds : race.inviter_rounds;
+  // Said from the winner's side ("2–1"), the way a score is read out.
+  const level = race.tied_rounds ? `, ${race.tied_rounds} level` : "";
+  const score = mineWon == null || theirsWon == null ? null
+    : `${Math.max(mineWon, theirsWon)}\u2013${Math.min(mineWon, theirsWon)}${level}`;
   const headline =
     verdict === "win" ? `You won the race against ${opponentName}.`
     : verdict === "loss" ? `${opponentName} won the race.`
@@ -317,9 +339,9 @@ export async function raceNote(admin: SupabaseClient, matchId: string, viewerId:
     : verdict === "void" ? "The race did not count."
     : `Your three are in.`;
   const explanation =
-    verdict === "win" ? (forfeit ? `${opponentName} did not finish all three. Nothing was rated.` : "Your match score against your own baselines was higher. Nothing was rated.")
-    : verdict === "loss" ? (forfeit ? "You did not finish all three, and they did. Nothing was rated." : "Their match score against their own baselines was higher. Nothing was rated.")
-    : verdict === "draw" ? "Level within the draw margin. Nothing was rated."
+    verdict === "win" ? (forfeit ? `${opponentName} did not finish all three. Nothing was rated.` : `You won ${score} on rounds, raw score against raw score. Nothing was rated.`)
+    : verdict === "loss" ? (forfeit ? "You did not finish all three, and they did. Nothing was rated." : `They won ${score} on rounds, raw score against raw score. Nothing was rated.`)
+    : verdict === "draw" ? `Level on rounds, ${score}. Nothing was rated.`
     : verdict === "void" ? "Neither side finished all three. Nothing was rated."
     : `${opponentName} is still playing. The race is decided when their third run lands or their clock runs out. Nothing is rated.`;
   return { kind: "race", raceId: race.id, opponentName, status: race.status, verdict, byForfeit: forfeit, headline, explanation };

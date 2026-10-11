@@ -10,10 +10,12 @@
  *                 takes it back; an expired one cannot be accepted
  *   the start     accepting creates both matches in one transaction, same three, same
  *                 start, unrated; a player already in a match cannot start one
- *   sealed        through race-status, the other side's round appears only once your own run
- *                 on it has landed; through RLS, the other player's match is not readable at all
- *   the result    decided once both legs end, from what settlement stored; a leg that did not
- *                 finish loses to one that did; two legs ending together decide it once
+ *   sealed        through race-status, the other side's raw score on a round appears only once
+ *                 your own run on it has landed; through RLS, the other player's match is not
+ *                 readable at all
+ *   the result    decided once both legs end, on rounds won on raw score, from what settlement
+ *                 stored; equal rounds is a draw; a leg that did not finish loses to one that
+ *                 did; two legs ending together decide it once
  *   unrated       no rating or rating history moves
  */
 
@@ -100,18 +102,20 @@ console.log("\n── sealed rounds ──────────────�
   const ids = await matchScenarios(db, aMatch);
   await land(db, P.Ana, aMatch, ids[0], 104);
   let bo = await status("Bo", { raceId });
-  check("Ana's round 1 lands: Bo sees it landed and sealed", bo.status === 200 && bo.body.them.landed === 1 && bo.body.rounds[0].them.sealed && bo.body.rounds[0].them.delta === null, JSON.stringify(bo.body).slice(0, 200));
-  check("no trace of the number anywhere in Bo's view", !JSON.stringify(bo.body).includes("0.04"));
+  check("Ana's round 1 lands: Bo sees it landed and sealed", bo.status === 200 && bo.body.them.landed === 1 && bo.body.rounds[0].them.sealed && bo.body.rounds[0].them.score === null, JSON.stringify(bo.body).slice(0, 200));
+  check("no trace of the number anywhere in Bo's view", !/"score":104\b/.test(JSON.stringify(bo.body)) && !JSON.stringify(bo.body).includes("0.04"));
   await land(db, P.Bo, bMatch, ids[1], 97);
   bo = await status("Bo", { raceId });
-  check("Bo landing round 2 opens nothing of Ana's round 1", bo.body.rounds[0].them.sealed && bo.body.rounds[0].them.delta === null);
+  check("Bo landing round 2 opens nothing of Ana's round 1", bo.body.rounds[0].them.sealed && bo.body.rounds[0].them.score === null);
   await land(db, P.Bo, bMatch, ids[0], 102);
   bo = await status("Bo", { raceId });
-  check("Bo landing round 1 opens Ana's round 1", !bo.body.rounds[0].them.sealed && Math.abs(bo.body.rounds[0].them.delta - 0.04) < 1e-9);
-  check("Bo's own rounds are measured against Bo's baseline", Math.abs(bo.body.rounds[0].you.delta - 0.02) < 1e-9 && Math.abs(bo.body.rounds[1].you.delta + 0.03) < 1e-9);
-  check("the bar is the one round both have revealed", Math.abs(bo.body.margin - (0.02 - 0.04)) < 1e-9 && bo.body.marginRounds === 1);
+  check("Bo landing round 1 opens Ana's raw score on it", !bo.body.rounds[0].them.sealed && bo.body.rounds[0].them.score === 104 && bo.body.rounds[0].you.score === 102);
+  check("Bo's own deltas still show, against Bo's baseline, as information", Math.abs(bo.body.rounds[0].you.delta - 0.02) < 1e-9 && Math.abs(bo.body.rounds[1].you.delta + 0.03) < 1e-9);
+  check("the bar is the one round both have landed, on raw score", bo.body.rounds[0].result === "lost" && bo.body.tally.lost === 1 && bo.body.tally.won === 0 && bo.body.rounds[1].result === null,
+    JSON.stringify(bo.body.tally));
+  check("and the status says so", /You trail 0\u20131 on rounds/.test(bo.body.status), bo.body.status);
   const ana = await status("Ana", { matchId: aMatch });
-  check("Ana sees Bo's round 1 (she landed hers) but not round 2", Math.abs(ana.body.rounds[0].them.delta - 0.02) < 1e-9 && ana.body.rounds[1].them.sealed);
+  check("Ana sees Bo's round 1 (she landed hers) but not round 2", ana.body.rounds[0].them.score === 102 && ana.body.rounds[1].them.sealed && ana.body.rounds[1].them.score === null);
   check("nobody else can watch", (await status("Cy", { raceId })).status === 404);
 
   await db.exec("set role authenticated");
@@ -138,14 +142,17 @@ console.log("\n── the result ───────────────�
   check("and says Bo is still playing, not that her run set joined the pool", /still playing/.test(sa.body.explanation) && !/pool/.test(sa.body.explanation), sa.body.explanation);
   check("the race is not decided yet", (await race(raceId)).status === "live");
   let bo = await status("Bo", { raceId });
-  check("Bo still cannot see Ana's round 3", bo.body.rounds[2].them.sealed && bo.body.them.matchScore === null);
+  check("Bo still cannot see Ana's round 3", bo.body.rounds[2].them.sealed && bo.body.rounds[2].them.score === null);
   await land(db, P.Bo, bMatch, ids[2], 101);
   const sb = await call("Bo", "settle-match", { matchId: bMatch });
   const r = await race(raceId);
-  check("Bo's last leg decides the race", r.status === "finished" && r.result === "inviter" && !r.by_forfeit, `${r.status} ${r.result}`);
-  check("Bo's result screen says who won", /Ana won the race/.test(sb.body.arena?.headline ?? ""), sb.body.arena?.headline);
+  check("Bo's last leg decides the race on rounds: 2-0 with one level", r.status === "finished" && r.result === "inviter" && !r.by_forfeit &&
+    r.inviter_rounds === 2 && r.invitee_rounds === 0 && r.tied_rounds === 1, `${r.status} ${r.result} ${r.inviter_rounds}-${r.invitee_rounds}-${r.tied_rounds}`);
+  check("Bo's result screen says who won, in rounds", /Ana won the race/.test(sb.body.arena?.headline ?? "") && /They won 2\u20130, 1 level on rounds/.test(sb.body.arena?.explanation ?? ""),
+    `${sb.body.arena?.headline} | ${sb.body.arena?.explanation}`);
   bo = await status("Bo", { raceId });
-  check("and the live view now shows everything, with the verdict", bo.body.verdict === "loss" && bo.body.rounds.every((x: any) => !x.them.sealed) && bo.body.them.matchScore != null);
+  check("and the live view now shows everything, with the verdict and the tally", bo.body.verdict === "loss" && bo.body.rounds.every((x: any) => !x.them.sealed && x.them.score != null) &&
+    bo.body.tally.won === 0 && bo.body.tally.lost === 2 && bo.body.tally.tied === 1, JSON.stringify(bo.body.tally));
   check("Ana's view reads it from her side", (await status("Ana", { raceId })).body.verdict === "win");
   check("the race is in both players' recent results", (await status("Ana")).body.recent[0]?.verdict === "win" && (await status("Bo")).body.recent[0]?.verdict === "loss");
 }
@@ -196,6 +203,18 @@ console.log("\n── forfeits, expiry, simultaneous finishes ──────
   await call("Cy", "settle-match", { matchId: r.invitee_match_id });
   r = await race(rejected.body.race.id);
   check("a leg with a Rejected run did not finish, whatever it scored", r.result === "invitee" && r.by_forfeit === true);
+
+  // Rounds, not a mean: a big gain on one round and two narrow losses is a loss.
+  const mean = await invite("Di", "Ana");
+  await act("Ana", { action: "accept", raceId: mean.body.race.id });
+  r = await race(mean.body.race.id);
+  await playAll(db, P.Di, r.inviter_match_id, [130, 99, 99]);
+  await playAll(db, P.Ana, r.invitee_match_id, [101, 101, 101]);
+  const sd = await call("Di", "settle-match", { matchId: r.inviter_match_id });
+  await call("Ana", "settle-match", { matchId: r.invitee_match_id });
+  r = await race(mean.body.race.id);
+  check("a higher mean gain that wins fewer rounds loses the race", sd.body.yourMatchScore > 0.05 && r.result === "invitee" && r.inviter_rounds === 1 && r.invitee_rounds === 2,
+    `${sd.body.yourMatchScore} ${r.result} ${r.inviter_rounds}-${r.invitee_rounds}`);
 }
 
 /* ------------------------------------------------------------------------------- */

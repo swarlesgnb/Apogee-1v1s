@@ -7,16 +7,14 @@
  *
  * WHAT IS IN IT, AND WHY THAT IS ENOUGH
  *
- * The holder's name, their match score (the bar to beat), the weakest verification tier
- * among their three runs, how long they have held it and how many people failed to take
- * it. Not their raw scores, baselines or per-round deltas: the bar is the one number a
- * challenger needs, and the rest is theirs.
+ * The holder's name, the weakest verification tier among their three runs, how long they
+ * have held it, how many people failed to take it, and what taking it needs: more of the
+ * three rounds on raw score. Not the holder's raw scores. Those are sealed from a
+ * challenger round by round until the challenger's own run on that scenario lands (the live
+ * view in race-status applies the rule), so the board cannot carry them. Nor their
+ * baselines or deltas: since ranked v2 a delta decides nothing, and it is theirs.
  *
- * Showing the bar before a challenge is deliberate, and is the opposite of the duel rule
- * (PLAN.md §6) for a reason. A duel recipient who saw the score first could pick only the
- * duels they expect to win, and every duel they skipped would cost the sender. Picking the
- * Crown with the lowest bar costs nobody anything: a low bar is supposed to fall. That is
- * the game.
+ * An ended reign is history, and its result is shown as the round tally that ended it.
  */
 
 import {
@@ -25,8 +23,11 @@ import {
   crownName,
   noticeText,
   REIGN_CAP_MS,
+  tally,
+  tallyText,
   type NoticeKind,
   type RunTier,
+  type Tally,
 } from "./crowns.ts";
 
 export interface CrownHistoryEntry {
@@ -37,7 +38,8 @@ export interface CrownHistoryEntry {
   endReason: "dethroned" | "lapsed" | "reset";
   /** Who took it, for a dethroning. */
   endedBy: string | null;
-  bar: number;
+  /** The round tally that ended it, from the taker's side ("2-1"), for a dethroning. */
+  takenOn: string | null;
 }
 
 export type CrownAction =
@@ -59,8 +61,10 @@ export interface CrownCard {
   /** The three, by name. Null until the first claim of a cycle draws them. */
   scenarios: string[] | null;
   holder: { playerId: string; name: string; you: boolean } | null;
-  /** The holder's match score: what a challenger has to beat by more than a draw. */
-  bar: number | null;
+  /** What taking it needs, said as a rule: the holder's scores stay sealed until yours land. */
+  toTake: string | null;
+  /** How many rounds (scenarios) a challenge is. */
+  rounds: number;
   tier: RunTier | null;
   provisional: boolean;
   heldSince: string | null;
@@ -100,7 +104,6 @@ export interface CrownBoard {
 export interface BoardReign {
   id: string;
   holderId: string;
-  matchScore: number;
   startedAt: number;
   defences: number;
   challenges: number;
@@ -126,7 +129,9 @@ export interface BoardHistoryRow {
   defences: number;
   endReason: "dethroned" | "lapsed" | "reset";
   endedBy: string | null;
-  matchScore: number;
+  /** Rounds the taker won and lost against this reign, for a dethroning. */
+  endedWon: number | null;
+  endedLost: number | null;
 }
 
 export interface BoardNoticeRow {
@@ -138,6 +143,8 @@ export interface BoardNoticeRow {
   reignMs: number;
   otherName: string | null;
   createdAt: number;
+  challengerRounds?: number | null;
+  holderRounds?: number | null;
 }
 
 export interface BoardInput {
@@ -207,7 +214,7 @@ export function buildBoard(input: BoardInput): CrownBoard {
         defences: h.defences,
         endReason: h.endReason,
         endedBy: h.endedBy ? displayName(input.names, h.endedBy) : null,
-        bar: h.matchScore,
+        takenOn: h.endReason === "dethroned" && h.endedWon != null && h.endedLost != null ? `${h.endedWon}\u2013${h.endedLost}` : null,
       }));
 
     return {
@@ -220,7 +227,8 @@ export function buildBoard(input: BoardInput): CrownBoard {
       cycle: row?.cycle ?? 0,
       scenarios: row?.scenarioIds ? row.scenarioIds.map((id) => input.scenarioNames.get(id) ?? `scenario ${id}`) : null,
       holder: reign ? { playerId: reign.holderId, name: displayName(input.names, reign.holderId), you } : null,
-      bar: reign ? reign.matchScore : null,
+      toTake: reign ? "Win more of the three rounds than the holder, on raw score. A tie on rounds keeps the Crown where it is." : null,
+      rounds: row?.scenarioIds?.length ?? 3,
       tier: reign ? reign.lowestTier : null,
       provisional: reign ? reign.provisional : false,
       heldSince: reign ? iso(reign.startedAt) : null,
@@ -284,16 +292,18 @@ export interface CrownResultNote {
   holderName: string | null;
   /** True when the Crown changed hands while the challenge was played. */
   judgedAgainstNewHolder: boolean;
-  challengerScore: number | null;
-  holderScore: number | null;
+  /**
+   * The rounds against the holder it was judged against, raw score against raw score.
+   * Every round of the challenger's has landed by the time there is a decision, so none of
+   * the holder's numbers is sealed any more. Null for a claim, a void or a forfeit.
+   */
+  rounds: { scenario: string; you: number; holder: number; result: "won" | "lost" | "tied" }[] | null;
+  tally: Tally | null;
   /** Defences of the reign it was judged against, after this challenge. */
   defences: number | null;
   headline: string;
   explanation: string;
 }
-
-const pct = (v: number | null) =>
-  v == null || !Number.isFinite(v) ? "n/a" : `${v >= 0 ? "+" : "−"}${Math.abs(v * 100).toFixed(1)}%`;
 
 export function crownResultNote(input: {
   outcome: CrownResultNote["outcome"];
@@ -303,33 +313,42 @@ export function crownResultNote(input: {
   claim: boolean;
   holderName: string | null;
   judgedAgainstNewHolder: boolean;
-  challengerScore: number | null;
-  holderScore: number | null;
+  /** Scenario names, in round order. */
+  scenarios: string[];
+  challengerScores: number[] | null;
+  holderScores: number[] | null;
   defences: number | null;
   reason?: string | null;
 }): CrownResultNote {
   const crown = crownName(input.category, input.band);
-  const you = pct(input.challengerScore);
-  const bar = pct(input.holderScore);
   const holder = input.holderName ?? "the holder";
   const moved = input.judgedAgainstNewHolder
     ? ` The Crown changed hands while you played, so you were measured against ${holder}, the holder when your result came in.`
     : "";
+  const paired = input.challengerScores && input.holderScores &&
+    input.challengerScores.length === input.holderScores.length && input.challengerScores.length > 0;
+  const rounds = paired
+    ? input.challengerScores!.map((you, i) => {
+        const h = input.holderScores![i];
+        return { scenario: input.scenarios[i] ?? `round ${i + 1}`, you, holder: h, result: (you > h ? "won" : you < h ? "lost" : "tied") as "won" | "lost" | "tied" };
+      })
+    : null;
+  const t = paired ? tally(input.challengerScores!, input.holderScores!) : null;
   let headline: string;
   let explanation: string;
   switch (input.outcome) {
     case "took":
       headline = `You took the ${crown}.`;
-      explanation = input.claim || input.holderScore == null
-        ? `It was vacant, and your run set (${you} against your baselines) is now the one to beat. Nothing was rated.`
-        : `${you} against your baselines beat ${holder}'s ${bar}. Your run set is now the one to beat. Nothing was rated.${moved}`;
+      explanation = input.claim || !t
+        ? `It was vacant, and your three scores are now the ones to beat. Nothing was rated.`
+        : `You won ${tallyText(t)} on rounds against ${holder}. Your three scores are now the ones to beat. Nothing was rated.${moved}`;
       break;
     case "defended":
       headline = `${holder} keeps the ${crown}.`;
-      explanation = (input.challengerScore != null && input.holderScore != null &&
-        Math.abs(input.challengerScore - input.holderScore) < 0.0005
-        ? `${you} drew with ${holder}'s ${bar}, and a draw is a defence.`
-        : `${you} against your baselines did not beat ${holder}'s ${bar}.`) +
+      explanation = (t && t.won === t.lost
+        ? `${tallyText(t)} on rounds against ${holder}, and a tie on rounds is a defence.`
+        : t ? `You won ${t.won} of ${t.won + t.lost + t.tied} rounds against ${holder}; taking the Crown needs more rounds won than lost.`
+        : `Your rounds did not take it from ${holder}.`) +
         ` You can challenge it again in 20 hours. Nothing was rated.${moved}`;
       break;
     case "forfeit":
@@ -338,7 +357,7 @@ export function crownResultNote(input: {
       break;
     case "stale":
       headline = `The ${crown} moved on.`;
-      explanation = `The Crown was reset onto new scenarios while you played, so this run set cannot be measured against it. Nothing was rated.`;
+      explanation = `The Crown was reset onto new scenarios while you played, so these rounds cannot be measured against it. Nothing was rated.`;
       break;
     case "pending":
       headline = `${crown} challenge recorded.`;
@@ -357,8 +376,8 @@ export function crownResultNote(input: {
     claim: input.claim,
     holderName: input.holderName,
     judgedAgainstNewHolder: input.judgedAgainstNewHolder,
-    challengerScore: input.challengerScore,
-    holderScore: input.holderScore,
+    rounds: input.outcome === "took" || input.outcome === "defended" ? rounds : null,
+    tally: input.outcome === "took" || input.outcome === "defended" ? t : null,
     defences: input.defences,
     headline,
     explanation,

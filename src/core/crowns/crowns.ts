@@ -1,16 +1,15 @@
 /**
  * Crowns: an asynchronous king of the hill, one per category and band.
  *
- * Apogee matches are won on delta over the player's own baseline (PLAN.md §3), which is
- * what lets any player contest any other. A Crown uses that directly. It is held by one
- * stored run set on three fixed scenarios. Anybody may challenge it by playing the same
- * three; if their match score beats the holder's, they take it and their run set becomes
- * the one to beat.
+ * A Crown is held by one stored run set on three fixed scenarios. Anybody may challenge it
+ * by playing the same three. Each scenario is a round, won by the higher raw score, the
+ * way every ranked match is decided since ranked v2 (PLAN.md §3). A challenger who wins
+ * more rounds than the holder takes the Crown, and their three become the ones to beat.
  *
  * WHERE THE RULES LIVE
  *
  * Here, as a pure reducer, and again in SQL (`crown_resolve` and friends in migration
- * 20261003000025), because the decision has to be taken inside the transaction that locks
+ * 20261011000005), because the decision has to be taken inside the transaction that locks
  * the Crown. Two copies of a rule drift, so `tools/validateCrownsDb.ts` drives the real
  * SQL and this reducer through the same random sequences and requires the same holder,
  * the same defences and the same notices out of both. This file is the specification;
@@ -21,19 +20,18 @@
  *   seeding     A vacant Crown is claimed by playing its three. The first qualifying run
  *               set to settle takes it. The three are drawn when the first claim opens,
  *               so every claimant in that cycle plays the same scenarios.
- *   taking      A challenger takes the Crown when their match score is at least
- *               CROWN_DRAW_EPSILON above the holder's: the same margin settleMatch needs
- *               to call a round a win rather than a draw.
- *   ties        A draw is a defence. The holder keeps it.
+ *   taking      Round by round on raw score, as settleMatch's rounds format decides a
+ *               match: the challenger takes the Crown by winning more rounds than they lose.
+ *   ties        A tied tally (1-1 with one round level, or 0-0 with three) is a defence.
+ *               The holder keeps it.
  *   judged by   whoever holds the Crown when the challenge settles. If it changed hands
- *               while the challenger was playing, they are judged against the new holder,
- *               on the same three scenarios. The holder at the end is then the best run
- *               set posted, whatever order simultaneous challenges settle in.
+ *               while the challenger was playing, they are judged against the new holder's
+ *               scores, on the same three scenarios.
  *   defences    One per distinct challenger beaten in a reign. A challenger who loses
  *               twice is one defence, so an alt account cannot pad the count.
- *   qualifying  Settled, every round counted, every run Verified or Consistent. Suspect
- *               runs are held for review in ranked and a Crown is a public title, so they
- *               do not take one. A Rejected run never counts for anything.
+ *   qualifying  Settled, a raw score on every scenario, every run Verified or Consistent.
+ *               Suspect runs are held for review in ranked and a Crown is a public title,
+ *               so they do not take one. A Rejected run never counts for anything.
  *   cooldown    One challenge per player per Crown every CHALLENGE_COOLDOWN_MS, whatever
  *               it came to. A void or a forfeit spends it too, or quitting a bad run
  *               would be a free reroll.
@@ -43,6 +41,13 @@
  *               is already being played, so nobody loses a chance mid-match.
  *   rating      None. Crown matches are unrated (`matches.rated = false`, the path
  *               tournaments use) and never enter the ranked pool.
+ *
+ * A round majority is not transitive: A can beat B 2-1 and B beat C 2-1 while C beats A.
+ * So when challenges settle at once the holder at the end can depend on the order they
+ * settle in. Each is still judged against exactly one holder, each reign still ends at
+ * most once, and every take beat the holder it took from (validateCrowns.ts checks all
+ * three); "the best run set wins whatever the order" held under mean delta and does not
+ * under rounds, and docs/fleet/arena.md says so.
  */
 
 import type { VerificationTier } from "../verify/verifyRun.ts";
@@ -53,11 +58,10 @@ const DAY = 24 * HOUR;
 /**
  * How long a reign may last.
  *
- * Measured rather than chosen, in the sense that the alternative was measured: with
- * players drawn from one distribution, the holder after m qualifying run sets is the best
- * of m, so the next challenger takes it with probability 1/(m+1) and the expected number
- * of changes of hand in a cycle grows only as ln(m). Without a cap the board freezes:
- * `validateCrowns.ts` replays eight weeks at five players and finds the last week of an
+ * Measured rather than chosen, in the sense that the alternative was measured: the holder's
+ * three are the survivors of every challenge so far, so each new challenger faces a set
+ * that has already beaten everybody before them, and without a cap the board freezes.
+ * `validateCrowns.ts` replays eight weeks of raw-score rounds and finds the last week of an
  * uncapped Crown changing hands a fraction as often as a capped one. Seven days is a week
  * of evenings, the unit PLAN.md §6 already uses for duels.
  */
@@ -67,21 +71,12 @@ export const REIGN_CAP_MS = 7 * DAY;
  * How often one player may challenge one Crown.
  *
  * The three scenarios are fixed for a cycle, so unlimited attempts would hand the Crown to
- * whoever has the most evenings to spend: the best of k tries beats one try k times in
- * k+1. One a day per Crown puts every player on the same number of draws. Twenty hours
- * rather than twenty-four, so somebody who plays at about the same time each evening is
- * not refused by a few minutes.
+ * whoever has the most evenings to spend: more tries at the same three is more chances at
+ * a lucky set. One a day per Crown puts every player on the same number of draws. Twenty
+ * hours rather than twenty-four, so somebody who plays at about the same time each evening
+ * is not refused by a few minutes.
  */
 export const CHALLENGE_COOLDOWN_MS = 20 * HOUR;
-
-/**
- * The margin a challenger needs: settleMatch's own DRAW_EPSILON (src/core/match/settle.ts).
- *
- * Restated rather than imported because settle.ts does not export it, and
- * `validateCrowns.ts` holds the two together by asking settleMatch for its verdict on the
- * same pairs of scores.
- */
-export const CROWN_DRAW_EPSILON = 0.0005;
 
 /** The verification tiers that may wear a Crown. */
 export const CROWN_TIERS: readonly VerificationTier[] = ["verified", "consistent"];
@@ -92,25 +87,35 @@ export type RunTier = VerificationTier | "unverified";
 export interface RunSet {
   /** Terminal status of the challenge match. */
   status: "settled" | "void";
-  /** The side's stored match score; null for a forfeit or anything voided. */
-  matchScore: number | null;
+  /** Raw score per scenario, in the match's scenario order; null for a forfeit or a void. */
+  scores: number[] | null;
   /** One tier per scenario the side has a run for. */
   tiers: RunTier[];
   /** How many scenarios the match had. */
   scenarios: number;
   /** True when the side ended by forfeit (abandoned or ran out of time). */
   forfeit?: boolean;
+  /** Mean delta against the player's own baselines: shown as "against your usual", decides nothing. */
+  meanDelta?: number | null;
   provisional?: boolean;
 }
 
 export type Outcome = "took" | "defended" | "void" | "forfeit" | "stale";
+
+export interface Tally {
+  won: number;
+  lost: number;
+  tied: number;
+}
 
 export interface Reign {
   id: string;
   holderId: string;
   /** The match the holder's run set was played in. */
   matchId: string;
-  matchScore: number;
+  /** The holder's raw score per scenario. Sealed from challengers until their run on it lands. */
+  scores: number[];
+  meanDelta: number | null;
   startedAt: number;
   /** Distinct challengers beaten in this reign. */
   defences: number;
@@ -150,8 +155,9 @@ export interface Notice {
   otherId: string | null;
   defences: number;
   reignMs: number;
-  challengerScore: number | null;
-  holderScore: number | null;
+  /** Rounds the challenger won and the holder won, for a take or a defence. */
+  challengerRounds: number | null;
+  holderRounds: number | null;
 }
 
 export interface Judgement {
@@ -159,16 +165,21 @@ export interface Judgement {
   state: CrownState;
   /** The reign this challenge was measured against, if any. */
   judgedReignId: string | null;
+  /** The round tally against that reign, from the challenger's side. */
+  tally: Tally | null;
   /** A reign that ended because of this challenge. */
   ended: (Reign & { endedAt: number; endReason: "dethroned"; endedBy: string }) | null;
   notice: Notice | null;
   reason: string;
 }
 
+const finiteScores = (s: number[] | null | undefined, n: number): s is number[] =>
+  Array.isArray(s) && s.length === n && s.every((x) => typeof x === "number" && Number.isFinite(x));
+
 /** Whether a stored side may take or seed a Crown, and if not, what it counts as. */
 export function qualifies(set: RunSet): { ok: true } | { ok: false; outcome: "void" | "forfeit"; reason: string } {
   if (set.forfeit) return { ok: false, outcome: "forfeit", reason: "the challenge was abandoned or ran out of time" };
-  if (set.status !== "settled" || set.matchScore == null || !Number.isFinite(set.matchScore)) {
+  if (set.status !== "settled" || !finiteScores(set.scores, set.scenarios)) {
     return { ok: false, outcome: "void", reason: "the match did not count" };
   }
   if (set.tiers.length !== set.scenarios) {
@@ -183,9 +194,26 @@ export function qualifies(set: RunSet): { ok: true } | { ok: false; outcome: "vo
   return { ok: true };
 }
 
-/** Does the challenger's match score take the Crown from the holder's? A draw does not. */
-export function beats(challenger: number, holder: number): boolean {
-  return challenger - holder >= CROWN_DRAW_EPSILON;
+/** Rounds won, lost and tied on raw score, from the challenger's side. Round i is scenario i. */
+export function tally(challenger: number[], holder: number[]): Tally {
+  const t: Tally = { won: 0, lost: 0, tied: 0 };
+  for (let i = 0; i < Math.min(challenger.length, holder.length); i++) {
+    if (challenger[i] > holder[i]) t.won++;
+    else if (challenger[i] < holder[i]) t.lost++;
+    else t.tied++;
+  }
+  return t;
+}
+
+/** Does the challenger take the Crown? More rounds won than lost. A tied tally does not. */
+export function beats(challenger: number[], holder: number[]): boolean {
+  const t = tally(challenger, holder);
+  return t.won > t.lost;
+}
+
+/** "2-1", "1-0 with two level". */
+export function tallyText(t: Tally): string {
+  return `${t.won}–${t.lost}${t.tied > 0 ? ` with ${t.tied === 1 ? "one" : t.tied === 2 ? "two" : "three"} level` : ""}`;
 }
 
 const TIER_ORDER: RunTier[] = ["verified", "consistent", "suspect", "unverified", "rejected"];
@@ -215,6 +243,7 @@ export function judge(
     outcome,
     state,
     judgedReignId: null,
+    tally: null,
     ended: null,
     notice: null,
     reason,
@@ -227,12 +256,13 @@ export function judge(
   // or the season dropped its scenarios), so it was played on a different three.
   if (challenge.cycle !== state.cycle) return same("the Crown moved on to new scenarios while this was played", "stale");
 
-  const score = set.matchScore as number;
+  const scores = set.scores as number[];
   const reign = (): Reign => ({
     id: newReignId,
     holderId: challenge.challengerId,
     matchId: challenge.matchId,
-    matchScore: score,
+    scores: [...scores],
+    meanDelta: set.meanDelta ?? null,
     startedAt: now,
     defences: 0,
     challenges: 0,
@@ -248,6 +278,7 @@ export function judge(
       outcome: "took",
       state: { ...state, reign: reign() },
       judgedReignId: null,
+      tally: null,
       ended: null,
       notice: null,
       reason: "the Crown was vacant",
@@ -258,26 +289,30 @@ export function judge(
   // here so a hand-made row cannot make a holder defend against themselves.
   if (current.holderId === challenge.challengerId) return same("a holder cannot challenge their own Crown", "stale");
 
-  if (beats(score, current.matchScore)) {
+  const t = tally(scores, current.scores);
+  const notice = (kind: NoticeKind, defences: number): Notice => ({
+    playerId: current.holderId,
+    kind,
+    category: state.category,
+    window: state.window,
+    reignId: current.id,
+    otherId: challenge.challengerId,
+    defences,
+    reignMs: now - current.startedAt,
+    challengerRounds: t.won,
+    holderRounds: t.lost,
+  });
+
+  if (t.won > t.lost) {
     const ended = { ...current, endedAt: now, endReason: "dethroned" as const, endedBy: challenge.challengerId };
     return {
       outcome: "took",
       state: { ...state, reign: reign() },
       judgedReignId: current.id,
+      tally: t,
       ended,
-      notice: {
-        playerId: current.holderId,
-        kind: "dethroned",
-        category: state.category,
-        window: state.window,
-        reignId: current.id,
-        otherId: challenge.challengerId,
-        defences: current.defences,
-        reignMs: now - current.startedAt,
-        challengerScore: score,
-        holderScore: current.matchScore,
-      },
-      reason: "beat the holder's match score",
+      notice: notice("dethroned", current.defences),
+      reason: "won more rounds than the holder",
     };
   }
 
@@ -292,20 +327,10 @@ export function judge(
     outcome: "defended",
     state: { ...state, reign: defended },
     judgedReignId: current.id,
+    tally: t,
     ended: null,
-    notice: {
-      playerId: current.holderId,
-      kind: "defended",
-      category: state.category,
-      window: state.window,
-      reignId: current.id,
-      otherId: challenge.challengerId,
-      defences: defended.defences,
-      reignMs: now - current.startedAt,
-      challengerScore: score,
-      holderScore: current.matchScore,
-    },
-    reason: beats(current.matchScore, score) ? "did not beat the holder's match score" : "drew with the holder, and a draw is a defence",
+    notice: notice("defended", defended.defences),
+    reason: t.won === t.lost ? "level on rounds with the holder, and a tie is a defence" : "won fewer rounds than the holder",
   };
 }
 
@@ -336,8 +361,8 @@ export function vacate(
       otherId: null,
       defences: reign.defences,
       reignMs: now - reign.startedAt,
-      challengerScore: null,
-      holderScore: reign.matchScore,
+      challengerRounds: null,
+      holderRounds: null,
     },
   };
 }
@@ -395,17 +420,20 @@ export function crownName(category: string, band: string | null | undefined): st
 
 /** The sentence a notice is shown as, the next time its owner opens the client. */
 export function noticeText(
-  notice: Pick<Notice, "kind" | "defences" | "reignMs" | "category">,
+  notice: Pick<Notice, "kind" | "defences" | "reignMs" | "category"> & Partial<Pick<Notice, "challengerRounds" | "holderRounds">>,
   band: string | null | undefined,
   otherName: string | null,
 ): string {
   const crown = crownName(notice.category, band);
   const who = otherName || "another player";
+  const rounds = notice.challengerRounds != null && notice.holderRounds != null
+    ? `${notice.challengerRounds}–${notice.holderRounds}`
+    : null;
   switch (notice.kind) {
     case "dethroned":
-      return `You lost the ${crown} to ${who} ${defencePhrase(notice.defences)}. You held it for ${duration(notice.reignMs)}.`;
+      return `You lost the ${crown} to ${who} ${defencePhrase(notice.defences)}${rounds ? `, ${rounds} on rounds` : ""}. You held it for ${duration(notice.reignMs)}.`;
     case "defended":
-      return `${who} challenged your ${crown} and did not take it. Defences this reign: ${notice.defences}.`;
+      return `${who} challenged your ${crown} and did not take it${rounds ? ` (${rounds} on rounds)` : ""}. Defences this reign: ${notice.defences}.`;
     case "lapsed":
       return `Your reign over the ${crown} reached its 7-day limit with ${notice.defences} defence${notice.defences === 1 ? "" : "s"}. It is vacant again, on three new scenarios.`;
     case "reset":

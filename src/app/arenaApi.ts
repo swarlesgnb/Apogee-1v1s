@@ -19,7 +19,8 @@ export interface CrownMatchInfo {
   name: string;
   claim: boolean;
   holderName: string | null;
-  bar: number | null;
+  /** Rounds in the challenge. The holder's scores are not sent: race-status opens them one by one. */
+  rounds: number;
 }
 
 /** What an accepted race adds to the find-match shape. */

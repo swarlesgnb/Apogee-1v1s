@@ -20,7 +20,8 @@
  * special case.
  */
 
-import { handler, HttpError, INITIAL_TTL_MS, json, readJson, requireCaller, sweepStaleMatches } from "../_shared/apogee.ts";
+import { handler, HttpError, INITIAL_TTL_MS, json, readJson, requireCaller } from "../_shared/apogee.ts";
+import { sweepStaleMatches } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { matchClock, recordMatchClock } from "../_shared/timeIntegrity.ts";
 import {
@@ -35,7 +36,6 @@ import {
 } from "../_shared/arena.ts";
 
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
-import { updateRating } from "../../../src/core/rating/glicko2.ts";
 import { DECLINE_QUIET_MS, RACE_INVITE_TTL_MS } from "../../../src/core/race/race.ts";
 import { RACE_COLUMNS, raceRowFromDb as raceRow, summarise } from "../../../src/core/race/view.ts";
 
@@ -76,7 +76,7 @@ Deno.serve(handler(async (req, admin) => {
     }
 
     // A race is played now, so an inviter already in a match has nothing to start.
-    const live = await sweepStaleMatches(admin, caller.playerId, updateRating);
+    const live = await sweepStaleMatches(admin, caller.playerId);
     if (live) throw new HttpError(409, "Finish or abandon your current match before inviting somebody to race.");
 
     const { season, bands, pools, cells } = await seasonCells(admin);
@@ -146,7 +146,7 @@ Deno.serve(handler(async (req, admin) => {
 
   // Retire the caller's own expired matches by the ordinary rule before race_start asks
   // whether both players are free.
-  await sweepStaleMatches(admin, caller.playerId, updateRating);
+  await sweepStaleMatches(admin, caller.playerId);
   // The accepter's UTC offset, pinned to the side race_start writes for them. The inviter's
   // side is pinned by their first ranked run, which holdToMatchClock does for any side
   // that arrives without one.

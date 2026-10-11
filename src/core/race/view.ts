@@ -156,23 +156,26 @@ export interface LiveView extends SealedView {
   status: string;
 }
 
-/** A lead or a deficit is a size, so it is written without a sign: "lead by 1.9%". */
-const size = (v: number) => `${Math.abs(v * 100).toFixed(1)}%`;
-
 /** The sentence under the bar. */
 export function liveStatus(view: SealedView, verdict: LiveView["verdict"], kind: LiveView["kind"]): string {
-  if (verdict === "win") return kind === "crown" ? "You beat the holder's run set." : `You won the race against ${view.them.name}.`;
-  if (verdict === "loss") return kind === "crown" ? "The holder's run set stood." : `${view.them.name} won the race.`;
-  if (verdict === "draw") return "Level within the draw margin.";
+  const { won, lost, tied } = view.tally;
+  const level = tied > 0 ? `, ${tied} level` : "";
+  const score = `${won}\u2013${lost}${level}`;
+  // A result is read out from the winner's side: "Kestrel won the race, 2-1".
+  const theirs = `${lost}\u2013${won}${level}`;
+  if (verdict === "win") return kind === "crown" ? `You took ${score} on rounds against the holder's scores.` : `You won the race against ${view.them.name}, ${score} on rounds.`;
+  if (verdict === "loss") return kind === "crown" ? `The holder's scores stood, ${theirs} on rounds.` : `${view.them.name} won the race, ${theirs} on rounds.`;
+  if (verdict === "draw") return kind === "crown" ? `Level on rounds, ${score}. A tie keeps the Crown with the holder.` : `Level on rounds, ${score}.`;
   if (verdict === "void") return "This one did not count.";
   const sealed = view.rounds.filter((r) => r.them.sealed).length;
-  const lead = view.margin == null
-    ? "No round revealed yet."
-    : view.margin > 0
-      ? `You lead by ${size(view.margin)} over ${view.marginRounds} round${view.marginRounds === 1 ? "" : "s"}.`
-      : view.margin < 0
-        ? `You trail by ${size(view.margin)} over ${view.marginRounds} round${view.marginRounds === 1 ? "" : "s"}.`
-        : `Level over ${view.marginRounds} round${view.marginRounds === 1 ? "" : "s"}.`;
+  const decided = won + lost + tied;
+  const lead = decided === 0
+    ? "No round decided yet."
+    : won > lost
+      ? `You lead ${score} on rounds.`
+      : won < lost
+        ? `You trail ${score} on rounds.`
+        : `Level ${score} on rounds.`;
   return sealed > 0
     ? `${lead} ${view.them.name} has landed ${sealed} round${sealed === 1 ? "" : "s"} you have not played yet; each opens when yours lands.`
     : lead;

@@ -35,6 +35,10 @@ export interface SettledRecord {
     baseline: number;
     delta: number | null;
     opponentDelta: number | null;
+    /** The other side's raw score, which settle-match sends for a rounds-format match. */
+    opponentScore?: number | null;
+    /** The round on raw score, as settle-match decided it. */
+    result?: "won" | "lost" | "tied" | null;
     counted: boolean;
     excludedReason: string | null;
   }[];
@@ -105,6 +109,17 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
 
   const rounds: CardRound[] = s.rounds.map((r) => {
     const theirs = r.counted && finite(r.opponentDelta) ? r.opponentDelta : null;
+    // A Crown challenge is decided on raw score against the holder's frozen three, and the
+    // holder's delta is not sent: the card prints both raw scores and the server's result.
+    if (s.arena && r.counted && finite(r.opponentScore)) {
+      return {
+        scenario: r.scenario,
+        you: { score: finite(r.score) ? r.score : null, baseline: finite(r.baseline) ? r.baseline : null, delta: finite(r.delta) ? r.delta : null },
+        them: { score: r.opponentScore, baseline: null, delta: theirs },
+        excluded: null,
+        result: r.result ?? null,
+      };
+    }
     return {
       scenario: r.scenario,
       you: { score: finite(r.score) ? r.score : null, baseline: finite(r.baseline) ? r.baseline : null, delta: r.counted && finite(r.delta) ? r.delta : null },
@@ -139,7 +154,8 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
     },
     opponent,
     verdict: seeding ? null : (s.verdict as "win" | "loss" | "draw"),
-    matchScore: { you: finite(s.yourMatchScore) ? s.yourMatchScore : null, them: seeding || !finite(s.theirMatchScore) ? null : s.theirMatchScore },
+    // A Crown or a race is decided on rounds; a mean delta there would read as the result.
+    matchScore: s.arena ? null : { you: finite(s.yourMatchScore) ? s.yourMatchScore : null, them: seeding || !finite(s.theirMatchScore) ? null : s.theirMatchScore },
     rounds,
     // Only on the poster's own seeding match: that is the run set the code answers.
     duelCode: seeding && rec.duelCode ? rec.duelCode : null,

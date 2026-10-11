@@ -7,10 +7,15 @@
  * What it proves, and how:
  *
  *   claims and takes     a vacant Crown is claimed by the first qualifying run set to settle;
- *                        a second claimant plays the same three and is judged against it
+ *                        a second claimant plays the same three and is judged against it,
+ *                        round by round on raw score
  *   one take             two challengers settling together against one holder: exactly one
  *                        takes, the holder's reign ends once, the other is judged against
- *                        the new holder
+ *                        the new holder (and a level tally is a defence)
+ *   sealed scores        the holder's numbers are not in the challenge match, race-status
+ *                        opens each as the challenger's run on it lands (an abandoned
+ *                        challenge opens no more), and a take removes the old holder from
+ *                        the match whose side became the bar
  *   what cannot take     a Rejected run, a Suspect run (even when settle-match calls it a
  *                        win), an abandoned scenario and a forfeit all leave the holder
  *   notices              readable by their owner and nobody else, through RLS and through
@@ -39,14 +44,14 @@ import {
   playAll,
   snapshotRatings,
 } from "./arenaHarness.ts";
-import { judge, vacate, beats, type Challenge, type CrownState, type RunSet, type RunTier } from "../src/core/crowns/crowns.ts";
+import { judge, vacate, tally, type Challenge, type CrownState, type RunSet, type RunTier } from "../src/core/crowns/crowns.ts";
 import { seededRandom } from "../src/core/match/scenarioSelection.ts";
 
 const db = await freshDatabase();
 const season = await fixtureSeason(db);
 const H = await loadHandlers(db, season, ["list-crowns", "challenge-crown", "settle-match", "abandon-match", "race-status"]);
 
-const NAMES = ["Rook", "Ash", "Birch", "Cedar", "Dune", "Elm", "Fern", "Gale", "Heath", "Iris", "Juniper", "Kestrel", "Larch", "Moss", "Nettle"];
+const NAMES = ["Rook", "Ash", "Birch", "Cedar", "Dune", "Elm", "Fern", "Gale", "Heath", "Iris", "Juniper", "Kestrel", "Larch", "Moss", "Nettle", "Oak"];
 const P: Record<string, string> = {};
 for (const [i, n] of NAMES.entries()) {
   P[n] = await makePlayer(db, i + 1, n);
@@ -60,11 +65,18 @@ const challenge = (who: string, category = PT, window = 1) => call(who, "challen
 const settle = (who: string, matchId: string) => call(who, "settle-match", { matchId });
 const board = (who: string, seen?: string[]) => call(who, "list-crowns", seen ? { seen } : {});
 const crownRow = async (category = PT, window = 1) => (await db.query<any>(
-  `select c.cycle, c.scenario_ids, r.id as reign_id, r.holder_id, r.defences, r.challenges, r.match_score, r.started_at
+  `select c.cycle, c.scenario_ids, r.id as reign_id, r.holder_id, r.defences, r.challenges, r.scores, r.started_at
      from crowns c left join crown_reigns r on r.id = c.reign_id where c.category = $1 and c.window_index = $2`, [category, window])).rows[0];
 const outcome = async (matchId: string) => (await db.query<any>("select * from crown_challenges where match_id = $1", [matchId])).rows[0];
 const resetLimits = () => db.query("delete from rate_limits");
 const card = (b: any, category = PT, window = 1) => b.crowns.find((c: any) => c.key === `${category}|${window}`);
+const nums = (a: unknown[] | null | undefined) => (a ?? []).map(Number);
+/** What a player can read of a match's sides through RLS, as the client would. */
+async function asPlayer<T = any>(playerId: string, sql: string, params: unknown[] = []): Promise<T[]> {
+  await db.exec("set role authenticated");
+  await db.query("select set_config('test.player_id', $1, false)", [playerId]);
+  try { return (await db.query<T>(sql, params)).rows; } finally { await db.exec("reset role"); }
+}
 
 /* ------------------------------------------------------------------------------- */
 console.log("\n── an empty board ───────────────────────────────");
@@ -85,6 +97,7 @@ let rookReign = "";
   check("the claim is a one-sided match on three scenarios", r.body.opponent === null && r.body.scenarios.length === 3);
   const a = await call("Ash", "challenge-crown", { category: PT, window: 1, tzOffsetMinutes: -120 });
   check("a second claimant gets a match too", a.status === 200 && a.body.crown?.claim === true);
+  check("the match info states the rounds, and carries no bar", r.body.crown.rounds === 3 && !("bar" in r.body.crown), JSON.stringify(r.body.crown));
   const clock = (await db.query<any>("select tz_offset_minutes from match_sides where match_id = $1 and player_id = $2", [a.body.matchId, P.Ash])).rows[0];
   check("the claimant's UTC offset is pinned to the side crown_open_challenge wrote", clock?.tz_offset_minutes === -120, JSON.stringify(clock));
   const [ra, aa] = [await matchScenarios(db, r.body.matchId), await matchScenarios(db, a.body.matchId)];
@@ -103,7 +116,8 @@ let rookReign = "";
   check("and is told why", /changed hands while you played/.test(sa.body.arena.crown.explanation));
   const row = await crownRow();
   rookReign = row.reign_id;
-  check("Rook holds it with one defence", row.holder_id === P.Rook && row.defences === 1 && Math.abs(Number(row.match_score) - 0.02) < 1e-9);
+  check("Ash lost all three rounds", (await outcome(a.body.matchId)).rounds_lost === 3 && sa.body.arena.crown.tally?.lost === 3, JSON.stringify(sa.body.arena.crown.tally));
+  check("Rook holds it with one defence, on raw scores", row.holder_id === P.Rook && row.defences === 1 && nums(row.scores).join() === "102,102,102", JSON.stringify(row));
 }
 
 /* ------------------------------------------------------------------------------- */
@@ -111,7 +125,15 @@ console.log("\n── the board, and who may challenge ────────�
 {
   const b = await board("Birch");
   const c = card(b.body);
-  check("the board shows holder, bar, defences, tier", c.holder?.name === "Rook" && Math.abs(c.bar - 0.02) < 1e-9 && c.defences === 1 && c.tier === "consistent", JSON.stringify(c).slice(0, 300));
+  check("the board shows holder, defences, tier and the rounds rule", c.holder?.name === "Rook" && c.defences === 1 && c.tier === "consistent" &&
+    c.rounds === 3 && /more of the three rounds/.test(c.toTake ?? ""), JSON.stringify(c).slice(0, 300));
+  const keys: string[] = [];
+  const walk = (v: unknown, path: string) => {
+    if (Array.isArray(v)) v.forEach((x, i) => walk(x, `${path}[${i}]`));
+    else if (v && typeof v === "object") for (const [k, x] of Object.entries(v)) { if (/^(score|scores|bar|deltas?|matchScore|baseline)$/.test(k)) keys.push(`${path}.${k}`); walk(x, `${path}.${k}`); }
+  };
+  walk(b.body, "board");
+  check("the board carries none of the holder's numbers", keys.length === 0, keys.join(", "));
   check("and offers Birch a challenge", c.action.kind === "challenge" && c.scenarios.length === 3);
   check("Rook's own board says the Crown is theirs", card((await board("Rook")).body).action.kind === "yours");
   const own = await challenge("Rook");
@@ -129,23 +151,35 @@ console.log("\n── two challengers settle together ────────�
   const c = await challenge("Cedar");
   const d = await challenge("Dune");
   check("both are playing Rook's run set", c.body.opponent?.displayName === "Rook" && d.body.opponent?.displayName === "Rook");
+  const copy = (await db.query<any>("select scores, deltas, match_score from match_sides where match_id = $1 and player_id = $2", [c.body.matchId, P.Rook])).rows[0];
+  check("the copied holder side carries no scores, deltas or match score", nums(copy.scores).length === 0 && nums(copy.deltas).length === 0 && copy.match_score === null, JSON.stringify(copy));
+  const readable = await asPlayer(P.Cedar, "select player_id, scores from match_sides where player_id = $1 and scores <> '{}'", [P.Rook]);
+  check("so a challenger can read none of the holder's scores, from any match", readable.length === 0, JSON.stringify(readable));
   await playAll(db, P.Cedar, c.body.matchId, [104, 104, 104]);
   await playAll(db, P.Dune, d.body.matchId, [104, 104, 104]);
   H.as(P.Cedar); const pc = H.handlers["settle-match"]({ matchId: c.body.matchId });
   H.as(P.Dune); const pd = H.handlers["settle-match"]({ matchId: d.body.matchId });
   const [rc, rd] = await Promise.all([pc, pd]);
   check("both settle", rc.status === 200 && rd.status === 200);
-  check("settle-match called both a win against Rook's run set", rc.body.verdict === "win" && rd.body.verdict === "win");
+  check("settle-match called both a win against Rook's run set, on rounds", rc.body.verdict === "win" && rd.body.verdict === "win" &&
+    rc.body.format === "rounds" && rc.body.roundTally?.won === 3, `${rc.body.format} ${JSON.stringify(rc.body.roundTally)}`);
+  check("found Rook's raw scores on Rook's own side", nums(rc.body.rounds.map((x: any) => x.opponentScore)).join() === "102,102,102", JSON.stringify(rc.body.rounds.map((x: any) => x.opponentScore)));
   const outs = [await outcome(c.body.matchId), await outcome(d.body.matchId)];
   const takes = outs.filter((o) => o.outcome === "took");
   check("exactly one of them takes the Crown", takes.length === 1, outs.map((o) => o.outcome).join(", "));
   const other = outs.find((o) => o.outcome !== "took");
-  check("the other drew with the new holder, and a draw is a defence", other?.outcome === "defended" && other.judged_reign_id !== rookReign);
+  check("the other was level on rounds with the new holder, and a tie is a defence", other?.outcome === "defended" && other.judged_reign_id !== rookReign &&
+    other.rounds_tied === 3 && other.rounds_won === 0 && other.rounds_lost === 0, JSON.stringify(other));
   const ended = (await db.query<any>("select end_reason, ended_by from crown_reigns where id = $1", [rookReign])).rows[0];
   check("Rook's reign ended once, dethroned by the taker", ended.end_reason === "dethroned" && ended.ended_by === takes[0].challenger_id);
   const live = (await db.query<any>("select count(*)::int as n from crown_reigns where category = $1 and window_index = 1 and ended_at is null", [PT])).rows[0].n;
   check("there is one live reign", live === 1);
   const takerName = takes[0].challenger_id === P.Cedar ? "Cedar" : "Dune";
+  const takeMatch = takes[0].match_id;
+  const left = (await db.query<any>("select player_id from match_sides where match_id = $1", [takeMatch])).rows.map((x) => x.player_id);
+  check("the take removed Rook's copy from the match that is now the bar", left.length === 1 && left[0] === takes[0].challenger_id, JSON.stringify(left));
+  const rookSees = await asPlayer(P.Rook, "select scores from match_sides where match_id = $1", [takeMatch]);
+  check("so the dethroned holder cannot read the new holder's scores", rookSees.length === 0, JSON.stringify(rookSees));
   const loserNote = (takerName === "Cedar" ? rd : rc).body.arena.crown;
   check("the second to settle is told it changed hands", loserNote.judgedAgainstNewHolder === true && loserNote.holderName === takerName, JSON.stringify(loserNote));
 }
@@ -162,7 +196,7 @@ console.log("\n── different scores settling together ───────�
   H.as(P.Elm); const pe = H.handlers["settle-match"]({ matchId: e.body.matchId });
   await Promise.all([pf, pe]);
   const row = await crownRow();
-  check("the best run set holds the Crown whatever order they settled in", row.holder_id === P.Elm, NAMES.find((n) => P[n] === row.holder_id));
+  check("a set that out-rounds both holds the Crown whatever order they settled in", row.holder_id === P.Elm, NAMES.find((n) => P[n] === row.holder_id));
   const endedOnce = (await db.query<any>("select count(*)::int as n from crown_reigns where holder_id = $1 and category = $2 and window_index = 1 and end_reason = 'dethroned'", [holderBefore, PT])).rows[0].n;
   check("the previous holder was dethroned exactly once", endedOnce === 1);
 }
@@ -205,22 +239,39 @@ console.log("\n── what cannot take a Crown ───────────
 console.log("\n── the live view of a challenge ─────────────────");
 {
   const holder = (await crownRow()).holder_id;
+  const holderScores = nums((await crownRow()).scores);
   const k = await challenge("Kestrel");
   const ids = await matchScenarios(db, k.body.matchId);
-  const holderDeltas = (await db.query<any>("select deltas from match_sides where match_id = $1 and player_id = $2", [k.body.matchId, holder])).rows[0].deltas.map(Number);
   let v = await call("Kestrel", "race-status", { matchId: k.body.matchId });
-  check("before a run lands, every holder round is sealed", v.status === 200 && v.body.kind === "crown" && v.body.rounds.every((r: any) => r.them.sealed && r.them.delta === null), JSON.stringify(v.body).slice(0, 300));
+  check("before a run lands, every holder round is sealed", v.status === 200 && v.body.kind === "crown" && v.body.rounds.every((r: any) => r.them.sealed && r.them.score === null), JSON.stringify(v.body).slice(0, 300));
+  check("and the reply carries none of the holder's scores", !holderScores.some((x) => new RegExp(`\\b${x}\\b`).test(JSON.stringify(v.body.rounds))));
   await land(db, P.Kestrel, k.body.matchId, ids[1], 103);
   v = await call("Kestrel", "race-status", { matchId: k.body.matchId });
-  check("the round you landed opens the holder's round", Math.abs(v.body.rounds[1].them.delta - holderDeltas[1]) < 1e-9 && Math.abs(v.body.rounds[1].you.delta - 0.03) < 1e-9);
-  check("the others stay sealed", v.body.rounds[0].them.sealed && v.body.rounds[2].them.sealed && v.body.rounds[0].them.delta === null);
-  check("the bar is that one round's margin", Math.abs(v.body.margin - (0.03 - holderDeltas[1])) < 1e-9 && v.body.marginRounds === 1);
+  check("the round you landed opens the holder's raw score", v.body.rounds[1].them.score === holderScores[1] && v.body.rounds[1].you.score === 103, JSON.stringify(v.body.rounds[1]));
+  check("and decides that round", v.body.rounds[1].result === "lost" && v.body.tally.lost === 1 && v.body.tally.won === 0);
+  check("your delta still shows, as information", Math.abs(v.body.rounds[1].you.delta - 0.03) < 1e-9);
+  check("the others stay sealed", v.body.rounds[0].them.sealed && v.body.rounds[2].them.sealed && v.body.rounds[0].them.score === null);
   check("nobody else can watch it", (await call("Larch", "race-status", { matchId: k.body.matchId })).status === 404);
   await land(db, P.Kestrel, k.body.matchId, ids[0], 90);
   await land(db, P.Kestrel, k.body.matchId, ids[2], 90);
-  await settle("Kestrel", k.body.matchId);
+  const sk = await settle("Kestrel", k.body.matchId);
+  check("the result note shows each round's two raw scores", sk.body.arena?.crown?.rounds?.map((r: any) => `${r.you}/${r.holder}`).join() === `90/${holderScores[0]},103/${holderScores[1]},90/${holderScores[2]}`,
+    JSON.stringify(sk.body.arena?.crown?.rounds));
+  check("and says it in rounds", /0 of 3 rounds/.test(sk.body.arena?.crown?.explanation ?? ""), sk.body.arena?.crown?.explanation);
   v = await call("Kestrel", "race-status", { matchId: k.body.matchId });
-  check("after settling it shows the verdict", v.body.verdict === "loss" && v.body.rounds.every((r: any) => !r.them.sealed));
+  check("after settling it shows the verdict", v.body.verdict === "loss" && v.body.rounds.every((r: any) => !r.them.sealed) && v.body.tally.lost === 3);
+  check("the holder still holds it", (await crownRow()).holder_id === holder);
+
+  // Abandoning after one round opens no more of the holder's scores than that round.
+  const o = await challenge("Oak");
+  const oids = await matchScenarios(db, o.body.matchId);
+  await land(db, P.Oak, o.body.matchId, oids[2], 200);
+  await call("Oak", "abandon-match", {});
+  v = await call("Oak", "race-status", { matchId: o.body.matchId });
+  check("an abandoned challenge shows only the round that landed", v.status === 200 && v.body.rounds[2].them.score === holderScores[2] &&
+    v.body.rounds[0].them.sealed && v.body.rounds[1].them.sealed && v.body.rounds[0].them.score === null && v.body.rounds[1].them.score === null,
+    JSON.stringify(v.body.rounds.map((r: any) => r.them)));
+  check("and it is a forfeit", (await outcome(o.body.matchId)).outcome === "forfeit" && v.body.verdict === "void");
 }
 
 /* ------------------------------------------------------------------------------- */
@@ -251,7 +302,7 @@ console.log("\n── notices belong to their owner ─────────�
 
   const rb = await board("Rook");
   const note = rb.body.notices.find((n: any) => n.id === dethroned.id);
-  check("list-crowns shows Rook the dethroned notice as a sentence", /^You lost the Precise Tracking Crown \(Intermediate\) to (Cedar|Dune) after 1 defence\./.test(note?.text ?? ""), note?.text);
+  check("list-crowns shows Rook the dethroned notice as a sentence, with the rounds", /^You lost the Precise Tracking Crown \(Intermediate\) to (Cedar|Dune) after 1 defence, 3\u20130 on rounds\./.test(note?.text ?? ""), note?.text);
   check("nobody else's board carries it", !(await board("Larch")).body.notices.some((n: any) => n.id === dethroned.id));
   await board("Larch", [dethroned.id]);
   check("another player cannot mark it read", (await db.query<any>("select seen_at from crown_notices where id = $1", [dethroned.id])).rows[0].seen_at === null);
@@ -326,8 +377,9 @@ console.log("\n── the SQL decides what the reducer decides ─────")
   const scen = season.pools.get(1)!.filter((s) => s.subCategory === category).slice(0, 3).map((s) => s.id);
   let ts: CrownState = { category, window, cycle: 0, scenarioIds: null, reign: null };
   const r = seededRandom("differential");
-  const scores = [-0.03, -0.02, -0.01, 0, 0.01, 0.02, 0.03, 0.04, 0.05];
-  let steps = 0, mismatches = 0;
+  // Integer raw scores from a narrow range, so tied rounds and level tallies are common.
+  const roundScore = () => 98 + Math.floor(r() * 5);
+  let steps = 0, mismatches = 0, tallied = 0, levels = 0;
   const kinds = { took: 0, defended: 0, void: 0, forfeit: 0, stale: 0 } as Record<string, number>;
   const mismatch = (what: string) => { mismatches++; if (mismatches <= 5) console.log(`       mismatch at step ${steps}: ${what}`); };
   let fileSerial = 0;
@@ -358,7 +410,7 @@ console.log("\n── the SQL decides what the reducer decides ─────")
     for (const { c, claim } of opened) {
       steps++;
       const kind = r();
-      const score = scores[Math.floor(r() * scores.length)];
+      const scores = [roundScore(), roundScore(), roundScore()];
       const tiers: RunTier[] = kind < 0.1 ? ["consistent", "rejected", "verified"] : kind < 0.18 ? ["verified", "suspect", "consistent"] : r() < 0.5 ? ["verified", "verified", "verified"] : ["consistent", "verified", "consistent"];
       const forfeit = kind >= 0.18 && kind < 0.26;
       const voided = kind >= 0.26 && kind < 0.3;
@@ -368,12 +420,12 @@ console.log("\n── the SQL decides what the reducer decides ─────")
         // What forfeitMatch commits: a loss for a contested challenge, a void for a claim.
         const sides = [{ player_id: c.challengerId, result: claim ? null : "loss" }];
         await db.query("select commit_match_result($1, $2, $3::jsonb, '[]'::jsonb, true)", [c.matchId, claim ? "void" : "settled", JSON.stringify(sides)]);
-        set = claim ? { status: "void", matchScore: null, tiers: [], scenarios: 3 } : { status: "settled", matchScore: null, tiers: [], scenarios: 3, forfeit: true };
+        set = claim ? { status: "void", scores: null, tiers: [], scenarios: 3 } : { status: "settled", scores: null, tiers: [], scenarios: 3, forfeit: true };
       } else if (voided || (!claim && tiers.includes("rejected"))) {
         // settle-match voids a contested match with a rejected round (uneven sides), and any
         // match with an abandoned one.
         await db.query("select commit_match_result($1, 'void', $2::jsonb)", [c.matchId, JSON.stringify([{ player_id: c.challengerId, result: null }])]);
-        set = { status: "void", matchScore: null, tiers: [], scenarios: 3 };
+        set = { status: "void", scores: null, tiers: [], scenarios: 3 };
       } else {
         const runIds: string[] = [];
         for (const [i, sid] of ids.entries()) {
@@ -381,14 +433,18 @@ console.log("\n── the SQL decides what the reducer decides ─────")
           const row = (await db.query<any>(
             `insert into runs (player_id, scenario_name, score, played_at, csv_sha256, verification_tier, match_id, challenge_start)
              values ($1, $2, $3, clock_timestamp(), $4, $5, $6, $7) returning id`,
-            [c.challengerId, name, 100 * (1 + score), `diff-run-${++fileSerial}`, tiers[i], c.matchId, distinctChallengeStart(100_000 + fileSerial)])).rows[0];
+            [c.challengerId, name, scores[i], `diff-run-${++fileSerial}`, tiers[i], c.matchId, distinctChallengeStart(100_000 + fileSerial)])).rows[0];
           runIds.push(row.id);
         }
-        const holderScore = ts.reign?.matchScore ?? 0;
-        const result = claim ? null : beats(score, holderScore) ? "win" : beats(holderScore, score) ? "loss" : "draw";
-        const sides = [{ player_id: c.challengerId, run_ids: runIds, deltas: [score, score, score], match_score: score, result, provisional: false }];
+        // What settleForPlayer commits: raw scores, deltas against a baseline of 100, and the
+        // rounds verdict against the side copied in (its scores, found on the holder's own side).
+        const copied = ts.reign && c.reignId ? ts.reign.scores : null;
+        const t = copied ? tally(scores, copied) : null;
+        const result = claim || !t ? null : t.won > t.lost ? "win" : t.won < t.lost ? "loss" : "draw";
+        const deltas = scores.map((x) => x / 100 - 1);
+        const sides = [{ player_id: c.challengerId, run_ids: runIds, deltas, scores, match_score: deltas.reduce((a, b) => a + b, 0) / 3, result, provisional: false }];
         await db.query("select commit_match_result($1, 'settled', $2::jsonb)", [c.matchId, JSON.stringify(sides)]);
-        set = { status: "settled", matchScore: score, tiers, scenarios: 3 };
+        set = { status: "settled", scores, tiers, scenarios: 3 };
       }
       const sqlRow = await crownRow(category, window);
       const decided = await outcome(c.matchId);
@@ -400,7 +456,12 @@ console.log("\n── the SQL decides what the reducer decides ─────")
       if (ts.reign && (sqlRow.defences !== ts.reign.defences || sqlRow.challenges !== ts.reign.challenges)) {
         mismatch(`defences ${sqlRow.defences}/${sqlRow.challenges} vs ${ts.reign.defences}/${ts.reign.challenges}`);
       }
-      if (ts.reign && Math.abs(Number(sqlRow.match_score) - ts.reign.matchScore) > 1e-12) mismatch("bar differs");
+      if (ts.reign && nums(sqlRow.scores).join() !== ts.reign.scores.join()) mismatch(`bar ${nums(sqlRow.scores)} vs ${ts.reign.scores}`);
+      if (j.tally && (decided.rounds_won !== j.tally.won || decided.rounds_lost !== j.tally.lost || decided.rounds_tied !== j.tally.tied)) {
+        mismatch(`tally ${decided.rounds_won}-${decided.rounds_lost}-${decided.rounds_tied} vs ${j.tally.won}-${j.tally.lost}-${j.tally.tied}`);
+      }
+      if (j.tally) tallied++;
+      if (j.tally && j.tally.won === j.tally.lost) levels++;
       if (sqlRow.cycle !== ts.cycle) mismatch(`cycle ${sqlRow.cycle} vs ${ts.cycle}`);
     }
   }
@@ -409,6 +470,7 @@ console.log("\n── the SQL decides what the reducer decides ─────")
   check(`${steps} random challenges decided identically by SQL and reducer`, mismatches === 0 && steps > 100,
     `${mismatches} mismatches; took ${kinds.took}, defended ${kinds.defended}, void ${kinds.void}, forfeit ${kinds.forfeit}, stale ${kinds.stale}`);
   check("every outcome kind occurred", kinds.took > 5 && kinds.defended > 5 && kinds.void > 5 && kinds.forfeit > 3);
+  check("level tallies occurred and were defences in both", levels > 3, `${levels} level of ${tallied} tallied`);
   check("one dethroned notice per take from a holder, one defended per defence", count("defended") === kinds.defended && count("dethroned") <= kinds.took && count("dethroned") > 0);
 }
 

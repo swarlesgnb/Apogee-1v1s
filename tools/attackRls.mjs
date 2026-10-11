@@ -268,7 +268,7 @@ console.log("\n-- crowns and races --");
 // would: by the server.
 await db.exec("reset role");
 const victimReign = (await db.query(
-  "insert into crown_reigns (category, window_index, cycle, holder_id, match_id, match_score, lowest_tier) values ('Precise Tracking', 1, 0, $1, $2, 0.05, 'verified') returning id",
+  "insert into crown_reigns (category, window_index, cycle, holder_id, match_id, scores, lowest_tier) values ('Precise Tracking', 1, 0, $1, $2, '{1001,1002,1003}', 'verified') returning id",
   [victim, realMatch],
 )).rows[0].id;
 await db.query("insert into crowns (category, window_index, reign_id, scenario_ids) values ('Precise Tracking', 1, $1, array[" + scen + "," + scen + "," + scen + "]::bigint[])", [victimReign]);
@@ -286,8 +286,10 @@ await db.exec("set test.player_id = '" + attacker + "'");
 await attack("take a Crown by pointing it at a reign of my own",
   `update crowns set reign_id = null where category = 'Precise Tracking'`);
 await attack("crown myself by writing a reign",
-  `insert into crown_reigns (category, window_index, cycle, holder_id, match_id, match_score, lowest_tier)
-   values ('Precise Tracking', 1, 0, '${attacker}', '${realMatch}', 9, 'verified')`);
+  `insert into crown_reigns (category, window_index, cycle, holder_id, match_id, scores, lowest_tier)
+   values ('Precise Tracking', 1, 0, '${attacker}', '${realMatch}', '{9999,9999,9999}', 'verified')`);
+await attack("lower the holder's scores to make the Crown easy",
+  `update crown_reigns set scores = '{0,0,0}' where id = '${victimReign}'`);
 await attack("rewrite the holder of somebody else's reign",
   `update crown_reigns set holder_id = '${attacker}' where id = '${victimReign}'`);
 await attack("pad my defences",
@@ -391,6 +393,7 @@ await readOwn("my own rating, as fetchStanding reads it",
 // closed. A notice is the one exception, and only to its owner.
 await readOthers("the Crown tables", `select category, reign_id from crowns`);
 await readOthers("who holds which Crown, raw", `select id, holder_id from crown_reigns`);
+await readOthers("a Crown holder's sealed raw scores", `select scores from crown_reigns where id = '${victimReign}'`);
 await readOthers("every challenge and its outcome", `select match_id, outcome from crown_challenges`);
 await readOthers("the races table", `select id, inviter_id from races`);
 await readOthers("the victim's Crown notices", `select id from crown_notices where player_id = '${victim}'`);

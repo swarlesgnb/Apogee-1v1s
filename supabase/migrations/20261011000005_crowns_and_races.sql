@@ -8,6 +8,32 @@
 -- forfeitMatch move no rating and find-match never draws them into the pool. Submission,
 -- verification, settlement and the match clock are the paths that already exist.
 --
+-- RANKED V2. Every decision here is on rounds: each scenario is a round won by the higher
+-- raw score (match_sides.scores, migration 20261005000023), and more rounds won wins, the
+-- way settleMatch decides a ranked match (PLAN.md §3). A Crown changes hands when the
+-- challenger wins more rounds than the holder; a tied tally is a defence. A race is won on
+-- the tally; equal rounds is a draw. Deltas are kept only as "against your usual".
+--
+-- ENGINE 1. Crown and race matches are created as `matches.engine = 1`, beside duels and
+-- tournament legs, not 2. The engine changes only how a rated result moves a rating and
+-- whether leaving a scenario early spends the player's one free void a week. These matches
+-- are unrated, so settleForPlayer never reaches either: an early exit always voids, and the
+-- weekly free void (void_reason = 'abandoned', written only for rated contested matches)
+-- is never spent on a Crown or a race. Keeping them out of engine 2 also keeps engine 2
+-- meaning "a queued ranked match" for the ladder comparisons. Rounds decide either way.
+--
+-- SEALED SCORES. Every participant in a match can read all of its sides through RLS
+-- (is_match_participant, migration 20260921000019), so two things follow.
+--   1. The holder's side copied into a challenge match carries no raw scores, no deltas and
+--      no match score. Settlement finds the scores on the holder's own side, by owner and
+--      submitted_at, the fallback settleForPlayer already uses for sides copied without
+--      them. A challenger cannot read the holder's numbers before playing; race-status
+--      reveals each raw score as the challenger's run on that scenario lands.
+--   2. When a challenge takes the Crown, crown_resolve deletes that copied side. The copy
+--      made the old holder a participant in the match whose side is now the Crown's bar;
+--      left in place, a dethroned holder could read the new holder's three scores and
+--      come back after the cooldown knowing exactly what to beat.
+--
 -- What this adds is the bookkeeping around those matches, and the decision. The decision is
 -- taken here, in SQL, by an AFTER UPDATE trigger on `matches` that runs inside the same
 -- transaction as commit_match_result (migration 20261002000022). The result of a challenge
@@ -33,7 +59,11 @@ create table crown_reigns (
   -- The match the holder's run set was played in. Their side of it is what every challenger
   -- of this reign plays against, copied into each challenge match.
   match_id       uuid not null references matches (id) on delete cascade,
-  match_score    numeric not null,
+  -- The holder's raw score per round, in the Crown's scenario order: what a challenger has to
+  -- out-round. Readable by nobody but the service role (the table is closed).
+  scores         numeric[] not null,
+  -- Against the holder's own usual. Information only; it decides nothing.
+  mean_delta     numeric,
   provisional    boolean not null default false,
   lowest_tier    verification_tier not null,
   started_at     timestamptz not null default now(),
@@ -44,7 +74,11 @@ create table crown_reigns (
   end_reason     text,
   ended_by       uuid references players (id) on delete set null,
   ended_match_id uuid,
+  -- The round tally that ended a reign, from the taker's side.
+  ended_won      integer,
+  ended_lost     integer,
 
+  constraint crown_reigns_scores check (cardinality(scores) between 1 and 5),
   constraint crown_reigns_end check ((ended_at is null) = (end_reason is null)),
   constraint crown_reigns_reason check (end_reason is null or end_reason in ('dethroned', 'lapsed', 'reset')),
   constraint crown_reigns_counts check (defences >= 0 and challenges >= defences),
@@ -91,8 +125,10 @@ create table crown_challenges (
   outcome          text,
   -- The reign it was measured against, which is whoever held the Crown when it settled.
   judged_reign_id  uuid references crown_reigns (id) on delete set null,
-  challenger_score numeric,
-  holder_score     numeric,
+  -- The tally against the judged reign, from the challenger's side.
+  rounds_won       integer,
+  rounds_lost      integer,
+  rounds_tied      integer,
   reason           text,
 
   constraint crown_challenges_outcome check (outcome is null or outcome in ('took', 'defended', 'void', 'forfeit', 'stale')),
@@ -120,8 +156,9 @@ create table crown_notices (
   other_name       text,
   defences         integer not null default 0,
   reign_seconds    integer not null default 0,
-  challenger_score numeric,
-  holder_score     numeric,
+  -- Rounds the challenger won and the holder won, for a take or a defence.
+  challenger_rounds integer,
+  holder_rounds    integer,
   created_at       timestamptz not null default now(),
   seen_at          timestamptz,
 
@@ -151,8 +188,10 @@ create table races (
   invitee_match_id uuid references matches (id) on delete set null,
   result           text,
   by_forfeit       boolean not null default false,
-  inviter_score    numeric,
-  invitee_score    numeric,
+  -- The round tally, from the inviter's side, once both legs finished.
+  inviter_rounds   integer,
+  invitee_rounds   integer,
+  tied_rounds      integer,
 
   constraint races_not_self check (inviter_id <> invitee_id),
   constraint races_three check (cardinality(scenario_ids) = 3),
@@ -233,9 +272,9 @@ begin
   if c.reign_id is not null then
     select * into r from crown_reigns where id = c.reign_id;
     update crown_reigns set ended_at = now(), end_reason = p_kind where id = r.id;
-    insert into crown_notices (player_id, kind, category, window_index, reign_id, defences, reign_seconds, holder_score)
+    insert into crown_notices (player_id, kind, category, window_index, reign_id, defences, reign_seconds)
     values (r.holder_id, p_kind, p_category, p_window, r.id, r.defences,
-            greatest(0, floor(extract(epoch from now() - r.started_at)))::integer, r.match_score);
+            greatest(0, floor(extract(epoch from now() - r.started_at)))::integer);
   end if;
   update crowns
      set reign_id = null, cycle = cycle + 1, scenario_ids = null, seed = null,
@@ -373,22 +412,25 @@ begin
   select rating, rd into v_rating, v_rd from ratings where player_id = p_player;
 
   insert into matches (mode, category, benchmark_name, difficulty, window_index, seed,
-                       scenario_ids, status, expires_at, rated)
+                       scenario_ids, status, expires_at, rated, engine)
   values ('async', p_category, coalesce(c.benchmark_name, p_benchmark), coalesce(c.difficulty, p_difficulty),
           p_window, p_seed, c.scenario_ids, 'awaiting_runs',
-          now() + make_interval(secs => p_ttl_seconds), false)
+          now() + make_interval(secs => p_ttl_seconds), false, 1)
   returning id into v_match;
 
   insert into match_sides (match_id, player_id, rating_before, rd_before)
   values (v_match, p_player, coalesce(v_rating, 1500), coalesce(v_rd, 350));
 
   if r.id is not null then
-    insert into match_sides (match_id, player_id, deltas, match_score, provisional,
+    -- Without the holder's numbers: see SEALED SCORES above. submitted_at is the original's,
+    -- which is what marks this row as a copy and what settlement finds the scores by.
+    insert into match_sides (match_id, player_id, deltas, scores, match_score, provisional,
                              rating_before, rd_before, submitted_at)
-    select v_match, ms.player_id, ms.deltas, ms.match_score, ms.provisional,
+    select v_match, ms.player_id, '{}', '{}', null, ms.provisional,
            ms.rating_before, ms.rd_before, ms.submitted_at
       from match_sides ms
-     where ms.match_id = r.match_id and ms.player_id = r.holder_id and ms.match_score is not null;
+     where ms.match_id = r.match_id and ms.player_id = r.holder_id
+       and cardinality(ms.scores) = cardinality(c.scenario_ids);
     if not found then
       raise exception using errcode = 'CR500', message = 'The holder''s run set is missing.';
     end if;
@@ -415,7 +457,7 @@ create function crown_resolve(p_match_id uuid) returns jsonb
 language plpgsql security definer set search_path = public, pg_temp as $$
 declare ch crown_challenges%rowtype; c crowns%rowtype; m matches%rowtype; side match_sides%rowtype;
   cur crown_reigns%rowtype; tiers verification_tier[]; v_outcome text; v_reason text;
-  v_new uuid; v_repeat boolean; v_judged uuid; v_holder_score numeric;
+  v_new uuid; v_repeat boolean; v_judged uuid; v_won integer; v_lost integer; v_tied integer;
 begin
   select * into ch from crown_challenges where match_id = p_match_id;
   if not found then return null; end if;
@@ -435,9 +477,10 @@ begin
   select * into side from match_sides where match_id = p_match_id and player_id = ch.challenger_id;
   tiers := arena_side_tiers(p_match_id, ch.challenger_id);
 
-  if m.status = 'settled' and side.match_score is null and side.result = 'loss' then
+  if m.status = 'settled' and cardinality(side.scores) = 0 and side.result = 'loss' then
     v_outcome := 'forfeit'; v_reason := 'the challenge was abandoned or ran out of time';
-  elsif m.status <> 'settled' or side.match_score is null then
+  elsif m.status <> 'settled' or cardinality(side.scores) <> cardinality(m.scenario_ids)
+        or array_position(side.scores, null) is not null then
     v_outcome := 'void'; v_reason := 'the match did not count';
   elsif cardinality(side.run_ids) <> cardinality(m.scenario_ids) or cardinality(tiers) <> cardinality(m.scenario_ids) then
     v_outcome := 'void'; v_reason := 'not every scenario has a run';
@@ -455,38 +498,50 @@ begin
       v_outcome := 'took'; v_reason := 'the Crown was vacant';
     elsif cur.holder_id = ch.challenger_id then
       v_outcome := 'stale'; v_reason := 'a holder cannot challenge their own Crown';
-    elsif side.match_score - cur.match_score >= 0.0005 then
-      v_outcome := 'took'; v_reason := 'beat the holder''s match score';
-    elsif cur.match_score - side.match_score >= 0.0005 then
-      v_outcome := 'defended'; v_reason := 'did not beat the holder''s match score';
     else
-      v_outcome := 'defended'; v_reason := 'drew with the holder, and a draw is a defence';
+      -- Round by round on raw score, the challenger's against the holder's.
+      select count(*) filter (where t.c > t.h), count(*) filter (where t.c < t.h), count(*) filter (where t.c = t.h)
+        into v_won, v_lost, v_tied
+        from unnest(side.scores, cur.scores) as t(c, h)
+       where t.c is not null and t.h is not null;
+      if v_won > v_lost then
+        v_outcome := 'took'; v_reason := 'won more rounds than the holder';
+      elsif v_won < v_lost then
+        v_outcome := 'defended'; v_reason := 'won fewer rounds than the holder';
+      else
+        v_outcome := 'defended'; v_reason := 'level on rounds with the holder, and a tie is a defence';
+      end if;
     end if;
   end if;
 
   v_judged := cur.id;
-  v_holder_score := cur.match_score;
 
   if v_outcome = 'took' then
     if cur.id is not null then
       update crown_reigns
-         set ended_at = now(), end_reason = 'dethroned', ended_by = ch.challenger_id, ended_match_id = p_match_id
+         set ended_at = now(), end_reason = 'dethroned', ended_by = ch.challenger_id, ended_match_id = p_match_id,
+             ended_won = v_won, ended_lost = v_lost
        where id = cur.id;
       insert into crown_notices (player_id, kind, category, window_index, reign_id, other_id, other_name,
-                                 defences, reign_seconds, challenger_score, holder_score)
+                                 defences, reign_seconds, challenger_rounds, holder_rounds)
       values (cur.holder_id, 'dethroned', ch.category, ch.window_index, cur.id, ch.challenger_id,
               (select display_name from players where id = ch.challenger_id), cur.defences,
               greatest(0, floor(extract(epoch from now() - cur.started_at)))::integer,
-              side.match_score, cur.match_score);
+              v_won, v_lost);
     end if;
-    insert into crown_reigns (category, window_index, cycle, holder_id, match_id, match_score,
+    insert into crown_reigns (category, window_index, cycle, holder_id, match_id, scores, mean_delta,
                               provisional, lowest_tier, started_at)
-    values (ch.category, ch.window_index, c.cycle, ch.challenger_id, p_match_id, side.match_score,
+    values (ch.category, ch.window_index, c.cycle, ch.challenger_id, p_match_id, side.scores, side.match_score,
             side.provisional, case when 'consistent' = any(tiers) then 'consistent' else 'verified' end::verification_tier,
             now())
     returning id into v_new;
     update crowns set reign_id = v_new, updated_at = now()
      where category = ch.category and window_index = ch.window_index;
+    -- This match's challenger side is now the Crown's bar. Take the copied holder side out,
+    -- so the player it was copied from is no longer a participant who can read it (SEALED
+    -- SCORES, point 2). Nothing reads the copy after settlement: the decision is stored
+    -- above and on the challenge row below.
+    delete from match_sides where match_id = p_match_id and player_id <> ch.challenger_id;
   elsif v_outcome = 'defended' then
     v_repeat := exists (
       select 1 from crown_challenges
@@ -497,16 +552,16 @@ begin
      where id = cur.id
     returning * into cur;
     insert into crown_notices (player_id, kind, category, window_index, reign_id, other_id, other_name,
-                               defences, reign_seconds, challenger_score, holder_score)
+                               defences, reign_seconds, challenger_rounds, holder_rounds)
     values (cur.holder_id, 'defended', ch.category, ch.window_index, cur.id, ch.challenger_id,
             (select display_name from players where id = ch.challenger_id), cur.defences,
             greatest(0, floor(extract(epoch from now() - cur.started_at)))::integer,
-            side.match_score, cur.match_score);
+            v_won, v_lost);
   end if;
 
   update crown_challenges
      set decided_at = now(), outcome = v_outcome, reason = v_reason, judged_reign_id = v_judged,
-         challenger_score = side.match_score, holder_score = v_holder_score
+         rounds_won = v_won, rounds_lost = v_lost, rounds_tied = v_tied
    where match_id = p_match_id;
 
   return jsonb_build_object('outcome', v_outcome, 'decided', true, 'reason', v_reason,
@@ -549,16 +604,16 @@ begin
   select * into ra from ratings where player_id = r.inviter_id;
   select * into rb from ratings where player_id = r.invitee_id;
 
-  insert into matches (mode, category, benchmark_name, difficulty, window_index, seed, scenario_ids, status, expires_at, rated)
+  insert into matches (mode, category, benchmark_name, difficulty, window_index, seed, scenario_ids, status, expires_at, rated, engine)
   values ('live', r.category, r.benchmark_name, r.difficulty, r.window_index, r.seed || ':inviter', r.scenario_ids,
-          'awaiting_runs', now() + make_interval(secs => p_ttl_seconds), false)
+          'awaiting_runs', now() + make_interval(secs => p_ttl_seconds), false, 1)
   returning id into v_a;
   insert into match_sides (match_id, player_id, rating_before, rd_before)
   values (v_a, r.inviter_id, coalesce(ra.rating, 1500), coalesce(ra.rd, 350));
 
-  insert into matches (mode, category, benchmark_name, difficulty, window_index, seed, scenario_ids, status, expires_at, rated)
+  insert into matches (mode, category, benchmark_name, difficulty, window_index, seed, scenario_ids, status, expires_at, rated, engine)
   values ('live', r.category, r.benchmark_name, r.difficulty, r.window_index, r.seed || ':invitee', r.scenario_ids,
-          'awaiting_runs', now() + make_interval(secs => p_ttl_seconds), false)
+          'awaiting_runs', now() + make_interval(secs => p_ttl_seconds), false, 1)
   returning id into v_b;
   insert into match_sides (match_id, player_id, rating_before, rd_before)
   values (v_b, r.invitee_id, coalesce(rb.rating, 1500), coalesce(rb.rd, 350));
@@ -569,11 +624,12 @@ begin
 end;
 $$;
 
--- A leg finished: settled, scored, a counted run on every scenario.
+-- A leg finished: settled, a raw score on every scenario, no run rejected.
 create function race_leg_finished(p_match uuid, p_player uuid) returns boolean
 language sql stable security definer set search_path = public, pg_temp as $$
   select coalesce((
-    select m.status = 'settled' and ms.match_score is not null
+    select m.status = 'settled'
+       and cardinality(ms.scores) = cardinality(m.scenario_ids) and array_position(ms.scores, null) is null
        and cardinality(ms.run_ids) = cardinality(m.scenario_ids)
        and cardinality(arena_side_tiers(p_match, p_player)) = cardinality(m.scenario_ids)
        and not exists (select 1 from unnest(arena_side_tiers(p_match, p_player)) t where t in ('rejected', 'unverified'))
@@ -586,8 +642,8 @@ $$;
 -- legs end at the same moment exactly one of the two transactions sees both ended.
 create function race_resolve(p_match uuid) returns jsonb
 language plpgsql security definer set search_path = public, pg_temp as $$
-declare r races%rowtype; sa text; sb text; a_ok boolean; b_ok boolean; a_score numeric; b_score numeric;
-  v_result text; v_forfeit boolean := false;
+declare r races%rowtype; sa text; sb text; a_ok boolean; b_ok boolean; a_scores numeric[]; b_scores numeric[];
+  v_won integer; v_lost integer; v_tied integer; v_result text; v_forfeit boolean := false;
 begin
   select * into r from races where inviter_match_id = p_match or invitee_match_id = p_match for update;
   if not found then return null; end if;
@@ -600,20 +656,23 @@ begin
 
   a_ok := race_leg_finished(r.inviter_match_id, r.inviter_id);
   b_ok := race_leg_finished(r.invitee_match_id, r.invitee_id);
-  select match_score into a_score from match_sides where match_id = r.inviter_match_id and player_id = r.inviter_id;
-  select match_score into b_score from match_sides where match_id = r.invitee_match_id and player_id = r.invitee_id;
+  select scores into a_scores from match_sides where match_id = r.inviter_match_id and player_id = r.inviter_id;
+  select scores into b_scores from match_sides where match_id = r.invitee_match_id and player_id = r.invitee_id;
 
   if not a_ok and not b_ok then v_result := 'void';
   elsif a_ok and not b_ok then v_result := 'inviter'; v_forfeit := true;
   elsif b_ok and not a_ok then v_result := 'invitee'; v_forfeit := true;
-  elsif abs(a_score - b_score) < 0.0005 then v_result := 'draw';
-  elsif a_score > b_score then v_result := 'inviter';
-  else v_result := 'invitee';
+  else
+    -- Round by round on raw score; more rounds won wins, equal rounds is a draw.
+    select count(*) filter (where t.a > t.b), count(*) filter (where t.a < t.b), count(*) filter (where t.a = t.b)
+      into v_won, v_lost, v_tied
+      from unnest(a_scores, b_scores) as t(a, b);
+    v_result := case when v_won > v_lost then 'inviter' when v_won < v_lost then 'invitee' else 'draw' end;
   end if;
 
   update races
      set status = 'finished', result = v_result, by_forfeit = v_forfeit, finished_at = now(),
-         inviter_score = case when a_ok then a_score end, invitee_score = case when b_ok then b_score end
+         inviter_rounds = v_won, invitee_rounds = v_lost, tied_rounds = v_tied
    where id = r.id;
   return jsonb_build_object('result', v_result, 'decided', true, 'byForfeit', v_forfeit);
 end;

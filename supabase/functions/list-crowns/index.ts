@@ -1,6 +1,7 @@
 /**
- * The Crowns board: every category and band of the live season, who holds each Crown, the
- * bar to beat, how long they have held it and how many people failed to take it. Plus the
+ * The Crowns board: every category and band of the live season, who holds each Crown, what
+ * taking it needs (more rounds than the holder; their scores stay sealed), how long they
+ * have held it and how many people failed to take it. Plus the
  * caller's own notices ("You lost the Precise Tracking Crown to X after 3 defences"), which
  * is the comeback loop, and a way to mark them read.
  *
@@ -18,11 +19,11 @@
  * update, so naming somebody else's notice marks nothing.
  */
 
-import { forfeitMatch, handler, HttpError, json, readJson, requireCaller } from "../_shared/apogee.ts";
+import { handler, HttpError, json, readJson, requireCaller } from "../_shared/apogee.ts";
+import { forfeitMatch } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { namesFor, onlyFields, requireId, scenarioNamesFor, seasonCells } from "../_shared/arena.ts";
 
-import { updateRating } from "../../../src/core/rating/glicko2.ts";
 import { CHALLENGE_COOLDOWN_MS, REIGN_CAP_MS, type RunTier } from "../../../src/core/crowns/crowns.ts";
 import {
   buildBoard,
@@ -73,7 +74,7 @@ Deno.serve(handler(async (req, admin) => {
     if (!m) continue;
     if ((m.status === "open" || m.status === "awaiting_runs") && m.expires_at && ms(m.expires_at) < Date.now()) {
       if (swept++ >= SWEEP_LIMIT) break;
-      await forfeitMatch(admin, c.match_id, c.challenger_id, updateRating);
+      await forfeitMatch(admin, c.match_id, c.challenger_id);
     } else if (m.status === "settled" || m.status === "void") {
       // Ended without being decided: only possible if the match ended before the trigger
       // existed. Decided now, by the same function.
@@ -110,11 +111,11 @@ Deno.serve(handler(async (req, admin) => {
     admin.from("crowns").select("category, window_index, cycle, scenario_ids, reign_id"),
     admin
       .from("crown_reigns")
-      .select("id, category, window_index, holder_id, match_score, started_at, defences, challenges, lowest_tier, provisional")
+      .select("id, category, window_index, holder_id, started_at, defences, challenges, lowest_tier, provisional")
       .is("ended_at", null),
     admin
       .from("crown_reigns")
-      .select("category, window_index, holder_id, started_at, ended_at, defences, end_reason, ended_by, match_score")
+      .select("category, window_index, holder_id, started_at, ended_at, defences, end_reason, ended_by, ended_won, ended_lost")
       .not("ended_at", "is", null)
       .order("ended_at", { ascending: false })
       .limit(HISTORY_READ),
@@ -126,7 +127,7 @@ Deno.serve(handler(async (req, admin) => {
       .order("created_at", { ascending: false }),
     admin
       .from("crown_notices")
-      .select("id, kind, category, window_index, defences, reign_seconds, other_name, created_at")
+      .select("id, kind, category, window_index, defences, reign_seconds, other_name, challenger_rounds, holder_rounds, created_at")
       .eq("player_id", caller.playerId)
       .is("seen_at", null)
       .order("created_at", { ascending: false })
@@ -173,7 +174,6 @@ Deno.serve(handler(async (req, admin) => {
         ? {
             id: r.id,
             holderId: r.holder_id,
-            matchScore: Number(r.match_score),
             startedAt: ms(r.started_at),
             defences: Number(r.defences),
             challenges: Number(r.challenges),
@@ -193,7 +193,8 @@ Deno.serve(handler(async (req, admin) => {
     defences: Number(h.defences),
     endReason: h.end_reason,
     endedBy: h.ended_by,
-    matchScore: Number(h.match_score),
+    endedWon: h.ended_won == null ? null : Number(h.ended_won),
+    endedLost: h.ended_lost == null ? null : Number(h.ended_lost),
   }));
 
   const lastChallenge = new Map<string, number>();
@@ -211,6 +212,8 @@ Deno.serve(handler(async (req, admin) => {
     reignMs: Number(n.reign_seconds) * 1000,
     otherName: n.other_name ?? null,
     createdAt: ms(n.created_at),
+    challengerRounds: n.challenger_rounds == null ? null : Number(n.challenger_rounds),
+    holderRounds: n.holder_rounds == null ? null : Number(n.holder_rounds),
   }));
 
   const names = await namesFor(admin, [

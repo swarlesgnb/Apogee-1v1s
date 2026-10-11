@@ -9,15 +9,13 @@
  *   identity       requireCaller returns whoever the test says is calling
  *   transport      handler/json return { status, body } instead of a Response
  *   season pool    loadSeasonPool serves a fixture pool built from seeded scenarios
- *   the sweep      sweepStaleMatches is restated over plain SQL (the real one uses a
- *                  PostgREST embedded join this adapter does not speak) and calls the REAL
- *                  forfeitMatch for anything expired
  *   tournaments    afterLegSettled answers null
  *
- * Everything else, the rate limiter included, is the shipped code. The database adapter
- * speaks the part of supabase-js these functions use and refuses anything else loudly, so
- * a function that starts using a query shape the adapter cannot run fails here rather
- * than passing on a misread query.
+ * Everything else is the shipped code: ranked v2's settleForPlayer, forfeitMatch and
+ * sweepStaleMatches (_shared/rankedV2.ts), the arena helpers, the rate limiter. The
+ * database adapter speaks the part of supabase-js these functions use and refuses anything
+ * else loudly, so a function that starts using a query shape the adapter cannot run fails
+ * here rather than passing on a misread query.
  *
  * PGlite is one connection. Overlapping promises interleave at every await, which
  * exercises idempotency and the order checks, but it does not prove the behaviour of two
@@ -338,18 +336,6 @@ export async function loadHandlers(db: PGlite, season: Season, names: string[]):
       if (selectable.length === 0) throw new real.HttpError(404, s.name + " has no scenarios in window " + windowIndex);
       return { season: { id: "season", name: s.name, status: "published", windows: s.windows }, windowName: s.windows[windowIndex] ?? ("window " + (windowIndex + 1)), selectable };
     };
-    export const sweepStaleMatches = async (admin, playerId, updateRating) => {
-      const db = globalThis.__arenaDb;
-      const open = (await db.query(
-        "select m.id, m.status, m.category, m.difficulty, m.scenario_ids, m.expires_at, m.created_at from match_sides ms join matches m on m.id = ms.match_id " +
-        "where ms.player_id = $1 and m.status in ('open','awaiting_runs') and (ms.submitted_at is null or ms.submitted_at >= m.created_at)", [playerId])).rows;
-      let live = null;
-      for (const m of open) {
-        if (m.expires_at && new Date(m.expires_at).getTime() < Date.now()) await real.forfeitMatch(admin, m.id, playerId, updateRating);
-        else live = live ?? { matchId: m.id, match: m };
-      }
-      return live;
-    };
   `;
 
   for (const name of names) {
@@ -368,7 +354,7 @@ export async function loadHandlers(db: PGlite, season: Season, names: string[]):
           // "./apogee.ts" from a sibling helper alike, goes through the boundary.
           b.onResolve({ filter: /(^|\/)apogee\.ts$/ }, (args) =>
             args.namespace === "arena" ? { path: real, namespace: "file" } : { path: "boundary", namespace: "arena" });
-          b.onResolve({ filter: /\/_shared\/tournament\.ts$/ }, () => ({ path: "tournament", namespace: "arena" }));
+          b.onResolve({ filter: /(^|\/)tournament\.ts$/ }, () => ({ path: "tournament", namespace: "arena" }));
           b.onResolve({ filter: /^jsr:/ }, () => ({ path: "client", namespace: "arena" }));
           b.onLoad({ filter: /.*/, namespace: "arena" }, (args) => ({
             resolveDir: process.cwd(),

@@ -25,8 +25,8 @@ import {
   readJson,
   requireCaller,
   requireEligible,
-  sweepStaleMatches,
 } from "../_shared/apogee.ts";
+import { sweepStaleMatches } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { matchClock, recordMatchClock } from "../_shared/timeIntegrity.ts";
 import {
@@ -40,7 +40,6 @@ import {
 } from "../_shared/arena.ts";
 
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
-import { updateRating } from "../../../src/core/rating/glicko2.ts";
 import {
   CHALLENGE_COOLDOWN_MS,
   canChallenge,
@@ -66,7 +65,7 @@ Deno.serve(handler(async (req, admin) => {
 
   // Retire this player's expired matches by the ordinary rule. A live one is either this
   // very challenge (handed back by crown_open_challenge) or something else, which blocks.
-  await sweepStaleMatches(admin, caller.playerId, updateRating);
+  await sweepStaleMatches(admin, caller.playerId);
 
   await requireEligible(admin, caller.playerId);
 
@@ -111,7 +110,7 @@ Deno.serve(handler(async (req, admin) => {
   const state: CrownState = {
     category, window, cycle: Number(crownRow?.cycle ?? 0), scenarioIds: null,
     reign: holderId
-      ? { id: crownRow!.reign_id, holderId, matchId: "", matchScore: 0, startedAt: 0, defences: 0, challenges: 0, defeated: [], lowestTier: "consistent", provisional: false }
+      ? { id: crownRow!.reign_id, holderId, matchId: "", scores: [], meanDelta: null, startedAt: 0, defences: 0, challenges: 0, defeated: [], lowestTier: "consistent", provisional: false }
       : null,
   };
   // Only a decided challenge is counted here. An undecided one may be the match this request
@@ -152,10 +151,11 @@ Deno.serve(handler(async (req, admin) => {
   const names = await scenarioNamesFor(admin, ids);
 
   // The holder's copied side: who played it and when, the fields find-match hands over for
-  // a stored run set, plus the bar the board already shows publicly. Not their rounds.
+  // a stored run set. Not their scores: those are sealed until each of the challenger's runs
+  // lands, and race-status is the only route to them.
   const { data: sides } = await admin
     .from("match_sides")
-    .select("player_id, match_score, rating_before, provisional, submitted_at")
+    .select("player_id, rating_before, provisional, submitted_at")
     .eq("match_id", matchId);
   const theirs = (sides ?? []).find((s: any) => s.player_id !== caller.playerId) ?? null;
   const holderName = theirs ? (await namesFor(admin, [theirs.player_id])).get(theirs.player_id) ?? "the holder" : null;
@@ -185,7 +185,7 @@ Deno.serve(handler(async (req, admin) => {
       name: crownName(category, band),
       claim,
       holderName,
-      bar: theirs?.match_score == null ? null : Number(theirs.match_score),
+      rounds: ids.length,
     },
   });
 }));
