@@ -19,8 +19,7 @@ import { scanStatsFolder } from "../core/history/history.ts";
 import { readStatsFolder } from "../core/stats/folderCache.ts";
 import { loadSeason } from "../core/season/season.ts";
 import { localDay } from "../core/brand/shareInput.ts";
-import type { CardContext } from "../core/brand/shareInput.ts";
-import type { ShareCardInput } from "../core/brand/shareCard.ts";
+import type { DailyRecord } from "../core/brand/shareInput.ts";
 import {
   BAND_SLUGS,
   dailyFor,
@@ -432,28 +431,22 @@ export class DailyService {
    * more than the text does. The brand kit's own daily card replaces this drawing at
    * integration; the data it is drawn from stays this.
    */
-  shareCardInput(ctx: CardContext): ShareCardInput | { refused: string } {
+  /**
+   * Today's finished Daily as the brand kit's Daily card takes it (DailyRecord in
+   * core/brand/shareInput.ts), or null until all three are played. It carries no scenario
+   * name, so the card cannot spoil the draw.
+   */
+  shareRecord(): DailyRecord | null {
     const view = this.view();
-    if (!view.complete) return { refused: "Finish all three of today's daily to share it." };
+    if (!view.complete) return null;
     return {
-      kind: "match",
-      mode: `Apogee Daily #${view.number}`,
-      season: ctx.season,
-      category: view.band.name,
-      // The season rank from the player's own scores, as the other cards carry it. Never a
-      // rating: a daily moves none.
-      player: { name: ctx.playerName, tier: ctx.tier, rating: null, ratingChange: null, percentile: null },
-      opponent: null,
-      verdict: null,
-      matchScore: { you: view.meanDelta, them: null },
-      rounds: view.rounds.map((r, i) => ({
-        scenario: r.skill || `Round ${i + 1}`,
-        you: { score: null, baseline: null, delta: r.glyph === "first" ? null : r.delta },
-        them: null,
-        excluded: r.glyph === "first" ? "First run" : null,
-      })),
-      duelCode: null,
-      playedAt: localDay(this.now()),
+      number: view.number,
+      band: view.band.name,
+      marks: view.rounds.map((r) => r.glyph),
+      meanDelta: view.meanDelta,
+      streak: view.streak,
+      provisional: view.provisional,
+      date: localDay(this.now()),
     };
   }
 }
