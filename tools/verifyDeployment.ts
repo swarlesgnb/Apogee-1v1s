@@ -583,6 +583,12 @@ async function main(): Promise<void> {
     // The queue board names who answered your Flags and reads your Shadow ladder; it is
     // about the caller and means nothing without one.
     "queue-board",
+    // A Crown challenge and an accepted race create matches, the board carries the caller's
+    // own notices, and the live view applies a reveal rule that needs to know who is asking.
+    "list-crowns",
+    "challenge-crown",
+    "race-action",
+    "race-status",
   ];
   for (const name of authedFunctions) {
     const res = await fetch(`${fnBase}/${name}`, {
@@ -675,14 +681,30 @@ async function main(): Promise<void> {
   // ---- shadows and flags ------------------------------------------------------------
   console.log("\n── shadows and flags ────────────────────────────");
 
-  // Written by find-match and settle-match, read by queue-board, all under the service role.
-  // A client that could read flags could see a planted score before answering it.
-  for (const table of ["match_shadows", "flags"]) {
-    const secret = await rest(`${table}?select=match_id&limit=1`, SECRET!);
+  // Written by find-match, settle-match and queue-board under the service role. A client
+  // that could read match_shadows could see which percentile it was about to face.
+  for (const table of ["match_shadows", "flag_reads"]) {
+    const secret = await rest(`${table}?select=*&limit=1`, SECRET!);
     check(`the ${table} table exists`, secret.status === 200, `HTTP ${secret.status}`);
-    const anon = await rest(`${table}?select=match_id&limit=1`, ANON!);
+    const anon = await rest(`${table}?select=*&limit=1`, ANON!);
     check(`clients CANNOT read ${table} directly`, anon.status !== 200, `HTTP ${anon.status}`);
   }
+
+  // ---- crowns and races -------------------------------------------------------------
+  console.log("\n── crowns and races ─────────────────────────────");
+
+  // Served by list-crowns and race-status under the service role. A client that could read
+  // these could see every challenge outcome and every race's numbers, sealed or not.
+  for (const table of ["crowns", "crown_reigns", "crown_challenges", "races"]) {
+    const present = await rest(`${table}?select=*&limit=1`, SECRET!);
+    check(`the ${table} table exists`, present.status === 200, `HTTP ${present.status}`);
+    const anon = await rest(`${table}?select=*&limit=1`, ANON!);
+    check(`clients CANNOT read ${table} directly`, anon.status !== 200, `HTTP ${anon.status}`);
+  }
+  // Notices are readable by their owner through RLS; the anon key is nobody, so nothing.
+  const noticesAnon = await rest("crown_notices?select=id&limit=1", ANON!);
+  check("the anon key reads no Crown notices", noticesAnon.status !== 200 || noticesAnon.body.trim() === "[]",
+    `HTTP ${noticesAnon.status}`);
 
   console.log();
   if (failures > 0) {
