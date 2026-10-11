@@ -1,186 +1,81 @@
 /**
- * Flags: a seeding run set planted as an open challenge.
+ * Flags: news about your banked rounds.
  *
- * WHAT A FLAG IS
+ * WHAT A FLAG IS, UNDER RANKED V2
  *
- * When the pool is empty, a ranked match is played against a Shadow (shadow.ts) and the
- * player's three runs are stored the way a seeding side always was: they become an
- * opponent the next player can be matched against. A Flag is that stored side with one
- * promise attached. The first real player who answers it within FLAG_TTL_MS settles a
- * rated match for both of them, and the player who planted it is told the next time the
- * app opens.
+ * Every side a player finishes goes into the bank find-match draws opponents from
+ * (ranked_pool_rounds), a seeding side included: find-match plants one by itself when the
+ * pool has nobody suitable, or when fresh scenarios would serve better (shouldPlantFresh).
+ * When somebody later plays a match drawn from your rounds and it settles, that is a
+ * Flag: you are told on your next launch, "kestrel played your banked rounds and took 2
+ * of 3".
  *
- * It is a duel addressed to the pool rather than to a person. That is the whole design
- * and the reason it is safe: everything a duel's challenger can do with their seeding
- * match, a planter can do with theirs, and nothing more.
+ * WHAT IT IS NOT
  *
- * WHY THE PLANTER IS RATED ONCE, AND NOT ON EVERY ANSWER
+ * Not a rating. Ranked v2 rates only the player who played, against the rating their
+ * opponent had when those rounds were played (PLAN.md §4), and a stored round answers as
+ * many players as draw it, so rating its owner on each would turn one afternoon into ten
+ * rating changes. A Flag is the owner hearing about it, nothing more. Not a planting
+ * mechanism either: planting is find-match's, unchanged.
  *
- * A stored side is never consumed; it answers as many players as draw it. Rating its owner
- * on every answer would turn one afternoon into ten rating changes (prepareChallengerRating
- * says the same about the pool). So the rule, which is the farm bound this feature is held
- * to, is that every run set rates its owner at most once:
+ * HOW IT IS READ
  *
- *   contested side   rated when played (unchanged)
- *   duel challenger  rated when the duel is answered (unchanged)
- *   flag planter     rated when the flag is first answered, within its window
- *
- * After that, or after it expires, the run set stays in the pool and rates only whoever
- * answers it, exactly as every seeding side did before Flags existed.
- *
- * WHAT DOES NOT ANSWER A FLAG
- *
- *   a void          an abandoned round or a rejected run voids the answer match, and a
- *                   result nobody played to the end is not a contest
- *   a forfeit       the answerer leaving would otherwise hand the planter a free win, and
- *                   a second account could hand it over on purpose
- *   a late draw     an answer match created after the flag expired
- *
- * Each leaves the flag open for the next player.
+ * Derived from rows that already exist: a copy of your side, sitting in somebody else's
+ * engine-2 rated match that has settled. Nothing is written when a match settles. The only
+ * new state is how far the player has read (flag_reads).
  */
 
-/**
- * How long a flag waits for an answer.
- *
- * Seven days, the duel's number and for the duel's reason (duels.ts): a match deadline is how
- * long somebody has to play, and this is how long somebody has to turn up. A week of
- * evenings is the unit somebody who plays after work has.
- */
-export const FLAG_TTL_MS = 7 * 24 * 60 * 60 * 1000;
-export const FLAG_TTL_DAYS = Math.round(FLAG_TTL_MS / 86_400_000);
+/** How far back a player with no read marker is told about, so a first launch is not a flood. */
+export const NEWS_DEFAULT_DAYS = 7;
+/** Most news items one read returns. */
+export const NEWS_LIMIT = 20;
 
-export type FlagStatus = "open" | "answered" | "expired";
-
-export interface Flag {
-  id: string;
-  planterId: string;
-  status: FlagStatus;
-  plantedAt: Date;
-  expiresAt: Date;
-  answerMatchId?: string | null;
-}
-
-/** What the planter's seeding match has to be for its run set to become a flag. */
-export interface PlantingFacts {
-  /** False for a tournament leg. */
-  rated: boolean;
-  /** Rounds that counted, against rounds in the match. */
-  countedRounds: number;
-  rounds: number;
-  /** The match was a Shadow match from the queue, not a duel's or a fixture's first leg. */
-  shadow: boolean;
+export interface RoundsTally {
+  /** Rounds the player who drew your rounds won. */
+  theirs: number;
+  /** Rounds your banked rounds held. */
+  yours: number;
+  tied: number;
 }
 
 /**
- * Only a complete, rated, queue-born seeding side is planted.
+ * Rounds each way, from the two raw score arrays, by ranked's own rule: the higher score
+ * takes the round.
  *
- * A duel's seeding side already has its one rating (the duel), and a tournament leg is
- * unrated by agreement. A side with an uncounted round never reaches the pool at all.
+ * Null when the arrays cannot say (a length mismatch), or when they disagree with the
+ * verdict settlement stored. They can disagree in one case: a round the player left early
+ * a second time in a week counts as lost whatever its partial score was, and the stored
+ * scores do not mark that. Then the news says only who won.
  */
-export function shouldPlant(f: PlantingFacts): boolean {
-  return f.rated && f.shadow && f.rounds > 0 && f.countedRounds === f.rounds;
+export function bankTally(banked: number[], theirs: number[], theirResult: "win" | "loss" | "draw" | null): RoundsTally | null {
+  if (banked.length === 0 || banked.length !== theirs.length) return null;
+  const t: RoundsTally = { theirs: 0, yours: 0, tied: 0 };
+  for (let i = 0; i < banked.length; i++) {
+    if (!Number.isFinite(banked[i]) || !Number.isFinite(theirs[i])) return null;
+    if (theirs[i] > banked[i]) t.theirs++;
+    else if (theirs[i] < banked[i]) t.yours++;
+    else t.tied++;
+  }
+  const implied = t.theirs > t.yours ? "win" : t.theirs < t.yours ? "loss" : "draw";
+  return theirResult && implied !== theirResult ? null : t;
 }
 
-/** A flag's status as of `now`: open past its deadline reads as expired. */
-export function flagStatus(flag: Pick<Flag, "status" | "expiresAt">, now: Date): FlagStatus {
-  if (flag.status === "open" && now.getTime() >= flag.expiresAt.getTime()) return "expired";
-  return flag.status;
+/** "kestrel played your banked rounds and took 2 of 3." */
+export function bankNewsLine(by: string, tally: RoundsTally | null, theirResult: "win" | "loss" | "draw" | null): string {
+  if (tally) {
+    const rounds = tally.theirs + tally.yours + tally.tied;
+    const tied = tally.tied > 0 ? ` (${tally.tied} tied)` : "";
+    return `${by} played your banked rounds and took ${tally.theirs} of ${rounds}${tied}.`;
+  }
+  const how = theirResult === "win" ? "won" : theirResult === "loss" ? "lost" : "drew";
+  return `${by} played your banked rounds and ${how}.`;
 }
 
-export type AnswerOutcome = "win" | "loss" | "draw" | "void" | "forfeit";
-
-export interface AnswerFacts {
-  answererId: string;
-  /** When the answer match was created: what has to fall inside the flag's window. */
-  answerCreatedAt: Date;
-  outcome: AnswerOutcome;
-  /** False for a tournament leg, which never draws from the pool anyway. */
-  rated: boolean;
-}
-
-/** Whether an answer settles a flag, and if not, why not. */
-export function canSettle(flag: Flag, a: AnswerFacts): { ok: true } | { ok: false; reason: string } {
-  if (flag.status !== "open") return { ok: false, reason: "the flag has already been answered" };
-  if (a.answerCreatedAt.getTime() >= flag.expiresAt.getTime()) return { ok: false, reason: "the flag had expired" };
-  if (a.answererId === flag.planterId) return { ok: false, reason: "a player cannot answer their own flag" };
-  if (!a.rated) return { ok: false, reason: "unrated matches do not answer flags" };
-  if (a.outcome === "void") return { ok: false, reason: "a void answer is not a contest" };
-  if (a.outcome === "forfeit") return { ok: false, reason: "a forfeit does not settle a flag" };
-  return { ok: true };
-}
-
-/** The flag after an answer: settled once, never again. */
-export function applyAnswer(flag: Flag, a: AnswerFacts, answerMatchId: string): Flag {
-  return canSettle(flag, a).ok ? { ...flag, status: "answered", answerMatchId } : flag;
-}
-
-/** The planter's verdict is the answerer's, mirrored. */
-export function planterVerdict(answerer: "win" | "loss" | "draw"): "win" | "loss" | "draw" {
-  return answerer === "win" ? "loss" : answerer === "loss" ? "win" : "draw";
-}
-
-interface RatingLike {
-  rating: number;
-  rd: number;
-  volatility: number;
-}
-
-/**
- * The planter's rating change for a settled answer.
- *
- * The same damped Glicko-2 step a duel's challenger takes (prepareChallengerRating), against
- * the answerer's rating as it stood when they played, at the match's own weight: halved when
- * either side leaned on a provisional baseline, so a placement-quality result cannot swing a
- * settled rating. Shared by settle-match and the validator so the two cannot drift.
- */
-export function planterRating(
-  planter: RatingLike,
-  answerer: { rating: number; rd: number },
-  verdict: "win" | "loss" | "draw",
-  weight: number,
-  updateRating: (p: RatingLike, games: { opponent: RatingLike; score: number }[]) => RatingLike,
-): { after: RatingLike; score: number } {
-  const score = verdict === "win" ? 1 : verdict === "loss" ? 0 : 0.5;
-  const raw = updateRating(planter, [{ opponent: { rating: answerer.rating, rd: answerer.rd, volatility: 0.06 }, score }]);
-  return {
-    score,
-    after: {
-      rating: planter.rating + (raw.rating - planter.rating) * weight,
-      rd: planter.rd + (raw.rd - planter.rd) * weight,
-      volatility: raw.volatility,
-    },
-  };
-}
-
-// ---------------------------------------------------------------------------
-// words, shared by the server's messages and the client's panel
-// ---------------------------------------------------------------------------
-
-export function daysLeft(expiresAt: Date, now: Date): number {
-  return Math.max(0, Math.ceil((expiresAt.getTime() - now.getTime()) / 86_400_000));
-}
-
-/** "Flag planted: Intermediate band, Precise Tracking. It settles when someone answers it (up to 7 days)." */
-export function plantedLine(band: string, category: string, ttlDays = FLAG_TTL_DAYS): string {
-  return `Flag planted: ${band} band, ${category}. It settles when someone answers it (up to ${ttlDays} days).`;
-}
-
-/** Said before the player commits, when the pool has nobody for them. */
-export function shadowQueueLine(shadowLabel: string): string {
-  return `No one in your band right now. You'll face a Shadow now (${shadowLabel}), and your run set stays planted as a Flag.`;
-}
-
-export function answeredLine(o: {
-  category: string;
-  by: string;
-  verdict: "win" | "loss" | "draw";
-  ratingChange: number | null;
-}): string {
-  const result = o.verdict === "win" ? "you won" : o.verdict === "loss" ? "they won" : "it was a draw";
-  const move = o.ratingChange == null ? "" : `, ${o.ratingChange >= 0 ? "+" : "−"}${Math.abs(o.ratingChange)} rating`;
-  return `Your ${o.category} Flag was answered by ${o.by}: ${result}${move}.`;
-}
-
-export function expiredLine(category: string): string {
-  return `Your ${category} Flag expired unanswered. Its run set stays in the pool; it no longer rates you.`;
+/** The pre-commit line when the queue will hand out a seeding match. */
+export function shadowQueueLine(shadowLabel: string, planting: boolean): string {
+  const why = planting
+    ? "The players near your rating have banked mostly scenarios you just played, so this is three fresh ones."
+    : "No one in your band right now.";
+  return `${why} You'll face a Shadow now (${shadowLabel}), and your three runs join the bank: ` +
+    "whoever draws them later plays you, and you'll hear how it went.";
 }
