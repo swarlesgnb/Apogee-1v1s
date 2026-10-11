@@ -257,7 +257,7 @@ Ranked by reach, the way the overnight audit ranked them:
 |---|---|---|---|
 | 1 | Everyone, every launch | The window cannot paint or respond until the whole folder is parsed (2.0 s stall at 15,000 runs here; 54 s cold in the owner's log). | Fixed (§4) |
 | 2 | Everyone past their first session | At the default 1280x880 window, Find opponent is below the fold: bottom at 1009 px. At 1440x1015 (a 1080 window under the Windows title bar) it clears by 11 px here and missed by 33 px in the preview suite on Windows fonts. | Fixed: 799 px and 796 px |
-| 3 | Everyone who plays a match | Match rows said "to beat 2,516" while the pool below said a scenario had no baseline (audit #14). The best never decided a round; the baseline does. | Fixed: "best 2,516", or "best 1,357 · 3 runs to a baseline" |
+| 3 | Everyone who plays a match | Match rows said "to beat 2,516" while the pool below said a scenario had no baseline (audit #14). The best never decided a round; the baseline does. | Withdrawn on ranked v2: rounds are now won on raw score, so main's "to beat 2,516" is right again and the change was not carried over |
 | 4 | Everyone, every run | 0.8 s to the run toast and 2.2 s to the count; a file still incomplete at its settle check was dropped, so a match could miss a run. | Fixed (§4) |
 | 5 | Everyone with a long history, first launch | The new reading state said the folder was not found. | Fixed |
 | 6 | Curious, signed out | Host a tournament was fully interactive and only the server refused (audit #15). | Fixed: the form stays explorable and ends in "Sign in to host", which presses the rail's button |
