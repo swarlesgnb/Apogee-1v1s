@@ -19,7 +19,7 @@
  */
 
 import type { ParsedRun } from "../stats/parseStatsFile.ts";
-import { matchesServerEvidence } from "./serverEvidence.ts";
+import { matchesServerEvidence, SERVER_TIME_SLOP_MS } from "./serverEvidence.ts";
 import {
   checkConsistency,
   type ConsistencyContext,
@@ -40,6 +40,13 @@ export interface VerifyInput {
   run: ParsedRun;
   /** KovaaK's record for this player and scenario, if one exists. */
   serverRecord?: ServerRecord | null;
+  /**
+   * KovaaK's record of this same run found by score, hash and challenge start alone,
+   * without asking whether its timestamp agrees (`sameRunRecord`). Supplied so that a
+   * record which identifies the run and disagrees about when it was played is read as a
+   * contradiction rather than as no evidence. See `serverTimeContradiction`.
+   */
+  sameRunRecord?: ServerRecord | null;
   consistency?: ConsistencyContext;
 }
 
@@ -63,6 +70,52 @@ const SCORE_EPSILON = 0.001;
 function scoresMatch(a: number, b: number): boolean {
   const scale = Math.max(Math.abs(a), Math.abs(b), 1);
   return Math.abs(a - b) / scale <= SCORE_EPSILON;
+}
+
+/**
+ * KovaaK's says this exact run was played outside the match it is being counted in.
+ *
+ * Missing evidence is not this. A player with no linked account, a run KovaaK's never
+ * received, a record that has scrolled out of the last ten: all of those leave the run
+ * where local checks put it, which is the documented policy. This is the opposite case,
+ * a record that matches the run on score, hash and challenge start to the millisecond
+ * and whose timestamp lies outside the match window. That is positive evidence the
+ * run's corrected time is wrong, which makes it a match-window failure, and a
+ * match-window failure is already a rejection (FAIR-PLAY.md, "How a run is graded").
+ *
+ * Measured against the match window, not against the corrected end time, on purpose.
+ * KovaaK's timestamp and the window are both server clocks; the corrected time is the
+ * player's PC clock plus the offset they declared. Comparing like with like means a PC
+ * clock a few minutes out cannot be mistaken for a time shift, while a run played hours
+ * before the match, or long after it, still lands far outside. The window is widened by
+ * the same three minutes Verified allows for upload latency.
+ *
+ * Without a match window there is nothing to count the run in, so a disagreement is an
+ * advisory and nothing more.
+ */
+function serverTimeContradiction(input: VerifyInput): { hard: string | null; advisory: string | null } {
+  const record = input.sameRunRecord;
+  const epoch = record?.epoch;
+  if (!record || typeof epoch !== "number" || !Number.isFinite(epoch)) return { hard: null, advisory: null };
+
+  const window = input.consistency?.window;
+  if (window) {
+    const lo = window.start.getTime() - SERVER_TIME_SLOP_MS;
+    const hi = window.end.getTime() + SERVER_TIME_SLOP_MS;
+    if (epoch >= lo && epoch <= hi) return { hard: null, advisory: null };
+    return {
+      hard: `KovaaK's recorded this run at ${new Date(epoch).toISOString()}, outside the match window ` +
+        `(${window.start.toISOString()} to ${window.end.toISOString()})`,
+      advisory: null,
+    };
+  }
+
+  const ended = input.run.playedAt?.getTime();
+  if (typeof ended === "number" && Number.isFinite(ended) && Math.abs(ended - epoch) > SERVER_TIME_SLOP_MS) {
+    const minutes = Math.round((ended - epoch) / 60_000);
+    return { hard: null, advisory: `corrected end time is ${minutes} min from KovaaK's record of this run` };
+  }
+  return { hard: null, advisory: null };
 }
 
 export function verifyRun(input: VerifyInput): VerifyOutcome {
@@ -94,6 +147,22 @@ export function verifyRun(input: VerifyInput): VerifyOutcome {
       reasons: report.hardFailures,
       advisories,
       report,
+    };
+  }
+
+  // KovaaK's own record of this run contradicts when it was played. Recorded as a failed
+  // hard check beside in_match_window, so the stored notes say why, and rejected the way
+  // an out-of-window run already is.
+  const contradiction = serverTimeContradiction(input);
+  if (contradiction.advisory) advisories.push(contradiction.advisory);
+  if (contradiction.hard) {
+    const check = { id: "server_time_in_window", severity: "hard" as const, status: "fail" as const, detail: contradiction.hard };
+    const failure = `${check.id}: ${check.detail}`;
+    return {
+      tier: "rejected",
+      reasons: [failure],
+      advisories,
+      report: { ...report, checks: [...report.checks, check], hardFailures: [...report.hardFailures, failure] },
     };
   }
 
