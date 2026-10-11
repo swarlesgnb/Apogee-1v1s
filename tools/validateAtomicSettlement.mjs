@@ -115,17 +115,21 @@ let handler;
 globalThis.Deno={env:{get:()=>''},serve:fn=>{handler=fn;}};
 globalThis.atomicPlayer=players[0];
 const actualShared=resolve('supabase/functions/_shared/apogee.ts').replaceAll('\\','/');
+const actualRanked=resolve('supabase/functions/_shared/rankedV2.ts').replaceAll('\\','/');
 await build({entryPoints:['supabase/functions/settle-match/index.ts'],outfile:'.cache/atomic-handler.mjs',bundle:true,platform:'node',format:'esm',plugins:[{
   name:'isolated-transport',setup(b){
     b.onResolve({filter:/\/\_shared\/apogee\.ts$/},args=>args.namespace==='test'
       ?{path:resolve('supabase/functions/_shared/apogee.ts'),namespace:'file'}
       :args.importer.replaceAll('\\','/').endsWith('settle-match/index.ts')?{path:'boundary',namespace:'test'}:undefined);
+    b.onResolve({filter:/\/_shared\/rankedV2\.ts$/},args=>args.namespace==='test'?{path:actualRanked,namespace:'file'}:undefined);
     b.onResolve({filter:/\/\_shared\/(rateLimit|tournament)\.ts$/},()=>({path:'optional',namespace:'test'}));
     b.onResolve({filter:/^jsr:/},()=>({path:'client',namespace:'test'}));
     b.onLoad({filter:/.*/,namespace:'test'},args=>({contents:args.path==='boundary'?`
       export * from ${JSON.stringify(actualShared)};
       import * as shared from ${JSON.stringify(actualShared)};
       globalThis.atomicShared=shared;
+      import * as ranked from ${JSON.stringify(actualRanked)};
+      globalThis.atomicRanked=ranked;
       export const handler=fn=>req=>fn(req,globalThis.atomicAdmin);
       export const requireCaller=async()=>({playerId:globalThis.atomicPlayer});
       export const json=(body,status=200)=>({body,status});
@@ -203,20 +207,20 @@ assert.equal(byOriginal.format,'rounds');assert.deepEqual(byOriginal.rounds.map(
 assert.equal(byOriginal.verdict,'loss');assert.deepEqual(byOriginal.roundTally,{won:1,lost:2,tied:0});
 console.log('PASS: a side copied without scores is settled on rounds from its original\'s scores');
 
-const {forfeitMatch,commitMatchResult,prepareChallengerRating}=globalThis.atomicShared;
-const ratingStub=(before,games)=>({...before,rating:before.rating+(games[0].score===1?10:-10)});
+const {commitMatchResult}=globalThis.atomicShared;
+const {forfeitMatch,prepareChallenger}=globalThis.atomicRanked;
 const queueForfeit=await match();
 const beforeQueue=await snapshot(queueForfeit), commitsBefore=commits;
-const queueResult=await forfeitMatch(globalThis.atomicAdmin,queueForfeit,players[0],ratingStub);
+const queueResult=await forfeitMatch(globalThis.atomicAdmin,queueForfeit,players[0]);
 assert.equal(queueResult.verdict,'loss');assert.equal(queueResult.rated,true);assert.equal(commits,commitsBefore+1);
 const afterQueue=await snapshot(queueForfeit);
 assert.equal(afterQueue.history.length,beforeQueue.history.length+1,'queue forfeit rates only the player who left');
 assert.deepEqual(afterQueue.ratings.find(r=>r.player_id===players[1]),beforeQueue.ratings.find(r=>r.player_id===players[1]));
-assert.equal((await forfeitMatch(globalThis.atomicAdmin,queueForfeit,players[0],ratingStub)).reason,'already-settled');
+assert.equal((await forfeitMatch(globalThis.atomicAdmin,queueForfeit,players[0])).reason,'already-settled');
 assert.deepEqual(await snapshot(queueForfeit),afterQueue);
 const seedingForfeit=await match();
 await db.query('delete from match_sides where match_id=$1 and player_id=$2',[seedingForfeit,players[1]]);
-assert.equal((await forfeitMatch(globalThis.atomicAdmin,seedingForfeit,players[0],ratingStub)).reason,'seeding');
+assert.equal((await forfeitMatch(globalThis.atomicAdmin,seedingForfeit,players[0])).reason,'seeding');
 assert.equal((await snapshot(seedingForfeit)).match[0].status,'void');
 const duelForfeit=await match();
 await db.query(`update match_sides set rating_before=1500,rd_before=350,deltas='{0,0,0}',match_score=0,
@@ -224,7 +228,7 @@ submitted_at='2000-01-01Z' where match_id=$1 and player_id=$2`,[duelForfeit,play
 await db.query(`insert into duels(challenger_id,challenged_id,match_id,answer_match_id,status,expires_at)
 values($1,$2,$3,$4,'accepted',now()+interval '1 day')`,[players[1],players[0],id,duelForfeit]);
 const beforeDuelForfeit=await snapshot(duelForfeit), commitsBeforeForfeit=commits;
-assert.equal((await forfeitMatch(globalThis.atomicAdmin,duelForfeit,players[0],ratingStub)).verdict,'loss');
+assert.equal((await forfeitMatch(globalThis.atomicAdmin,duelForfeit,players[0])).verdict,'loss');
 assert.equal(commits,commitsBeforeForfeit+1);
 const afterDuelForfeit=await snapshot(duelForfeit);
 assert.equal(afterDuelForfeit.history.length,beforeDuelForfeit.history.length+2);
@@ -235,6 +239,6 @@ for(const receipt of [null,{}, {committed:false}, {committed:false,reason:'unkno
   await assert.rejects(commitMatchResult({rpc:async()=>({data:receipt,error:null})},id,'settled',[]),e=>e.status===500);
 }
 const failedRead={from(){return {select(){return this;},eq(){return this;},maybeSingle:async()=>({data:null,error:{message:'planted read failure'}})};}};
-await assert.rejects(prepareChallengerRating(failedRead,id,'win',1,ratingStub),/planted read failure/);
+await assert.rejects(prepareChallenger(failedRead,id,{won:1,lost:0,tied:0},1,'match',{rating:1500,rd:350,volatility:0.06}),/planted read failure/);
 console.log('PASS: actual forfeit helper commits both duel ratings once, preserves queue opponent and run-set identity, voids seeding, and refuses missing receipts and failed reads');
 await db.close();

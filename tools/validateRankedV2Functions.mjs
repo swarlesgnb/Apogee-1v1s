@@ -3,7 +3,7 @@
  *
  *   node tools/validateRankedV2Functions.mjs
  *
- * find-match-v2, settle-match-v2 and abandon-match-v2 are bundled as they are deployed and
+ * find-match, settle-match and abandon-match are bundled as they are deployed and
  * run against PGlite with every migration applied. Only what cannot run here is stubbed:
  * who the caller is (requireCaller), the rate limiter, tournament notification and the
  * Supabase client, which is replaced by a small translation of the query-builder calls
@@ -212,9 +212,9 @@ async function load(name) {
   await import(pathToFileURL(resolve(`.cache/${name}.mjs`)).href + `?t=${Date.now()}`);
   assert.equal(typeof handlers[name], "function", `${name} registered a handler`);
 }
-await load("find-match-v2");
-await load("settle-match-v2");
-await load("abandon-match-v2");
+await load("find-match");
+await load("settle-match");
+await load("abandon-match");
 
 await build({ entryPoints: ["src/core/rating/ranked.ts"], outfile: ".cache/ranked-core.mjs", bundle: true, platform: "node", format: "esm" });
 const ranked = await import(pathToFileURL(resolve(".cache/ranked-core.mjs")).href);
@@ -223,9 +223,9 @@ const call = (name, as, body = {}) => {
   globalThis.v2Caller = as;
   return handlers[name](new Request(`https://local.invalid/${name}`, { method: "POST", body: JSON.stringify(body) }));
 };
-const find = (as) => call("find-match-v2", as, { category: "Any", window: 1 });
-const settle = (as, matchId) => call("settle-match-v2", as, { matchId });
-const abandon = (as) => call("abandon-match-v2", as);
+const find = (as) => call("find-match", as, { category: "Any", window: 1 });
+const settle = (as, matchId) => call("settle-match", as, { matchId });
+const abandon = (as) => call("abandon-match", as);
 
 // ---- a season, three players, an opponent with banked rounds -----------------------------
 const scenarios = (await db.query("select id, name from scenarios order by id limit 4")).rows;
@@ -253,10 +253,8 @@ async function player(name, rating, rd) {
   }
   return id;
 }
-const A = await player("tester", 1500, 80);
+const A = await player("player", 1500, 80);
 const B = await player("opponent", 1700, 60);
-const C = await player("not-an-admin", 1500, 80);
-await db.query("insert into admins(player_id, note) values($1, 'ranked v2 test')", [A]);
 
 // B banked eight sittings on the pool, each played at 1400 although B is 1700 now.
 for (let k = 0; k < 8; k++) {
@@ -285,26 +283,10 @@ const rating = async (id) => {
 const history = async (matchId) => (await db.query("select * from rating_history where match_id = $1", [matchId])).rows;
 const at1400 = { rating: 1400, rd: 60, volatility: 0.06 };
 
-// ---- the gate ---------------------------------------------------------------------------
-const refused = await find(C);
-assert.deepEqual([refused.status, refused.body.error], [403, "ranked v2 is only open to testers"]);
-assert.equal((await db.query("select count(*)::int as n from matches where engine = 2")).rows[0].n, 0);
-for (const name of ["settle-match-v2", "abandon-match-v2"]) assert.equal((await call(name, C, { matchId: "x" })).status, 403);
-console.log("PASS: all three refuse a non-admin before doing anything");
-
-// Deployed before the migration: PostgREST answers the probe with PGRST202. Every function
-// must refuse with the message the client falls back on, not a 500.
-const realRpc = admin.rpc;
-admin.rpc = async (name, params) => name === "ranked_pool_rounds"
-  ? { data: null, error: { code: "PGRST202", message: "Could not find the function public.ranked_pool_rounds" } }
-  : realRpc(name, params);
-for (const name of ["find-match-v2", "settle-match-v2", "abandon-match-v2"]) {
-  const r = await call(name, A, { category: "Any", window: 1, matchId: "x" });
-  assert.deepEqual([r.status, r.body.error], [503, "ranked v2's migration is not applied (npx supabase db push)"], name);
-}
-admin.rpc = realRpc;
-assert.equal((await db.query("select count(*)::int as n from matches where engine = 2")).rows[0].n, 0);
-console.log("PASS: before the migration, all three refuse an admin with the message the client falls back on");
+// ---- open to everyone --------------------------------------------------------------------
+// v2 ran admin-only before it replaced v1. Nobody here is an admin, so a gate left behind
+// anywhere would refuse every call below.
+assert.equal((await db.query("select count(*)::int as n from admins")).rows[0].n, 0);
 
 // ---- queue: rated as they played, with stakes ----------------------------------------------
 const first = await find(A);
@@ -407,7 +389,7 @@ console.log("PASS: an expired match with every run in is settled by the sweep, a
 // The new match from that queue is left to a forfeit, to clear the way for v1 matches.
 assert.equal((await abandon(A)).status, 200);
 
-// ---- a v1 match settled through v2 keeps v1's rules ----------------------------------------
+// ---- a match from before v2 keeps v1's rules ----------------------------------------
 async function v1Match(opponentRating) {
   const m = (await db.query(`insert into matches(category, benchmark_name, difficulty, seed, scenario_ids, status, window_index, expires_at)
     values('Any', 'Test Season', 'Intermediate', $1, $2::bigint[], 'awaiting_runs', 1, now() + interval '1 hour') returning id`,
@@ -432,4 +414,4 @@ const legacyVoid = await settle(A, legacyLeft);
 assert.equal(legacyVoid.body.verdict, "void");
 assert.equal(legacyVoid.body.freeAbandon, null, "a v1 match voids as it always has, spending nothing");
 assert.equal((await db.query("select void_reason from matches where id = $1", [legacyLeft])).rows[0].void_reason, null);
-console.log("PASS: a v1 match settled through v2 is rated as one game and voids for free, as settle-match would");
+console.log("PASS: a match from before v2 is rated as one game and voids for free, as it would have been then");

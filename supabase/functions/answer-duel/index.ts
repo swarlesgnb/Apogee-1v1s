@@ -20,7 +20,6 @@
  */
 
 import {
-  forfeitMatch,
   handler,
   INITIAL_TTL_MS,
   isOffPool,
@@ -28,13 +27,13 @@ import {
   readJson,
   requireCaller,
   requireEligible,
-  sweepStaleMatches,
   HttpError,
 } from "../_shared/apogee.ts";
+import { forfeitMatch, sweepStaleMatches } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 
 import { answerDuel, type Duel, type DuelAnswer } from "../../../src/core/match/duels.ts";
-import { updateRating, winProbability } from "../../../src/core/rating/glicko2.ts";
+import { winProbability } from "../../../src/core/rating/glicko2.ts";
 
 interface Body {
   duelId: string;
@@ -88,7 +87,7 @@ Deno.serve(handler(async (req, admin) => {
       .eq("player_id", caller.playerId)
       .maybeSingle();
     if (mine && mine.match_score == null) {
-      await forfeitMatch(admin, row.match_id, caller.playerId, updateRating);
+      await forfeitMatch(admin, row.match_id, caller.playerId);
       return json({ ok: true, status: "cancelled", matchVoided: row.match_id });
     }
     return json({ ok: true, status: "cancelled" });
@@ -137,7 +136,7 @@ Deno.serve(handler(async (req, admin) => {
 
   // Same rule as the queue and as sending: one match at a time. Checked before the claim
   // below, so a refusal here leaves the duel open for when they have finished.
-  const live = await sweepStaleMatches(admin, caller.playerId, updateRating);
+  const live = await sweepStaleMatches(admin, caller.playerId);
   if (live) {
     throw new HttpError(409, "finish or abandon your current match before accepting a duel");
   }

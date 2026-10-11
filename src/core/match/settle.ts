@@ -76,7 +76,7 @@ export interface SettlementInput {
    * match. Rounds format only.
    *
    * Dropping is right for a crash and wrong for a choice, and the file cannot tell them
-   * apart. Settlement decides which to assume (settle-match-v2 allows one void a week);
+   * apart. Settlement decides which to assume (settle-match allows one void a week under v2);
    * this only carries the decision out.
    */
   abandonedRoundsLose?: boolean;

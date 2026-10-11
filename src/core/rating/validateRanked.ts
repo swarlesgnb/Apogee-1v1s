@@ -47,8 +47,9 @@ console.log("── the rating policy ──────────────
 
 check("the adopted outcome model is rounds", RANKED_OUTCOME === "rounds");
 
-// v1 through ranked.ts must be v1 exactly, because settle-match-v2 settles every engine-1
-// match this way and claims to settle it as settle-match would.
+// v1 through ranked.ts must be v1 exactly, because settle-match settles every engine-1
+// match (a duel, a tournament leg, anything from before v2) this way and claims to settle
+// it as v1 did.
 for (const [won, lost, verdict] of [[2, 1, 1], [1, 2, 0], [1, 1, 0.5]] as const) {
   const v1 = updateRating(me, [{ opponent: them, score: verdict }]);
   const v2 = rateResult({ before: me, opponent: them, tally: { won, lost, tied: won === lost ? 1 : 0 }, model: "match" });

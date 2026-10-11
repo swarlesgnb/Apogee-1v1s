@@ -310,17 +310,20 @@ Glicko-2's rating deviation (RD) was designed for.
   nightly, and RD never widened with inactivity. The second was measured below and is
   deliberately not applied.
 
-### Ranked v2: measured, and running beside v1
+### Ranked v2: measured, then made the ladder
 
-Ranked v2 changes how a result moves a rating and how an opponent is found. It runs
-behind its own functions (`find-match-v2`, `settle-match-v2`, `abandon-match-v2`),
-which answer only an admin, and a development build asks for it while a release never
-does, so it is tried against the live ladder without moving anybody else onto it. A
-match records the engine that created it (`matches.engine`), and the v2 functions
-settle and forfeit every match by the rules of the engine that created it, so a v1 match
-a tester settles through v2 comes out exactly as settle-match would have it. The v1
-functions do not read the column, which matters only to a tester whose build falls back
-to v1 halfway through a v2 match.
+Ranked v2 changes how a result moves a rating and how an opponent is found. It ran
+first behind three admin-only functions that only development builds called, against
+the live ladder, and then replaced v1 in find-match, settle-match and abandon-match
+themselves, so every client already installed moved onto it without an update.
+
+A match records the engine that created it (`matches.engine`: 1 before v2, 2 for every
+queued match since), and settlement, forfeits and the expiry sweep apply the rules of
+the engine that created it. A match open at the switch therefore finished under v1's
+rules, and duels and tournament legs, which are still created as engine 1, keep them:
+one result each, and leaving early always voids. There is one implementation of ending
+a match (`_shared/rankedV2.ts`), and the duel, fixture and tournament paths use it too,
+so a v2 match cannot be cleared through one of them for less than it costs in the queue.
 
 What decided the rating policy is `npm run compare:ladders`: the production matchmaking
 and rating code run over a simulated async season - only the caller rated, opponents as
@@ -373,8 +376,8 @@ And one thing for the player: the match screen shows what every result would do 
 rating before they play, computed by the function settlement uses.
 
 `npm run validate:ranked` re-derives the corpus numbers above and checks v2 beats v1 on
-every seed; `validate:ranked-boundaries` runs both new SQL functions and all three v2
-Edge Functions, unmodified, against Postgres.
+every seed; `validate:ranked-boundaries` runs both new SQL functions and find-match,
+settle-match and abandon-match, unmodified, against Postgres, with nobody an admin.
 
 ### Rank tiers: Apogee's own
 

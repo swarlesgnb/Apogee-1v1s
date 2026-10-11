@@ -46,7 +46,6 @@ import {
   abandonMatch,
   fetchActiveMatch,
   findMatch,
-  rankedEngine,
   fetchApexBoard,
   fetchLeaderboard,
   isAdmin,
@@ -1691,8 +1690,8 @@ function runSmokeTest(): void {
       }`,
     );
 
-    // Ranked v2's stakes line: painted from the server's numbers, hidden when there are none
-    // (v1, a seeding match), and a change of zero or below never printed as "+".
+    // The stakes line: painted from the server's numbers, hidden when there are none (a
+    // match from before v2, a seeding match), and a change of zero or below never printed as "+".
     const stakes = await probe.webContents.executeJavaScript(`(() => {
       if (typeof renderStakes !== "function") return null;
       const el = document.getElementById("matchStakes");
@@ -2206,8 +2205,6 @@ ipcMain.handle("apogee:installUpdate", () => updater.install());
 ipcMain.handle("apogee:getState", () => ({
   /** Which bundle this window is running, so a stale one is visible rather than guessed at. */
   build: BUILD,
-  /** Which ranked engine this session is on, and why not v2 when a dev build asked for it. */
-  ranked: rankedEngine(),
   statsDir: state.statsDir,
   snapshot: state.snapshot,
   lastError: state.lastError,

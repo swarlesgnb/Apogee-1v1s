@@ -56,14 +56,6 @@ export const LIMITS: Record<string, Limit> = {
   /** Abandoning repeatedly is cheap for us and pointless for them, but cap it anyway. */
   "abandon-match": { max: 20, windowSeconds: 300 },
 
-  /**
-   * Ranked v2's three, at v1's limits: the same work behind an admin gate
-   * (_shared/rankedV2.ts). Separate keys rather than v1's so each function is limited by
-   * name, which is what validate:functions checks for.
-   */
-  "find-match-v2": { max: 20, windowSeconds: 300 },
-  "settle-match-v2": { max: 30, windowSeconds: 60 },
-  "abandon-match-v2": { max: 20, windowSeconds: 300 },
 
   /**
    * Baseline refresh is the heaviest read in the system: it walks a player's history.

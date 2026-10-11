@@ -273,23 +273,7 @@ export async function refreshBaseline(
   );
 }
 
-/**
- * End a match the player is not going to finish, and charge them for it if it counted.
- *
- * Shared because two paths reach it and they must agree. Pressing Abandon and letting
- * the clock run out are the same act from the ladder's point of view, and if only one
- * of them cost anything, the free one would be the only one anybody used.
- *
- * That mattered little while a match lasted six hours. With a five-minute deadline,
- * waiting it out is the cheapest possible way to escape a match that is going badly,
- * so it has to cost what forfeiting costs.
- *
- * The exceptions are the same in both directions:
- *
- *   SEEDING   one side, by design. There is no opponent to lose to, and inventing a
- *             loss against nobody would be a free way to tank a rating.
- *   PLAYED    the runs are already in. Settlement should decide it, not this.
- */
+/** What forfeitMatch (rankedV2.ts) did with a match, and why. */
 export interface ForfeitOutcome {
   matchId: string;
   rated: boolean;
@@ -325,60 +309,6 @@ export async function isOffPool(
   } catch {
     return false;
   }
-}
-
-export async function forfeitMatch(
-  admin: SupabaseClient, matchId: string, playerId: string,
-  updateRating: (player: { rating: number; rd: number; volatility: number },
-    games: { opponent: { rating: number; rd: number; volatility: number }; score: number }[],
-  ) => { rating: number; rd: number; volatility: number },
-): Promise<ForfeitOutcome> {
-  const sideResult = await admin.from("match_sides")
-    .select("player_id, rating_before, rd_before, match_score").eq("match_id", matchId);
-  if (sideResult.error) throw new HttpError(500, sideResult.error.message);
-  const mine = (sideResult.data ?? []).find((s: any) => s.player_id === playerId);
-  const opponent = (sideResult.data ?? []).find((s: any) => s.player_id !== playerId);
-  if (!mine) throw new HttpError(403, "you are not in that match");
-  const matchResult = await admin.from("matches")
-    .select("status, rated, scenario_ids, window_index").eq("id", matchId).maybeSingle();
-  if (matchResult.error) throw new HttpError(500, matchResult.error.message);
-  const match = matchResult.data;
-  if (!match) throw new HttpError(404, "no such match");
-  if (match.status === "settled" || match.status === "void") {
-    return { matchId, rated: false, verdict: null, reason: "already-settled" };
-  }
-  if (mine.match_score != null) return { matchId, rated: false, verdict: null, reason: "already-played" };
-
-  const simple = async (status: "settled" | "void", verdict: "loss" | null,
-    reason: "seeding" | "off-pool" | "forfeit"): Promise<ForfeitOutcome> => {
-    const receipt = await commitMatchResult(admin, matchId, status,
-      [{ player_id: playerId, result: verdict }], [], true);
-    return { matchId, rated: false, verdict: receipt.committed ? verdict : null,
-      reason: receipt.committed ? reason : receipt.reason ?? "already-settled" };
-  };
-  if (!opponent) return simple("void", null, "seeding");
-  if (match.rated === false) return simple("settled", "loss", "forfeit");
-  if (await isOffPool(admin, match.scenario_ids, match.window_index)) return simple("void", null, "off-pool");
-
-  const ratingResult = await admin.from("ratings").select("rating, rd, volatility, matches_played")
-    .eq("player_id", playerId).maybeSingle();
-  if (ratingResult.error) throw new HttpError(500, ratingResult.error.message);
-  const ratingRow = ratingResult.data;
-  const before = { rating: Number(ratingRow?.rating ?? 1500), rd: Number(ratingRow?.rd ?? 350),
-    volatility: Number(ratingRow?.volatility ?? 0.06) };
-  const after = updateRating(before, [{ opponent: { rating: Number(opponent.rating_before ?? 1500),
-    rd: Number(opponent.rd_before ?? 350), volatility: 0.06 }, score: 0 }]);
-  const plans: RatingProposal[] = [{ player_id: playerId, before, after,
-    matches_played: Number(ratingRow?.matches_played ?? 0), score: 0, weight: 1 }];
-  const sides: Record<string, unknown>[] = [{ player_id: playerId, result: "loss",
-    rating_before: before.rating, rating_after: after.rating, rd_before: before.rd, rd_after: after.rd }];
-  const challenger = await prepareChallengerRating(admin, matchId, "win", 1, updateRating, before);
-  if (challenger) { sides.push(challenger.side); plans.push(challenger.rating); }
-  const receipt = await commitMatchResult(admin, matchId, "settled", sides, plans, true);
-  if (!receipt.committed) return { matchId, rated: false, verdict: null, reason: receipt.reason ?? "already-settled" };
-  return { matchId, rated: true, verdict: "loss", reason: "forfeit",
-    ratingBefore: Math.round(before.rating), ratingAfter: Math.round(after.rating),
-    ratingChange: Math.round(after.rating - before.rating) };
 }
 
 /**
@@ -515,78 +445,6 @@ export interface LiveMatch {
 }
 
 /**
- * Retire this player's expired matches, and report whether a live one is left.
- *
- * THE RULE THIS CARRIES
- *
- * A player may hold one match at a time. Without that they could open several, play the
- * scenarios, see which set went best, submit that one and abandon the rest - and because
- * scores are read from a stats folder rather than typed in, every one of those matches is
- * playable before the choice is made. It is the only thing standing between the ladder
- * and a free reroll.
- *
- * It lived inside find-match while find-match was the only way to start a match. Duels
- * are a second and a third, and a rule enforced in three places is a rule that will be
- * enforced in two of them.
- *
- * WHY IT SWEEPS BEFORE IT ANSWERS
- *
- * Matches were given an `expires_at` and for a while nothing ever acted on it, so a match
- * somebody walked away from blocked them permanently rather than until it expired: the
- * guard reads the status, and the status never changed on its own. Running out of time is
- * a forfeit rather than a free pass - at eight minutes it means they did not finish, and
- * if that costs nothing then waiting out the clock is strictly cheaper than pressing
- * Abandon, so the button that costs a loss would never be pressed again.
- *
- * `forfeitMatch` does the charging, shared with abandon-match so the two cannot disagree,
- * and it still costs nothing for a seeding match or one whose runs are already in.
- */
-export async function sweepStaleMatches(
-  admin: SupabaseClient,
-  playerId: string,
-  updateRating: (
-    player: { rating: number; rd: number; volatility: number },
-    games: { opponent: { rating: number; rd: number; volatility: number }; score: number }[],
-  ) => { rating: number; rd: number; volatility: number },
-): Promise<LiveMatch | null> {
-  const { data: rows } = await admin
-    .from("match_sides")
-    .select("match_id, submitted_at, matches!inner(id, status, category, difficulty, scenario_ids, window_index, expires_at, created_at)")
-    .eq("player_id", playerId)
-    .in("matches.status", ["open", "awaiting_runs"]);
-
-  // A copy of this player's stored run set, sitting in somebody else's live match, is not
-  // a match this player is in. Treating it as one resumed them into a stranger's match.
-  const openMatches = (rows ?? []).filter((row: any) => !isCopiedSide(row, row.matches));
-
-  const now = Date.now();
-  const expired = openMatches.filter((row: any) => {
-    const expiresAt = row.matches?.expires_at;
-    return expiresAt != null && new Date(expiresAt).getTime() < now;
-  });
-
-  // A live match on a pool that has since been rebuilt is retired here too, rather than
-  // handed back. Resuming it was the playtest bug: the queue kept returning the same
-  // unplayable three, and the only exit was Abandon. forfeitMatch voids it for nothing.
-  const offPool: any[] = [];
-  for (const row of openMatches) {
-    if (expired.includes(row)) continue;
-    const m = (row as any).matches;
-    if (await isOffPool(admin, m?.scenario_ids, m?.window_index)) offPool.push(row);
-  }
-  const stale = [...expired, ...offPool];
-
-  for (const row of stale) {
-    await forfeitMatch(admin, (row as any).match_id, playerId, updateRating);
-  }
-
-  const staleIds = new Set(stale.map((row: any) => row.match_id));
-  const live = openMatches.find((row: any) => !staleIds.has(row.match_id));
-
-  return live ? { matchId: (live as any).match_id, match: (live as any).matches } : null;
-}
-
-/**
  * Whether a side is a stored run set copied into someone else's match.
  *
  * find-match, answer-duel and play-fixture all answer a caller with an opponent's
@@ -619,116 +477,6 @@ export function isCopiedSide(
 export function runSetId(side: { player_id: string; submitted_at: string }): string {
   return `${side.player_id}@${new Date(side.submitted_at).toISOString()}`;
 }
-
-/**
- * Rate the player whose stored run set was just played against, when it was a duel.
- *
- * WHY THIS DOES NOT APPLY TO THE QUEUE
- *
- * `settle-match` rates the caller and nobody else, and for the pool that is right rather
- * than an oversight. A stored side is never consumed: it answers as many callers as draw
- * it, so rating its owner on every one would multiply a single afternoon's performance
- * into ten rating changes they did not play for. You are rated for matches you played,
- * not for being a record somebody else played against.
- *
- * A duel is the one case where that reasoning does not hold. It is addressed at exactly
- * one person and answered exactly once, so the run set is used for one contest and its
- * owner sat down to play it knowing who it was for. Leaving them unrated is what makes
- * sending a duel a purely charitable act - it would move nothing for the sender, so the
- * only rated thing anybody could do is answer one, and a feature nobody has a reason to
- * start is a feature that does not happen.
- *
- * This prepares both a side update and a rating proposal without writing either.
- * The caller commits these with its own result in commit_match_result, which checks
- * current ratings under locks and refuses duplicate terminal transitions.
- *
- * Their rating is read live from `ratings` rather than from `rating_before` on the frozen
- * side, which was written when they played and may be days and several matches stale. Same
- * split `forfeitMatch` makes above, and for the same reason.
- */
-export async function prepareChallengerRating(
-  admin: SupabaseClient,
-  answerMatchId: string,
-  challengerVerdict: "win" | "loss" | "draw",
-  weight: number,
-  updateRating: (
-    player: { rating: number; rd: number; volatility: number },
-    games: { opponent: { rating: number; rd: number; volatility: number }; score: number }[],
-  ) => { rating: number; rd: number; volatility: number },
-  opponentBefore?: { rating: number; rd: number },
-): Promise<{ side: Record<string, unknown>; rating: RatingProposal } | null> {
-  const { data: duel, error: duelError } = await admin
-    .from("duels")
-    .select("id, challenger_id")
-    .eq("answer_match_id", answerMatchId)
-    .maybeSingle();
-
-  if (duelError) throw new HttpError(500, duelError.message);
-  if (!duel) return null;
-
-  const { data: sides, error: sidesError } = await admin
-    .from("match_sides")
-    .select("player_id, deltas, result, rating_before, rd_before")
-    .eq("match_id", answerMatchId);
-
-  if (sidesError) throw new HttpError(500, sidesError.message);
-  const theirs = (sides ?? []).find(
-    (s: { player_id: string }) => s.player_id === duel.challenger_id,
-  );
-  const opponent = (sides ?? []).find(
-    (s: { player_id: string }) => s.player_id !== duel.challenger_id,
-  );
-
-  if (!theirs || !opponent) throw new HttpError(500, "duel sides are incomplete");
-  if (theirs.result != null) return null;
-  if (!Array.isArray(theirs.deltas) || theirs.deltas.length === 0) {
-    return null;
-  }
-
-  const { data: ratingRow, error: ratingError } = await admin
-    .from("ratings")
-    .select("rating, rd, volatility, matches_played")
-    .eq("player_id", duel.challenger_id)
-    .maybeSingle();
-
-  if (ratingError) throw new HttpError(500, ratingError.message);
-  const before = {
-    rating: Number(ratingRow?.rating ?? 1500),
-    rd: Number(ratingRow?.rd ?? 350),
-    volatility: Number(ratingRow?.volatility ?? 0.06),
-  };
-
-  const score = challengerVerdict === "win" ? 1 : challengerVerdict === "loss" ? 0 : 0.5;
-
-  const raw = updateRating(before, [
-    {
-      opponent: {
-        rating: opponentBefore?.rating ?? Number(opponent.rating_before ?? 1500),
-        rd: opponentBefore?.rd ?? Number(opponent.rd_before ?? 350),
-        volatility: 0.06,
-      },
-      score,
-    },
-  ]);
-
-  const after = {
-    rating: before.rating + (raw.rating - before.rating) * weight,
-    rd: before.rd + (raw.rd - before.rd) * weight,
-    volatility: raw.volatility,
-  };
-  return {
-    side: {
-      player_id: duel.challenger_id, result: challengerVerdict,
-      rating_before: before.rating, rating_after: after.rating,
-      rd_before: before.rd, rd_after: after.rd, record_submission: false,
-    },
-    rating: {
-      player_id: duel.challenger_id, before, after,
-      matches_played: Number(ratingRow?.matches_played ?? 0), score, weight,
-    },
-  };
-}
-
 
 /**
  * How long a player may idle between runs before the match expires.

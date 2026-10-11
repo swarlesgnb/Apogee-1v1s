@@ -11,13 +11,14 @@
  * What it costs is decided by forfeitMatch, which the expiry sweep in find-match also
  * uses. Pressing this button and letting the clock run out are the same act as far as
  * the ladder is concerned, and if only one of them cost anything then the free one
- * would be the only one anybody used.
+ * would be the only one anybody used. Under ranked v2 a forfeit costs every round, so
+ * leaving is never cheaper than playing on and losing all three.
  */
 
-import { forfeitMatch, handler, isCopiedSide, json, requireCaller } from "../_shared/apogee.ts";
+import { handler, isCopiedSide, json, requireCaller } from "../_shared/apogee.ts";
+import { forfeitMatch } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { afterLegSettled } from "../_shared/tournament.ts";
-import { updateRating } from "../../../src/core/rating/glicko2.ts";
 
 Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
@@ -37,7 +38,7 @@ Deno.serve(handler(async (req, admin) => {
   if (!side) return json({ ok: true, nothingToAbandon: true });
 
   const matchId = (side as { match_id: string }).match_id;
-  const outcome = await forfeitMatch(admin, matchId, caller.playerId, updateRating);
+  const outcome = await forfeitMatch(admin, matchId, caller.playerId);
 
   // If that was a tournament leg, the bracket should know now rather than at the next look.
   const tournament = outcome.reason === "already-played" || outcome.reason === "already-settled" ? null : await afterLegSettled(admin, matchId);

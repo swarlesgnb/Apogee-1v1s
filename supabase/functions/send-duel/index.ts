@@ -20,7 +20,6 @@
  */
 
 import {
-  forfeitMatch,
   handler,
   INITIAL_TTL_MS,
   json,
@@ -28,15 +27,14 @@ import {
   readJson,
   requireCaller,
   requireEligible,
-  sweepStaleMatches,
   HttpError,
 } from "../_shared/apogee.ts";
+import { forfeitMatch, sweepStaleMatches } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
 import { ANY_CATEGORY } from "../../../src/core/match/matchmaking.ts";
 import { canSendDuel, DUEL_TTL_MS } from "../../../src/core/match/duels.ts";
-import { updateRating } from "../../../src/core/rating/glicko2.ts";
 
 interface Body {
   /** The player id from the roster `list-duels` serves. */
@@ -78,7 +76,7 @@ Deno.serve(handler(async (req, admin) => {
   // One match at a time, the same rule the queue holds to, and here it refuses rather
   // than resuming: the match they already have is not this duel, and handing it back
   // would answer a question they did not ask.
-  let live = await sweepStaleMatches(admin, caller.playerId, updateRating);
+  let live = await sweepStaleMatches(admin, caller.playerId);
 
   // The empty match of a duel this player took back is not a match they are in. answer-duel
   // voids it on cancel now; this clears the ones left open before it did, which otherwise
@@ -92,8 +90,8 @@ Deno.serve(handler(async (req, admin) => {
       .eq("player_id", caller.playerId)
       .maybeSingle();
     if (duel?.status === "cancelled" && side && side.match_score == null) {
-      await forfeitMatch(admin, live.matchId, caller.playerId, updateRating);
-      live = await sweepStaleMatches(admin, caller.playerId, updateRating);
+      await forfeitMatch(admin, live.matchId, caller.playerId);
+      live = await sweepStaleMatches(admin, caller.playerId);
     }
   }
   if (live) {

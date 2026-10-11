@@ -1,20 +1,24 @@
 /**
- * Ranked v2, server side: settlement, forfeits and the expiry sweep under the rules in
- * src/core/rating/ranked.ts.
+ * Ranked, server side: settlement, forfeits and the expiry sweep under the rules in
+ * src/core/rating/ranked.ts. settle-match and abandon-match are thin over this, and
+ * find-match, send-duel, answer-duel, play-fixture and the tournament reconciler all
+ * retire stale matches through it, so there is one rule for ending a match.
  *
- * Reached only through find-match-v2, settle-match-v2 and abandon-match-v2, and those
- * only answer an admin. The v1 functions do not import this file, so deploying it changes
- * nothing for anybody on a released build. What v2 changes, and what it was measured
- * against, is in ranked.ts and PLAN.md §4; this file is the plumbing.
+ * What v2 changed, and what it was measured against, is in ranked.ts and PLAN.md §4; this
+ * file is the plumbing. It ran beside v1 for admins first, then replaced it.
+ *
+ * Settlement is idempotent. A client that calls it twice, or two clients racing, must not
+ * apply the rating change twice: every terminal write goes through commit_match_result,
+ * which commits once, and a match already settled returns its stored result untouched.
  *
  * WHICH RULES A MATCH IS SETTLED BY
  *
  * The match's, not the caller's. `matches.engine` records which engine created it, and
- * everything here applies that engine's rules: a duel answer or a tournament leg is still
- * created by a v1 function, so a tester who settles one through v2 gets exactly what v1
- * would have done. (The v1 functions do not read the column, so the reverse - a v2 match
- * settled through settle-match by a build that fell back mid-match - is settled as v1.) Only a match find-match-v2 created is rated by rounds against the
- * opponent's rating at play, and only there does leaving a scenario early stop being free.
+ * everything here applies that engine's rules. Only find-match writes 2. A duel answer or
+ * a tournament leg is created as 1, as is every match from before v2, and is settled,
+ * forfeited and swept exactly as v1 did: one result against the opponent's rating, and
+ * leaving a scenario early always voids. Only a queued match is rated by rounds against
+ * the opponent's rating at play, and only there does leaving early stop being free.
  */
 
 import {
@@ -44,21 +48,8 @@ import type { VerificationTier } from "../../../src/core/verify/verifyRun.ts";
 
 import type { SupabaseClient } from "jsr:@supabase/supabase-js@2";
 
-/** What find-match-v2 writes to `matches.engine`. */
+/** What find-match writes to `matches.engine`. */
 export const RANKED_V2_ENGINE = 2;
-
-/**
- * The refusal a non-tester gets. The client matches on it to fall back to v1, so a
- * development build used by somebody without access still plays ranked.
- */
-export const RANKED_V2_CLOSED = "ranked v2 is only open to testers";
-
-/**
- * The refusal when the functions are deployed but migration 20261010000025 is not. The
- * client falls back to v1 on it too: otherwise deploying in the wrong order turns every
- * queue from a development build into a 500.
- */
-export const RANKED_V2_UNMIGRATED = "ranked v2's migration is not applied (npx supabase db push)";
 
 /**
  * Free voids for leaving a scenario early, per player, per rolling week.
@@ -90,21 +81,6 @@ export function policyFor(engine: number | null | undefined): EnginePolicy {
     : { engine: 1, model: "match", freeAbandons: null };
 }
 
-/** Refuse anybody who is not an admin, and everybody while the migration is missing. */
-export async function requireRankedV2(admin: SupabaseClient, playerId: string): Promise<void> {
-  const { data, error } = await admin.from("admins").select("player_id").eq("player_id", playerId).maybeSingle();
-  if (error) throw new HttpError(500, error.message);
-  if (!data) throw new HttpError(403, RANKED_V2_CLOSED);
-
-  // A window that cannot exist, so this reads nothing and only asks whether the function
-  // is there. PGRST202 is PostgREST's "no such function".
-  const probe = await admin.rpc("ranked_pool_rounds", {
-    p_window: -1, p_caller: playerId, p_rating: 0, p_players: 1, p_sides_per_player: 1,
-  });
-  if (probe.error?.code === "PGRST202") throw new HttpError(503, RANKED_V2_UNMIGRATED);
-  if (probe.error) throw new HttpError(500, probe.error.message);
-}
-
 async function readRating(admin: SupabaseClient, playerId: string): Promise<{ rating: Rating; matchesPlayed: number }> {
   const { data, error } = await admin
     .from("ratings")
@@ -125,8 +101,9 @@ async function readRating(admin: SupabaseClient, playerId: string): Promise<{ ra
 /**
  * The rating a stored side is played against: what find-match wrote on it.
  *
- * find-match-v2 writes the owner's rating when they played those rounds; v1 wrote their
- * rating when the match was created. Either way it is the number matchmaking used, so the
+ * find-match writes the owner's rating when they played those rounds; before v2 it wrote
+ * their rating when the match was created, and a duel carries the sender's from when
+ * they sent it. Either way it is the number matchmaking used, so the
  * two cannot disagree about who the opponent was.
  */
 function sideRating(side: { rating_before?: unknown; rd_before?: unknown }): Rating {
@@ -162,10 +139,33 @@ function flip(tally: RoundTally): RoundTally {
 }
 
 /**
- * Rate the sender of a duel too, as prepareChallengerRating does for v1, by the same
- * rounds the caller was rated on, seen from the other side.
+ * Rate the player whose stored run set was just played against, when it was a duel.
+ *
+ * WHY THIS DOES NOT APPLY TO THE QUEUE
+ *
+ * Settlement rates the caller and nobody else, and for the pool that is right rather
+ * than an oversight. A stored side is never consumed: it answers as many callers as draw
+ * it, so rating its owner on every one would multiply a single afternoon's performance
+ * into ten rating changes they did not play for. You are rated for matches you played,
+ * not for being a record somebody else played against.
+ *
+ * A duel is the one case where that reasoning does not hold. It is addressed at exactly
+ * one person and answered exactly once, so the run set is used for one contest and its
+ * owner sat down to play it knowing who it was for. Leaving them unrated is what makes
+ * sending a duel a purely charitable act - it would move nothing for the sender, so the
+ * only rated thing anybody could do is answer one, and a feature nobody has a reason to
+ * start is a feature that does not happen.
+ *
+ * This prepares both a side update and a rating proposal without writing either.
+ * The caller commits these with its own result in commit_match_result, which checks
+ * current ratings under locks and refuses duplicate terminal transitions.
+ *
+ * Their rating is read live from `ratings` rather than from `rating_before` on the frozen
+ * side, which was written when they played and may be days and several matches stale.
+ * They are rated by the same rounds the caller was, seen from the other side, under the
+ * match's engine.
  */
-async function prepareChallenger(
+export async function prepareChallenger(
   admin: SupabaseClient,
   answerMatchId: string,
   challengerTally: RoundTally,
@@ -213,10 +213,13 @@ export interface SettleOutcome {
 }
 
 /**
- * Settle one player's match. settle-match-v2's whole job, and what the sweep runs for a
- * match whose runs are all in but which nobody settled before it expired.
+ * Settle one player's match and move the ladder. settle-match's whole job, and what the
+ * sweep runs for a match whose runs are all in but which nobody settled before it expired.
  *
- * Follows settle-match step for step; where it differs, it says so.
+ * Everything that decides the result is recomputed here from stored rows: the runs, the
+ * baselines, the deltas, the verdict, the rating change. Nothing is taken from the
+ * request beyond which match to settle. That is the whole point of the security model
+ * (PLAN.md §7) and the reason this runs with the service role rather than in the app.
  */
 export async function settleForPlayer(
   admin: SupabaseClient,
@@ -235,6 +238,9 @@ export async function settleForPlayer(
   if (matchError) throw new HttpError(500, matchError.message);
   if (!match) throw new HttpError(404, "no such match");
 
+  // False only for a tournament leg (migration 20260912000018). Everything below still runs
+  // - the runs, the baselines, the deltas, the verdict - and only the rating writes are
+  // skipped, so a tournament result is decided exactly the way a ladder one is.
   const rated = match.rated !== false;
   const policy = policyFor(match.engine);
 
@@ -244,10 +250,15 @@ export async function settleForPlayer(
     .eq("match_id", matchId);
   if (sidesError) throw new HttpError(500, sidesError.message);
 
+  // The caller's own side, never a copy of their stored run set that is the opponent
+  // here: settling through that closed a stranger's match before they had played it.
   const mine = (sides ?? []).find((s: any) => s.player_id === playerId && !isCopiedSide(s, match));
   const theirs = (sides ?? []).find((s: any) => s.player_id !== playerId);
   if (!mine) throw new HttpError(403, "you are not in that match");
 
+  // Already settled: return what was stored rather than recomputing and re-applying. The
+  // tournament fold runs again on a repeat call, a no-op once it has landed and the retry
+  // that lands it if the first call died before it could.
   if (match.status === "settled" || match.status === "void") {
     return {
       status: 200,
@@ -267,8 +278,15 @@ export async function settleForPlayer(
     };
   }
 
+  // A seeding match has one side by design: the pool was empty when it was handed out, so
+  // there was never an opponent to be found. Nothing was contested, so nothing is rated,
+  // but the side still has to be scored and stored here, because submit-run only records
+  // runs and it is this function that writes deltas and match_score. Until those exist
+  // the pool read in find-match cannot see the run set.
   const seeding = !theirs;
   const scenarioIds: number[] = (match.scenario_ids ?? []).map(Number);
+
+  // ---- the caller's runs for this match ------------------------------------------
 
   const { data: runs, error: runsError } = await admin
     .from("runs")
@@ -279,6 +297,8 @@ export async function settleForPlayer(
     .order("id", { ascending: true });
   if (runsError) throw new HttpError(500, runsError.message);
 
+  // How long each of these scenarios is supposed to last, so a run that stopped early
+  // can be told from one that went badly.
   const { data: scenarioRows, error: scenarioError } = await admin
     .from("scenarios")
     .select("id, name, duration_seconds")
@@ -288,13 +308,19 @@ export async function settleForPlayer(
     (scenarioRows ?? []).map((s: any) => [Number(s.id), s.duration_seconds ?? null]),
   );
 
-  // The first run submitted on each scenario is the one that counts.
+  // One run per scenario: the first submitted counts, in the server's receipt order, so a
+  // player cannot keep retrying a scenario until it goes well and then settle, nor
+  // backdate a later attempt's played_at to put it first.
   const firstByScenario = new Map<number, any>();
   for (const r of runs ?? []) {
     const id = Number(r.scenario_id);
     if (r.scenario_id != null && !firstByScenario.has(id)) firstByScenario.set(id, r);
   }
 
+  // Left before the scenario finished: not a bad score, an absent one. Both sides of this
+  // can be null - an unreadable duration, or a scenario with no fixed length - and
+  // isAbandonedRun answers false to either, so a check that cannot be confident never
+  // costs anyone a round or a void.
   const abandoned = (r: any) =>
     isAbandonedRun(
       r.duration_seconds != null ? Number(r.duration_seconds) : null,
@@ -304,9 +330,11 @@ export async function settleForPlayer(
 
   // ---- leaving a scenario early --------------------------------------------------
   //
-  // v1 voids on the spot, always. v2 does too while the week's free void is unspent, and
-  // for anything with nothing at stake (a seeding match, a tournament leg); otherwise the
-  // round is lost and the match plays on (FREE_ABANDONS_PER_WEEK says why).
+  // Said now rather than after two more scenarios, while the player still wants the
+  // queue. An engine-1 match voids on the spot, always, as v1 did. A v2 match does too
+  // while the week's free void is unspent, and for anything with nothing at stake (a
+  // seeding match, a tournament leg); otherwise the round is lost and the match plays on
+  // (FREE_ABANDONS_PER_WEEK says why).
   let loseAbandoned = false;
   let freeAbandon: { used: true; nextFreeAt: string | null } | null = null;
   if (abandonedRun) {
@@ -370,7 +398,15 @@ export async function settleForPlayer(
     };
   }
 
-  // ---- baselines as they stood when the match began (settle-match says why) ----------
+  // ---- baselines, as they stood when the match began ------------------------------
+  //
+  // Recomputed from the runs played before the match, never read from the stored row.
+  // submit-run refreshes that row as each match run lands, so by the time this ran it
+  // already held the very runs it was about to measure. On a scenario with no earlier
+  // history uploaded the baseline was the run itself, and every such round read exactly
+  // 0%; with some history it was still pulled toward the score. The rule was measured
+  // (compareBaselines, coldStart) against the runs strictly before each one, and that is
+  // what this restores.
   const baselines = await Promise.all(
     scenarioIds.map((scenarioId) =>
       baselineFor(admin, playerId, scenarioId, firstByScenario.get(scenarioId)!.scenario_name,
@@ -385,6 +421,10 @@ export async function settleForPlayer(
       scenarioId,
       scenarioName: run.scenario_name,
       score: Number(run.score),
+      // Nothing played before the match to measure against: the run stands as its own
+      // baseline for a provisional 0%, stated rather than arrived at by accident. PLAN.md
+      // §3's fallback chain (a sibling scenario, the sub-category, the rank cohort) is the
+      // better answer and is not built yet.
       baseline: baseline.runCount > 0 ? baseline.value : Number(run.score),
       provisional: baseline.provisional,
       verificationTier: run.verification_tier as VerificationTier,
@@ -393,6 +433,10 @@ export async function settleForPlayer(
   });
   const runIds = scenarioIds.map((id) => firstByScenario.get(id)!.id);
 
+  // A seeding match has nothing to compare against, so it is scored on its own and
+  // recorded without touching the ladder. Storing the deltas is the whole purpose: this
+  // side is what the next player to queue will be matched against. Scored as rounds, the
+  // format whoever draws these rounds will be settled in.
   if (seeding) {
     const side = settleSide(playerRounds, "rounds");
     const receipt = await commitMatchResult(admin, matchId, "settled", [{
@@ -402,6 +446,9 @@ export async function settleForPlayer(
     }]);
     if (!receipt.committed) return again();
 
+    // The first leg of a tournament fixture: same scoring, same storage, but it is not
+    // going to the pool (the pool reads only rated sides), so the sentence about the pool
+    // would be untrue.
     const tournament = rated ? null : await afterLegSettled(admin, matchId);
     const firstLeg = tournament
       ? `Your three are in for ${tournament.label}. Your opponent plays the same three next, ` +
@@ -412,6 +459,8 @@ export async function settleForPlayer(
       status: 200,
       body: {
         matchId, engine: policy.engine, seeding: true, rated: false, tournament, verdict: null,
+        // Null, not zero: zero would read as an opponent who scored exactly their
+        // baseline, which is a claim about somebody who does not exist.
         yourMatchScore: side.matchScore, theirMatchScore: null, countedRounds: side.countedRounds,
         rounds: side.rounds.map((r) => ({
           scenario: r.scenarioName, score: r.score, baseline: Math.round(r.baseline), delta: r.delta,
@@ -431,6 +480,13 @@ export async function settleForPlayer(
   }
 
   // ---- contested ------------------------------------------------------------------
+  //
+  // The opponent's rounds were frozen when they played. Reconstruct their side from what
+  // was stored rather than re-deriving, which is what makes an async match reproducible.
+  // Rounds when the raw scores are there, which is every match created since they were
+  // stored. A copy that predates them and whose original cannot be found either is still
+  // settled, by the mean-delta rule it was created under, rather than voided for a gap
+  // that is nobody's doing.
   const opponentDeltas: number[] = (theirs!.deltas ?? []).map(Number);
   const opponentScores = await frozenScores(admin, theirs!, scenarioIds.length);
   const format = opponentScores ? "rounds" : "mean-delta";
@@ -442,6 +498,7 @@ export async function settleForPlayer(
       scenarioId,
       scenarioName: playerRounds[i].scenarioName,
       score,
+      // The baseline that reproduces the frozen delta exactly from the stored score.
       baseline: 1 + delta > 0 ? score / (1 + delta) : score,
       provisional: !!theirs!.provisional,
       verificationTier: "consistent",
@@ -456,6 +513,10 @@ export async function settleForPlayer(
   // A match decided on deltas is one result, whatever the engine.
   const model: OutcomeModel = settlement.format === "rounds" ? policy.model : "match";
 
+  // ---- rating ---------------------------------------------------------------------
+  //
+  // Provisional baselines make a noisy result, so the change is damped by ratingWeight
+  // rather than discarded: the match still counts, it just moves the ladder less.
   const { rating: before, matchesPlayed } = await readRating(admin, playerId);
   const opponentRating = sideRating(theirs!);
   const counts = settlement.verdict !== "void" && rated;
@@ -484,8 +545,14 @@ export async function settleForPlayer(
     settlement.verdict === "void" ? "void" : "settled", sidePlans, ratingPlans);
   if (!receipt.committed) return again();
 
+  // Who it was against, so the result screen can say who you beat and offer a rematch.
+  // The id comes with it because a duel has to be addressed and a display name cannot
+  // address one. Null on a void: there is nothing to rematch about a match that did not
+  // count.
   const { data: opponentPlayer } = await admin
     .from("players").select("id, display_name").eq("id", theirs!.player_id).maybeSingle();
+  // The second leg of a tournament fixture decides it. Folded in before answering, so the
+  // result screen and the bracket agree the moment the player looks at either.
   const tournament = rated ? null : await afterLegSettled(admin, matchId);
   const roundResults = settlement.roundResults ?? [];
   let counted = 0;
@@ -511,6 +578,8 @@ export async function settleForPlayer(
       yourMatchScore: settlement.player.matchScore,
       theirMatchScore: settlement.opponent.matchScore,
       format: settlement.format,
+      // Null outside the rounds format, so the client does not print "0–0" over a match
+      // that was decided some other way.
       roundTally: settlement.format === "rounds" && settlement.verdict !== "void" ? tally : null,
       ratingBefore: Math.round(before.rating),
       ratingAfter: Math.round(update.after.rating),
@@ -535,7 +604,11 @@ export async function settleForPlayer(
   };
 }
 
-/** The opponent's raw scores, as settle-match's frozenScores finds them. */
+/**
+ * The opponent's raw scores: on the side itself, or, for a side copied whole without
+ * them (a tournament's second leg, written by open_fixture_leg, always is one), on the
+ * original it shares an owner and submitted_at with.
+ */
 async function frozenScores(
   admin: SupabaseClient,
   side: { player_id: string; submitted_at: string | null; scores?: unknown[] | null },
@@ -558,10 +631,29 @@ async function frozenScores(
 }
 
 /**
- * End a match the player will not finish: forfeitMatch's rules, and the rating change
- * the match's engine gives a forfeit (under rounds, every round lost).
+ * End a match the player is not going to finish, and charge them for it if it counted.
+ *
+ * Shared because two paths reach it and they must agree. Pressing Abandon and letting
+ * the clock run out are the same act from the ladder's point of view, and if only one
+ * of them cost anything, the free one would be the only one anybody used.
+ *
+ * That mattered little while a match lasted six hours. With a five-minute deadline,
+ * waiting it out is the cheapest possible way to escape a match that is going badly,
+ * so it has to cost what forfeiting costs.
+ *
+ * What it costs is what the match's engine says a forfeit costs: under v2 every round
+ * lost, so leaving is never cheaper than playing on and losing all three; under v1 one
+ * lost game.
+ *
+ * The exceptions are the same in both directions:
+ *
+ *   SEEDING   one side, by design. There is no opponent to lose to, and inventing a
+ *             loss against nobody would be a free way to tank a rating.
+ *   PLAYED    the runs are already in. Settlement should decide it, not this.
+ *   UNRATED   a tournament leg: recorded as a loss for the fixture, rating untouched.
+ *   OFF-POOL  the pool was rebuilt under it, so it could not be played. Void.
  */
-export async function forfeitMatchV2(admin: SupabaseClient, matchId: string, playerId: string): Promise<ForfeitOutcome> {
+export async function forfeitMatch(admin: SupabaseClient, matchId: string, playerId: string): Promise<ForfeitOutcome> {
   const sideResult = await admin.from("match_sides")
     .select("player_id, rating_before, rd_before, match_score").eq("match_id", matchId);
   if (sideResult.error) throw new HttpError(500, sideResult.error.message);
@@ -610,16 +702,41 @@ export async function forfeitMatchV2(admin: SupabaseClient, matchId: string, pla
 }
 
 /**
- * sweepStaleMatches, with one hole closed: a match whose runs are all in, but which was
- * never settled, is settled here instead of being left open forever.
+ * Retire this player's expired matches, and report whether a live one is left.
  *
- * v1 asks forfeitMatch to retire every expired match, and forfeitMatch rightly refuses
- * one whose runs are in ("already-played"). Nothing then settles it: the client gives up
- * after four retries, the match stays `awaiting_runs` for good, its result never reaches
- * the ladder and its rounds never reach the pool, and the sweep steps around it on every
- * queue after. Settling it is the only answer that matches what the player did.
+ * THE RULE THIS CARRIES
+ *
+ * A player may hold one match at a time. Without that they could open several, play the
+ * scenarios, see which set went best, submit that one and abandon the rest - and because
+ * scores are read from a stats folder rather than typed in, every one of those matches is
+ * playable before the choice is made. It is the only thing standing between the ladder
+ * and a free reroll.
+ *
+ * It lived inside find-match while find-match was the only way to start a match. Duels
+ * are a second and a third, and a rule enforced in three places is a rule that will be
+ * enforced in two of them.
+ *
+ * WHY IT SWEEPS BEFORE IT ANSWERS
+ *
+ * Matches were given an `expires_at` and for a while nothing ever acted on it, so a match
+ * somebody walked away from blocked them permanently rather than until it expired: the
+ * guard reads the status, and the status never changed on its own. Running out of time is
+ * a forfeit rather than a free pass - at eight minutes it means they did not finish, and
+ * if that costs nothing then waiting out the clock is strictly cheaper than pressing
+ * Abandon, so the button that costs a loss would never be pressed again.
+ *
+ * `forfeitMatch` does the charging, shared with abandon-match so the two cannot disagree,
+ * and it still costs nothing for a seeding match.
+ *
+ * WHY IT SETTLES A FINISHED ONE
+ *
+ * forfeitMatch rightly refuses a match whose runs are in ("already-played"), and before
+ * v2 nothing then settled it: the client gives up after four retries, the match stayed
+ * `awaiting_runs` for good, its result never reached the ladder and its rounds never
+ * reached the pool, and the sweep stepped around it on every queue after. Settling it is
+ * the only answer that matches what the player did.
  */
-export async function sweepStaleMatchesV2(admin: SupabaseClient, playerId: string): Promise<LiveMatch | null> {
+export async function sweepStaleMatches(admin: SupabaseClient, playerId: string): Promise<LiveMatch | null> {
   const { data: rows, error } = await admin
     .from("match_sides")
     .select("match_id, submitted_at, matches!inner(id, status, category, difficulty, scenario_ids, window_index, expires_at, created_at, engine)")
@@ -627,8 +744,13 @@ export async function sweepStaleMatchesV2(admin: SupabaseClient, playerId: strin
     .in("matches.status", ["open", "awaiting_runs"]);
   if (error) throw new HttpError(500, error.message);
 
+  // A copy of this player's stored run set, sitting in somebody else's live match, is not
+  // a match this player is in. Treating it as one resumed them into a stranger's match.
   const openMatches = (rows ?? []).filter((row: any) => !isCopiedSide(row, row.matches));
   const now = Date.now();
+  // Expired, or on a pool that has since been rebuilt. Resuming the second was the
+  // playtest bug: the queue kept returning the same unplayable three, and the only exit
+  // was Abandon. forfeitMatch voids it for nothing.
   const stale: any[] = [];
   for (const row of openMatches as any[]) {
     const expiresAt = row.matches?.expires_at;
@@ -637,7 +759,7 @@ export async function sweepStaleMatchesV2(admin: SupabaseClient, playerId: strin
   }
 
   for (const row of stale) {
-    const outcome = await forfeitMatchV2(admin, row.match_id, playerId);
+    const outcome = await forfeitMatch(admin, row.match_id, playerId);
     if (outcome.reason === "already-played") {
       try {
         await settleForPlayer(admin, row.match_id, playerId);
