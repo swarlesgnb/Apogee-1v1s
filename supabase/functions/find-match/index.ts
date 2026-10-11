@@ -43,6 +43,7 @@ import {
 } from "../_shared/apogee.ts";
 import { RANKED_V2_ENGINE, sweepStaleMatches } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import { fieldShadow, shadowForMatch } from "../_shared/queue.ts";
 import { matchClock } from "../_shared/timeIntegrity.ts";
 
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
@@ -299,6 +300,8 @@ Deno.serve(handler(async function findMatchRequest(req, admin, attempt = 0): Pro
       { player_id: caller.playerId, rating_before: rating.rating, rd_before: rating.rd, ...clock },
     ]);
     if (!opened.created) return retry(opened.matchId);
+    // A Shadow to play against (src/core/match/shadow.ts), frozen now, judged at settlement.
+    const shadow = await fieldShadow(admin, caller.playerId, opened.matchId, scenarioIds.map((id) => byId.get(id)?.name ?? ""));
 
     return json({
       matchId: opened.matchId,
@@ -312,6 +315,7 @@ Deno.serve(handler(async function findMatchRequest(req, admin, attempt = 0): Pro
       // Says why there is no opponent when there could have been one, so the client is
       // not left to guess that the pool was empty.
       planting,
+      shadow,
       winProbability: null,
       stakes: null,
       poolSize: banks.size,
@@ -421,6 +425,7 @@ async function resume(admin: any, playerId: string, matchId: string, match: any)
         }
       : null,
     seeding: !other,
+    shadow: other ? null : await shadowForMatch(admin, matchId),
     resumed: true,
     winProbability: them && v2 ? matchWinProbability(me, them) : null,
     // Only for a v2 match: a v1 match is rated as one result, and these are per round.

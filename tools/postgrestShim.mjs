@@ -16,7 +16,8 @@
  *   not(col, "is", null), or("a.is.null,a.neq.x")
  *   order limit maybeSingle single
  *   insert(rows, {defaultToNull}) update upsert(onConflict) delete, each with .select()
- *   rpc(name, params)              named arguments; objects and arrays sent as jsonb
+ *   rpc(name, params)              named arguments; objects and arrays sent as jsonb;
+ *                                  a table function (TABLE_RPCS) comes back as rows
  *
  * An embed's foreign key is found by convention (`players` -> `player_id`), which holds for
  * every embed in the functions today. Anything unsupported throws rather than guessing.
@@ -191,6 +192,9 @@ class Query {
   }
 }
 
+/** Functions that return a table, which PostgREST hands back as an array of rows. */
+const TABLE_RPCS = new Set(["ranked_pool_rounds"]);
+
 export function createAdmin(db, { onQuery, onRpc } = {}) {
   return {
     from(table) { onQuery?.(table); return new Query(db, table); },
@@ -201,7 +205,13 @@ export function createAdmin(db, { onQuery, onRpc } = {}) {
         return v !== null && typeof v === "object" ? JSON.stringify(v) : v;
       });
       try {
-        const r = await db.query(`select ${ident(name)}(${keys.map((k, i) => `${ident(k)} => $${i + 1}`).join(", ")}) as result`, values);
+        const args = keys.map((k, i) => `${ident(k)} => $${i + 1}`).join(", ");
+        if (TABLE_RPCS.has(name)) {
+          const r = await db.query(`select coalesce(json_agg(to_json(x)), '[]'::json) as rows from ${ident(name)}(${args}) x`, values);
+          onRpc?.(name, r.rows[0].rows);
+          return { data: r.rows[0].rows, error: null };
+        }
+        const r = await db.query(`select ${ident(name)}(${args}) as result`, values);
         onRpc?.(name, r.rows[0].result);
         return { data: r.rows[0].result, error: null };
       } catch (e) {

@@ -19,6 +19,7 @@ import { handler, isCopiedSide, json, requireCaller } from "../_shared/apogee.ts
 import { forfeitMatch } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
 import { afterLegSettled } from "../_shared/tournament.ts";
+import { shadowAbandonMessage } from "../_shared/queue.ts";
 
 Deno.serve(handler(async (req, admin) => {
   const caller = await requireCaller(req, admin);
@@ -57,5 +58,8 @@ Deno.serve(handler(async (req, admin) => {
         ? "Your runs are already in, so this match will settle on its own."
         : "Match forfeited. You can queue again now.";
 
-  return json({ ok: true, ...outcome, tournament, message });
+  // A Shadow match is not a match against nobody, and abandoning one is a Shadow loss.
+  const shadowMessage = outcome.reason === "seeding" && !tournament ? await shadowAbandonMessage(admin, matchId) : null;
+
+  return json({ ok: true, ...outcome, tournament, message: shadowMessage ?? message, shadow: Boolean(shadowMessage) });
 }));

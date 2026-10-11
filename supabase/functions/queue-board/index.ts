@@ -1,16 +1,17 @@
 /**
- * The queue screen's read: what queueing would do, the caller's Flags, and their Shadow ladder.
+ * The queue screen's read: what queueing would do, the caller's Shadow ladder, and news
+ * about their banked rounds (Flags).
  *
  * Polled by the client on launch, on focus and after every settled match, which is how a
- * planter learns their Flag was answered while they were away. `ack` marks that news as
- * seen so it is announced once, on whichever machine opens first.
+ * player learns that somebody played their banked rounds while they were away. `ack`
+ * (the newest settledAt the client has shown) marks that news read, so it is said once, on
+ * whichever machine opens first.
  *
- * Everything returned is about the caller. A flag's answerer is named only after the fact,
- * the way a result screen names an opponent; the planter's own score is theirs to see; and
- * nothing here says how any stored run set in the pool scored, because choosing what to queue
- * by that would be picking matches you expect to win.
+ * Everything returned is about the caller. Who played your rounds is named only after the
+ * match settled, the way a result screen names an opponent; nothing here says how any
+ * stored rounds in the pool scored before somebody plays them.
  *
- * The one write is the caller's own: acknowledging news and closing their expired flags.
+ * The one write is the caller's own read marker.
  */
 
 import { handler, json, readJson, requireCaller, HttpError } from "../_shared/apogee.ts";
@@ -23,6 +24,9 @@ Deno.serve(handler(async (req, admin) => {
   const body = (await readJson<BoardRequest>(req)) ?? {};
   if (body.window != null && (typeof body.window !== "number" || body.window < 0)) {
     throw new HttpError(400, "window must be a window index");
+  }
+  if (body.ack != null && (typeof body.ack !== "string" || body.ack.length > 40)) {
+    throw new HttpError(400, "ack must be a timestamp");
   }
   return json(await queueBoard(admin, caller.playerId, body));
 }));
