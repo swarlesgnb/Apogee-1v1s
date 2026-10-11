@@ -22,6 +22,7 @@ import { recordGhost, recordMatch, rerollQuest, type QuestState, type QuestSync 
 import { GhostService } from "./ghostService.ts";
 import { ShareCards } from "./shareCard.ts";
 import { Updater } from "./updater.ts";
+import { installSocial } from "./social.ts";
 import {
   installCrashHandlers,
   attachRendererLogging,
@@ -248,7 +249,48 @@ const shareCards = new ShareCards({
     };
   },
   ghost: () => ghost.shareRecord(),
+  daily: (ctx) => social.daily.shareCardInput(ctx),
   window: () => window,
+});
+
+/**
+ * Apogee Daily, challenge links, open challenges and Discord presence (social.ts). Local
+ * first like Ghost Mode: the Daily needs a stats folder and nothing else.
+ */
+const social = installSocial({
+  statsDir: () => state.statsDir,
+  signedIn: () => state.session !== null,
+  queueBand: () => state.snapshot?.benchmark.matchPool?.window ?? null,
+  broadcast,
+  notify: (message) => notify(message),
+  focus: () => {
+    if (!window || window.isDestroyed()) return;
+    if (window.isMinimized()) window.restore();
+    window.focus();
+  },
+  adoptMatch: (match) => adoptMatch(match),
+  matchVoided: (matchId) => {
+    if (state.match?.matchId !== matchId) return;
+    state.match = null;
+    state.submitted.clear();
+    broadcast("apogee:match", null);
+  },
+  ghostLink: async (code) => {
+    const r = await ghost.action({ type: "link", code });
+    return r.error ? { error: r.error } : {};
+  },
+  launch: (scenario) => launchKovaaks(scenario),
+  activity: () => {
+    const m = state.match;
+    const mode = !m ? "ranked" as const
+      : m.tournament ? "tournament" as const
+      : m.duel?.open ? "open" as const
+      : m.duel ? "duel" as const
+      : m.seeding ? "seeding" as const
+      : "ranked" as const;
+    return { match: m ? { id: m.matchId, category: m.category, mode } : null, ghost: ghost.presence() };
+  },
+  log,
 });
 
 /** Show a neutral message, and keep it for a window that has not loaded yet. */
@@ -381,6 +423,12 @@ function startWatching(dir: string): void {
         ghost.onRun(run, file);
       } catch (err) {
         console.error("ghost run failed:", err);
+      }
+      // Today's Apogee Daily reads the same run from the folder; its own try for the same reason.
+      try {
+        social.onRun(run);
+      } catch (err) {
+        console.error("daily run failed:", err);
       }
 
       // If this scenario belongs to the active match, send it for verification without
@@ -690,7 +738,10 @@ async function settleActiveMatch(attempt = 0): Promise<string | null> {
     const settled = await settleMatch(match.matchId);
     state.match = null;
     state.submitted.clear();
-    shareCards.recordSettled(settled, !!match.duel?.to);
+    shareCards.recordSettled(settled, !!match.duel?.to, Date.now(), {
+      duelCode: match.duel?.open ? match.duel.code ?? null : null,
+      openChallenge: !!match.duel?.open && settled.seeding !== true,
+    });
     // `sentDuel` rides along because a duel you sent settles exactly like a seeding match
     // (one side, nobody yet) and the payload cannot tell them apart. Ghost Mode's
     // "nobody in the pool yet" offer is wrong about somebody you just named.
@@ -897,7 +948,7 @@ if (!HAS_LOCK) {
 } else if (!SMOKE) {
   // A second launch focuses the window that already exists, which is what someone
   // double-clicking the icon actually wants.
-  app.on("second-instance", () => {
+  app.on("second-instance", (_event, argv) => {
     console.log(
       `focusing the existing window, built ${BUILD}. A newer bundle will not load until ` +
         "this instance is closed.",
@@ -906,6 +957,15 @@ if (!HAS_LOCK) {
       if (window.isMinimized()) window.restore();
       window.focus();
     }
+    // A challenge link clicked while Apogee is open arrives as the second launch's argv.
+    // Parsed against the link grammar and only proposed; see social.ts.
+    social.receiveArgv(argv);
+  });
+  // macOS hands links over as an event rather than on the command line, and may do so
+  // before the app is ready; a link kept until the window asks for it is not lost.
+  app.on("open-url", (event, url) => {
+    event.preventDefault();
+    social.receive(url, "open-url");
   });
 }
 
@@ -2202,6 +2262,9 @@ app.whenReady().then(() => {
 
   createWindow();
   updater.start({ disabled: FRESH });
+  social.registerProtocol();
+  // A first launch from a challenge link carries it on the command line.
+  social.receiveArgv(process.argv);
   installMenu({
     rescan: () => rebuild("menu rescan"),
     chooseFolder: () => void chooseStatsFolder().then((r) => { if (r && typeof r === "object") broadcast("apogee:error", r.error); }),
@@ -2254,6 +2317,7 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
   watcher?.close();
   saveDiskCache();
+  social.dispose();
   if (process.platform !== "darwin") app.quit();
 });
 

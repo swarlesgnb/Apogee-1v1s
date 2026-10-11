@@ -572,7 +572,7 @@ export async function settleForPlayer(
       category: match.category,
       explanation: rated
         ? explainVerdict(settlement)
-        : `${explainVerdict(settlement)} Unrated: this was a tournament fixture.`,
+        : `${explainVerdict(settlement)} Unrated: this was ${tournament ? "a tournament fixture" : "an open challenge"}.`,
       voidReason: settlement.voidReason ?? null,
       ratingWeight: settlement.ratingWeight,
       yourMatchScore: settlement.player.matchScore,

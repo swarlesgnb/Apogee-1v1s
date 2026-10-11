@@ -575,6 +575,11 @@ async function main(): Promise<void> {
     "ghost-link",
     // The boards name other players, which only the server may decide (list-duels).
     "leaderboard",
+    // The Daily board and open challenges: an entry is a player's, a board places the
+    // caller, and a code lookup is metered per player like ghost-link.
+    "daily-submit",
+    "daily-board",
+    "open-duel",
   ];
   for (const name of authedFunctions) {
     const res = await fetch(`${fnBase}/${name}`, {

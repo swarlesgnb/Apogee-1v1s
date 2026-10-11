@@ -44,6 +44,10 @@ export interface MatchRecord {
   at: number;
   /** A duel this player sent: one-sided like a seeding match, but somebody has been named. */
   sentDuel: boolean;
+  /** The code of an open challenge this player posted (open-duel): the card is the invitation. */
+  duelCode?: string | null;
+  /** An answer to somebody's open challenge: unrated, and the card says so. */
+  openChallenge?: boolean;
 }
 
 /** The parts of a booked ghost result a card reads (core/ghost GhostResult plus its kind's name). */
@@ -109,7 +113,11 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
     };
   });
 
-  const mode = s.tournament ? `Tournament · ${s.tournament.label}` : seeding && rec.sentDuel ? "Duel sent" : null;
+  const mode = s.tournament
+    ? `Tournament · ${s.tournament.label}`
+    : rec.openChallenge
+      ? "Open challenge · unrated"
+      : seeding && rec.sentDuel ? "Duel sent" : null;
 
   return {
     kind: "match",
@@ -127,7 +135,8 @@ export function matchCardInput(rec: MatchRecord, ctx: CardContext): ShareCardInp
     verdict: seeding ? null : (s.verdict as "win" | "loss" | "draw"),
     matchScore: { you: finite(s.yourMatchScore) ? s.yourMatchScore : null, them: seeding || !finite(s.theirMatchScore) ? null : s.theirMatchScore },
     rounds,
-    duelCode: null,
+    // Only on the poster's own seeding match: that is the run set the code answers.
+    duelCode: seeding && rec.duelCode ? rec.duelCode : null,
     playedAt: localDay(rec.at),
   };
 }
@@ -154,7 +163,7 @@ export function ghostCardInput(rec: GhostRecord, ctx: CardContext): ShareCardInp
   };
 }
 
-export const SHARE_SOURCES = ["match", "ghost"] as const;
+export const SHARE_SOURCES = ["match", "ghost", "daily"] as const;
 export const SHARE_LAYOUTS = ["landscape", "portrait"] as const;
 export const SHARE_ACTIONS = ["preview", "copy", "save"] as const;
 

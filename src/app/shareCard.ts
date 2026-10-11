@@ -43,6 +43,8 @@ export interface ShareDeps {
   context: () => CardContext;
   /** The ghost result on screen, or null when there is none to share. */
   ghost: () => GhostRecord | null;
+  /** Today's Apogee Daily as a card (dailyService.ts), or why there is none. */
+  daily?: (ctx: CardContext) => ShareCardInput | { refused: string };
   window: () => BrowserWindow | null;
   /** Where Save puts a card. Replaced by validate:share, which cannot click a dialog. */
   saveAs?: (defaultPath: string) => Promise<string | null>;
@@ -107,8 +109,8 @@ export class ShareCards {
   constructor(private readonly deps: ShareDeps) {}
 
   /** Keep the settlement exactly as main received it. The next one replaces it. */
-  recordSettled(settled: SettledRecord, sentDuel: boolean, at = Date.now()): void {
-    this.match = { settled, sentDuel, at };
+  recordSettled(settled: SettledRecord, sentDuel: boolean, at = Date.now(), duel?: { duelCode?: string | null; openChallenge?: boolean }): void {
+    this.match = { settled, sentDuel, at, duelCode: duel?.duelCode ?? null, openChallenge: duel?.openChallenge ?? false };
   }
 
   private loadKit(): Kit {
@@ -135,10 +137,13 @@ export class ShareCards {
   }
 
   /** The card for a source, or why there is none. Built from main's records only. */
-  input(source: "match" | "ghost"): ShareCardInput | { refused: string } {
+  input(source: "match" | "ghost" | "daily"): ShareCardInput | { refused: string } {
     if (source === "match") {
       if (!this.match) return { refused: "There is no settled match on screen to share." };
       return matchCardInput(this.match, this.deps.context());
+    }
+    if (source === "daily") {
+      return this.deps.daily ? this.deps.daily(this.deps.context()) : { refused: "The Daily has no card in this build." };
     }
     const g = this.deps.ghost();
     if (!g) return { refused: "Finish a ghost match to share it." };
