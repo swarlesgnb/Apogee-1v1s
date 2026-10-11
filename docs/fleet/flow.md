@@ -105,39 +105,39 @@ Final run on this branch:
 
 ```
 suite                  result     time  why
-validate:expedition    pass       1.4s  
+validate:expedition    pass       1.4s
 validate:parser        FAIL       0.5s  exit 1: Error: ENOENT: no such file or directory, scandir 'E:\Steam\steamapps\common\FPSA…
 validate:duration      FAIL       0.5s  exit 1: Error: ENOENT: no such file or directory, scandir 'E:\Steam\steamapps\common\FPSA…
-validate:season        pass       0.6s  
-validate:pool          pass       0.6s  
-validate:thresholds    pass       0.5s  
-validate:aimtypes      pass       0.5s  
-validate:standing      pass       0.6s  
+validate:season        pass       0.6s
+validate:pool          pass       0.6s
+validate:thresholds    pass       0.5s
+validate:aimtypes      pass       0.5s
+validate:standing      pass       0.6s
 validate:engine        FAIL       0.8s  exit 1: FAIL: engine disagrees with KovaaK's
-validate:ranks         pass       0.5s  
+validate:ranks         pass       0.5s
 validate:sync          FAIL       0.5s  exit 1: No payloads produced, cannot validate.
 validate:verify        FAIL       1.1s  exit 1: Error: ENOENT: no such file or directory, scandir 'E:\Steam\steamapps\common\FPSA…
-validate:kovaaks       pass       0.6s  
-validate:glicko        pass       0.5s  
+validate:kovaaks       pass       0.6s
+validate:glicko        pass       0.5s
 validate:match         FAIL       0.5s  exit 1: FAIL: 2 check(s) failed
-validate:duels         pass       0.5s  
-validate:tournament    pass       2.8s  
-validate:playlist      pass       0.5s  
+validate:duels         pass       0.5s
+validate:tournament    pass       2.8s
+validate:playlist      pass       0.5s
 validate:quests        FAIL       0.5s  exit 1: FAIL: 1 check(s) failed
 validate:ghost         FAIL       0.5s  exit 1: FAIL: no real draw to test the rules on
 validate:ghost-links   FAIL       0.5s  exit 1: FAIL: 12 check(s) failed
-validate:live          pass       0.5s  
-validate:schema        pass      18.3s  
-validate:functions     pass       5.1s  
-validate:sound         pass       0.2s  
-validate:orb           pass       1.1s  
-validate:theme         pass       7.3s  
-validate:counter       pass       0.2s  
-validate:progression   pass       0.5s  
-validate:presentation  pass       0.2s  
+validate:live          pass       0.5s
+validate:schema        pass      18.3s
+validate:functions     pass       5.1s
+validate:sound         pass       0.2s
+validate:orb           pass       1.1s
+validate:theme         pass       7.3s
+validate:counter       pass       0.2s
+validate:progression   pass       0.5s
+validate:presentation  pass       0.2s
 validate:sce           FAIL       0.5s  exit 1: FAIL no KovaaK's install found; nothing was measured
 validate:season-files  FAIL       0.5s  exit 1: FAIL no KovaaK's install; thresholds and value ranges cannot be checked
-validate:fixture       pass       8.2s  
+validate:fixture       pass       8.2s
 
 22 passed, 11 failed in 58s. Logs: .cache/validate/
 ```
