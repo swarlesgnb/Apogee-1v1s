@@ -145,10 +145,22 @@ export async function dailyPool(
   windowIndex: number,
 ): Promise<{ seasonName: string; band: string; pool: DailyPoolEntry[] }> {
   const { season, windowName, selectable } = await loadSeasonPool(admin, windowIndex);
+  // The ranked pool lends Intermediate its Novice variants (rankedPoolWindows), but a
+  // Daily is drawn from its own band's scenarios: the client draws from the season file by
+  // band (dailyService.ts), and the two must agree on the day's three.
+  const { data: own, error } = await admin
+    .from("season_scenarios")
+    .select("scenario_id")
+    .eq("season_id", season.id)
+    .eq("window_index", windowIndex);
+  if (error) throw new HttpError(500, error.message);
+  const inBand = new Set((own ?? []).map((r: { scenario_id: number }) => Number(r.scenario_id)));
   return {
     seasonName: season.name,
     band: windowName,
-    pool: selectable.map((s) => ({ name: s.name, category: s.subCategory ?? "", window: windowIndex })),
+    pool: selectable
+      .filter((s) => inBand.has(Number(s.id)))
+      .map((s) => ({ name: s.name, category: s.subCategory ?? "", window: windowIndex })),
   };
 }
 
