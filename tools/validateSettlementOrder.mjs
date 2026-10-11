@@ -13,6 +13,7 @@ export const json=(body,status=200)=>({body,status});
 export const isCopiedSide=()=>false;
 export const enforceRateLimit=async()=>{};
 export const afterLegSettled=async()=>null;
+export const arenaNote=async()=>null;
 export const baselineFor=async()=>{throw new Error('Unexpected baseline calculation');};
 export const isOffPool=async()=>false;
 export const commitMatchResult=async(_admin,matchId,status,sides,ratings=[])=>{
@@ -21,7 +22,7 @@ globalThis.settlementFixture.commits.push({matchId,status,sides,ratings});return
 await build({entryPoints:['supabase/functions/settle-match/index.ts'],outfile:'.cache/settlement-order.mjs',bundle:true,platform:'node',format:'esm',
   plugins:[{name:'isolated-boundaries',setup(b){
     // rankedV2.ts, which does the settling, reaches the same three as ./apogee.ts and the like.
-    b.onResolve({filter:/(\/_shared\/|^\.\/)(apogee|rateLimit|tournament)\.ts$/},()=>({path:'mock',namespace:'test'}));
+    b.onResolve({filter:/(\/_shared\/|^\.\/)(apogee|rateLimit|tournament|arena)\.ts$/},()=>({path:'mock',namespace:'test'}));
     b.onLoad({filter:/.*/,namespace:'test'},()=>({contents:mocks}));
   }}]});
 let handle;

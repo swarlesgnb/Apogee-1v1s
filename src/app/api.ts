@@ -68,7 +68,7 @@ export function friendlyError(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
 }
 
-/** Exported for the feature modules that keep their calls beside them (socialApi.ts). */
+/** Exported for the feature modules that keep their calls beside them (socialApi.ts, arenaApi.ts). */
 export async function callFunction<T>(name: string, body: unknown): Promise<T> {
   const token = await accessToken();
   if (!token) throw new ApiError("Sign in with Steam to play ranked.", 401);
