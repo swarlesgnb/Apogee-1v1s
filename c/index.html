@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>An Apogee challenge</title>
+<meta name="description" content="Ranked 1v1 for KovaaK's. Open this link in Apogee to answer the challenge, or download Apogee first.">
+<meta property="og:title" content="An Apogee challenge">
+<meta property="og:description" content="Ranked 1v1 for KovaaK's. Open the link in Apogee to answer it.">
+<meta property="og:type" content="website">
+<style>
+:root { --ground:#090c12; --panel:#121822; --well:#0c111a; --ink:#f2f0e8;
+  --ink-dim:#a4b2c4; --brand:#e5edb0; --brand-ink:#151c15; --rule:#2c3746; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--ground); color: var(--ink); font: 16px/1.55 "Segoe UI", system-ui, sans-serif; }
+body::before { content: ""; position: fixed; inset: 0; background: radial-gradient(1200px 700px at 90% -10%, #32445266, transparent 60%); pointer-events: none; }
+main { position: relative; max-width: 680px; margin: 0 auto; padding: 48px 24px 64px; display: grid; gap: 22px; }
+.lockup { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font: 500 24px "Bahnschrift", "Segoe UI", sans-serif; letter-spacing: -.02em; }
+.lockup svg { width: 28px; height: 28px; fill: none; stroke: var(--brand); stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; }
+.kicker { color: var(--brand); font: 12px ui-monospace, "Cascadia Mono", Consolas, monospace; letter-spacing: .16em; text-transform: uppercase; margin: 0; }
+h1 { margin: 0; font: 600 clamp(34px, 7vw, 52px)/1.02 "Bahnschrift", "Segoe UI", sans-serif; letter-spacing: -.035em; }
+p { margin: 0; color: var(--ink-dim); }
+.card { display: grid; gap: 14px; padding: 22px; border-radius: 14px; background: var(--panel); border: 1px solid var(--rule); }
+.code { font: 600 22px ui-monospace, "Cascadia Mono", Consolas, monospace; letter-spacing: .12em; color: var(--brand); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 20px; border-radius: 9px; border: 1px solid var(--rule); background: var(--well); color: var(--ink); text-decoration: none; font-weight: 600; }
+.btn.go { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); }
+[hidden] { display: none !important; }
+.fine { font-size: 13px; }
+.fine a { color: var(--ink); }
+ul { margin: 0; padding-left: 20px; color: var(--ink-dim); display: grid; gap: 6px; }
+</style>
+</head>
+<body>
+<main>
+  <a class="lockup" href="../"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 20 9-17 9 17M3 20l9-6 9 6M8 11h8M12 3l0 11"/></svg>apogee</a>
+  <p class="kicker" id="kicker">Challenge link</p>
+  <h1 id="title">Ranked 1v1 for KovaaK's</h1>
+  <p id="lede">Apogee matches you against someone near your level on three scenarios, played in KovaaK's as normal. Each side is measured against its own baseline, so the question is who played sharper than usual.</p>
+  <section class="card" id="card" hidden>
+    <div class="code" id="code"></div>
+    <ul id="points"></ul>
+  </section>
+  <div class="actions">
+    <a class="btn go" id="open" hidden>Open in Apogee</a>
+    <a class="btn" id="download" href="https://github.com/swarlesgnb/Apogee-1v1s/releases/latest">Download Apogee for Windows</a>
+  </div>
+  <p class="fine" id="how" hidden>Open in Apogee needs the app installed. The app shows what the link is for and nothing happens until you confirm it there. If the button does nothing, open Apogee, choose Links &amp; Discord at the top, and paste this page's address.</p>
+  <p class="fine"><a href="../">What Apogee is</a> · <a href="https://github.com/swarlesgnb/Apogee-1v1s">Source</a></p>
+</main>
+<script>"use strict";(()=>{var b=8,R=Date.UTC(2026,9,1,b);function d(e){return typeof e=="number"&&Number.isInteger(e)&&e>=1&&e<=99999}var s=["novice","intermediate","advanced","expert"];var a="apogee",f=128,u="[2-9A-HJKMNP-Z]{8}",$=new RegExp(`^${u}$`);var C=new RegExp(`^apogee://(duel|ghost)/(${u})/?$`,"i"),T=new RegExp(`^apogee://daily(?:/([1-9][0-9]{0,4})(?:/(${s.join("|")}))?)?/?$`,"i");var h=/^[\x21-\x7e]+$/,i=e=>({ok:!1,reason:e});function p(e){return e.kind==="daily"?e.number===null?`${a}://daily`:`${a}://daily/${e.number}${e.band?`/${e.band}`:""}`:`${a}://${e.kind}/${e.code}`}var y=new RegExp(`^(duel|ghost)=(${u})$`,"i"),k=new RegExp(`^daily(?:=([1-9][0-9]{0,4})(?:&band=(${s.join("|")}))?)?$`,"i");function m(e){if(typeof e!="string")return i("not-a-string");if(e.length>f)return i("too-long");if(!h.test(e)||e.includes("%"))return i("bad-characters");let t=y.exec(e);if(t)return{ok:!0,link:{kind:t[1].toLowerCase(),code:t[2].toUpperCase()}};let r=k.exec(e);if(r){let o=r[1]?Number(r[1]):null;return o!==null&&!d(o)?i("malformed"):{ok:!0,link:{kind:"daily",number:o,band:r[2]?r[2].toLowerCase():null}}}return i("malformed")}var n=e=>document.getElementById(e),g=m(location.search.replace(/^\?/,""));if(g.ok){let e=g.link,t=[];if(e.kind==="duel")n("kicker").textContent="Open challenge",n("title").textContent="Somebody played three. Your turn.",n("lede").textContent="This is an open challenge from an Apogee player. Answer it with your own run of the same three scenarios in KovaaK's.",n("code").textContent=e.code,t.push("Each side is scored against its own baseline, so you can score fewer points and still win, or more and still lose.","Their score stays hidden until yours is in.","Unrated: answering an open challenge never moves anybody's rating.");else if(e.kind==="ghost")n("kicker").textContent="Ghost link",n("title").textContent="Race somebody's ghost",n("lede").textContent="Three runs somebody played in Apogee, raced against your own baselines. Unrated.",n("code").textContent=e.code,t.push("Their runs play back as a ghost; your runs come from KovaaK's as you play them.","Nothing is rated, and nothing is sent until you start.");else{let l=e.band?e.band[0].toUpperCase()+e.band.slice(1):null;n("kicker").textContent="Apogee Daily",n("title").textContent=e.number?`Apogee Daily #${e.number}${l?` \xB7 ${l}`:""}`:"Apogee Daily",n("lede").textContent="Three scenarios a day, the same for everyone in a band. Play them in KovaaK's; Apogee reads the result from your stats folder.",n("code").textContent=e.number?`#${e.number}${l?` ${l}`:""}`:"Today",t.push("One Clicking, one Tracking and one Switching scenario. Your first run on each counts.","Each is scored against your own baseline: above, near or below.","Works offline and signed out. Signed in, you see where you placed among the day's players.")}let r=n("points");for(let l of t){let c=document.createElement("li");c.textContent=l,r.append(c)}n("card").hidden=!1;let o=n("open");o.href=p(e),o.hidden=!1,n("how").hidden=!1}else location.search.length>1&&(n("kicker").textContent="Not an Apogee link",n("lede").textContent="This address does not hold a challenge Apogee made, so there is nothing to open. Here is what Apogee is instead: ranked 1v1 for KovaaK's, scored against your own baseline.");})();
+</script>
+</body>
+</html>
