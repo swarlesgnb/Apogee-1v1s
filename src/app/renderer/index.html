@@ -3087,6 +3087,7 @@
 <link rel="stylesheet" href="social.css">
 <link rel="stylesheet" href="queue-board.css">
 <link rel="stylesheet" href="crowns.css">
+<link rel="stylesheet" href="practice-ux.css">
 </head>
 <body data-screen="queue">
 <a class="skip-link" href="#mainContent">Skip to content</a>
@@ -3099,11 +3100,33 @@
     </div>
 
     <nav class="nav" role="tablist" aria-label="Screens" aria-orientation="vertical">
-      <div class="nav-label" data-copy="nav.group.play">Compete</div>
+      <button class="tab" role="tab" aria-selected="false" data-screen="home">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><path d="m3 10 9-7 9 7v11h-6v-7H9v7H3Z"/></svg>
+        <span class="tab-key"></span><span class="tab-label">Practice home</span>
+      </button>
+      <div class="nav-label">Practice</div>
+      <button class="tab" role="tab" aria-selected="false" data-screen="mixtape">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M5 12a7 7 0 0 1 7-7m0 14a7 7 0 0 0 7-7"/></svg>
+        <span class="tab-key"></span><span class="tab-label">Practice session</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="scenarios">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h9M4 18h9"/><path d="m16 16 2.5 2.5L22 14"/></svg>
+        <span class="tab-key"></span>
+        <span class="tab-label" data-copy="nav.tab.scenarios">Scenario library</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="ghost">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V10a7 7 0 0 1 14 0v11l-2.3-1.8L14.3 21 12 19.2 9.7 21l-2.4-1.8Z"/><path d="M9.5 10.5h.01M14.5 10.5h.01"/></svg>
+        <span class="tab-key"></span><span class="tab-label">Ghost</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="expedition">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><path d="M12 2 22 12 12 22 2 12Z M12 6v12M6 12h12"/><circle cx="12" cy="12" r="3"/></svg>
+        <span class="tab-key"></span><span class="tab-label">Expedition</span>
+      </button>
+      <div class="nav-label">Compete</div>
       <button class="tab" role="tab" aria-selected="true" data-screen="queue">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 3 6 6-2 2-6-6V3h2Zm14 0-6 6 2 2 6-6V3h-2ZM3 21l6-6m6 0 6 6M2 16l6 6m8-20-5 5m5 15 6-6M9 11l4 4m2-6-4 4"/></svg>
         <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.queue">Play arena</span>
+        <span class="tab-label" data-copy="nav.tab.queue">Ranked 1v1</span>
       </button>
 
       <button class="tab" role="tab" aria-selected="false" data-screen="daily">
@@ -3123,69 +3146,42 @@
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.seasonview">Season</span>
       </button>
-
       <button class="tab" role="tab" aria-selected="false" data-screen="tournaments">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h5v4H3zm0 10h5v4H3zm5-8h4v10H8m4-5h4m0-3h5v6h-5z"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.tournaments">Tournaments</span>
       </button>
-
       <button class="tab" role="tab" aria-selected="false" data-screen="leaderboards">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V12h4v9m4 0V4h4v17m4 0V9h-4"/><path d="M3 21h18"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.leaderboards">Leaderboards</span>
       </button>
-
       <button class="tab" role="tab" aria-selected="false" data-screen="result">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v7a4 4 0 0 1-8 0V3Zm4 11v6m-4 1h8M8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.result">Last match</span>
       </button>
-
-      <div class="nav-label" data-copy="nav.group.practice">Improve</div>
-      <button class="tab" role="tab" aria-selected="false" data-screen="mixtape">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M5 12a7 7 0 0 1 7-7m0 14a7 7 0 0 0 7-7"/></svg>
-        <span class="tab-key"></span><span class="tab-label">Mixtape</span>
-      </button>
-      <button class="tab" role="tab" aria-selected="false" data-screen="ghost">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V10a7 7 0 0 1 14 0v11l-2.3-1.8L14.3 21 12 19.2 9.7 21l-2.4-1.8Z"/><path d="M9.5 10.5h.01M14.5 10.5h.01"/></svg>
-        <span class="tab-key"></span><span class="tab-label">Ghost</span>
-      </button>
-      <button class="tab" role="tab" aria-selected="false" data-screen="expedition">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><path d="M12 2 22 12 12 22 2 12Z M12 6v12M6 12h12"/><circle cx="12" cy="12" r="3"/></svg>
-        <span class="tab-key"></span><span class="tab-label">Expedition</span>
-      </button>
+      <div class="nav-label">Progress</div>
       <button class="tab" role="tab" aria-selected="false" data-screen="profile">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 1v4m0 14v4M1 12h4m14 0h4"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.profile">Your aim</span>
       </button>
-
       <button class="tab" role="tab" aria-selected="false" data-screen="quests">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h6v6M20 3 9 14M10 4H4v16h16v-6"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.quests">Quests</span>
       </button>
-
-      <button class="tab" role="tab" aria-selected="false" data-screen="scenarios">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h9M4 18h9"/><path d="m16 16 2.5 2.5L22 14"/></svg>
-        <span class="tab-key"></span>
-        <span class="tab-label" data-copy="nav.tab.scenarios">Scenarios</span>
-      </button>
-
-      <div class="nav-label" data-copy="nav.group.standing">Progress</div>
       <button class="tab" role="tab" aria-selected="false" data-screen="ranks">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 8-6 8 6M4 15l8-6 8 6M4 20l8-6 8 6"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.ranks">Ranks</span>
       </button>
-
       <button class="tab" role="tab" aria-selected="false" data-screen="consistency">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h18M3 12l4-5 4 7 5-10 5 6M3 21h18"/></svg>
         <span class="tab-key"></span>
         <span class="tab-label" data-copy="nav.tab.consistency">Consistency</span>
       </button>
-
       <button class="tab" role="tab" aria-selected="false" data-screen="admin" id="tabAdmin" hidden>
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="8" cy="7" r="3"/><circle cx="16" cy="17" r="3"/></svg>
         <span class="tab-key"></span>
@@ -3310,6 +3306,7 @@
       </button>
 
       <div class="topbar-right">
+        <button type="button" class="practice-resume" id="practiceResume" hidden></button>
         <button type="button" class="arcade-jump" id="arcadeJump" aria-haspopup="dialog">Jump to <kbd>Ctrl K</kbd></button>
         <details class="sound-studio" id="soundStudio">
           <summary class="sound-toggle" aria-label="Sound settings" title="Sound settings">SFX</summary>
@@ -3385,6 +3382,7 @@
         </div>
 
         <div id="app" hidden>
+          <section class="screen" id="screen-home"><div id="practiceHome"></div></section>
           <section class="screen" id="screen-mixtape"><div id="mixtapeRoot"></div></section>
           <section class="screen" id="screen-ghost"><div id="ghostRoot"></div></section>
           <section class="screen" id="screen-daily"><div id="dailyRoot"></div></section>
@@ -3933,11 +3931,10 @@
           <!-- ------------------------------------------ season (player) -->
           <section class="screen" id="screen-scenarios">
             <div class="screen-head">
-              <h1 data-copy="scenarios.title">Scenario ranks</h1>
+              <h1 data-copy="scenarios.title">Scenario library</h1>
               <p data-copy="scenarios.lede">
-                Your rank on every scenario in the season, from your best run on it.
-                Each difficulty only awards its own part of the ladder, so a maxed
-                scenario means moving up a difficulty.
+                Find a drill, save your favorites, and see the score you need next.
+                These are the season’s scenarios; your KovaaK’s scores update automatically.
               </p>
             </div>
 
@@ -3947,10 +3944,12 @@
                 <span class="note" id="scNote"></span>
               </div>
               <div class="pbody">
-                <input type="search" class="sc-search" id="scSearch" placeholder="Search scenarios" aria-label="Search scenarios" autocomplete="off">
+                <div class="sc-search-row"><label class="sc-search-label" for="scSearch">Find a scenario</label><input type="search" class="sc-search" id="scSearch" placeholder="Name, category, or family…" aria-label="Search scenarios" autocomplete="off"><button type="button" id="scClear">Reset filters</button></div>
                 <div class="pool-bands sc-filter" id="scCats"></div>
                 <div class="pool-bands sc-filter" id="scBands"></div>
+                <div class="sc-tools"><label>Show<select id="scStatus"><option value="all">All scenarios</option><option value="favorites">Favorites</option><option value="unplayed">Unplayed</option><option value="played">Played</option><option value="next">Next rank available</option><option value="maxed">Maxed at this difficulty</option></select></label><label>Sort by<select id="scOrder"><option value="closest">Closest to next rank</option><option value="category">Category</option><option value="name">Name A–Z</option><option value="rank">Highest rank</option><option value="least">Least played</option></select></label><span id="scCount" role="status" aria-live="polite"></span></div>
                 <button type="button" class="go" id="scInstall" hidden></button>
+                <p class="sc-playlist-note" id="scPlaylistNote" hidden></p>
               </div>
               <div class="scen-wrap">
                 <table class="scen sc-table">
@@ -3963,7 +3962,7 @@
                     <th>Target</th>
                     <th><button type="button" class="sc-sort" data-sort="closest">Gap</button></th>
                     <th>Progress</th>
-                    <th aria-label="Play"></th>
+                    <th aria-label="Scenario actions"></th>
                   </tr></thead>
                   <tbody id="scRanksBody"></tbody>
                 </table>
@@ -4376,9 +4375,9 @@
 
 <dialog class="arcade-command" id="arcadeCommand" aria-labelledby="arcadeCommandTitle">
   <div class="arcade-command-head"><span id="arcadeCommandTitle">Go to</span><button type="button" id="arcadeCommandClose" aria-label="Close jump menu">Esc</button></div>
-  <input id="arcadeCommandSearch" type="search" placeholder="Find a screen…" autocomplete="off" aria-label="Find a screen">
+  <input id="arcadeCommandSearch" type="search" placeholder="Find a screen or scenario…" autocomplete="off" aria-label="Find a screen or scenario">
   <div class="arcade-command-list" id="arcadeCommandList"></div>
-  <p class="arcade-command-empty" id="arcadeCommandEmpty" hidden>No screens match. Try “season”, “rank”, or “aim”.</p>
+  <p class="arcade-command-empty" id="arcadeCommandEmpty" hidden>No matches. Try a scenario name, “practice”, or “rank”.</p>
   <div class="arcade-command-foot">↑ ↓ to move <span>Enter to go</span></div>
 </dialog>
 <dialog id="seasonBatchDialog" class="editor-dialog" aria-labelledby="seasonBatchTitle">
@@ -4391,6 +4390,7 @@
     <div class="pgd-tools"><button type="submit" class="pool-btn">Add families</button><button type="button" class="pool-btn" id="seasonBatchCancel">Cancel</button></div>
   </form>
 </dialog>
+<script src="practice-prefs.js"></script>
 <script src="renderer.js"></script>
 <script src="cosmic.js"></script>
 <script src="expedition.js"></script>
@@ -4404,5 +4404,6 @@
 <script src="queue-board.js"></script>
 <script src="crowns.js"></script>
 <script src="race.js"></script>
+<script src="practice-home.js"></script>
 </body>
 </html>

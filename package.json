@@ -1,6 +1,6 @@
 {
   "name": "apogee",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "private": true,
   "description": "Ranked 1v1 for KovaaK's",
   "author": "Rylee",
@@ -8,6 +8,7 @@
   "license": "AGPL-3.0-or-later",
   "type": "module",
   "scripts": {
+    "validate:practice-ux": "tsx tools/buildUiPreview.ts && electron tools/practiceUxUi.cjs",
     "validate:release": "node tools/releaseReadiness.mjs",
     "validate:expedition": "tsx src/core/expedition/validateExpedition.ts && tsx src/core/expedition/validateJourneys.ts",
     "validate:expedition-ui": "npm run build:cosmic && tsx tools/buildUiPreview.ts && node tools/buildExpeditionUiTest.mjs && electron .cache/expedition-ui/main.cjs",

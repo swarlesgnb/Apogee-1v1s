@@ -113,7 +113,7 @@ const tournamentSample = {
 };
 const body = bodyMatch[1]
   // The preview supplies its own inline script instead of loading the file.
-  .replace(/<script src="(?:renderer|cosmic|expedition|presentation|mixtape-engine|mixtape|ghost|share|queue-board|crowns|race)\.js"><\/script>/g, "");
+  .replace(/<script src="(?:renderer|cosmic|expedition|presentation|mixtape-engine|mixtape|ghost|share|practice-prefs|practice-home|queue-board|crowns|race)\.js"><\/script>/g, "");
 
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Apogee Client Preview</title>
@@ -126,6 +126,7 @@ ${style}
 <style>${readFileSync(new URL("share.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("queue-board.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("crowns.css", RENDERER_DIR), "utf8")}</style>
+<style>${readFileSync(new URL("practice-ux.css", RENDERER_DIR), "utf8")}</style>
 </head><body data-screen="queue">
 ${body}
 <script id="apogee-snapshot" type="application/json">${snapshot}</script>
@@ -150,6 +151,9 @@ ${body}
   );
 </script>
 <script>
+${readFileSync(new URL("practice-prefs.js", RENDERER_DIR), "utf8")}
+</script>
+<script>
 ${rendererJs}
 </script>
 <script>window.__COSMIC_ASSETS__ = ${JSON.stringify(cosmicAssets)};</script>
@@ -163,6 +167,7 @@ ${rendererJs}
 <script>${readFileSync(new URL("queue-board.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("crowns.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("race.js", RENDERER_DIR), "utf8")}</script>
+<script>${readFileSync(new URL("practice-home.js", RENDERER_DIR), "utf8")}</script>
 </body></html>
 `;
 
