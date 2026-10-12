@@ -8,7 +8,9 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const candidate = process.argv[2] && resolve(process.argv[2]);
 if (!candidate) throw new Error('Usage: node tools/validatePackage.mjs <candidate directory>');
-const archive = join(candidate, 'win-unpacked/resources/app.asar');
+const linux = process.argv.includes('--linux');
+const unpacked = linux ? 'linux-unpacked' : 'win-unpacked';
+const archive = join(candidate, unpacked, 'resources/app.asar');
 const paths = listPackage(archive).map(path => path.replaceAll('\\', '/').replace(/^\//, ''));
 const files = paths.filter(path => !statFile(archive, normalize(path)).files);
 const readArchive = path => extractFile(archive, normalize(path));
@@ -26,7 +28,7 @@ check('Application metadata points to the bundled main process', metadata.name =
 const copies = [
   ['dist/app/preload.cjs', 'src/app/preload.cjs'],
   ...['index.html', 'expedition.js', 'expedition.css', 'arcade.css'].map(name => [`dist/app/renderer/${name}`, `src/app/renderer/${name}`]),
-  ...['first-light-v1.json', 'first-light-v2.json', 'first-light-v4.json', 'first-light-v5.json'].map(name => [`dist/data/expeditions/${name}`, `data/expeditions/${name}`]),
+  ...['first-light-v1.json', 'first-light-v2.json', 'first-light-v4.json', 'first-light-v5.json', 'first-light-v6.json'].map(name => [`dist/data/expeditions/${name}`, `data/expeditions/${name}`]),
   // Byte for byte: submit-run refuses a run whose scenario hash is not the committed file's.
   ...readdirSync(join(root, 'data/season-1/scenarios')).filter(name => name.endsWith('.sce')).map(name => [`dist/data/season-1/scenarios/${name}`, `data/season-1/scenarios/${name}`]),
 ];
@@ -37,7 +39,7 @@ check('Bundled main process matches the validated build', hash(readArchive('dist
 const envFile = join(root, '.env');
 const privateValues = existsSync(envFile) ? readFileSync(envFile, 'utf8').split(/\r?\n/).flatMap(line => {
   const entry = /^([A-Z0-9_]+)\s*=\s*(.*)$/.exec(line.trim());
-  if (!entry || !/SERVICE_ROLE|SECRET|PASSWORD|PRIVATE_KEY/.test(entry[1])) return [];
+  if (!entry || !/SERVICE_ROLE|SECRET|PASSWORD|PRIVATE_KEY|TOKEN/.test(entry[1])) return [];
   const value = entry[2].trim().replace(/^(['"])(.*)\1$/, '$2');
   return value.length >= 12 ? [value] : [];
 }) : [];
@@ -47,8 +49,8 @@ check('Known local private credentials are absent from packaged text', !files.so
   const content = readArchive(path).toString('utf8');
   return privateValues.some(value => content.includes(value));
 }));
-const installer = join(candidate, `Apogee-${metadata.version}-setup.exe`);
-check('Installer and unpacked executable exist', existsSync(installer) && existsSync(join(candidate, 'win-unpacked/Apogee.exe')));
+const installer = join(candidate, linux ? `Apogee-${metadata.version}-x86_64.AppImage` : `Apogee-${metadata.version}-setup.exe`);
+check('Installer and unpacked executable exist', existsSync(installer) && existsSync(join(candidate, unpacked, linux ? 'apogee' : 'Apogee.exe')));
 const report = { checkedAt: new Date().toISOString(), version: metadata.version, checks,
   allPassed: checks.every(item => item.passed), installer,
   installerSha256: existsSync(installer) ? hash(readFileSync(installer)) : null,

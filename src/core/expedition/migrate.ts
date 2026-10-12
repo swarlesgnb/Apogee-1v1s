@@ -3,7 +3,7 @@ import type { ChallengeKind, ExpeditionDefinition, ExpeditionState } from "./typ
 
 /** Upgrade route pacing while keeping the original save, rewards, and trial standards. */
 export function migrateExpedition(old: ExpeditionState, legacy: ExpeditionDefinition, def: ExpeditionDefinition, now: number): ExpeditionState {
-  if (((old.version === 3 && legacy.version === 3 && def.version === 4) || (old.version === 4 && legacy.version === 4 && def.version === 5)) && old.definitionId === legacy.id) {
+  if (((old.version === 3 && legacy.version === 3 && def.version === 4) || (old.version === 4 && legacy.version === 4 && def.version === 5) || (old.version === 5 && legacy.version === 5 && def.version === 6)) && old.definitionId === legacy.id) {
     const next = structuredClone(old);
     next.version = def.version; next.definitionId = def.id; next.migratedAt = now;
     // v4 and v5 change the roster, not the rules. A route whose accepted scenarios all

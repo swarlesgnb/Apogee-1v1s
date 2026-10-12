@@ -3,6 +3,33 @@
 What still stands between the local candidate and a public release, and how to re-check
 it. The solo campaign rules are in [the solo guide](solo-expedition.md).
 
+## 0.4.6, 2026-10-12
+
+- Windows NSIS installer and Linux x86_64 AppImage, with their updater manifests.
+- Integrates ranked v2, Daily and challenge links, Shadows and Flags, Crowns and races,
+  Discord integration, practice discovery, startup caching, and security hardening.
+- Gravity Well calibration is carried into the Shadow table and First Light v6. Existing
+  v5 saves migrate without rewriting the original file; accepted targets, active trials,
+  rewards and route progress are preserved. Dedicated migration tests pass.
+- Production: four migrations through `20261011000005`, reference-data sync, all 26 Edge
+  Functions deployed, and the three Gravity Well threshold rows updated in place.
+  `verify:deployment` passed against the live project; season/scenario IDs are preserved.
+- Both final packages passed 180/180 archive checks and packaged smoke tests. Windows
+  ran as `Apogee.exe` from a temporary working directory. Linux used WSL/Xvfb and explicitly
+  synthetic stats; this does not verify a physical Linux desktop or Proton gameplay.
+- Full release run: 47/55 initially passed. Corrected Campaign definitions, Windows
+  presence fixture and contrast-variable detection passed subsequent reruns. Practice,
+  Mixtape, Daily/social, Crowns and queue UI checks passed. Focused Campaign UI passed
+  enrollment, route/trial/reward flows, compact layouts and reduced motion with no renderer
+  errors. The broad all-screen test passed the repaired short-window queue but stalled
+  during the 600px sweep; that entire sweep is not certified.
+- Existing failures retained: standing and beta checks lack 41 Expert board samples;
+  the quest replay balance check flags category_volume and no_disasters; ten scenario
+  measurements fall outside the comparison corpus range. These are not all-green gates.
+  No tuning exceptions or pass conditions were weakened to hide them.
+- Live human Steam login, real matches/settlement and physical Linux/Proton play remain
+  hands-on checks. Discord bot source is included; persistent bot hosting is separate.
+
 ## 0.4.4, 2026-10-05
 
 - Installer: `release/Apogee-0.4.4-setup.exe`

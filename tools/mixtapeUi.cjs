@@ -91,7 +91,7 @@ app.whenReady().then(async()=>{
   await click('[data-mix="auto"]');
   await click('[data-mix="end"]');
   await run(`localStorage.setItem('apogee.mixtape.v1','{"active":{"version":1,"tracks":null},"history":[{}]}')`);
-  await win.reload();await settle();assert.equal(await run(`document.querySelectorAll('.mix-track').length`),6,'Corrupt saved state recovers');
+  await win.reload();await settle();assert.equal(await run(`document.querySelectorAll('.mix-track').length`),3,'Corrupt session state recovers while preserving the chosen 3-track length');
   await run(`window.dispatchEvent(new CustomEvent('apogee:practice-ready',{detail:{season:{windows:['Novice','Intermediate','Advanced','Expert']},scenarios:[],playlistDir:null}}))`);await settle();
   assert.equal(await run(`document.querySelector('[data-mix="start"]').disabled`),true,'Empty pool cannot start');
   await run(`window.apogee.chooseFolder=async()=>null;window.dispatchEvent(new CustomEvent('apogee:practice-ready',{detail:{...window.__APOGEE_PRACTICE__,playlistDir:null}}));true`);await settle();

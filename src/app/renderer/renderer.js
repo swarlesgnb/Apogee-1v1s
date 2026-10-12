@@ -747,7 +747,7 @@ function targetName(s) {
 /** Rank insignia: the outer wings and earned pips advance with the ladder rung. */
 function badge(tier, uid) {
   const rung = Math.max(1, Math.min(8, Number(/^tier-(\d+)$/.exec(String(tier.id ?? ""))?.[1] || 1)));
-  const color = legibleOnDark(tier.color, RANK_TEXT_CONTRAST);
+  const badgeInk = legibleOnDark(tier.color, RANK_TEXT_CONTRAST);
   const faces = [
     'M40 12 62 34 40 67 18 34Z',
     'M40 9 64 24 60 52 40 69 20 52 16 24Z',
@@ -761,7 +761,7 @@ function badge(tier, uid) {
   const ribs = rung >= 3 ? '<path d="M20 29 9 24l4 26 12 10M60 29l11-5-4 26-12 10" fill="none" stroke="currentColor" stroke-width="1.4"/>' : '';
   const crown = rung >= 6 ? '<path d="m25 15 2-10 13 6L53 5l2 10" fill="none" stroke="currentColor" stroke-width="1.5"/>' : '';
   const pips = Array.from({length:rung}, (_, i) => '<path d="m' + (40 + (i - (rung - 1) / 2) * 5) + ' 78 1.5 2-1.5 2-1.5-2Z" fill="currentColor"/>').join('');
-  return '<svg class="rank-insignia material-' + rung + '" viewBox="0 0 80 86" role="img" aria-label="' + esc(tier.name) + '" style="color:' + esc(color) + '">' +
+  return '<svg class="rank-insignia material-' + rung + '" viewBox="0 0 80 86" role="img" aria-label="' + esc(tier.name) + '" style="color:' + esc(badgeInk) + '">' +
     '<path d="' + faces[rung-1] + '" fill="currentColor" fill-opacity=".17" stroke="currentColor" stroke-width="1.4"/>' +
     '<path d="M40 16 58 27 40 38 22 27Z" fill="currentColor" fill-opacity=".48"/>' +
     '<path d="M22 27v23l18 14V38Z" fill="currentColor" fill-opacity=".1"/>' +
@@ -1023,6 +1023,7 @@ function makeCopyable(el, name) {
     try {
       await navigator.clipboard.writeText(name);
     } catch {
+      showError('Clipboard unavailable. Exact scenario name: ' + name);
       return;
     }
     el.classList.add("copied");
@@ -1048,6 +1049,23 @@ function paintFolderFound() {
   if (current || !currentPath || (banner.classList.contains("on") && !banner.classList.contains("notice"))) return;
   $("emptyHead").textContent = "Found your KovaaK's stats";
   $("emptyText").textContent = "Play any scenario in KovaaK's and it shows up here.";
+  $("emptyPath").textContent = currentPath;
+  $("emptyPath").hidden = false;
+  $("emptyHelp").hidden = true;
+  const choose = $("emptyChoose");
+  choose.textContent = "Change folder";
+  choose.classList.add("secondary");
+}
+
+/**
+ * Found and still being read. The window now paints before the first read of the folder
+ * is done (1.6 s on a 15,000-run folder, and far longer on a slow disk), and the card's
+ * default words, "Looking for your KovaaK's stats", said the folder had not been found.
+ */
+function paintFolderReading() {
+  if (current || !currentPath) return;
+  $("emptyHead").textContent = "Reading your KovaaK's stats…";
+  $("emptyText").textContent = "Found the folder. A long history takes a few seconds to read the first time.";
   $("emptyPath").textContent = currentPath;
   $("emptyPath").hidden = false;
   $("emptyHelp").hidden = true;
@@ -6042,6 +6060,9 @@ function playButton(scenario) {
         // Back to Play, so the same button can open it again after a restart of the game.
         setTimeout(() => { play.textContent = prev; }, 3000);
       }
+    } catch (error) {
+      showError("Could not open KovaaK’s. Try again, or copy the scenario name and open it in the game. " + (error?.message || ""));
+      play.textContent = prev;
     } finally {
       play.disabled = false;
     }
@@ -6061,11 +6082,35 @@ function nextRankTarget(s) {
  * reason as `seasonBand`: a run landing mid-grind repaints the table, and a filter that
  * reset itself would lose the scenario the player was watching.
  */
-const scenarioView = { category: null, window: null, sort: "closest", query: "" };
+const scenarioView = { category: null, window: null, sort: "closest", query: "", status: "all" };
+try {
+  const saved = JSON.parse(localStorage.getItem('apogee.library.v1') || '{}');
+  if (typeof saved.category === 'string') scenarioView.category = saved.category;
+  if (Number.isInteger(saved.window) && saved.window >= 0) scenarioView.window = saved.window;
+  if (['closest','category','rank','name','least'].includes(saved.sort)) scenarioView.sort = saved.sort;
+  if (['all','favorites','unplayed','played','next','maxed'].includes(saved.status)) scenarioView.status = saved.status;
+  if (typeof saved.query === 'string') scenarioView.query = saved.query.slice(0, 300);
+} catch {}
+function saveScenarioView() {
+  try { localStorage.setItem('apogee.library.v1', JSON.stringify(scenarioView)); } catch {}
+}
+function resetScenarioView() {
+  Object.assign(scenarioView, { category: null, window: null, query: '', status: 'all', sort: 'closest' });
+  saveScenarioView();
+  renderScenarioRanks();
+  $('scSearch').focus();
+}
+function browseScenarios(filters = {}) {
+  Object.assign(scenarioView, { category: null, window: null, query: '', status: 'all' }, filters);
+  saveScenarioView();
+  renderScenarioRanks();
+  openScreen('scenarios');
+  $('scSearch')?.focus({ preventScroll: true });
+}
 
 /** Every word, any order, against the name, label and family. */
 function matchesQuery(row, query) {
-  const words = query.toLowerCase().split(/s+/).filter(Boolean);
+  const words = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
   if (words.length === 0) return true;
   const hay = [row.scenario, row.name, row.label, row.family, row.category].filter(Boolean).join(" ").toLowerCase();
   return words.every((w) => hay.includes(w));
@@ -6085,15 +6130,21 @@ function renderScenarioInstall() {
     : "Apogee " + (scenarioView.category === null ? "All" : scenarioView.category) + " " + windows[w];
   const offered = name && (practice.playlists || []).some((p) => p.name === name);
   btn.hidden = HOST !== "electron" || !offered;
+  $('scPlaylistNote').hidden = btn.hidden;
   if (!offered) return;
   const installed = new Set(practice.installedNames || []).has(name);
-  btn.textContent = installed ? "Installed in KovaaK's · " + name : "Install as a KovaaK's playlist · " + name;
+  btn.textContent = installed ? "Reinstall playlist · " + name : "Install playlist · " + name;
+  const note = $('scPlaylistNote');
+  note.hidden = btn.hidden;
+  note.textContent = 'Installs the full difficulty/category playlist. Search and Show filters do not change its contents.';
   btn.onclick = async () => {
     btn.disabled = true;
     try {
       const r = await api.installPlaylists([name]);
       if (r && r.error) showError(r.error);
       else showNotice("“" + name + "” is in KovaaK's Playlists. If the game is open, restart it to load it.");
+    } catch (error) {
+      showError('Could not install the playlist. ' + (error?.message || 'Try again.'));
     } finally {
       btn.disabled = false;
       refreshPractice();
@@ -6130,6 +6181,11 @@ function renderScenarioRanks() {
   const cats = (practice && practice.season && practice.season.categories) || [];
   const windows = (practice && practice.season && practice.season.windows) || [];
   const ladderOf = new Map(cats.map((c) => [c.name, c]));
+  if (cats.length && !cats.some(c => c.name === scenarioView.category)) scenarioView.category = null;
+  if (windows.length && scenarioView.window >= windows.length) scenarioView.window = null;
+  const focused = document.activeElement;
+  const filterFocus = focused?.closest('#scCats, #scBands') ? { host: focused.parentElement.id, value: focused.dataset.value } : null;
+  const rowFocus = focused?.closest('.sc-row') ? { scenario: focused.closest('.sc-row').dataset.scenario, className: focused.className } : null;
 
   const filterRow = (host, options, key) => {
     if (!host) return;
@@ -6141,9 +6197,13 @@ function renderScenarioRanks() {
       btn.className = "pool-band" + (on ? " on" : "");
       btn.setAttribute("aria-pressed", String(on));
       btn.textContent = o.label;
+      btn.dataset.value = String(o.value);
       btn.addEventListener("click", () => {
         scenarioView[key] = o.value;
+        saveScenarioView();
+        if (key === 'window' && o.value !== null) window.ApogeePracticePrefs.set({ difficulty: windows[o.value] });
         renderScenarioRanks();
+        [...host.children].find(el => el.dataset.value === String(o.value))?.focus({ preventScroll: true });
       });
       host.append(btn);
     });
@@ -6152,16 +6212,24 @@ function renderScenarioRanks() {
   filterRow($("scBands"), windows.map((name, w) => ({ value: w, label: name })), "window");
   renderScenarioInstall();
   const search = $("scSearch");
+  if (search && search.value !== scenarioView.query) search.value = scenarioView.query;
   if (search && !search.dataset.wired) {
     search.dataset.wired = "1";
     search.addEventListener("input", () => {
       scenarioView.query = search.value;
+      saveScenarioView();
       renderScenarioRanks();
     });
   }
+  $('scStatus').value = scenarioView.status;
+  $('scOrder').value = scenarioView.sort;
+  $('scClear').disabled = !scenarioView.query && scenarioView.category === null && scenarioView.window === null && scenarioView.status === 'all' && scenarioView.sort === 'closest';
 
   document.querySelectorAll(".sc-sort").forEach((b) => {
     b.setAttribute("aria-pressed", String(b.dataset.sort === scenarioView.sort));
+    const selected = b.dataset.sort === scenarioView.sort;
+    if (selected) b.closest('th').setAttribute('aria-sort', scenarioView.sort === 'rank' ? 'descending' : 'ascending');
+    else b.closest('th').removeAttribute('aria-sort');
   });
 
   const nameAt = (row, index) => {
@@ -6179,6 +6247,12 @@ function renderScenarioRanks() {
       ({ r }) =>
         (scenarioView.category === null || r.category === scenarioView.category) &&
         (scenarioView.window === null || r.window === scenarioView.window) &&
+        (scenarioView.status === 'all' ||
+          (scenarioView.status === 'favorites' && window.ApogeePracticePrefs.state.favorites.includes(r.scenario)) ||
+          (scenarioView.status === 'played' && r.runs > 0) ||
+          (scenarioView.status === 'unplayed' && !r.runs) ||
+          (scenarioView.status === 'next' && r.nextRankScore !== null) ||
+          (scenarioView.status === 'maxed' && r.nextRankScore === null)) &&
         matchesQuery(r, scenarioView.query),
     );
 
@@ -6195,8 +6269,11 @@ function renderScenarioRanks() {
       (b.r.progress ?? 0) - (a.r.progress ?? 0) ||
       a.order - b.order,
     category: (a, b) => a.order - b.order,
+    name: (a, b) => (a.r.label || a.r.scenario).localeCompare(b.r.label || b.r.scenario),
+    least: (a, b) => (a.r.runs || 0) - (b.r.runs || 0) || a.order - b.order,
   };
   shown.sort(sorters[scenarioView.sort] || sorters.closest);
+  $('scCount').textContent = shown.length + ' of ' + all.length + ' scenarios';
 
   const ranked = shown.filter(({ r }) => r.rankIndex !== null).length;
   const maxed = shown.filter(({ r }) => r.nextRankScore === null).length;
@@ -6213,7 +6290,8 @@ function renderScenarioRanks() {
     body.innerHTML =
       '<tr><td colspan="9" class="empty">' +
       (all.length === 0 ? "Season not loaded yet." : "No scenarios match these filters.") +
-      "</td></tr>";
+      (all.length ? ' <button type="button" class="sc-reset-empty">Reset filters</button>' : '') + "</td></tr>";
+    body.querySelector('.sc-reset-empty')?.addEventListener('click', resetScenarioView);
     return;
   }
 
@@ -6226,6 +6304,7 @@ function renderScenarioRanks() {
     tr.className = "sc-row" + (maxedHere ? " maxed" : "") + (r.runs === 0 ? " untouched" : "");
     // Read by the smoke test, which holds the painted names to the core's rank indices.
     tr.dataset.rank = held ?? "";
+    tr.dataset.scenario = r.scenario;
     tr.innerHTML =
       "<td>" + esc(r.label) + ' <span class="win">' + esc(r.windowName) + "</span></td>" +
       "<td>" + esc(r.category) + "</td>" +
@@ -6253,14 +6332,50 @@ function renderScenarioRanks() {
       (maxedHere ? " · all ranks held" : " · " + Math.round((r.progress ?? 0) * 100) + "% to next rank");
 
     const play = playButton(r.scenario);
-    if (play) tr.querySelector(".sc-act").append(play);
+    const actions = tr.querySelector('.sc-act');
+    actions.append(favoriteButton(r.scenario));
+    const copy = document.createElement('button');
+    copy.type = 'button'; copy.className = 'sc-copy'; copy.textContent = 'Copy';
+    copy.setAttribute('aria-label', 'Copy exact name of ' + r.label);
+    copy.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(r.scenario); copy.textContent = 'Copied'; setTimeout(() => copy.textContent = 'Copy', 2000); }
+      catch { showError('Clipboard unavailable. Exact scenario name: ' + r.scenario); }
+    });
+    actions.append(copy);
+    if (play) { play.setAttribute('aria-label', 'Play ' + r.label); actions.append(play); }
     body.append(tr);
   }
+  if (filterFocus) [...$(filterFocus.host).children].find(el => el.dataset.value === filterFocus.value)?.focus({ preventScroll: true });
+  if (rowFocus) [...body.querySelectorAll('.sc-row')].find(el => el.dataset.scenario === rowFocus.scenario)?.querySelector('.' + rowFocus.className)?.focus({ preventScroll: true });
+}
+
+function favoriteButton(scenario) {
+  const button = document.createElement('button');
+  button.type = 'button'; button.className = 'sc-favorite';
+  const paint = () => {
+    const saved = window.ApogeePracticePrefs.state.favorites.includes(scenario);
+    button.textContent = saved ? '★' : '☆';
+    button.setAttribute('aria-pressed', String(saved));
+    button.setAttribute('aria-label', (saved ? 'Remove favorite: ' : 'Favorite: ') + scenario);
+    button.title = saved ? 'Remove from favorites' : 'Save to favorites';
+  };
+  paint();
+  button.addEventListener('click', () => {
+    if (!window.ApogeePracticePrefs.favorite(scenario)) showNotice('Favorite changed for this session. Local storage is unavailable.');
+    paint();
+    if (scenarioView.status === 'favorites' && document.body.dataset.screen === 'scenarios') { renderScenarioRanks(); $('scStatus').focus({ preventScroll: true }); }
+  });
+  return button;
+}
+$('scClear')?.addEventListener('click', resetScenarioView);
+for (const [id, key] of [['scStatus','status'], ['scOrder','sort']]) {
+  $(id)?.addEventListener('change', event => { scenarioView[key] = event.target.value; saveScenarioView(); renderScenarioRanks(); });
 }
 
 document.querySelectorAll(".sc-sort").forEach((b) => {
   b.addEventListener("click", () => {
     scenarioView.sort = b.dataset.sort;
+    saveScenarioView();
     renderScenarioRanks();
   });
 });
@@ -6536,6 +6651,7 @@ function renderSeasonView(data) {
         : seasonPool
           ? (seasonPool.matchPool?.window ?? 1)
           : 1;
+    seasonBand = window.ApogeePracticePrefs.band(bands, bands[seasonBand]);
   }
   if (seasonBand >= bands.length) seasonBand = 0;
 
@@ -6556,6 +6672,7 @@ function renderSeasonView(data) {
         (dueIn[w] > 0 ? " · " + dueIn[w] + " next ranks scored here" : "");
       btn.addEventListener("click", () => {
         seasonBand = w;
+        window.ApogeePracticePrefs.set({ difficulty: bands[w] });
         if (current) renderSeasonView(current);
       });
       diffs.append(btn);
@@ -6931,6 +7048,8 @@ function renderPlaylists() {
       // it, so the click read as ignored and got pressed again.
       lastWritten = { label: btn.dataset.label, band, at: Date.now() };
       renderPlaylists();
+    } catch (error) {
+      showError('Could not install the playlist. ' + (error?.message || 'Try again.'));
     } finally {
       delete btn.dataset.busy;
       btn.classList.remove("is-writing");
@@ -7560,6 +7679,9 @@ function renderTodo(arriving) {
           } else {
             play.textContent = "Opened";
           }
+        } catch (error) {
+          showError('Could not open KovaaK’s. ' + (error?.message || 'Try again or open the scenario manually.'));
+          play.textContent = prev;
         } finally {
           play.disabled = false;
         }
@@ -7840,13 +7962,15 @@ function renderSettled(s) {
   // run-on mono string with a middot in it.
   $("ratingMove").innerHTML = s.tournament
     ? 'unrated<span class="after">tournament</span>'
+    : s.arena
+    ? `unrated<span class="after">${s.arena.kind === "race" ? "race" : "crown"}</span>`
     : isSeeding
     ? 'not rated<span class="after">seeding</span>'
     : isVoid ? 'no change<span class="after">void</span>'
     : !Number.isFinite(change) ? 'unavailable<span class="after">rating change</span>'
     : `${change >= 0 ? "+" : "−"}${Math.abs(change)}` +
       `<span class="after">rating ${esc(Number.isFinite(s.ratingAfter) ? String(s.ratingAfter) : "unavailable")}</span>`;
-  $("ratingMove").style.color = isSeeding || isVoid || s.tournament
+  $("ratingMove").style.color = isSeeding || isVoid || s.tournament || s.arena
     ? "var(--ink-dim)"
     : change > 0 ? "var(--up)" : change < 0 ? "var(--down)" : "var(--ink-mid)";
 
@@ -7891,6 +8015,8 @@ function renderSettled(s) {
       '<td class="' + (youWon ? "won-round" : "") + '">' + outcome + "</td>";
     body.append(tr);
   });
+  // A Shadow result, or an answer that settled a Flag (queue-board.js), says so.
+  globalThis.apogeeQueueHooks?.paintSettled?.(s);
 }
 
 /**
@@ -8170,10 +8296,12 @@ function questCard(q, board) {
       btn.title = "Swap this for another quest. One reroll a day.";
       btn.addEventListener("click", async () => {
         btn.disabled = true;
-        const r = await api.rerollQuest(q.id);
-        // Success needs nothing here: main rebuilds and the new board arrives as a snapshot.
-        if (r && r.error) {
-          showError(r.error);
+        try {
+          const r = await api.rerollQuest(q.id);
+          // Success arrives as a new quest board.
+          if (r && r.error) { showError(r.error); btn.disabled = false; }
+        } catch (error) {
+          showError('Could not reroll the quest. ' + (error?.message || 'Try again.'));
           btn.disabled = false;
         }
       });
@@ -8928,10 +9056,10 @@ function paintPractice() {
 function refreshPractice() {
   if (HOST !== "electron" || !api || !api.practice) return;
   void api.practice().then((r) => {
-    if (!r || r.error) return;
+    if (!r || r.error) { window.dispatchEvent(new CustomEvent('apogee:practice-error', {detail:r?.error || 'Practice data is unavailable.'})); return; }
     practice = r;
     paintPractice();
-  });
+  }).catch(error => window.dispatchEvent(new CustomEvent('apogee:practice-error', {detail:error?.message || 'Practice data could not load.'})));
   refreshApex();
 }
 
@@ -9520,20 +9648,25 @@ function restoreScreen() {
   try {
     name = localStorage.getItem(LAST_SCREEN_KEY);
   } catch {
-    return;
+    /* Start at practice home when preferences cannot be read. */
   }
-  if (!name || name === "queue") return;
+  if (!name) name = 'home';
+  if (name === "queue") return;
 
-  const tab = document.querySelector('.tab[data-screen="' + name + '"]');
+  const tab = [...document.querySelectorAll('.tab')].find(t => t.dataset.screen === name);
   // Skip a tab that is not there any more: the Season tab is admin-only, and it is
   // revealed after boot, so a remembered "season" simply lands on Queue.
   if (tab && !tab.hidden) tab.click();
+  else document.querySelector('.tab[data-screen="home"]')?.click();
 }
 
 /** Screens that work before any stats are read. */
-const STANDALONE_SCREENS = new Set(["mixtape", "expedition"]);
+const STANDALONE_SCREENS = new Set(["home", "scenarios", "mixtape", "expedition"]);
+// The scenario pool exists before the first personal score does.
+$('app').before($('screen-scenarios'));
 /** Set while a locked tab sends the player back to the folder card, which is behind Queue. */
 let showingFolderCard = false;
+const screenScroll = new Map();
 
 document.querySelectorAll(".tab").forEach((tab) => {
   tab.id ||= "nav-" + tab.dataset.screen;
@@ -9578,6 +9711,9 @@ document.querySelectorAll(".tab").forEach((tab) => {
     // `.click()`, including the one that re-selects the tab already showing, and a
     // navigation sound for going nowhere is just a noise.
     if (tab.getAttribute("aria-selected") !== "true") playSound("nav");
+    const previousScreen = document.body.dataset.screen;
+    const scroll = document.querySelector('.scroll');
+    screenScroll.set(previousScreen, scroll.scrollTop);
     document.querySelectorAll(".tab").forEach((t) => {
       t.setAttribute("aria-selected", "false");
       t.setAttribute("tabindex", "-1");
@@ -9597,7 +9733,7 @@ document.querySelectorAll(".tab").forEach((tab) => {
     // The orb field reads this to decide how far to lift on this screen. Set here
     // rather than in each caller because every route into a tab goes through .click().
     document.body.dataset.screen = tab.dataset.screen;
-    document.querySelector(".scroll").scrollTop = 0;
+    scroll.scrollTop = screenScroll.get(tab.dataset.screen) || 0;
     rememberScreen(tab.dataset.screen);
     // Drawn on the way in rather than at boot: the editors are cheap to build and stale
     // the moment the season or a save lands, so the screen is always redrawn from the
@@ -9658,14 +9794,14 @@ numberTabs();
  * press it again, which is not what a click somewhere else means.
  */
 document.addEventListener("pointerdown", (e) => {
-  document.querySelectorAll("details[open]:not(.pool-disclosure)").forEach((d) => {
+  document.querySelectorAll(".topbar details[open], .status details[open]").forEach((d) => {
     if (!d.contains(e.target)) d.open = false;
   });
 });
 
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
-  const open = document.querySelector("details[open]:not(.pool-disclosure)");
+  const open = document.querySelector(".topbar details[open], .status details[open]");
   if (open) open.open = false;
 });
 
@@ -9690,7 +9826,7 @@ document.addEventListener("keydown", (e) => {
   // A modal is showing: its own Escape handling owns the keyboard.
   const modal = $("celebrate");
   if (modal && !modal.hidden) return;
-  if ($('arcadeCommand')?.open) return;
+  if (document.querySelector('dialog[open]')) return;
 
   const tabs = [...document.querySelectorAll(".tab")].filter((tab) => !tab.hidden);
   if (tabs.length === 0) return;
@@ -9714,6 +9850,10 @@ document.addEventListener("keydown", (e) => {
     next.click();
     next.focus();
     e.preventDefault();
+  }
+  if (target?.closest('.nav') && (e.key === 'Home' || e.key === 'End')) {
+    const next = e.key === 'Home' ? tabs[0] : tabs.at(-1);
+    next.click(); next.focus(); e.preventDefault();
   }
 });
 
@@ -9746,6 +9886,10 @@ function paintActiveMatch() {
     "held",
     activeMatch.tournament
       ? "Tournament fixture"
+      : activeMatch.crown
+      ? (activeMatch.crown.claim ? "Claiming a Crown" : "Crown challenge")
+      : activeMatch.race
+      ? "Racing " + activeMatch.race.opponentName
       : activeMatch.duel?.to
       ? "Duel sent"
       : activeMatch.duel?.from
@@ -9800,10 +9944,17 @@ function showRealMatch(match, data) {
     // is what it is - but it is not waiting on a pool, it is waiting on a person, and
     // saying "no opponent yet" about somebody you just named would be nonsense.
     const sentTo = match.duel?.to ?? null;
-    $("oppName").textContent = sentTo || "No opponent yet";
-    $("oppTier").textContent = sentTo ? "duel sent" : "seeding the pool";
+    // A claim on a vacant Crown and a race leg are one-sided too, and neither feeds the pool.
+    const crownClaim = match.crown?.claim ? match.crown : null;
+    const raceWith = match.race?.opponentName ?? null;
+    $("oppName").textContent = crownClaim ? "Vacant Crown" : raceWith ? raceWith : sentTo || "No opponent yet";
+    $("oppTier").textContent = crownClaim ? crownClaim.name : raceWith ? "racing now, unrated" : sentTo ? "duel sent" : "seeding the pool";
     $("oppTier").style.color = legibleOnDark(me.tier.color, RANK_TEXT_CONTRAST);
-    $("oppAge").textContent = sentTo
+    $("oppAge").textContent = crownClaim
+      ? "the first qualifying run set to settle takes it"
+      : raceWith
+      ? "same three, same start; their rounds open as yours land"
+      : sentTo
       ? "play your 3, then they answer"
       : match.poolSize == null
         ? "match already in progress"
@@ -9832,8 +9983,9 @@ function showRealMatch(match, data) {
     const played = new Date(match.opponent.playedAt);
     const days = Math.max(0, Math.round((Date.now() - played.getTime()) / 86400000));
     $("oppAge").textContent =
+      (match.crown ? `holds the ${match.crown.name} · ` : "") +
       `stored rounds · ${days === 0 ? "today" : days === 1 ? "yesterday" : days + " days ago"}` +
-      ` · ${match.poolSize} in the pool`;
+      (match.poolSize == null ? "" : ` · ${match.poolSize} in the pool`);
 
     renderStakes(match.stakes);
 
@@ -9895,6 +10047,9 @@ function showRealMatch(match, data) {
         " plays the same three after you, and the fixture goes to whoever improves more."
       : leg.opponentName + " has played these three. Only your first run on each counts.";
   }
+
+  // A Shadow match or an answer to a Flag (queue-board.js) draws its own opponent card.
+  globalThis.apogeeQueueHooks?.paintMatch?.(match);
 
   startMatchClock(match.expiresAt);
 
@@ -11164,6 +11319,21 @@ function tnHostPanel() {
   );
   body.append(sum);
 
+  // Signed out, the server refuses to host (flow audit #15), so the button is the sign-in
+  // rather than a form that fails on submit. The fields stay live: seeing what a bracket of
+  // a given shape costs is worth something before signing in. It presses the rail's own
+  // button, as the empty state beside it does, so the two cannot behave differently.
+  if (HOST === "electron" && !signedIn) {
+    const rail = $("btnSignIn");
+    const canSignIn = !!rail && !rail.disabled;
+    const signIn = tnButton(canSignIn ? "Sign in to host" : "Sign-in unavailable", "primary", () => {
+      if (canSignIn) rail.click();
+    });
+    signIn.disabled = !canSignIn;
+    body.append(signIn, tnEl("p", "tn-sum", "Hosting needs a signed-in account: the server keeps the bracket and checks every fixture."));
+    return panel;
+  }
+
   const create = tnButton("Open it for entry", "primary", async () => {
     if (HOST !== "electron") {
       showNotice("Tournaments are hosted from the desktop app.");
@@ -12083,22 +12253,36 @@ if (HOST === "electron") {
     if (r && r.board) renderDuels(r.board);
   }).catch(() => undefined);
 
-  $("btnRescan").addEventListener("click", () => api.rescan());
-  $("btnOpen").addEventListener("click", () => api.openStatsFolder());
+  $("btnRescan").addEventListener("click", async () => {
+    const button = $('btnRescan'); button.disabled = true;
+    try { await api.rescan(); } catch (error) { showError('Could not rescan your stats. ' + (error?.message || 'Try again.')); }
+    finally { button.disabled = false; }
+  });
+  $("btnOpen").addEventListener("click", () => { void api.openStatsFolder().catch(error => showError('Could not open your stats folder. ' + (error?.message || ''))); });
   const choose = async () => {
-    const chosen = await api.chooseFolder();
-    if (chosen && typeof chosen === "object" && chosen.error) showError(chosen.error);
-    else if (typeof chosen === "string") {
-      currentPath = chosen;
-      setStatus("scanning", "Scanning\u2026", currentPath);
-    }
+    const button = $('btnChoose'); if (button.disabled) return;
+    button.disabled = true;
+    try {
+      const chosen = await api.chooseFolder();
+      if (chosen && typeof chosen === "object" && chosen.error) showError(chosen.error);
+      else if (typeof chosen === "string") {
+        currentPath = chosen;
+        setStatus("scanning", "Scanning\u2026", currentPath);
+        refreshPractice();
+      }
+    } catch (error) { showError('Could not choose your stats folder. ' + (error?.message || 'Try again.')); }
+    finally { button.disabled = false; }
   };
   $("btnChoose").addEventListener("click", choose);
   $("emptyChoose").addEventListener("click", choose);
 
   $("btnSignIn").addEventListener("click", async () => {
-    const result = await api.signIn();
-    if (result && result.error) showError(result.error);
+    const button = $('btnSignIn'); button.disabled = true;
+    try {
+      const result = await api.signIn();
+      if (result && result.error) showError(result.error);
+    } catch (error) { showError('Could not start Steam sign-in. ' + (error?.message || 'Try again.')); }
+    finally { button.disabled = false; }
   });
 
   // A listener added this way is invisible from outside: there is no way to ask an
@@ -12316,6 +12500,8 @@ if (HOST === "electron") {
       const leg = activeMatch.tournament;
       const ok = window.confirm(leg
         ? `Forfeit ${leg.label} against ${name}?\n\nThe fixture goes to them. Nothing is rated.`
+        : activeMatch.crown
+        ? `Forfeit this challenge for the ${activeMatch.crown.name}?\n\n${name} keeps it, and it uses today's challenge on this Crown. Nothing is rated.`
         : `Forfeit this match against ${name}?\n\n` +
           "Counts as a loss and lowers your rating. You can queue again right away.",
       );
@@ -12592,6 +12778,7 @@ if (HOST === "electron") {
   api.onScanning(({ scanning }) => {
     setStatus(scanning ? "scanning" : "ok", scanning ? "Scanning…" : "Watching", currentPath);
     if (!scanning) paintFolderFound();
+    else paintFolderReading();
   });
 
   api.onError((message) => {
@@ -12640,8 +12827,9 @@ if (HOST === "electron") {
         showError(state.lastError);
         paintFolderMissing();
       } else if (!state.scanning) paintFolderFound();
+      else paintFolderReading();
     }
-  });
+  }).catch(error => showError('Could not load the app. Reopen Apogee to try again. ' + (error?.message || '')));
 } else {
   // Static preview: the snapshot is inlined, and neither folder controls nor sign-in
   // apply without a main process behind them.
@@ -12762,9 +12950,14 @@ function mountArcadeCommand() {
   if (!dialog || !input || !list) return;
   let opener = null;
   const descriptions = {
-    mixtape: 'Build a practice playlist.',
+    home: 'Start practice, resume a session, or find a drill.',
+    mixtape: 'Mixtape: build a short practice session.',
+    ghost: 'Race a saved score on the same scenarios.',
+    expedition: 'Solo challenges and unlockable rewards.',
+    leaderboards: 'Compare scores and ladder standings.',
     queue: 'Queue a ranked match.', seasonview: 'Season benchmarks and your next rank.',
     tournaments: 'Groups, brackets and fixtures.', result: 'Rounds and rating change from your last match.',
+    crowns: 'Hold a Crown per category and band, or race a friend now.',
     profile: 'Category strengths and weak spots.', quests: 'Current quests.',
     scenarios: 'Search every scenario.', ranks: 'Rank thresholds and where you sit.',
     consistency: 'How steady your recent scores are.', admin: 'Local appearance and app settings.',
@@ -12777,7 +12970,7 @@ function mountArcadeCommand() {
       if (tab.hidden) return;
       const label = tab.querySelector('.tab-label')?.textContent || '';
       const description = descriptions[tab.dataset.screen] || '';
-      if (query && !(label + ' ' + description).toLowerCase().includes(query)) return;
+      if (query && !query.split(/\s+/).every(word => (label + ' ' + description).toLowerCase().includes(word))) return;
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'arcade-command-route';
@@ -12788,10 +12981,26 @@ function mountArcadeCommand() {
       });
       list.append(button);
     });
+    if (query) {
+      const rows = (practice?.scenarios || []).filter(row => matchesQuery(row, query));
+      for (const row of rows.slice(0, 6)) {
+        const button = document.createElement('button');
+        button.type = 'button'; button.className = 'arcade-command-route';
+        button.innerHTML = '<span aria-hidden="true">↗</span><span><strong>' + esc(row.label || row.scenario) + '</strong><small>' + esc(row.category + ' · ' + row.windowName) + '</small></span><span>View</span>';
+        button.addEventListener('click', () => { dialog.close(); browseScenarios({ query: row.scenario }); });
+        list.append(button);
+      }
+      if (rows.length > 6) {
+        const all = document.createElement('button'); all.type = 'button'; all.className = 'arcade-command-route';
+        all.textContent = 'View all ' + rows.length + ' matching scenarios';
+        all.addEventListener('click', () => { dialog.close(); browseScenarios({ query }); });
+        list.append(all);
+      }
+    }
     $('arcadeCommandEmpty').hidden = list.childElementCount > 0;
   }
   function show() {
-    if (dialog.open || !$('celebrate').hidden) return;
+    if (document.querySelector('dialog[open]') || !$('celebrate').hidden) return;
     opener = document.activeElement;
     input.value = '';
     renderRoutes();
@@ -12800,7 +13009,7 @@ function mountArcadeCommand() {
   }
   $('arcadeJump').addEventListener('click', show);
   $('arcadeCommandClose').addEventListener('click', () => dialog.close());
-  dialog.addEventListener('close', () => { if (opener?.isConnected) opener.focus(); });
+  dialog.addEventListener('close', () => { if (opener?.isConnected && document.activeElement === document.body) opener.focus(); });
   dialog.addEventListener('click', event => {
     if (event.target !== dialog) return;
     const r = dialog.getBoundingClientRect();

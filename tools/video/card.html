@@ -30,6 +30,8 @@
   .lockup { display: block; flex: none; }
   .lockup.horizontal { height: 6.2vmin; width: auto; }
   .lockup.stacked { height: 30vmin; width: auto; }
+  /* A mechanic's emblem (assets/brand/mechanics), set by `glyph`: it leads the top row. */
+  .glyph { display: block; flex: none; height: 13vmin; width: 13vmin; }
   .eyebrow { font: 400 2.1vmin var(--mono); letter-spacing: .32em; text-transform: uppercase; color: var(--ink-dim); white-space: nowrap;
     padding-left: 2.4vmin; border-left: 1px solid rgba(186,211,233,.22); line-height: 3.4vmin; }
   .center .eyebrow { border-left: 0; padding-left: 0; }
@@ -65,6 +67,8 @@ const CARD = /*CARD*/;
 const LOCKUPS = /*LOCKUPS*/;
 /** Image data URIs by the path shots.json names them with, inlined by record.cjs. */
 const IMAGES = /*IMAGES*/;
+/** assets/brand/mechanics/emblems/dark/<glyph>.svg, inlined by record.cjs when a card names one. */
+const GLYPHS = /*GLYPHS*/;
 const portrait = innerHeight > innerWidth;
 if (portrait) document.body.classList.add("portrait");
 document.documentElement.style.setProperty("--pad", portrait ? "8vmin" : "11vmin");
@@ -83,12 +87,20 @@ if (CARD.layout === "center") card.classList.add("center");
 if (CARD.images) card.classList.add("showcase");
 const lockup = CARD.lockup ? LOCKUPS[CARD.lockup] : "";
 if (CARD.lockup && !lockup) throw new Error("no lockup named " + CARD.lockup);
+const glyph = CARD.glyph ? GLYPHS[CARD.glyph] : "";
+if (CARD.glyph && !glyph) throw new Error("no mechanic glyph named " + CARD.glyph);
 card.innerHTML =
-  (lockup || CARD.eyebrow ? `<div class="top">${lockup}${CARD.eyebrow ? `<span class="eyebrow">${esc(CARD.eyebrow)}</span>` : ""}</div>` : "") +
+  (lockup || glyph || CARD.eyebrow ? `<div class="top">${glyph}${lockup}${CARD.eyebrow ? `<span class="eyebrow">${esc(CARD.eyebrow)}</span>` : ""}</div>` : "") +
   (titleLines.length ? `<h1>${titleLines.map((l) => `<span class="line">${inline(l).split(/(\s+)/).map((w) => (/^\s+$/.test(w) ? w : `<span class="w">${w}</span>`)).join("")}</span>`).join("")}</h1>` : "") +
   (CARD.rule !== false ? `<div class="rule"></div>` : "") +
   (subLines.length ? `<div class="sub">${subLines.map((l) => `<span class="line">${inline(l)}</span>`).join("")}</div>` : "");
-const lockupSvg = card.querySelector(".top > svg");
+const glyphSvg = glyph ? card.querySelector(".top > svg") : null;
+if (glyphSvg) {
+  glyphSvg.classList.add("glyph");
+  glyphSvg.removeAttribute("width");
+  glyphSvg.removeAttribute("height");
+}
+const lockupSvg = card.querySelector(glyph ? ".top > svg + svg" : ".top > svg");
 if (lockupSvg) {
   lockupSvg.classList.add("lockup", CARD.lockup);
   // The file's own width and height are its PNG size; the card sizes it in vmin instead.

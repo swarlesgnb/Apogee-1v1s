@@ -134,7 +134,10 @@ function cardPage(card) {
     .replace("/*TOKENS*/", () => themeTokens())
     .replace("/*CARD*/", () => JSON.stringify(card))
     .replace("/*LOCKUPS*/", () => JSON.stringify(card.lockup ? { [card.lockup]: read(lockups[card.lockup]) } : {}))
-    .replace("/*IMAGES*/", () => JSON.stringify(images));
+    .replace("/*IMAGES*/", () => JSON.stringify(images))
+    // A mechanic's emblem, drawn by npm run brand:mechanics (tools/video/mechanics.json has a
+    // ready scene per mechanic).
+    .replace("/*GLYPHS*/", () => JSON.stringify(card.glyph ? { [card.glyph]: read(`assets/brand/mechanics/emblems/dark/${card.glyph}.svg`) } : {}));
 }
 
 /* ------------------------------------------------------------------ camera */

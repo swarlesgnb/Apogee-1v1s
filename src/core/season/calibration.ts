@@ -91,6 +91,8 @@ export interface FamilyCalibration {
 
 export interface BandCalibration {
   factor: number;
+  /** Explicit playtest tuning retained until this field is removed for recalibration. */
+  override?: string;
   relative?: number;
   raw: number;
   runs: number;
@@ -304,5 +306,8 @@ export function calibratedWhy(calibration: Calibration, family: string, window: 
   const f = calibration.families[family];
   const band = f.windows?.[String(window)];
   const factor = factorFor(calibration, family, window);
+  if (band?.override) {
+    return `The model's prediction (see predicted), scaled by ${factor} with a manual playtest adjustment: ${band.override} Stored in data/season-1/calibration.json; retained during recalibration until the override is removed. This is tuning, not a sampled leaderboard.`;
+  }
   return `The model's prediction (see predicted), with every score on its board multiplied by ${factor}: ${band ? `this band's correction from ${band.runs} playtest run(s) on its current file` : `the family's correction from ${f.runs} playtest run(s) on the current files, this band having none of its own`}, which put it ${factor < 1 ? "harder" : "easier"} than the model had it next to the rest of its category on one ladder across bands. Measured by npm run calibrate:season; see data/season-1/calibration.json and src/core/season/calibration.ts.`;
 }

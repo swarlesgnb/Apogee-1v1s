@@ -6,8 +6,9 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const scripts = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).scripts;
-const validation = [...scripts.validate.matchAll(/npm run ([\w:-]+)/g)].map(match => match[1]);
-const checks = [...new Set(['typecheck', ...validation, 'validate:expedition-ui', 'audit:look', 'smoke', 'beta'])];
+const validation = [...(scripts["validate:suites"] ?? scripts.validate).matchAll(/npm run ([\w:-]+)/g)].map(match => match[1]);
+if (validation.length === 0) throw new Error('No validation suites found in package.json');
+const checks = [...new Set(['typecheck', ...validation, 'validate:discord', 'validate:practice-ux', 'validate:mixtape-ui', 'validate:social-ui', 'validate:crowns-ui', 'validate:queue-ui', 'validate:expedition-ui', 'audit:look', 'smoke', 'beta'])];
 const output = join(root, '.cache', 'release-readiness');
 mkdirSync(output, { recursive: true });
 const report = { startedAt: new Date().toISOString(), finishedAt: null, checks: [], allPassed: false,

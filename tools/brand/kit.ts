@@ -12,13 +12,14 @@
  */
 
 import { spawnSync } from "node:child_process";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { emblemFrom, fontCss as fontCssFrom, readTokens, sliceBadge, TOKEN_SHEETS, tokenCss, withFonts as withFontsFrom } from "../../src/core/brand/clientSources.ts";
 import type { BrandTokens } from "../../src/core/brand/palette.ts";
+import type { TextChecks } from "./checks.ts";
 import { loadRankTheme, type RankTier } from "../../src/core/ranks/apogeeRanks.ts";
 
 export const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -88,6 +89,28 @@ export interface RasterJob {
   height: number;
   /** Shrink-wrap the viewBox to the drawing plus this many units, then scale to `width`. */
   trim?: number;
+  /** Measure every text after fitting (position, ink, what is behind it); see checks.ts. */
+  report?: boolean;
+  /** Strings replaced in the kept SVG only: an embedded picture swapped for its path. */
+  rewrite?: [string, string][];
+  /** What the measured text is held to (checks.ts). Implies `report`. */
+  checks?: TextChecks;
+}
+
+/** One <text> as the rasteriser measured it, in output pixels. */
+export interface TextMetric {
+  s: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  /** Font size in output pixels, after fitting. */
+  size: number;
+  weight: number;
+  fill: string;
+  opacity: number;
+  /** The least legible pixel behind the text (3rd percentile), when it sits on a drawn ground. */
+  bg?: string;
 }
 
 /**
@@ -98,16 +121,32 @@ export interface RasterJob {
  * real font metrics, which nothing in Node can do without a font parser.
  */
 export function rasterize(jobs: RasterJob[], label: string): void {
+  const r = rasterizeReport(jobs, label);
+  if (!r.ok) process.exit(1);
+}
+
+/**
+ * The same, without exiting: whether every job rendered cleanly, and the text measured in
+ * each job that asked for a report (null for the rest).
+ */
+export function rasterizeReport(jobs: RasterJob[], label: string): { ok: boolean; reports: (TextMetric[] | null)[] } {
   const dir = join(root, ".cache", "brand", "jobs");
   mkdirSync(dir, { recursive: true });
   const electron = createRequire(import.meta.url)("electron") as unknown as string;
   const file = join(dir, `${label}.json`);
+  const reportFile = file.replace(/\.json$/, ".report.json");
+  rmSync(reportFile, { force: true });
   writeFileSync(file, JSON.stringify(jobs));
-  const r = spawnSync(electron, [join(root, "tools", "brand", "rasterize.cjs"), file], { stdio: "inherit" });
-  if (r.status !== 0) {
-    console.error(`rasterising ${label} failed (${relative(root, file)})`);
-    process.exit(r.status ?? 1);
-  }
+  // Chromium refuses to start as root with its sandbox on (a Linux container or CI box);
+  // the pages drawn here are our own SVGs, with no network and no remote content.
+  const sandbox = process.platform === "linux" && process.getuid?.() === 0 ? ["--no-sandbox"] : [];
+  const r = spawnSync(electron, [...sandbox, join(root, "tools", "brand", "rasterize.cjs"), file], { stdio: "inherit" });
+  const ok = r.status === 0;
+  if (!ok) console.error(`rasterising ${label} failed (${relative(root, file)})`);
+  if (!existsSync(reportFile)) return { ok, reports: jobs.map(() => null) };
+  const reports = JSON.parse(readFileSync(reportFile, "utf8")) as (TextMetric[] | null)[];
+  rmSync(reportFile);
+  return { ok, reports };
 }
 
 export function ensureDir(p: string): string {

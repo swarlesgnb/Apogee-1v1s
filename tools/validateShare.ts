@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { app, BrowserWindow } from "electron";
 import { ShareCards } from "../src/app/shareCard.ts";
+import { writeFileSync } from "node:fs";
 import { parseShareRequest, type GhostRecord, type SettledRecord } from "../src/core/brand/shareInput.ts";
 
 const output = resolve('.cache/share');
@@ -62,6 +63,46 @@ app.whenReady().then(async () => {
   assert.ok('refused' in cards.input('match'));
   ghost = null;
   assert.ok('refused' in cards.input('ghost'));
+
+  // The mechanic cards, through the same main-owned path: a record in, a name from the
+  // renderer, a card out. Nothing is drawn before a record exists.
+  for (const source of ['daily', 'crown', 'flag', 'shadow'] as const) {
+    assert.ok('refused' in cards.input(source), `${source} refuses with no record`);
+    const none = await cards.handle({ source, layout: 'landscape', action: 'preview' });
+    assert.ok(!none.ok, `${source} preview refuses with no record`);
+  }
+  const at = Date.parse('2026-10-03T12:00:00');
+  cards.recordDaily({ number: 212, band: 'Intermediate', date: '2026-10-03', marks: ['above', 'near', 'below'], meanDelta: .0063, streak: 6 });
+  cards.recordCrown({ event: 'taken', category: 'Speed Switching', band: 'Lunar', rival: { displayName: 'Holder' }, defences: 0, rivalReignDays: 3, yourMatchScore: .1, theirMatchScore: .05, rounds: settled.rounds, at });
+  cards.recordFlag({ verdict: 'win', category: 'Precise Tracking', challenger: { displayName: 'Challenger' }, plantedAt: '2026-10-01', answeredAt: '2026-10-03', rated: true, ratingAfter: 1550, ratingChange: 15, yourMatchScore: .1, theirMatchScore: .05, rounds: settled.rounds });
+  cards.recordShadow({ category: 'Speed Switching', of: 5, placed: null, at, series: [{ verdict: 'win', shadowRating: 1604, yourMatchScore: .02, theirMatchScore: .01 }, { verdict: 'loss', shadowRating: 1621 }] });
+  const want: Record<string, string[]> = {
+    daily: ['Daily #212', 'Test Player', 'ABOVE', 'NEAR', 'BELOW', 'Streak 6 days'],
+    crown: ['Crown taken', 'Test Player  vs  Holder', 'Scenario One', 'Lunar band'],
+    flag: ['Flag held', 'Test Player  vs  Challenger', 'Scenario One', 'Stood 2 days'],
+    shadow: ['Placing', 'Shadow 1604', 'Shadow 1621', 'TO PLAY'],
+  };
+  for (const source of ['daily', 'crown', 'flag', 'shadow'] as const) {
+    const input = cards.input(source);
+    assert.ok(!('refused' in input), `${source}: ${'refused' in input ? input.refused : ''}`);
+    for (const layout of ['landscape', 'portrait'] as const) {
+      const rendered = await cards.renderAny(input, layout);
+      assert.equal(rendered.width, layout === 'landscape' ? 1200 : 1080);
+      assert.equal(rendered.height, layout === 'landscape' ? 675 : 1920);
+      for (const w of want[source]) assert.ok(rendered.texts.some(t => t.includes(w)), `${source} ${layout} prints "${w}"`);
+      writeFileSync(join(output, `${source}-${layout}.png`), rendered.png);
+      console.log(`PASS: ${source} ${layout} rendered at ${rendered.width}x${rendered.height}, ${rendered.png.length} bytes (${rendered.fileName})`);
+    }
+    const copiedBefore: Buffer | null = copied;
+    assert.equal((await cards.handle({ source, layout: 'portrait', action: 'copy' })).ok, true);
+    assert.ok(copied && copied !== copiedBefore, `${source} copies`);
+  }
+  // A daily card names no scenario: the record has nowhere to put one.
+  const daily = await cards.renderAny(cards.input('daily') as never, 'landscape');
+  assert.ok(!daily.texts.some(t => /Scenario/.test(t)), 'the daily card prints no scenario');
+  cards.recordFlag({ verdict: 'void', challenger: { displayName: 'x' }, plantedAt: '2026-10-01', answeredAt: '2026-10-02', yourMatchScore: 0, theirMatchScore: 0, rounds: settled.rounds });
+  assert.ok('refused' in cards.input('flag'), 'a void flag answer has no card');
+  console.log('PASS: daily, crown, flag and shadow cards: refused without a record, drawn from main\'s record, copy works, void refused');
 
   // Exercise the shipped panel script with a controlled bridge; rendering above uses
   // the real main-process implementation. No clipboard or real save dialog is used.

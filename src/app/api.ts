@@ -22,7 +22,7 @@ import { join } from "node:path";
 
 import { parseFilename } from "../core/stats/parseStatsFile.ts";
 import { log } from "./crashLog.ts";
-import { collectRuns, type RunPayload } from "../core/sync/uploadRuns.ts";
+import { collectRuns, runClockOffset, type RunPayload } from "../core/sync/uploadRuns.ts";
 import { accessToken, supabase, SUPABASE_URL } from "./session.ts";
 
 const FUNCTIONS_BASE = `${SUPABASE_URL.replace(/\/+$/, "")}/functions/v1`;
@@ -68,7 +68,8 @@ export function friendlyError(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
 }
 
-async function callFunction<T>(name: string, body: unknown): Promise<T> {
+/** Exported for the feature modules that keep their calls beside them (socialApi.ts, arenaApi.ts). */
+export async function callFunction<T>(name: string, body: unknown): Promise<T> {
   const token = await accessToken();
   if (!token) throw new ApiError("Sign in with Steam to play ranked.", 401);
 
@@ -311,12 +312,24 @@ export interface FoundMatch {
    * Set when this match came from a duel rather than the queue, naming whoever is on the
    * other end of it. find-match never sets it, so every existing caller sees undefined.
    */
-  duel?: { id: string; to?: string; from?: string } | null;
+  /** `code` and `open` mark an open challenge (open-duel); answering one is always unrated. */
+  duel?: { id: string; to?: string; from?: string; code?: string; open?: boolean; unrated?: boolean } | null;
   /**
    * Set when this match is one leg of a tournament fixture. Unrated. `leg` 1 is played
    * first against nobody, and `opponentName` answers it with the same three afterwards.
    */
   tournament?: TournamentLeg | null;
+  /** The synthetic opponent of a match the pool had nobody for (fleet/queue). Never its scores. */
+  shadow?: ShadowInfo | null;
+}
+
+export interface ShadowInfo {
+  percentile: number;
+  /** "a 58th-percentile score on each". */
+  label: string;
+  rung: number;
+  ordinal: number;
+  synthetic: true;
 }
 
 export interface TournamentLeg {
@@ -327,6 +340,57 @@ export interface TournamentLeg {
   label: string;
   leg: 1 | 2;
   opponentName: string;
+}
+
+/* ------------------------------------------------------------ shadows and flags ---- */
+
+/** Somebody played your banked rounds, and the match settled. Unrated for you. */
+export interface BankNews {
+  matchId: string;
+  settledAt: string;
+  by: string;
+  category: string;
+  theirResult: "win" | "loss" | "draw" | null;
+  /** Rounds each way, when the raw scores say so unambiguously. */
+  tally: { theirs: number; yours: number; tied: number } | null;
+  line: string;
+}
+
+export interface QueueBoard {
+  now: string;
+  /** What queueing this category would do, when one was asked about. */
+  preview: {
+    category: string;
+    window: number;
+    band: string;
+    outcome: "shadow" | "plant" | "opponent" | "live" | "ineligible";
+    opponents?: number;
+    shadow?: ShadowInfo;
+    /** Scenarios in this category the next Shadow has a committed score on, of `total`. */
+    scored: number;
+    total: number;
+    line: string;
+  } | null;
+  shadow: {
+    next: ShadowInfo;
+    standing: { highestBeaten: number | null; lostAbove: number | null; roundsWon: number; roundsContested: number; streak: number; played: number };
+    recent: { ordinal: number; percentile: number; label: string; result: string; tally: string | null; decidedAt: string | null }[];
+  };
+  activeShadow: (ShadowInfo & { matchId: string }) | null;
+  /** Unread news about your banked rounds, newest first. */
+  news: BankNews[];
+  /** The last week of it, read or not, for the panel. */
+  recentBank: BankNews[];
+  /** The newest settledAt in `news`: send it back as `ack` once shown. */
+  newsThrough: string | null;
+}
+
+/**
+ * The queue screen's read: what queueing would do, your Shadow ladder, and who played your
+ * banked rounds. `ack` (a `newsThrough`) marks that news read, so it is said once.
+ */
+export function fetchQueueBoard(request: { category?: string; window?: number; ack?: string }): Promise<QueueBoard> {
+  return callFunction<QueueBoard>("queue-board", request);
 }
 
 /**
@@ -341,7 +405,16 @@ export function findMatch(
   category: string,
   pool: { window: number },
 ): Promise<FoundMatch> {
-  return callFunction<FoundMatch>("find-match", { category, window: pool.window });
+  return callFunction<FoundMatch>("find-match", { category, window: pool.window, tzOffsetMinutes: matchClockOffset() });
+}
+
+/**
+ * The UTC offset a new match is started with. Every run submitted to it is held to this
+ * one, and it has to agree with the offsets on this machine's recent history uploads
+ * (src/core/verify/timeIntegrity.ts).
+ */
+export function matchClockOffset(): number {
+  return new Date().getTimezoneOffset();
 }
 
 /* ------------------------------------------------------------------------ duels ---- */
@@ -417,7 +490,7 @@ export function sendDuel(
   category: string,
   pool: { window: number },
 ): Promise<FoundMatch> {
-  return callFunction<FoundMatch>("send-duel", { to, category, window: pool.window });
+  return callFunction<FoundMatch>("send-duel", { to, category, window: pool.window, tzOffsetMinutes: matchClockOffset() });
 }
 
 export interface DuelAnswer {
@@ -441,7 +514,7 @@ export function answerDuel(
   duelId: string,
   action: "accept" | "decline" | "cancel",
 ): Promise<FoundMatch & DuelAnswer> {
-  return callFunction<FoundMatch & DuelAnswer>("answer-duel", { duelId, action });
+  return callFunction<FoundMatch & DuelAnswer>("answer-duel", { duelId, action, tzOffsetMinutes: matchClockOffset() });
 }
 
 /* ------------------------------------------------------------------ tournaments ---- */
@@ -493,7 +566,7 @@ export function tournamentAction(request: TournamentAction): Promise<{ ok: boole
  * the same path, with `tournament` saying which fixture it is.
  */
 export function playFixture(tournamentId: string, fixtureId: string, attempt: number): Promise<FoundMatch> {
-  return callFunction<FoundMatch>("play-fixture", { tournamentId, fixtureId, attempt });
+  return callFunction<FoundMatch>("play-fixture", { tournamentId, fixtureId, attempt, tzOffsetMinutes: matchClockOffset() });
 }
 
 /**
@@ -702,10 +775,10 @@ export async function submitRun(
   // only this machine can say what instant those digits mean. Without it the server
   // reads them in its own timezone and every run lands hours from where it belongs.
   //
-  // Safe to take from the client: it shifts nothing but the sender's own match window,
-  // and a wrong one puts their runs outside it, which is the check rejecting them
-  // rather than being fooled.
-  const tzOffsetMinutes = new Date().getTimezoneOffset();
+  // The offset for this file's own wall clock, the one its history upload carried. The
+  // server holds it to the clock the match started with and to the first upload of the
+  // run, so it is no longer a free choice (src/core/verify/timeIntegrity.ts).
+  const tzOffsetMinutes = runClockOffset(filename);
 
   return callFunction<SubmittedRun>("submit-run", {
     filename,
@@ -725,6 +798,14 @@ export interface SettledMatch {
   rated?: boolean;
   /** The fixture this was a leg of, when it was one. */
   tournament?: { id: string; name: string; label: string; leg: 1 | 2 } | null;
+  /** A match against a Shadow: how it went on rounds. Unrated whatever the verdict. */
+  shadow?: (ShadowInfo & {
+    verdict: "win" | "loss" | "draw" | "void" | "forfeit" | null;
+    tally: { won: number; lost: number; tied: number } | null;
+    contested?: number;
+    rounds?: number;
+    scores?: (number | null)[];
+  }) | null;
   /**
    * Who it was against, so the result can offer a rematch.
    *

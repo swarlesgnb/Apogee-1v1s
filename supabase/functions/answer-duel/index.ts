@@ -31,6 +31,7 @@ import {
 } from "../_shared/apogee.ts";
 import { forfeitMatch, sweepStaleMatches } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import { matchClock } from "../_shared/timeIntegrity.ts";
 
 import { answerDuel, type Duel, type DuelAnswer } from "../../../src/core/match/duels.ts";
 import { winProbability } from "../../../src/core/rating/glicko2.ts";
@@ -38,6 +39,8 @@ import { winProbability } from "../../../src/core/rating/glicko2.ts";
 interface Body {
   duelId: string;
   action: DuelAnswer | "cancel";
+  /** The PC's UTC offset now, on accept; every run in the match is held to it. */
+  tzOffsetMinutes?: number;
 }
 
 Deno.serve(handler(async (req, admin) => {
@@ -142,6 +145,7 @@ Deno.serve(handler(async (req, admin) => {
   }
 
   await requireEligible(admin, caller.playerId);
+  const clock = await matchClock(admin, caller.playerId, body);
 
   // Claim it in one statement.
   //
@@ -225,6 +229,7 @@ Deno.serve(handler(async (req, admin) => {
         player_id: caller.playerId,
         rating_before: Number(myRating?.rating ?? 1500),
         rd_before: Number(myRating?.rd ?? 350),
+        ...clock,
       },
       {
         match_id: match.id,
