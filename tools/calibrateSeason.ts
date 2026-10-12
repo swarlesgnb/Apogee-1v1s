@@ -14,7 +14,7 @@
  *
  *   relative   each family and band against the rest of its category, read on the season's
  *              one ladder across bands, from the player's Apogee bests alone
- *   anchor     each category's ladder moved so the player's practised Apogee best lands
+ *   anchor     each category's ladder moved so the player's practiced Apogee best lands
  *              at their top fraction on the real KovaaK's boards of that category's
  *              scenarios (data/leaderboard_percentiles.json, categories from
  *              data/scenario_identity.json)

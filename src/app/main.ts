@@ -518,7 +518,7 @@ function installScenarioFiles(statsDir: string): void {
 /**
  * Bring the practice playlists the player already installed up to this season. Their
  * names outlive a change of scenarios, so without this a player who installed before a
- * season changed kept practising the old pool.
+ * season changed kept practicing the old pool.
  */
 function refreshInstalledPlaylists(statsDir: string): void {
   try {

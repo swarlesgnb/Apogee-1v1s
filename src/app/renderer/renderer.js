@@ -6978,7 +6978,7 @@ function renderSeasonView(data) {
  * band gets run back to back. There is one per category per band - all six separately -
  * plus one of everything at that band, and each is installable on its own because an
  * evening of tracking should not require writing every file for skills you are not
- * practising.
+ * practicing.
  *
  * KovaaK's reads playlists at startup, so the restart caveat is printed rather than left
  * to be discovered: a playlist that is genuinely on disk and genuinely not in the menu

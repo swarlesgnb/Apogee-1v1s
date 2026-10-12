@@ -71,7 +71,7 @@ secret is kept, because a secret kept from an offline client is not one. What is
    `dailyFor(pool, season, now, band)`, which takes the clock; the renderer's `daily()`
    takes no argument. Preview window in the app: zero.
 2. The server refuses a board read or an entry for a day that has not started (422).
-3. An entry is the first run on each scenario played inside the day, so practising
+3. An entry is the first run on each scenario played inside the day, so practicing
    tomorrow's three today earns nothing on tomorrow's board directly.
 4. The baseline is built from runs before the day began, so practice before the day raises
    the bar the day is measured against. Advance practice partly cancels itself.

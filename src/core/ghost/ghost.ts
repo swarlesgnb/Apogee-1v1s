@@ -243,7 +243,7 @@ const KINDS: Record<GhostKind, { daysBack: number; pick: "median" | "best" }> = 
  *
  * What these are replayed on is narrower than what the app draws from. A live side only
  * exists where the player played that day, so each day's three are drawn from the
- * scenarios touched that day, which skews toward what the player was practising. The app
+ * scenarios touched that day, which skews toward what the player was practicing. The app
  * draws from every eligible scenario in the library, recently played first, and that draw
  * cannot be replayed whole: on its real draws only 11-18% of rounds had a live run that
  * day. Over those rounds the live side won 60.0%, 55.7% and 48.7% of rounds for the three

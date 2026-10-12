@@ -1019,7 +1019,7 @@ benchmark standing without computing anything itself.
 
 A radar/heat visual over the sub-categories of the tracked benchmark, showing the
 player's rank in each, computed from real history against real thresholds. Its job is to
-answer *"what should I practise today"* and then hand that straight to the queue button.
+answer *"what should I practice today"* and then hand that straight to the queue button.
 
 This is the most retention-relevant feature in the plan and the lowest
 competitive-risk: it makes Apogee useful on days the player doesn't want to compete, and
