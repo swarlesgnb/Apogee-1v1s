@@ -43,6 +43,8 @@ import {
 } from "../_shared/apogee.ts";
 import { RANKED_V2_ENGINE, sweepStaleMatches } from "../_shared/rankedV2.ts";
 import { enforceRateLimit } from "../_shared/rateLimit.ts";
+import { fieldShadow, shadowForMatch } from "../_shared/queue.ts";
+import { matchClock } from "../_shared/timeIntegrity.ts";
 
 import { selectScenarios } from "../../../src/core/match/scenarioSelection.ts";
 import {
@@ -66,6 +68,8 @@ interface Body {
    * run set already banked under the old one.
    */
   window: number;
+  /** The PC's UTC offset now; every run in the match is held to it (_shared/timeIntegrity.ts). */
+  tzOffsetMinutes?: number;
 }
 
 /** Opponents faced this recently are deprioritised, so the ladder feels bigger. */
@@ -107,6 +111,10 @@ Deno.serve(handler(async function findMatchRequest(req, admin, attempt = 0): Pro
   // whatever their history says, because refusing there would strand them in a match
   // they cannot see or abandon. What the bar is and why is in requireEligible.
   await requireEligible(admin, caller.playerId);
+  // The match clock, checked against the player's own recent uploads before anything is
+  // created, and written onto their side below.
+  const clock = await matchClock(admin, caller.playerId, body);
+
   const { season, windowName, selectable } = await loadSeasonPool(admin, body.window);
 
   const { data: ratingRow, error: ratingError } = await admin
@@ -289,9 +297,11 @@ Deno.serve(handler(async function findMatchRequest(req, admin, attempt = 0): Pro
       .map((s) => s.id);
 
     const opened = await open(admin, caller.playerId, matchRow(scenarioIds), [
-      { player_id: caller.playerId, rating_before: rating.rating, rd_before: rating.rd },
+      { player_id: caller.playerId, rating_before: rating.rating, rd_before: rating.rd, ...clock },
     ]);
     if (!opened.created) return retry(opened.matchId);
+    // A Shadow to play against (src/core/match/shadow.ts), frozen now, judged at settlement.
+    const shadow = await fieldShadow(admin, caller.playerId, opened.matchId, scenarioIds.map((id) => byId.get(id)?.name ?? ""));
 
     return json({
       matchId: opened.matchId,
@@ -305,6 +315,7 @@ Deno.serve(handler(async function findMatchRequest(req, admin, attempt = 0): Pro
       // Says why there is no opponent when there could have been one, so the client is
       // not left to guess that the pool was empty.
       planting,
+      shadow,
       winProbability: null,
       stakes: null,
       poolSize: banks.size,
@@ -320,7 +331,7 @@ Deno.serve(handler(async function findMatchRequest(req, admin, attempt = 0): Pro
   const copiedAt = new Date(Math.max(...rounds.map((r) => r.playedAt.getTime())));
 
   const opened = await open(admin, caller.playerId, matchRow(scenarioIds), [
-    { player_id: caller.playerId, rating_before: rating.rating, rd_before: rating.rd },
+    { player_id: caller.playerId, rating_before: rating.rating, rd_before: rating.rd, ...clock },
     {
       player_id: opponent.playerId,
       run_ids: rounds.map((r) => r.runId).filter((id): id is string => id !== null),
@@ -414,6 +425,7 @@ async function resume(admin: any, playerId: string, matchId: string, match: any)
         }
       : null,
     seeding: !other,
+    shadow: other ? null : await shadowForMatch(admin, matchId),
     resumed: true,
     winProbability: them && v2 ? matchWinProbability(me, them) : null,
     // Only for a v2 match: a v1 match is rated as one result, and these are per round.

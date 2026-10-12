@@ -22,25 +22,27 @@
 import { copyFileSync, existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
+import { anyCardSvg } from "../../src/core/brand/mechanicCards.ts";
 import { palettes } from "../../src/core/brand/palette.ts";
 import {
   FIT_TEXT_SCRIPT,
   SHARE_CARD_SIZES,
-  shareCardSvg,
   type CardLayout,
   type CardRound,
   type CardTier,
   type ShareCardInput,
 } from "../../src/core/brand/shareCard.ts";
+import type { AnyCardInput } from "../../src/core/brand/shareInput.ts";
 import { settleMatch, type RoundSubmission } from "../../src/core/match/settle.ts";
 import { updateRating } from "../../src/core/rating/glicko2.ts";
 import { emblem, ensureDir, rasterize, root, tiers, tokens, withFonts, type RasterJob } from "./kit.ts";
+import { MECHANIC_COMMITTED, mechanicSamples } from "./mechanicSamples.ts";
 
 const P = palettes(tokens);
 
 /** A card as a finished SVG: fonts embedded, the fit script riding along for the rasteriser. */
-export function cardSvg(input: ShareCardInput, layout: CardLayout, theme: "dark" | "light"): string {
-  const svg = shareCardSvg(input, { layout, palette: P[theme], emblem });
+export function cardSvg(input: AnyCardInput, layout: CardLayout, theme: "dark" | "light"): string {
+  const svg = anyCardSvg(input, { layout, palette: P[theme], emblem });
   return withFonts(svg).replace("</svg>", `<script type="text/fit">${FIT_TEXT_SCRIPT}</script></svg>`);
 }
 
@@ -156,7 +158,7 @@ const SAMPLES: Record<string, ShareCardInput> = {
   },
 };
 
-/** The three committed, and why: one of each thing a card has to do. */
+/** The three result cards committed, and why: one of each thing a card has to do. */
 const COMMITTED: [string, CardLayout, "dark" | "light"][] = [
   // The hard case: a loss on more raw points, and the card still makes it make sense.
   ["defeat-more-points", "landscape", "dark"],
@@ -169,9 +171,12 @@ const COMMITTED: [string, CardLayout, "dark" | "light"][] = [
 // ------------------------------------------------------------------ render
 
 const arg = process.argv[2];
-const inputs: Record<string, ShareCardInput> = arg && existsSync(arg)
-  ? { [arg.replace(/.*[\\/]/, "").replace(/\.json$/, "")]: JSON.parse(readFileSync(arg, "utf8")) as ShareCardInput }
-  : SAMPLES;
+// The mechanic cards (Daily, Crown, Flag, Shadow) ride along with the result cards: built
+// in mechanicSamples.ts from records through the real adapters.
+const ALL: Record<string, AnyCardInput> = { ...SAMPLES, ...mechanicSamples() };
+const inputs: Record<string, AnyCardInput> = arg && existsSync(arg)
+  ? { [arg.replace(/.*[\\/]/, "").replace(/\.json$/, "")]: JSON.parse(readFileSync(arg, "utf8")) as AnyCardInput }
+  : ALL;
 
 const out = join(root, ".cache", "brand", "cards");
 const jobs: RasterJob[] = [];
@@ -187,10 +192,10 @@ for (const [name, input] of Object.entries(inputs)) {
 console.log(`share cards: ${Object.keys(inputs).length} result(s), ${jobs.length} renders`);
 rasterize(jobs, "cards");
 
-if (inputs === SAMPLES) {
-  for (const [name, layout, theme] of COMMITTED) {
+if (inputs === ALL) {
+  for (const [name, layout, theme] of [...COMMITTED, ...MECHANIC_COMMITTED]) {
     const from = join(out, `${name}-${layout}-${theme}.png`);
     copyFileSync(from, ensureDir(join(root, "assets", "brand", "samples", `${name}-${layout}-${theme}.png`)));
   }
-  console.log(`  committed ${COMMITTED.length} to assets/brand/samples; all ${jobs.length} in .cache/brand/cards`);
+  console.log(`  committed ${COMMITTED.length + MECHANIC_COMMITTED.length} to assets/brand/samples; all ${jobs.length} in .cache/brand/cards`);
 }

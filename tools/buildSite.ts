@@ -28,6 +28,8 @@ import { MIN_RUNS_TO_QUEUE } from "../src/core/match/eligibility.ts";
 import { renderSite, type Mark, type SiteConfig } from "../src/core/report/site.ts";
 import { practicePlaylists } from "../src/core/season/practice.ts";
 import { loadSeason } from "../src/core/season/season.ts";
+import { renderLanding } from "../src/core/social/landing.ts";
+import { MARK_PATH } from "../src/core/brand/shareCard.ts";
 
 const root = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const renderer = join(root, "src", "app", "renderer");
@@ -94,6 +96,29 @@ const html = renderSite({ season, config, minRunsToQueue: MIN_RUNS_TO_QUEUE, pal
 const out = join(root, "site", "index.html");
 mkdirSync(join(root, "site"), { recursive: true });
 writeFileSync(out, html, "utf8");
+
+// ---- the challenge-link landing (site/c/index.html) -----------------------------------
+// Where every https challenge link a post carries lands; see src/core/social/landing.ts.
+const landingScript = (await build({
+  entryPoints: [join(root, "src", "core", "social", "landingClient.ts")],
+  bundle: true,
+  write: false,
+  format: "iife",
+  target: "es2020",
+  minify: true,
+  legalComments: "none",
+})).outputFiles[0].text.replace(/<\/script/gi, "<\\/script");
+const landing = renderLanding({
+  downloadUrl: config.downloadUrl,
+  sourceUrl: config.sourceUrl,
+  homeHref: "../",
+  palette,
+  script: landingScript,
+  markPath: MARK_PATH,
+});
+mkdirSync(join(root, "site", "c"), { recursive: true });
+writeFileSync(join(root, "site", "c", "index.html"), landing, "utf8");
+console.log(`wrote site/c/index.html: the challenge-link landing, ${Math.round(landing.length / 1024)} KB`);
 
 const liveLookup = season.scenarios.some((s) => s.leaderboardId);
 const waiting = [...names].filter((n) => !config.shareCodes[n]?.trim());

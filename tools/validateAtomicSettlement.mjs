@@ -108,8 +108,11 @@ values($1,$2,$3,$4,'accepted',now()+interval '1 day')`,[players[1],players[0],id
 for(const [i,s] of scenarios.entries()){
   await db.query(`insert into runs(player_id,scenario_name,score,played_at,created_at,csv_sha256,verification_tier)
   values($1,$2,100,'2026-10-01Z','2026-10-01Z',$3,'consistent')`,[players[0],s.name,'baseline-'+i]);
-  await db.query(`insert into runs(player_id,scenario_name,score,played_at,csv_sha256,verification_tier,match_id,duration_seconds)
-  values($1,$2,110,$3,$4,'consistent',$5,60)`,[players[0],s.name,`2026-10-02T16:0${i}:00Z`,'duel-round-'+i,duelMatch]);
+  // Each run its own Challenge Start, as every KovaaK's file has: migration
+  // 20261011000002 reads it with the score as a ranked run's identity, and these blocks
+  // land equal scores on the same scenarios in different matches.
+  await db.query(`insert into runs(player_id,scenario_name,score,played_at,csv_sha256,verification_tier,match_id,duration_seconds,challenge_start)
+  values($1,$2,110,$3,$4,'consistent',$5,60,$6)`,[players[0],s.name,`2026-10-02T16:0${i}:00Z`,'duel-round-'+i,duelMatch,`10:0${i}:00.000`]);
 }
 let handler;
 globalThis.Deno={env:{get:()=>''},serve:fn=>{handler=fn;}};
@@ -179,8 +182,8 @@ console.log('PASS: actual settlement handler and shared helpers atomically rate 
 const roundsMatch=await match();
 await db.query(`update match_sides set rating_before=1500,rd_before=350,deltas='{-0.5,0.9,-0.5}',scores='{105,120,100}',match_score=-0.03,
 submitted_at='2000-01-02Z' where match_id=$1 and player_id=$2`,[roundsMatch,players[1]]);
-for(const [i,s] of scenarios.entries()) await db.query(`insert into runs(player_id,scenario_name,score,played_at,csv_sha256,verification_tier,match_id,duration_seconds)
-  values($1,$2,110,$3,$4,'consistent',$5,60)`,[players[0],s.name,`2026-10-03T16:0${i}:00Z`,'rounds-round-'+i,roundsMatch]);
+for(const [i,s] of scenarios.entries()) await db.query(`insert into runs(player_id,scenario_name,score,played_at,csv_sha256,verification_tier,match_id,duration_seconds,challenge_start)
+  values($1,$2,110,$3,$4,'consistent',$5,60,$6)`,[players[0],s.name,`2026-10-03T16:0${i}:00Z`,'rounds-round-'+i,roundsMatch,`11:0${i}:00.000`]);
 const roundsRequest=new Request('https://local.invalid/settle-match',{method:'POST',body:JSON.stringify({matchId:roundsMatch})});
 const byRounds=(await handler(roundsRequest)).body;
 assert.equal(byRounds.format,'rounds');assert.equal(byRounds.verdict,'win');assert.equal(byRounds.ratingWeight,1);
@@ -200,8 +203,8 @@ await db.query(`update match_sides set scores='{120,120,90}',deltas='{0,0,0}',ma
 const copied=await match();
 await db.query(`update match_sides set rating_before=1500,rd_before=350,deltas='{0.9,0.9,-0.5}',match_score=0.43,
 submitted_at='2000-01-03Z' where match_id=$1 and player_id=$2`,[copied,players[1]]);
-for(const [i,s] of scenarios.entries()) await db.query(`insert into runs(player_id,scenario_name,score,played_at,csv_sha256,verification_tier,match_id,duration_seconds)
-  values($1,$2,110,$3,$4,'consistent',$5,60)`,[players[0],s.name,`2026-10-04T16:0${i}:00Z`,'copied-round-'+i,copied]);
+for(const [i,s] of scenarios.entries()) await db.query(`insert into runs(player_id,scenario_name,score,played_at,csv_sha256,verification_tier,match_id,duration_seconds,challenge_start)
+  values($1,$2,110,$3,$4,'consistent',$5,60,$6)`,[players[0],s.name,`2026-10-04T16:0${i}:00Z`,'copied-round-'+i,copied,`12:0${i}:00.000`]);
 const byOriginal=(await handler(new Request('https://local.invalid/settle-match',{method:'POST',body:JSON.stringify({matchId:copied})}))).body;
 assert.equal(byOriginal.format,'rounds');assert.deepEqual(byOriginal.rounds.map(r=>r.opponentScore),[120,120,90]);
 assert.equal(byOriginal.verdict,'loss');assert.deepEqual(byOriginal.roundTally,{won:1,lost:2,tied:0});

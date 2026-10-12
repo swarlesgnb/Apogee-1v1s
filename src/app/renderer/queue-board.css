@@ -1,0 +1,77 @@
+/* Shadows and Flags (queue-board.js). A Shadow is drawn in one cool, desaturated tone so it
+   never reads as a person or as the player; a Flag wears the brand colour, because it is the
+   player's own run set out in the world. Rating colours (up and down) appear only on what
+   moved a rating: an answered Flag. */
+:root { --qb-shadow: #b9b4e8; --qb-shadow-soft: #b9b4e81f; --qb-shadow-line: #b9b4e852; --qb-flag: var(--brand, #ff9468); }
+
+.qb-mark { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.qb-glyph { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; }
+.qb-glyph .qb-mark { width: 18px; height: 18px; }
+.qb-glyph.shadow { color: var(--qb-shadow); background: var(--qb-shadow-soft); border: 1px dashed var(--qb-shadow-line); }
+.qb-glyph.flag { color: var(--qb-flag); background: color-mix(in srgb, var(--qb-flag) 12%, transparent); border: 1px solid color-mix(in srgb, var(--qb-flag) 35%, transparent); }
+
+/* ---- the plan under the queue button ---- */
+.qb-plan { display: flex; gap: 14px; align-items: flex-start; margin-top: 14px; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--rule); background: var(--well); font-size: 13px; line-height: 1.5; color: var(--ink-mid); }
+.qb-plan[hidden] { display: none; }
+.qb-plan.shadow { border-color: var(--qb-shadow-line); background: linear-gradient(135deg, var(--qb-shadow-soft), transparent 70%), var(--well); }
+.qb-plan-body { display: grid; gap: 6px; min-width: 0; }
+.qb-plan-body strong { color: var(--ink); font-weight: 640; font-size: 14px; }
+.qb-plan-body p { margin: 0; }
+.qb-plan-body b { color: var(--qb-shadow); font-weight: 600; }
+.qb-plan.opponent .qb-plan-body strong { font-size: 13px; font-weight: 500; color: var(--ink-mid); }
+.qb-flagline { display: flex; gap: 8px; align-items: flex-start; color: var(--ink-mid); }
+.qb-flagline .qb-mark { color: var(--qb-flag); margin-top: 3px; }
+.qb-thin { color: var(--warn); font-size: 12px; }
+.qb-what summary { cursor: pointer; color: var(--ink-dim); font-size: 12px; width: max-content; }
+.qb-what summary:hover { color: var(--ink); }
+.qb-what p { margin-top: 6px; color: var(--ink-dim); font-size: 12px; max-width: 70ch; }
+
+/* ---- the match card ---- */
+.qb-shadow-badge { color: var(--qb-shadow); border: 1px dashed var(--qb-shadow-line); background: var(--qb-shadow-soft); }
+.qb-shadow-badge .qb-mark { width: 60%; height: 60%; }
+.qb-odds-you { background: var(--brand, #ff9468); opacity: .7; }
+.qb-odds-them { background: var(--qb-shadow); opacity: .45; }
+
+/* ---- the panel: flags and the ladder ---- */
+.qb-panel[hidden] { display: none; }
+.qb-ladder { display: flex; gap: 10px; align-items: center; margin: 0 0 12px; color: var(--ink-mid); font-size: 13px; }
+.qb-ladder > .qb-mark { color: var(--qb-shadow); width: 18px; height: 18px; }
+.qb-ladder b { color: var(--ink); font-weight: 600; }
+.qb-ladder i { font-style: normal; color: var(--ink-dim); margin: 0 8px; }
+.qb-flags { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.qb-flag { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--rule); border-radius: 10px; background: var(--well); }
+.qb-flag.new { border-color: color-mix(in srgb, var(--qb-flag) 50%, transparent); }
+.qb-flag.expired { opacity: .7; }
+.qb-flag-what { display: grid; gap: 2px; min-width: 0; flex: 1; }
+.qb-flag-what b { color: var(--ink); font-weight: 600; font-size: 13px; }
+.qb-flag-what small { color: var(--ink-dim); font-size: 11px; }
+.qb-chip { font: 11px var(--mono); letter-spacing: .02em; padding: 5px 10px; border-radius: 20px; border: 1px solid var(--rule); color: var(--ink-mid); white-space: nowrap; }
+.qb-chip.open { color: var(--qb-flag); border-color: color-mix(in srgb, var(--qb-flag) 40%, transparent); }
+.qb-chip.up { color: var(--up); border-color: color-mix(in srgb, var(--up) 40%, transparent); }
+.qb-chip.down { color: var(--down); border-color: color-mix(in srgb, var(--down) 40%, transparent); }
+.qb-foot { margin: 12px 0 0; color: var(--ink-dim); font-size: 12px; line-height: 1.5; max-width: 80ch; }
+
+/* ---- the result ---- */
+.qb-result { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 18px 24px 2px; }
+.qb-result[hidden] { display: none; }
+.qb-card { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--rule); background: var(--well); }
+.qb-card strong { display: block; color: var(--ink); font-size: 13px; font-weight: 640; margin-bottom: 3px; }
+.qb-card p { margin: 0; color: var(--ink-mid); font-size: 12.5px; line-height: 1.5; }
+.qb-card p b { color: var(--ink); font-weight: 600; }
+.qb-card p i { font-style: normal; color: var(--ink-dim); margin: 0 6px; }
+.qb-card.flag { border-color: color-mix(in srgb, var(--qb-flag) 40%, transparent); }
+.qb-card.shadow { border-color: var(--qb-shadow-line); }
+
+/* ---- the news toast ---- */
+.qb-toast { position: fixed; right: 22px; bottom: 22px; z-index: 50; display: flex; align-items: flex-start; gap: 12px; width: min(420px, calc(100vw - 44px)); padding: 14px 14px 14px 16px; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--qb-flag) 45%, transparent); background: var(--panel); box-shadow: 0 18px 50px #0008; color: var(--ink-mid); animation: qb-rise 260ms cubic-bezier(.2, .8, .2, 1); }
+.qb-toast[hidden] { display: none; }
+.qb-toast.up { border-color: color-mix(in srgb, var(--up) 45%, transparent); }
+.qb-toast.down { border-color: color-mix(in srgb, var(--down) 45%, transparent); }
+.qb-toast > div { flex: 1; min-width: 0; }
+.qb-toast strong { display: block; color: var(--ink); font-size: 13px; font-weight: 640; }
+.qb-toast p { margin: 3px 0 0; font-size: 12.5px; line-height: 1.45; }
+.qb-toast button { font: 12px var(--font); color: var(--ink-mid); background: var(--well); border: 1px solid var(--rule); border-radius: 7px; padding: 7px 12px; cursor: pointer; }
+.qb-toast button:hover { color: var(--ink); }
+.qb-toast .qb-x { padding: 4px 9px; background: transparent; border-color: transparent; font-size: 16px; line-height: 1; }
+@keyframes qb-rise { from { opacity: 0; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce) { .qb-toast { animation: none; } }

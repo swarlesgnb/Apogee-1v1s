@@ -271,9 +271,13 @@ async function play(matchId, scores, durations = scores.map(() => 60)) {
   const names = new Map(scenarios.map((s) => [Number(s.id), s.name]));
   for (const [i, id] of m.scenario_ids.entries()) {
     if (scores[i] === undefined) continue;
-    await db.query(`insert into runs(player_id, scenario_name, score, played_at, csv_sha256, verification_tier, match_id, duration_seconds)
-      values($1, $2, $3, $4, $5, 'consistent', $6, $7)`,
-      [A, names.get(Number(id)), scores[i], new Date(Date.UTC(2026, 9, 1, 0, ++minute)).toISOString(), "match-run-" + ++file, matchId, durations[i]]);
+    // Each run carries its own Challenge Start, as KovaaK's writes into every file: the
+    // time-integrity trigger (migration 20261011000002) reads it with the score as a ranked
+    // run's identity, so two test runs with equal scores must not both leave it empty.
+    const challengeStart = `00:${String(Math.floor(file / 60) % 60).padStart(2, "0")}:${String(file % 60).padStart(2, "0")}.${String(file).padStart(3, "0").slice(-3)}`;
+    await db.query(`insert into runs(player_id, scenario_name, score, played_at, csv_sha256, verification_tier, match_id, duration_seconds, challenge_start)
+      values($1, $2, $3, $4, $5, 'consistent', $6, $7, $8)`,
+      [A, names.get(Number(id)), scores[i], new Date(Date.UTC(2026, 9, 1, 0, ++minute)).toISOString(), "match-run-" + ++file, matchId, durations[i], challengeStart]);
   }
 }
 const rating = async (id) => {

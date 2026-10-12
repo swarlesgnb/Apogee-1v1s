@@ -32,6 +32,8 @@ import {
   type RatingProposal,
 } from "./apogee.ts";
 import { afterLegSettled } from "./tournament.ts";
+import { markShadowVoid, settleShadowMatch, shadowResultFor } from "./queue.ts";
+import { arenaNote } from "./arena.ts";
 
 import { baselineFromScores } from "../../../src/core/history/baseline.ts";
 import { isAbandonedRun } from "../../../src/core/stats/duration.ts";
@@ -269,6 +271,9 @@ export async function settleForPlayer(
         seeding: !theirs,
         rated,
         tournament: rated ? null : await afterLegSettled(admin, matchId),
+        shadow: theirs ? null : await shadowResultFor(admin, matchId),
+        // A Crown challenge or a race leg: what the database decided about it.
+        arena: rated ? null : await arenaNote(admin, matchId, playerId),
         verdict: match.status === "void" ? "void" : mine.result,
         yourMatchScore: mine.match_score != null ? Number(mine.match_score) : null,
         theirMatchScore: theirs?.match_score != null ? Number(theirs.match_score) : null,
@@ -351,10 +356,13 @@ export async function settleForPlayer(
         if (error) throw new HttpError(500, error.message);
         freeAbandon = { used: true, nextFreeAt: new Date(Date.now() + ABANDON_WINDOW_MS).toISOString() };
       }
+      // A Shadow match voided this way is no result, not the loss an abandon is (queue.ts).
+      if (seeding) await markShadowVoid(admin, matchId);
       const receipt = await commitMatchResult(admin, matchId, "void", [{ player_id: playerId, result: null }]);
       if (!receipt.committed) return again();
 
       const tournament = rated ? null : await afterLegSettled(admin, matchId);
+      const arena = rated ? null : await arenaNote(admin, matchId, playerId);
       const name = abandonedRun.scenario_name;
       return {
         status: 200,
@@ -364,6 +372,7 @@ export async function settleForPlayer(
           verdict: "void",
           rated: false,
           tournament,
+          arena,
           voidReason: "a scenario was left before it finished",
           scenario: name,
           playedSeconds: abandonedRun.duration_seconds != null ? Number(abandonedRun.duration_seconds) : null,
@@ -438,6 +447,11 @@ export async function settleForPlayer(
   // side is what the next player to queue will be matched against. Scored as rounds, the
   // format whoever draws these rounds will be settled in.
   if (seeding) {
+    // Played against a Shadow: judged on raw rounds and stored in one commit (queue.ts).
+    // Null for a duel's or a fixture's first leg, which carry no Shadow.
+    const shadowed = await settleShadowMatch(admin, { matchId, match, playerId, scenarioIds, playerRounds, runIds });
+    if (shadowed) return shadowed.retry ? again() : { status: 200, body: shadowed.body };
+
     const side = settleSide(playerRounds, "rounds");
     const receipt = await commitMatchResult(admin, matchId, "settled", [{
       player_id: playerId, run_ids: runIds,
@@ -454,11 +468,14 @@ export async function settleForPlayer(
       ? `Your three are in for ${tournament.label}. Your opponent plays the same three next, ` +
         "and the fixture is decided when they have. Nothing is rated."
       : null;
+    // A claim on a vacant Crown or a race leg is one-sided too, and does not go to the pool
+    // either. The Crown or the race says what it came to instead.
+    const arena = rated ? null : await arenaNote(admin, matchId, playerId);
     const pooled = side.countedRounds === scenarioIds.length;
     return {
       status: 200,
       body: {
-        matchId, engine: policy.engine, seeding: true, rated: false, tournament, verdict: null,
+        matchId, engine: policy.engine, seeding: true, rated: false, tournament, arena, verdict: null,
         // Null, not zero: zero would read as an opponent who scored exactly their
         // baseline, which is a claim about somebody who does not exist.
         yourMatchScore: side.matchScore, theirMatchScore: null, countedRounds: side.countedRounds,
@@ -468,11 +485,11 @@ export async function settleForPlayer(
           verificationTier: r.verificationTier,
         })),
         ratingChange: 0,
-        explanation: firstLeg ?? (pooled
+        explanation: firstLeg ?? arena?.explanation ?? (pooled
           ? "Nothing was rated: there was no opponent to play against. Your run set is now in the pool, " +
             "and the next player to queue this category plays against it."
           : "Recorded, but not every scenario counted, so this run set is not in the pool yet."),
-        message: firstLeg ?? (pooled
+        message: firstLeg ?? arena?.headline ?? (pooled
           ? "Your run set is in the pool. The next player to queue this category plays against it."
           : "Recorded, but not every scenario counted, so this run set is not in the pool yet."),
       },
@@ -554,6 +571,7 @@ export async function settleForPlayer(
   // The second leg of a tournament fixture decides it. Folded in before answering, so the
   // result screen and the bracket agree the moment the player looks at either.
   const tournament = rated ? null : await afterLegSettled(admin, matchId);
+  const arena = rated ? null : await arenaNote(admin, matchId, playerId);
   const roundResults = settlement.roundResults ?? [];
   let counted = 0;
 
@@ -566,13 +584,16 @@ export async function settleForPlayer(
       verdict: settlement.verdict,
       rated,
       tournament,
+      arena,
       opponent: opponentPlayer && settlement.verdict !== "void"
         ? { playerId: opponentPlayer.id, displayName: opponentPlayer.display_name }
         : null,
       category: match.category,
       explanation: rated
         ? explainVerdict(settlement)
-        : `${explainVerdict(settlement)} Unrated: this was a tournament fixture.`,
+        : arena
+          ? `${explainVerdict(settlement)} ${arena.headline}`
+          : `${explainVerdict(settlement)} Unrated: this was ${tournament ? "a tournament fixture" : "an open challenge"}.`,
       voidReason: settlement.voidReason ?? null,
       ratingWeight: settlement.ratingWeight,
       yourMatchScore: settlement.player.matchScore,
