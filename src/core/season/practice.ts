@@ -190,7 +190,7 @@ export function writePracticePlaylists(
  * Installed practice playlists whose scenarios no longer match this season.
  *
  * A name alone said "installed", and a season that changed its scenarios under the same
- * names left every player who installed before it practising the old pool while the
+ * names left every player who installed before it practicing the old pool while the
  * app reported them up to date.
  */
 export function stalePlaylistNames(season: SeasonLike, dir: string): string[] {

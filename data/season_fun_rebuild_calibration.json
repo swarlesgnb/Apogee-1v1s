@@ -1184,7 +1184,7 @@
         "family": "Vertical Control",
         "category": "Precise Tracking",
         "subCategory": "Precise Tracking",
-        "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practise directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement.",
+        "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practice directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement.",
         "variants": [
           {
             "window": 0,
@@ -1204,7 +1204,7 @@
               "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
             },
             "admitted": {
-              "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practise directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement."
+              "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practice directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement."
             },
             "arm": "Wrist",
             "armFrom": "Apogee"
@@ -1227,7 +1227,7 @@
               "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
             },
             "admitted": {
-              "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practise directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement."
+              "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practice directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement."
             },
             "arm": "Wrist",
             "armFrom": "Apogee"
@@ -1250,7 +1250,7 @@
               "why": "First four frozen targets preserved; two crossover ranks require stricter performance on this easier scenario. Each is the greater of its prior target plus one point and its frozen stricter percentile cut, capped at record minus one and record. Previously unreachable tails are explicitly recorded as repairs. Reproducible before/after evidence and board dates: data/season_expansion_calibration.json."
             },
             "admitted": {
-              "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practise directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement."
+              "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practice directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement."
             },
             "arm": "Wrist",
             "armFrom": "Apogee"
@@ -1288,7 +1288,7 @@
               "why": "Frozen once for the theory-led draft rebuild from this exact scenario's own dated leaderboard. Existing Apogee percentile positions are retained. The target is a fixed score, not a live percentile or proof of equal difficulty across variants. Provisional calibration: 4725 players; this board is below the population floor for this band. Validate the difficulty step through group playtesting before publishing the season."
             },
             "admitted": {
-              "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practise directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement."
+              "why": "These four Altered POV cuts explicitly isolate vertical smoothness. They replace a second broad sphere-control test with an axis players can identify and practice directly. Entry, Easy, Intermediate and standard v2 are curated into four Apogee bands; difficulty spacing remains a playtest judgement."
             },
             "thinBoard": {
               "why": "This exact variant covers Vertical Control at Expert. Its 4725-player board is below the 8750-player calibration floor. Kept as an explicitly provisional draft choice to retain this distinct skill without substituting another stock Voltaic ladder. Frozen percentile targets have fewer than 70 players above the hardest cut and require group playtesting before season publication."

@@ -105,7 +105,7 @@
         ${figures}
       </div>
       <div class="dy-lane-act">
-        <button type="button" data-dy-launch="${i}" ${busy ? 'disabled' : ''}>${played ? 'Practise' : 'Play'}</button>
+        <button type="button" data-dy-launch="${i}" ${busy ? 'disabled' : ''}>${played ? 'Practice' : 'Play'}</button>
       </div>
     </li>`;
   }

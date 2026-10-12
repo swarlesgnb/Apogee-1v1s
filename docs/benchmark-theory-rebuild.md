@@ -41,7 +41,7 @@ The aim is broader skill coverage within a manageable circuit, not one scored sl
 
 These are suggested training protocols, not new grading rules or a compulsory full routine:
 
-1. **Read first:** one comfortable-band run, then the current-band run. If you are guessing turns, practise the easier task again before raising difficulty.
+1. **Read first:** one comfortable-band run, then the current-band run. If you are guessing turns, practice the easier task again before raising difficulty.
 2. **Pace into precision:** use an easier Speed Switching cut for a short freeplay burst, then try to retain the clean transfers in a complete challenge run. Viscose Varied supplies the shrinking-target demand without an artificial duration multiplier.
 3. **Finish the target:** pick Regen Control, Arc Transfer or the retained Smooth family. Notice whether the miss came from the initial landing, lost contact, or leaving before the kill. Repeat for that specific reason, not just another score roll.
 4. **Confirm every click:** use Pasu Sequence to keep reading between hits, then revisit a one-shot dynamic test. Do not treat a memorised apex as the only useful shot window.

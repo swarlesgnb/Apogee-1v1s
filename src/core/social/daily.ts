@@ -33,7 +33,7 @@
  *     the clock, never a number), and the server refuses a board read or entry for a
  *     day that has not started;
  *   - a board entry is the first run on each scenario played *inside* the day, so
- *     practising tomorrow's three today earns nothing on tomorrow's board directly;
+ *     practicing tomorrow's three today earns nothing on tomorrow's board directly;
  *   - practice before the day raises the baseline the day is measured against (it is
  *     built from runs before the day began), so advance practice partly cancels itself.
  *
