@@ -144,7 +144,8 @@
     "bot": "tsx discord/bot.ts",
     "bot:provision": "tsx discord/provision.ts",
     "validate:discord": "tsx discord/validateDiscord.ts",
-    "validate:security": "tsx tools/validateTimeIntegrity.mjs && node tools/validateVerifiedPbs.mjs && node tools/validateSteamAuth.mjs && node tools/validateRendererSinks.mjs && node tools/attackRls.mjs"
+    "validate:security": "tsx tools/validateTimeIntegrity.mjs && node tools/validateVerifiedPbs.mjs && node tools/validateSteamAuth.mjs && node tools/validateRendererSinks.mjs && node tools/attackRls.mjs",
+    "validate:queue-ui": "tsx tools/validateQueueFlow.ts && tsx tools/buildUiPreview.ts && electron tools/queueUi.cjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",

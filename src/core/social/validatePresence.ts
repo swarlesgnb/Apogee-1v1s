@@ -58,7 +58,7 @@ interface FakeDiscord {
 }
 
 function fakeDiscord(name: string, opts: { ready?: boolean } = {}): Promise<FakeDiscord> {
-  const path = join(dir, name);
+  const path = process.platform === "win32" ? `\\\\.\\pipe\\apogee-presence-${process.pid}-${name}` : join(dir, name);
   const fake: FakeDiscord = { server: null as unknown as Server, path, connections: 0, frames: [], sockets: [], close: async () => {} };
   fake.server = createServer((socket) => {
     fake.connections++;

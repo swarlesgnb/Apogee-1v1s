@@ -747,7 +747,7 @@ function targetName(s) {
 /** Rank insignia: the outer wings and earned pips advance with the ladder rung. */
 function badge(tier, uid) {
   const rung = Math.max(1, Math.min(8, Number(/^tier-(\d+)$/.exec(String(tier.id ?? ""))?.[1] || 1)));
-  const color = legibleOnDark(tier.color, RANK_TEXT_CONTRAST);
+  const badgeInk = legibleOnDark(tier.color, RANK_TEXT_CONTRAST);
   const faces = [
     'M40 12 62 34 40 67 18 34Z',
     'M40 9 64 24 60 52 40 69 20 52 16 24Z',
@@ -761,7 +761,7 @@ function badge(tier, uid) {
   const ribs = rung >= 3 ? '<path d="M20 29 9 24l4 26 12 10M60 29l11-5-4 26-12 10" fill="none" stroke="currentColor" stroke-width="1.4"/>' : '';
   const crown = rung >= 6 ? '<path d="m25 15 2-10 13 6L53 5l2 10" fill="none" stroke="currentColor" stroke-width="1.5"/>' : '';
   const pips = Array.from({length:rung}, (_, i) => '<path d="m' + (40 + (i - (rung - 1) / 2) * 5) + ' 78 1.5 2-1.5 2-1.5-2Z" fill="currentColor"/>').join('');
-  return '<svg class="rank-insignia material-' + rung + '" viewBox="0 0 80 86" role="img" aria-label="' + esc(tier.name) + '" style="color:' + esc(color) + '">' +
+  return '<svg class="rank-insignia material-' + rung + '" viewBox="0 0 80 86" role="img" aria-label="' + esc(tier.name) + '" style="color:' + esc(badgeInk) + '">' +
     '<path d="' + faces[rung-1] + '" fill="currentColor" fill-opacity=".17" stroke="currentColor" stroke-width="1.4"/>' +
     '<path d="M40 16 58 27 40 38 22 27Z" fill="currentColor" fill-opacity=".48"/>' +
     '<path d="M22 27v23l18 14V38Z" fill="currentColor" fill-opacity=".1"/>' +

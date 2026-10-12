@@ -15,7 +15,7 @@ app.setPath("userData", join(isolated, "electron"));
 const stats = join(isolated, "stats"); mkdirSync(stats);
 let dir: string | null = null, service = new ExpeditionService(isolated);
 const def = loadExpedition();
-const store = new ExpeditionStore(join(isolated, "expedition-first-light-v5.json"), def);
+const store = new ExpeditionStore(join(isolated, "expedition-first-light-v6.json"), def);
 const realNow = Date.now;
 let time = realNow(), serial = 0;
 const sessionStartedAt = time;
@@ -81,7 +81,8 @@ app.whenReady().then(async () => {
   win.webContents.send("test:update", sessionView(service.view(dir)));
   await waitFor(`!document.querySelector('.exp-preview-note')`);
   console.log('PASS: Expedition defers background DOM replacement and displays fresh state on focus.');
-  const screens = await evaluate<string[]>(`[...document.querySelectorAll('.tab')].filter(el=>!el.hidden && el.checkVisibility()).map(el=>el.dataset.screen)`);
+  // Daily and Crowns use their own real-service UI fixtures; this bridge only supplies Expedition.
+  const screens = await evaluate<string[]>(`[...document.querySelectorAll('.tab')].filter(el=>!el.hidden && el.checkVisibility() && !['daily','crowns'].includes(el.dataset.screen)).map(el=>el.dataset.screen)`);
   const screenSizes = process.env.APOGEE_EXPEDITION_UI_ONLY === '1' ? [] : [[1440,1080],[940,640],[600,900]];
   for (const [width,height] of screenSizes) {
     win.setSize(width,height);

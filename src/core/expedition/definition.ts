@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { dataFile } from "../dataDir.ts";
 import type { ExpeditionDefinition, Reward } from "./types.ts";
 
-export function loadExpedition(version: 1 | 2 | 3 | 4 | 5 = 5): ExpeditionDefinition {
+export function loadExpedition(version: 1 | 2 | 3 | 4 | 5 | 6 = 6): ExpeditionDefinition {
   // V3 changes progression, not the frozen scenario roster or score standards. V4 keeps
   // v3's progression on the roster of the rebuilt season, frozen in its own file, and v5
   // the same progression on Apogee's own scenarios, which replaced that season's.

@@ -351,3 +351,13 @@ body[data-screen="season"] #poolPanel .pg-cat th {
 }
 body[data-screen="season"] #poolPanel .pg-cat th { padding-top: 13px; padding-bottom: 8px; }
 body[data-screen="season"] #poolPanel .pg-cat th > span:first-child { font-size: 12px; color: var(--ink); }
+
+/* Keep the queue action visible on short desktop windows. */
+@media (min-width: 761px) and (max-height: 620px) {
+  #screen-queue .queue-heading .arcade-hero-links { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  #screen-queue .queue-heading .arcade-hero-links > button { padding-inline: 6px; font-size: 10px; }
+  #screen-queue .queue-heading { padding-bottom: 6px; }
+  #screen-queue #cats .cat { min-height: 42px; padding-block: 6px; }
+  #screen-queue .queue-selection { padding-top: 8px; }
+  #screen-queue .queue-stage .commit { min-height: 49px; padding-block: 8px; }
+}

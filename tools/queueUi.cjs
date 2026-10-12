@@ -41,7 +41,7 @@ app.whenReady().then(async () => {
     'queueBoard:async(a)=>{window.__qbAsks.push(a||{});return {board:a&&a.ack?{...window.__qbBoard,news:[]}:window.__qbBoard};},' +
     'onQueueBoard:h=>window.__qbH.board.push(h),onMatch:h=>window.__qbH.match.push(h),' +
     'onMatchSettled:h=>window.__qbH.settled.push(h),onSession:h=>window.__qbH.session.push(h)});</script>';
-  const page = readFileSync(join(root, 'preview.html'), 'utf8');
+  const page = readFileSync(process.env.APOGEE_PREVIEW_OUT || resolve('tools/apogee-ui-preview.html'), 'utf8');
   assert.ok(page.includes(marker), 'the preview carries queue-board.js: build it with APOGEE_PREVIEW_OUT=.cache/queue-ui/preview.html');
   writeFileSync(join(root, 'fixture.html'), page.replace(marker, bridge + marker));
   await win.loadFile(join(root, 'fixture.html'));
