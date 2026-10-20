@@ -41,6 +41,8 @@ const RECHECK_MS = 4 * 60 * 60 * 1000;
 export class Updater {
   private state: UpdateState;
   private timer: NodeJS.Timeout | null = null;
+  private enabled = false;
+  private checking = false;
 
   constructor(private readonly publish: (state: UpdateState) => void) {
     this.state = { status: "idle", current: app.getVersion() };
@@ -64,9 +66,12 @@ export class Updater {
    */
   start(options: { disabled: boolean }): void {
     if (options.disabled || process.env.APOGEE_NO_UPDATE === "1") return;
+    // Package-manager installs and portable archives have no AppImage to replace.
+    if (process.platform === "linux" && !/\.appimage$/i.test(process.env.APPIMAGE ?? "")) return;
 
     const feed = process.env.APOGEE_UPDATE_FEED;
     if (!app.isPackaged && !feed) return;
+    this.enabled = true;
     if (feed) {
       autoUpdater.setFeedURL({ provider: "generic", url: feed });
       autoUpdater.forceDevUpdateConfig = !app.isPackaged;
@@ -114,11 +119,19 @@ export class Updater {
       }
     });
 
-    const check = () => {
-      autoUpdater.checkForUpdates().catch((e) => log(`update check failed: ${e instanceof Error ? e.message : e}`));
-    };
+    const check = () => { void this.checkNow(); };
     setTimeout(check, FIRST_CHECK_MS);
     this.timer = setInterval(check, RECHECK_MS);
+  }
+
+  async checkNow(): Promise<boolean> {
+    if (!this.enabled) return false;
+    if (this.checking || this.state.status === "downloading" || this.state.status === "ready") return true;
+    this.checking = true;
+    try { await autoUpdater.checkForUpdates(); }
+    catch (e) { log(`update check failed: ${e instanceof Error ? e.message : e}`); }
+    finally { this.checking = false; }
+    return true;
   }
 
   /** Restart into the downloaded version. Ignored unless one is ready. */

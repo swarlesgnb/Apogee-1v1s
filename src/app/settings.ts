@@ -26,9 +26,10 @@ export interface Settings {
   /** The stats folder in use, remembered so auto-detection is a first-run job only. */
   statsDir: string | null;
   window: WindowBounds | null;
+  zoom: number;
 }
 
-const DEFAULTS: Settings = { statsDir: null, window: null };
+const DEFAULTS: Settings = { statsDir: null, window: null, zoom: 1 };
 
 function storePath(): string {
   return join(app.getPath("userData"), "settings.json");
@@ -56,6 +57,8 @@ export function loadSettings(): Settings {
     const raw = readFileSync(path, "utf8").replace(/^\uFEFF/, "");
     const parsed = JSON.parse(raw) as Partial<Settings>;
     return {
+      zoom: typeof parsed.zoom === "number" && Number.isFinite(parsed.zoom)
+        ? Math.min(2, Math.max(0.5, parsed.zoom)) : 1,
       statsDir: typeof parsed.statsDir === "string" && parsed.statsDir ? parsed.statsDir : null,
       window: isBounds(parsed.window)
         ? {

@@ -6220,6 +6220,11 @@ function renderScenarioRanks() {
       saveScenarioView();
       renderScenarioRanks();
     });
+    search.addEventListener("keydown", event => {
+      if (event.key !== "Escape") return;
+      event.preventDefault(); event.stopPropagation();
+      scenarioView.query = ""; saveScenarioView(); renderScenarioRanks();
+    });
   }
   $('scStatus').value = scenarioView.status;
   $('scOrder').value = scenarioView.sort;
@@ -9757,6 +9762,13 @@ if ($("bandBack")) {
 }
 
 restoreScreen();
+
+document.addEventListener("keydown", event => {
+  if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== "f" || event.altKey || document.querySelector("dialog[open]")) return;
+  event.preventDefault();
+  openScreen("scenarios");
+  $("scSearch")?.focus(); $("scSearch")?.select();
+});
 
 /**
  * Put each tab's shortcut on the tab itself, and in its tooltip.

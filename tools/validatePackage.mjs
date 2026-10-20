@@ -8,9 +8,8 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const candidate = process.argv[2] && resolve(process.argv[2]);
 if (!candidate) throw new Error('Usage: node tools/validatePackage.mjs <candidate directory>');
-const linux = process.argv.includes('--linux');
-const unpacked = linux ? 'linux-unpacked' : 'win-unpacked';
-const archive = join(candidate, unpacked, 'resources/app.asar');
+const platform = process.argv.includes('--linux') ? 'linux' : 'win';
+const archive = join(candidate, `${platform}-unpacked/resources/app.asar`);
 const paths = listPackage(archive).map(path => path.replaceAll('\\', '/').replace(/^\//, ''));
 const files = paths.filter(path => !statFile(archive, normalize(path)).files);
 const readArchive = path => extractFile(archive, normalize(path));
@@ -49,12 +48,19 @@ check('Known local private credentials are absent from packaged text', !files.so
   const content = readArchive(path).toString('utf8');
   return privateValues.some(value => content.includes(value));
 }));
-const installer = join(candidate, linux ? `Apogee-${metadata.version}-x86_64.AppImage` : `Apogee-${metadata.version}-setup.exe`);
-check('Installer and unpacked executable exist', existsSync(installer) && existsSync(join(candidate, unpacked, linux ? 'apogee' : 'Apogee.exe')));
+const installer = join(candidate, platform === 'linux'
+  ? `Apogee-${metadata.version}-linux-x64.tar.gz` : `Apogee-${metadata.version}-setup.exe`);
+check('Distribution and unpacked executable exist', existsSync(installer) && existsSync(join(candidate,
+  platform === 'linux' ? 'linux-unpacked/apogee' : 'win-unpacked/Apogee.exe')));
+if (platform === 'linux') {
+  const elf = readFileSync(join(candidate, 'linux-unpacked/apogee'));
+  check('Linux executable is x86-64 ELF', elf.subarray(0, 4).equals(Buffer.from([0x7f, 0x45, 0x4c, 0x46])) && elf[4] === 2 && elf.readUInt16LE(18) === 62);
+  check('Linux Chromium sandbox helper is included', existsSync(join(candidate, 'linux-unpacked/chrome-sandbox')));
+}
 const report = { checkedAt: new Date().toISOString(), version: metadata.version, checks,
   allPassed: checks.every(item => item.passed), installer,
   installerSha256: existsSync(installer) ? hash(readFileSync(installer)) : null,
   limits: ['Does not verify Authenticode, installation, native gameplay, or online services.'] };
-writeFileSync(join(candidate, 'package-check.json'), JSON.stringify(report, null, 2) + '\n');
+writeFileSync(join(candidate, platform === 'linux' ? 'package-check-linux.json' : 'package-check.json'), JSON.stringify(report, null, 2) + '\n');
 console.log(`Package ${metadata.version}: ${checks.filter(item => item.passed).length}/${checks.length} checks passed.`);
 process.exitCode = report.allPassed ? 0 : 1;

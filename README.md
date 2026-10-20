@@ -57,6 +57,9 @@ is missing is a population.
 
 ## Quick start
 
+Linux and Arch packages, launch troubleshooting, and build instructions are in
+[the Linux guide](docs/linux.md).
+
 ```bash
 npm install
 

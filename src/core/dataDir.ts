@@ -16,10 +16,12 @@ import { existsSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 let override: string | null = null;
+let sourceWrites = true;
 
 /** Point the core at a specific data directory. Called by the Electron main process. */
-export function setDataDir(dir: string): void {
+export function setDataDir(dir: string, allowSourceWrites = true): void {
   override = dir;
+  sourceWrites = allowSourceWrites;
 }
 
 /** How far up to search before giving up. */
@@ -68,6 +70,7 @@ export function dataFile(...segments: string[]): string {
  * this returns null, which is the correct answer rather than a failure.
  */
 export function sourceDataDir(): string | null {
+  if (!sourceWrites) return null;
   let current = resolve(process.cwd());
 
   for (let depth = 0; depth < MAX_DEPTH; depth++) {

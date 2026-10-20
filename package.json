@@ -1,6 +1,6 @@
 {
   "name": "apogee",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "private": true,
   "description": "Ranked 1v1 for KovaaK's",
   "author": "Rylee",
@@ -71,8 +71,8 @@
     "brand:motion": "tsx tools/brand/buildMotion.ts",
     "brand:contact": "tsx tools/brand/contactSheet.ts",
     "validate:brand": "tsx tools/brand/validateBrand.ts",
-    "dist": "npm run build:icon && npm run build:app && electron-builder --win --publish never",
-    "dist:linux": "npm run build:icon && npm run build:app && electron-builder --linux --publish never",
+    "dist": "node tools/dist.mjs",
+    "dist:linux": "npm run build:icon && npm run build:app && electron-builder --linux AppImage --x64 --publish never && node tools/buildArchPackage.mjs release",
     "smoke": "npm run build:app && electron . --smoke",
     "fresh": "npm run build:app && electron . --fresh",
     "fresh:nostats": "npm run build:app && electron . --fresh --no-stats",
@@ -145,7 +145,12 @@
     "bot:provision": "tsx discord/provision.ts",
     "validate:discord": "tsx discord/validateDiscord.ts",
     "validate:security": "tsx tools/validateTimeIntegrity.mjs && node tools/validateVerifiedPbs.mjs && node tools/validateSteamAuth.mjs && node tools/validateRendererSinks.mjs && node tools/attackRls.mjs",
-    "validate:queue-ui": "tsx tools/validateQueueFlow.ts && tsx tools/buildUiPreview.ts && electron tools/queueUi.cjs"
+    "validate:queue-ui": "tsx tools/validateQueueFlow.ts && tsx tools/buildUiPreview.ts && electron tools/queueUi.cjs",
+    "dist:win": "npm run build:icon && npm run build:app && electron-builder --win --publish never",
+    "dist:linux:portable": "npm run build:icon && npm run build:app && electron-builder --linux dir --x64 --publish never && node tools/buildArchPackage.mjs release",
+    "validate:desktop": "tsx tools/validateDesktop.ts",
+    "validate:linux-package": "node tools/validateLinuxArchives.mjs release",
+    "validate:backup": "tsx tools/validateProgressBackup.ts"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",
@@ -156,7 +161,8 @@
     "steamworks.js": "^0.4.0",
     "supabase": "^2.114.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "tar": "7.5.22"
   },
   "main": "dist/app/main.cjs",
   "dependencies": {
