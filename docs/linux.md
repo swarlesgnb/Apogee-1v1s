@@ -36,8 +36,8 @@ cd Apogee-0.4.8-linux-x64
 Launch it from a terminal to see the actual error:
 
 ```sh
-chmod +x Apogee-0.4.8-linux-x64.AppImage
-./Apogee-0.4.8-linux-x64.AppImage
+chmod +x Apogee-0.4.8-linux-x86_64.AppImage
+./Apogee-0.4.8-linux-x86_64.AppImage
 ```
 
 If an older build reports `libfuse.so.2`, Arch needs the `fuse2` package. New AppImage
@@ -47,7 +47,7 @@ portable archive avoids this requirement. AppImage also supports extracting with
 mounting it:
 
 ```sh
-./Apogee-0.4.8-linux-x64.AppImage --appimage-extract
+./Apogee-0.4.8-linux-x86_64.AppImage --appimage-extract
 ./squashfs-root/AppRun
 ```
 
