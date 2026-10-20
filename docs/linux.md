@@ -91,7 +91,9 @@ local edits, while a new version receives its shipped season and keeps the prior
 
 The Linux packaging workflow builds all three formats, validates archive contents,
 boots extracted packages under Xvfb, and installs the native package with pacman in
-an Arch container. The Arch container disables Chromium's sandbox only for its smoke
+an Arch container. It also starts the AppImage file with `--appimage-extract-and-run`
+on Arch to test the runtime without needing a FUSE mount in Docker.
+The Arch container disables Chromium's sandbox only for its smoke
 test; it does not prove sandbox behavior on a real Arch desktop. AppImage extraction
 tests do not exercise FUSE mounting, and headless smoke tests do not prove Wayland,
 Steam authentication, or actual gameplay. CI builds use an offline test configuration

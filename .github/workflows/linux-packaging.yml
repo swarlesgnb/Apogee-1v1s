@@ -65,6 +65,9 @@ jobs:
               su tester -c "timeout 120s xvfb-run -a apogee --smoke --no-sandbox" > /tmp/arch-smoke.log 2>&1
               cat /tmp/arch-smoke.log
               grep -F "OK: desktop client boots, finds stats, and renders" /tmp/arch-smoke.log
+              su tester -c "timeout 120s xvfb-run -a /packages/*.AppImage --appimage-extract-and-run --smoke --no-sandbox" > /tmp/arch-appimage-smoke.log 2>&1
+              cat /tmp/arch-appimage-smoke.log
+              grep -F "OK: desktop client boots, finds stats, and renders" /tmp/arch-appimage-smoke.log
             '
       - uses: actions/upload-artifact@v4
         if: always()
