@@ -24,6 +24,11 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: npm run typecheck && npm run validate:desktop && npm run validate:backup
+      - name: Check desktop HTTPS transport
+        run: |
+          sudo chown root:root node_modules/electron/dist/chrome-sandbox
+          sudo chmod 4755 node_modules/electron/dist/chrome-sandbox
+          timeout 60s xvfb-run -a npm run validate:desktop-network
       - run: npm run dist:linux
       - run: node tools/validatePackage.mjs release --linux && npm run validate:linux-package
       - name: Test portable package on Ubuntu

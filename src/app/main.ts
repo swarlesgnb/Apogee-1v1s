@@ -85,6 +85,7 @@ import {
 import { candidateStatsFolders, findStatsFolder, statsFolderOverride, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
 import { loadSettings, saveSettings, settingsPath, type WindowBounds } from "./settings.ts";
 import { installMenu } from "./menu.ts";
+import { installDesktopFetch } from "./network.ts";
 import { writableReferenceData } from "./referenceData.ts";
 import { launchKovaaks, writeMatchPlaylist } from "./playlist.ts";
 import { loadSeason, seasonPath, validateSeason } from "../core/season/season.ts";
@@ -2324,6 +2325,7 @@ async function restoreSignedIn(attempt = 0): Promise<void> {
 }
 
 app.whenReady().then(() => {
+  installDesktopFetch();
   if (!HAS_LOCK) return;
   if (app.isPackaged) {
     try {
