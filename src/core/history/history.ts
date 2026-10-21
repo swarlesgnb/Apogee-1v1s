@@ -32,6 +32,7 @@
  */
 
 import { readStatsFolder } from "../stats/folderCache.ts";
+import { historyWithCloud } from "./cloudHistory.ts";
 import { baselineFromScores, type Baseline } from "./baseline.ts";
 
 // The maths lives in baseline.ts so the server can import it without pulling in
@@ -66,7 +67,7 @@ export interface ScenarioHistory {
 export function scanStatsFolder(dir: string): Map<string, ScenarioHistory> {
   const history = new Map<string, ScenarioHistory>();
 
-  for (const { run } of readStatsFolder(dir)) {
+  for (const run of historyWithCloud(readStatsFolder(dir))) {
     let entry = history.get(run.scenario);
     if (!entry) {
       entry = { scenario: run.scenario, runs: [], best: 0, lastPlayed: null };

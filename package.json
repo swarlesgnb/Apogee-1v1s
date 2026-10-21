@@ -151,7 +151,9 @@
     "validate:desktop": "tsx tools/validateDesktop.ts",
     "validate:linux-package": "node tools/validateLinuxArchives.mjs release",
     "validate:backup": "tsx tools/validateProgressBackup.ts",
-    "validate:desktop-network": "node tools/checkDesktopNetwork.mjs"
+    "validate:desktop-network": "node tools/checkDesktopNetwork.mjs",
+    "validate:cloud-history": "tsx tools/validateCloudHistory.ts",
+    "validate:apogee-names": "node tools/validateApogeeNames.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.5",

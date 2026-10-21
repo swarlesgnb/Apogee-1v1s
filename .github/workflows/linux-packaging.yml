@@ -24,6 +24,7 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: npm run typecheck && npm run validate:desktop && npm run validate:backup
+      - run: npm run validate:cloud-history && npm run validate:apogee-names
       - name: Check desktop HTTPS transport
         run: |
           sudo chown root:root node_modules/electron/dist/chrome-sandbox

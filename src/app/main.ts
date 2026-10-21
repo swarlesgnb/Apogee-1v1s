@@ -80,12 +80,15 @@ import {
   SessionUnreachable,
   signIn,
   signOut,
+  supabase,
   type ApogeeSession,
 } from "./session.ts";
 import { candidateStatsFolders, findStatsFolder, statsFolderOverride, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
 import { loadSettings, saveSettings, settingsPath, type WindowBounds } from "./settings.ts";
 import { installMenu } from "./menu.ts";
 import { installDesktopFetch } from "./network.ts";
+import { CloudHistoryStore, downloadCloudHistory } from "./cloudHistory.ts";
+import { cloudHistoryCount, setCloudHistory } from "../core/history/cloudHistory.ts";
 import { writableReferenceData } from "./referenceData.ts";
 import { launchKovaaks, writeMatchPlaylist } from "./playlist.ts";
 import { loadSeason, seasonPath, validateSeason } from "../core/season/season.ts";
@@ -2275,6 +2278,48 @@ function runSmokeTest(): void {
  * the network still coming up used to delete the token and sign the player out.
  */
 const RESTORE_RETRY_MS = [5_000, 15_000, 60_000, 120_000];
+let cloudHistoryState = {count: 0, status: "idle", error: null as string | null};
+let cloudHistorySync: {playerId: string; promise: Promise<void>} | null = null;
+function clearCloudHistory(): void {
+  cloudHistorySync = null;
+  setCloudHistory([]);
+  cloudHistoryState = {count: 0, status: "idle", error: null};
+  broadcast("apogee:cloudHistory", cloudHistoryState);
+  scheduleRebuild("signed-out history");
+}
+function recoverCloudHistory(): Promise<void> {
+  const playerId = state.session?.playerId;
+  if (!playerId) return Promise.resolve();
+  if (cloudHistorySync?.playerId === playerId) return cloudHistorySync.promise;
+  const store = new CloudHistoryStore(join(app.getPath("userData"), "cloud-history"));
+  setCloudHistory(store.load(playerId));
+  scheduleRebuild("cached cloud history");
+  cloudHistoryState = {count: cloudHistoryCount(), status: "loading", error: null};
+  broadcast("apogee:cloudHistory", cloudHistoryState);
+  const task = {playerId, promise: Promise.resolve()};
+  task.promise = (async () => {
+    try {
+      const runs = await downloadCloudHistory(supabase(), playerId);
+      if (state.session?.playerId !== playerId || cloudHistorySync !== task) return;
+      store.save(playerId, runs);
+      setCloudHistory(runs);
+      cloudHistoryState = {count: runs.length, status: "ready", error: null};
+      log(`cloud history restored: ${runs.length} saved runs`);
+      scheduleRebuild("cloud history restored");
+    } catch (error) {
+      if (state.session?.playerId !== playerId || cloudHistorySync !== task) return;
+      cloudHistoryState = {count: cloudHistoryCount(), status: "error", error: friendlyError(error)};
+      log(`cloud history: ${friendlyError(error)}`);
+    } finally {
+      if (cloudHistorySync === task) {
+        cloudHistorySync = null;
+        broadcast("apogee:cloudHistory", cloudHistoryState);
+      }
+    }
+  })();
+  cloudHistorySync = task;
+  return task.promise;
+}
 async function restoreSignedIn(attempt = 0): Promise<void> {
   let session: ApogeeSession | null;
   try {
@@ -2291,6 +2336,7 @@ async function restoreSignedIn(attempt = 0): Promise<void> {
 
   state.session = session;
   broadcast("apogee:session", session);
+  void recoverCloudHistory();
 
   // Recover a match left open by a previous run of the app. The watcher only
   // submits a run against a match it knows about, so without this a player who
@@ -2382,6 +2428,7 @@ app.whenReady().then(() => {
     // showing them signed in while every action answers "sign in".
     if (!state.session) return;
     state.session = null;
+    clearCloudHistory();
     broadcast("apogee:session", null);
     broadcast("apogee:error", "Your session expired. Sign in with Steam again.");
   });
@@ -2451,6 +2498,7 @@ ipcMain.handle("apogee:getState", () => ({
   scanning: state.scanning,
   session: state.session,
   signingIn: state.signingIn,
+  cloudHistory: cloudHistoryState,
   configured: isConfigured(),
   // A reloaded window has to be able to repaint a match in progress.
   match: state.match,
@@ -2552,6 +2600,7 @@ ipcMain.handle("apogee:signIn", async () => {
     state.session = session;
     state.lastError = null;
     broadcast("apogee:session", session);
+    void recoverCloudHistory();
     void refreshDuels("signed in");
     void queueBoard.refresh("signed in", true);
     void refreshTournaments("signed in");
@@ -2578,9 +2627,37 @@ ipcMain.handle("apogee:cancelSignIn", () => {
   return { ok: true };
 });
 
+ipcMain.handle("apogee:restoreCloudHistory", async () => {
+  if (!state.session) return {error: "Sign in with Steam to restore your saved history."};
+  await recoverCloudHistory();
+  return {...cloudHistoryState};
+});
+
+ipcMain.handle("apogee:updateName", async (_event, value: unknown) => {
+  const playerId = state.session?.playerId;
+  if (!playerId) return {error: "Sign in with Steam to edit your Apogee name."};
+  const name = typeof value === "string" ? value.trim() : "";
+  if ([...name].length < 2 || [...name].length > 32 || /[\x00-\x1f\x7f-\x9f]/.test(name)) {
+    return {error: "Use 2–32 characters without line breaks or control characters."};
+  }
+  try {
+    const {data, error} = await supabase().rpc("set_apogee_name", {new_name: name});
+    if (error) {
+      if (error.code === "PGRST202") return {error: "Name editing isn't available on the server yet. Your current name has not changed."};
+      throw Error(error.message);
+    }
+    if (typeof data !== "string" || !data) throw Error("The server did not confirm your new name.");
+    if (state.session?.playerId !== playerId) return {error: "Your account changed. Sign in and try again."};
+    state.session = {...state.session, displayName: data};
+    broadcast("apogee:session", state.session);
+    return {session: state.session};
+  } catch (error) { return {error: friendlyError(error)}; }
+});
+
 ipcMain.handle("apogee:signOut", async () => {
   await signOut().catch(() => undefined);
   state.session = null;
+  clearCloudHistory();
   // The match panel reads this broadcast; without it an open match stayed on screen
   // while nothing submitted its runs any more.
   if (state.match) broadcast("apogee:match", null);
