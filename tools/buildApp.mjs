@@ -44,6 +44,10 @@ function clientEnv() {
       if (m && m[1] in out) out[m[1]] = m[2].trim();
     }
   }
+  // CI and Linux packagers can provide the three public client values directly.
+  for (const key of Object.keys(out)) {
+    if (process.env[key]) out[key] = process.env[key];
+  }
 
   const missing = Object.entries(out).filter(([, v]) => !v).map(([k]) => k);
   if (missing.length > 0) {

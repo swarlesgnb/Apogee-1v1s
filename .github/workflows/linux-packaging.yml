@@ -1,0 +1,88 @@
+name: Linux packaging
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ['src/**', 'tools/**', 'data/**', 'package*.json', 'electron-builder.yml', '.github/workflows/linux-packaging.yml']
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  linux:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+    env:
+      # Public client settings only. The fallback builds an offline test artifact.
+      APOGEE_SUPABASE_URL: ${{ vars.APOGEE_SUPABASE_URL || 'https://example.supabase.co' }}
+      APOGEE_SUPABASE_ANON_KEY: ${{ vars.APOGEE_SUPABASE_ANON_KEY || 'public-offline-ci-fixture' }}
+      APOGEE_STEAM_AUTH_URL: ${{ vars.APOGEE_STEAM_AUTH_URL || 'https://example.supabase.co/functions/v1/steam-auth' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck && npm run validate:desktop && npm run validate:backup
+      - run: npm run validate:cloud-history && npm run validate:apogee-names
+      - name: Check desktop HTTPS transport
+        run: |
+          sudo chown root:root node_modules/electron/dist/chrome-sandbox
+          sudo chmod 4755 node_modules/electron/dist/chrome-sandbox
+          timeout 60s xvfb-run -a npm run validate:desktop-network
+      - run: npm run dist:linux
+      - run: node tools/validatePackage.mjs release --linux && npm run validate:linux-package
+      - name: Test portable package on Ubuntu
+        run: |
+          node tools/linuxSmokeFixture.mjs
+          mkdir -p .cache/portable-test
+          tar -xzf release/Apogee-*-linux-x64.tar.gz -C .cache/portable-test
+          # The packaged setuid helper is not needed on a normal userns-enabled host.
+          # Ubuntu CI supports this helper when extracted as a non-root runner.
+          sudo chown root:root .cache/portable-test/Apogee-*/chrome-sandbox
+          sudo chmod 4755 .cache/portable-test/Apogee-*/chrome-sandbox
+          timeout 120s xvfb-run -a .cache/portable-test/Apogee-*/start-apogee.sh --smoke > release/linux-smoke.log 2>&1
+          cat release/linux-smoke.log
+          grep -F 'OK: desktop client boots, finds stats, and renders' release/linux-smoke.log
+      - name: Check AppImage extraction without FUSE
+        run: |
+          chmod +x release/*.AppImage
+          mkdir -p .cache/appimage-test
+          cd .cache/appimage-test
+          ../../release/*.AppImage --appimage-extract > /dev/null
+          sudo chown root:root squashfs-root/chrome-sandbox
+          sudo chmod 4755 squashfs-root/chrome-sandbox
+          timeout 120s xvfb-run -a ./squashfs-root/AppRun --smoke > ../../release/appimage-smoke.log 2>&1
+          cat ../../release/appimage-smoke.log
+          grep -F 'OK: desktop client boots, finds stats, and renders' ../../release/appimage-smoke.log
+      - name: Install and test the native package on Arch
+        run: |
+          docker run --rm -e CI=true --security-opt seccomp=unconfined --cap-add SYS_ADMIN \
+            -v "$PWD/release:/packages:ro" -v "$PWD/tools/linuxSmokeFixture.mjs:/fixture.mjs:ro" \
+            -v "$PWD/data:/data:ro" archlinux:base bash -euc '
+              pacman -Syu --noconfirm
+              pacman -S --needed --noconfirm nodejs xorg-server-xvfb xorg-xauth mesa
+              pacman -U --noconfirm /packages/*.pkg.tar.gz
+              pacman -Q apogee
+              useradd -m tester
+              su tester -c "cd / && node /fixture.mjs"
+              # Explicit container-only sandbox bypass: Docker user namespaces differ
+              # from a desktop kernel. Ubuntu steps above exercise the sandbox helper.
+              su tester -c "timeout 120s xvfb-run -a apogee --smoke --no-sandbox" > /tmp/arch-smoke.log 2>&1
+              cat /tmp/arch-smoke.log
+              grep -F "OK: desktop client boots, finds stats, and renders" /tmp/arch-smoke.log
+              su tester -c "timeout 120s xvfb-run -a /packages/*.AppImage --appimage-extract-and-run --smoke --no-sandbox" > /tmp/arch-appimage-smoke.log 2>&1
+              cat /tmp/arch-appimage-smoke.log
+              grep -F "OK: desktop client boots, finds stats, and renders" /tmp/arch-appimage-smoke.log
+            '
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-packaging-evidence
+          if-no-files-found: error
+          path: |
+            release/*.AppImage
+            release/*.tar.gz
+            release/*linux.yml
+            release/*check*.json
+            release/*smoke.log

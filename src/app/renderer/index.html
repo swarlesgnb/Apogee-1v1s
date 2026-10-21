@@ -2148,6 +2148,10 @@
   .editor-dialog form { display: grid; gap: 14px; }
   .editor-dialog :is(h2,p) { margin: 0; }
   .editor-dialog p { font-size: var(--t-sm); color: var(--ink-dim); }
+  #profileDialog::backdrop { background: rgb(0 0 0 / .65); }
+  #profileDialog button { font: inherit; font-size: var(--t-sm); padding: 8px 14px; border: 1px solid var(--rule-2); border-radius: var(--r); background: var(--control); color: var(--ink); cursor: pointer; }
+  #profileDialog button[type=submit] { background: var(--accent); color: var(--ground); }
+  #profileDialog button:disabled { opacity: .45; cursor: default; }
   #seasonBatchError { color: var(--warn); }
   #seasonImportFile[hidden] { display: none; }
   #poolGrid { display: block; position: relative; overscroll-behavior: contain; scroll-behavior: auto; }
@@ -3220,7 +3224,7 @@
                   title="Sign in with Steam">Sign in with Steam</button>
         <div class="signed-in" id="signedIn" hidden>
           <div>
-            <div class="who-name" id="accountName"></div>
+              <button type="button" class="who-name" id="accountName" title="Edit Apogee name"></button>
             <div class="sub" id="accountSteam"></div>
           </div>
           <button type="button" id="btnSignOut" title="Sign out">Sign out</button>
@@ -3271,11 +3275,14 @@
               <button type="button" id="btnRescan">Rescan now</button>
               <button type="button" id="btnChoose">Choose folder…</button>
               <button type="button" id="btnOpen">Open in Explorer</button>
+              <button type="button" id="btnRestoreCloud" hidden>Restore saved history</button>
+              <button type="button" id="btnEditName" hidden>Edit Apogee name</button>
             </div>
             <p class="hint">
               Apogee reads the stat files KovaaK's writes after each run and never
               modifies them.
             </p>
+            <p class="hint" id="cloudHistoryStatus" role="status" aria-live="polite"></p>
           </div>
         </details>
       </div>
@@ -4390,8 +4397,22 @@
     <div class="pgd-tools"><button type="submit" class="pool-btn">Add families</button><button type="button" class="pool-btn" id="seasonBatchCancel">Cancel</button></div>
   </form>
 </dialog>
-<script src="practice-prefs.js"></script>
+  <dialog id="profileDialog" class="editor-dialog" aria-labelledby="profileTitle" style="width:min(420px,calc(100vw - 40px))">
+    <form id="profileForm">
+      <h2 id="profileTitle" style="margin:0 0 12px">Your Apogee name</h2>
+      <p id="profileHint" class="hint">2–32 characters. This changes your public Apogee name, not your Steam account.</p>
+      <label for="profileName">Display name</label>
+      <input id="profileName" type="text" autocomplete="nickname" required aria-describedby="profileHint profileStatus" style="box-sizing:border-box;width:100%;margin:8px 0 12px;padding:10px;background:var(--well);color:var(--ink);border:1px solid var(--rule-2);font:inherit">
+      <p id="profileStatus" role="status" aria-live="polite" class="hint"></p>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+        <button type="button" id="profileCancel">Cancel</button>
+        <button type="submit" id="profileSave">Save name</button>
+      </div>
+    </form>
+  </dialog>
+  <script src="practice-prefs.js"></script>
 <script src="renderer.js"></script>
+  <script src="account-profile.js"></script>
 <script src="cosmic.js"></script>
 <script src="expedition.js"></script>
 <script src="presentation.js"></script>

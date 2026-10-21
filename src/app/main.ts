@@ -12,7 +12,7 @@
  */
 
 import { app, BrowserWindow, ipcMain, screen, shell, dialog } from "electron";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { createHash } from "node:crypto";
 
@@ -80,11 +80,16 @@ import {
   SessionUnreachable,
   signIn,
   signOut,
+  supabase,
   type ApogeeSession,
 } from "./session.ts";
 import { candidateStatsFolders, findStatsFolder, statsFolderOverride, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
 import { loadSettings, saveSettings, settingsPath, type WindowBounds } from "./settings.ts";
 import { installMenu } from "./menu.ts";
+import { installDesktopFetch } from "./network.ts";
+import { CloudHistoryStore, downloadCloudHistory } from "./cloudHistory.ts";
+import { cloudHistoryCount, setCloudHistory } from "../core/history/cloudHistory.ts";
+import { writableReferenceData } from "./referenceData.ts";
 import { launchKovaaks, writeMatchPlaylist } from "./playlist.ts";
 import { loadSeason, seasonPath, validateSeason } from "../core/season/season.ts";
 import { queueEligibility, type QueueEligibility } from "../core/match/eligibility.ts";
@@ -111,7 +116,6 @@ import { installSeasonScenarios, scenariosFolderFor } from "../core/season/insta
  * because a packaged app has no meaningful working directory.
  */
 const here = __dirname;
-setDataDir(join(here, "..", "data"));
 
 // Smoke probes exercise settings and appearance writes as well as progress. Give
 // the entire process a fresh profile before any stores or Chromium caches open.
@@ -131,6 +135,13 @@ if (SMOKE || FRESH) {
   app.setPath("userData", profile);
   app.setPath("sessionData", profile);
 }
+
+// cpSync needs the real unpacked directory; Electron's virtual asar path supports
+// readFile but cannot be traversed by every filesystem operation.
+const shippedData = app.isPackaged
+  ? join(process.resourcesPath, "app.asar.unpacked", "dist", "data")
+  : join(here, "..", "data");
+setDataDir(shippedData, !app.isPackaged);
 
 /**
  * When this bundle was built. Replaced at build time by esbuild's `define`.
@@ -407,6 +418,19 @@ function scheduleRebuild(reason: string): void {
   rebuildTimer = setTimeout(() => rebuild(reason), REBUILD_DEBOUNCE_MS);
 }
 
+function rescanStats(): void {
+  let current: string | null = null;
+  try { if (state.statsDir && statSync(state.statsDir).isDirectory()) current = state.statsDir; } catch {}
+  const found = current ?? findStatsFolder();
+  if (!found) {
+    broadcast("apogee:error", "KovaaK's stats folder is unavailable. Reconnect its drive, or use Apogee > Choose stats folder.");
+    return;
+  }
+  // Reattach the watcher too: removable drives can invalidate an existing fs.watch.
+  startWatching(found);
+  saveSettings({ statsDir: found });
+}
+
 function startWatching(dir: string): void {
   watcher?.close();
   state.statsDir = dir;
@@ -577,7 +601,7 @@ async function chooseStatsFolder(): Promise<string | { error: string } | null> {
   const chosen = resolveStatsFolder(result.filePaths[0]);
   if (!chosen) {
     return {
-      error: `That folder has no KovaaK's stats. It is usually ${join("Steam", "steamapps", "common", "FPSAimTrainer", "FPSAimTrainer", "stats")}.`,
+      error: "No KovaaK's stats folder was found there. Choose the game folder, its Steam library, or FPSAimTrainer/stats. A fresh stats folder can be empty.",
     };
   }
 
@@ -602,6 +626,8 @@ function diagnostics(): string {
     `bundle built  ${BUILD}`,
     `electron      ${process.versions.electron}  (node ${process.versions.node})`,
     `platform      ${process.platform} ${process.arch}`,
+    `display       ${process.env.XDG_SESSION_TYPE ?? (process.platform === "linux" ? "unknown" : "native")}`,
+    `package       ${process.env.APPIMAGE ? "AppImage" : app.isPackaged ? "installed / portable" : "development"}`,
     `stats folder  ${state.statsDir ?? "not found"}`,
     `runs parsed   ${snapshot?.player.totalRuns ?? 0}`,
     `season        ${snapshot ? `${snapshot.benchmark.name} ${snapshot.benchmark.difficulty}` : "not loaded"}`,
@@ -904,6 +930,7 @@ function createWindow(): void {
   if (settings.window?.maximized) window.maximize();
 
   window.once("ready-to-show", () => window?.show());
+  window.webContents.once("did-finish-load", () => window?.webContents.setZoomFactor(settings.zoom));
   window.on("resize", scheduleRememberBounds);
   window.on("move", scheduleRememberBounds);
   window.on("maximize", scheduleRememberBounds);
@@ -911,6 +938,7 @@ function createWindow(): void {
   window.on("close", () => {
     if (boundsTimer) clearTimeout(boundsTimer);
     rememberBounds();
+    if (window && !window.isDestroyed()) saveSettings({ zoom: window.webContents.getZoomFactor() });
   });
   window.on("closed", () => { window = null; });
 
@@ -1346,6 +1374,28 @@ function runSmokeTest(): void {
         ranked: rows.filter((r) => r.dataset.rank !== "").length,
       };
     })()`);
+
+    const conveniences = await probe.webContents.executeJavaScript(`(() => {
+      const sample = { scenario: "Apogee Pasu Intermediate", category: "Static Clicking" };
+      const words = matchesQuery(sample, "pasu static") && matchesQuery(sample, "STATIC   pasu") &&
+        !matchesQuery(sample, "pasu impossible");
+      const input = document.getElementById("scSearch");
+      input.value = "no-such-scenario-123";
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      const empty = document.querySelectorAll("#scRanksBody tr.sc-row").length === 0;
+      const resetVisible = !document.getElementById("scClear").hidden;
+      document.getElementById("scClear").click();
+      const restored = document.querySelectorAll("#scRanksBody tr.sc-row").length > 0 && input.value === "";
+      document.dispatchEvent(new KeyboardEvent("keydown", { key: "f", ctrlKey: true, bubbles: true, cancelable: true }));
+      const focused = document.activeElement === input;
+      input.value = "pasu"; input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true, cancelable: true }));
+      const escaped = input.value === "" && scenarioView.query === "";
+      resetScenarioView();
+      return { words, empty, resetVisible, restored, focused, escaped };
+    })()`);
+    if (!Object.values(conveniences).every(Boolean)) problems.push("search conveniences failed: " + JSON.stringify(conveniences));
+    console.log("search tools : " + JSON.stringify(conveniences));
 
     if (!scenarioRanks.tab) problems.push("the Scenarios tab is not in the DOM");
     else if (scenarioRanks.want > 0) {
@@ -2095,14 +2145,15 @@ function runSmokeTest(): void {
         new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true, cancelable: true }));
       const moved = gridSel.window === 1 && document.body.dataset.screen === screenBefore;
 
-      // The search finds a scenario from the first few letters of its name. It searches the
-      // scenarios it can offer, and by the letters that tell one apart: every season name
-      // starts "Apogee ", so six letters of one matched all 164 and the forty shown were
-      // whichever sorted first, and none of them is on offer until it has been played.
-      const named = seasonAvailable.find((o) => /^[A-Za-z0-9+]+ [A-Za-z0-9]{3}/.test(o.name));
-      const term = named ? named.name.replace(/^(\S+ \S{3}).*$/, "$1") : "";
-      gridOpenSearch(term);
-      const found = !!named && gridSearchHits.some((o) => o.name === named.name);
+      // A shared prefix can match more than the 40-result limit. Check that it
+      // returns matching names, then require the specific scenario for an exact query.
+      const named = seasonDraft.scenarios.find((x) => x.scenario && x.scenario.length > 6);
+      const prefix = named.scenario.slice(0, 6);
+      gridOpenSearch(prefix);
+      const prefixFound = gridSearchHits.length > 0 && gridSearchHits.every(
+        (o) => o.name.toLowerCase().includes(prefix.toLowerCase()));
+      gridOpenSearch(named.scenario);
+      const found = prefixFound && gridSearchHits[0]?.name === named.scenario;
       gridCloseSearch(false);
 
       // Move a scenario into another family's slot in the same difficulty. It keeps the
@@ -2170,7 +2221,7 @@ function runSmokeTest(): void {
     } else if (!season.moved) {
       problems.push("an arrow key did not move the grid's selection, or switched screens");
     } else if (!season.found) {
-      problems.push("the grid's search did not find a scenario from its first letters");
+      problems.push("the grid's search failed prefix matching or exact-name lookup");
     } else if (!season.kept || season.cutting !== 0) {
       problems.push("a scenario moved between families lost its thresholds or waited on a cut");
     } else if (season.replacedShown !== 1) {
@@ -2227,6 +2278,48 @@ function runSmokeTest(): void {
  * the network still coming up used to delete the token and sign the player out.
  */
 const RESTORE_RETRY_MS = [5_000, 15_000, 60_000, 120_000];
+let cloudHistoryState = {count: 0, status: "idle", error: null as string | null};
+let cloudHistorySync: {playerId: string; promise: Promise<void>} | null = null;
+function clearCloudHistory(): void {
+  cloudHistorySync = null;
+  setCloudHistory([]);
+  cloudHistoryState = {count: 0, status: "idle", error: null};
+  broadcast("apogee:cloudHistory", cloudHistoryState);
+  scheduleRebuild("signed-out history");
+}
+function recoverCloudHistory(): Promise<void> {
+  const playerId = state.session?.playerId;
+  if (!playerId) return Promise.resolve();
+  if (cloudHistorySync?.playerId === playerId) return cloudHistorySync.promise;
+  const store = new CloudHistoryStore(join(app.getPath("userData"), "cloud-history"));
+  setCloudHistory(store.load(playerId));
+  scheduleRebuild("cached cloud history");
+  cloudHistoryState = {count: cloudHistoryCount(), status: "loading", error: null};
+  broadcast("apogee:cloudHistory", cloudHistoryState);
+  const task = {playerId, promise: Promise.resolve()};
+  task.promise = (async () => {
+    try {
+      const runs = await downloadCloudHistory(supabase(), playerId);
+      if (state.session?.playerId !== playerId || cloudHistorySync !== task) return;
+      store.save(playerId, runs);
+      setCloudHistory(runs);
+      cloudHistoryState = {count: runs.length, status: "ready", error: null};
+      log(`cloud history restored: ${runs.length} saved runs`);
+      scheduleRebuild("cloud history restored");
+    } catch (error) {
+      if (state.session?.playerId !== playerId || cloudHistorySync !== task) return;
+      cloudHistoryState = {count: cloudHistoryCount(), status: "error", error: friendlyError(error)};
+      log(`cloud history: ${friendlyError(error)}`);
+    } finally {
+      if (cloudHistorySync === task) {
+        cloudHistorySync = null;
+        broadcast("apogee:cloudHistory", cloudHistoryState);
+      }
+    }
+  })();
+  cloudHistorySync = task;
+  return task.promise;
+}
 async function restoreSignedIn(attempt = 0): Promise<void> {
   let session: ApogeeSession | null;
   try {
@@ -2243,6 +2336,7 @@ async function restoreSignedIn(attempt = 0): Promise<void> {
 
   state.session = session;
   broadcast("apogee:session", session);
+  void recoverCloudHistory();
 
   // Recover a match left open by a previous run of the app. The watcher only
   // submits a run against a match it knows about, so without this a player who
@@ -2277,7 +2371,18 @@ async function restoreSignedIn(attempt = 0): Promise<void> {
 }
 
 app.whenReady().then(() => {
+  installDesktopFetch();
   if (!HAS_LOCK) return;
+  if (app.isPackaged) {
+    try {
+      setDataDir(writableReferenceData(shippedData, app.getPath("userData"), app.getVersion()), false);
+    } catch (error) {
+      const detail = `Could not prepare writable reference data in ${app.getPath("userData")}.\nCheck free disk space and folder permissions.\n\n${friendlyError(error)}`;
+      log(detail); console.error(detail);
+      if (!SMOKE) dialog.showErrorBox("Apogee could not start", detail);
+      app.exit(1); return;
+    }
+  }
   if (SMOKE) {
     runSmokeTest();
     return;
@@ -2289,12 +2394,29 @@ app.whenReady().then(() => {
   // A first launch from a challenge link carries it on the command line.
   social.receiveArgv(process.argv);
   installMenu({
-    rescan: () => rebuild("menu rescan"),
+    rescan: rescanStats,
     chooseFolder: () => void chooseStatsFolder().then((r) => { if (r && typeof r === "object") broadcast("apogee:error", r.error); }),
     openStatsFolder: () => {
       if (state.statsDir) void shell.openPath(state.statsDir);
     },
     diagnostics: () => diagnostics(),
+    checkForUpdates: () => { void updater.checkNow().then(async supported => {
+      if (supported) {
+        const update = updater.current;
+        await dialog.showMessageBox({ type: update.status === "error" ? "warning" : "info",
+          title: "Apogee updates", message: update.status === "idle" ? "Apogee is up to date."
+            : update.status === "error" ? "Could not check for updates."
+            : update.status === "ready" ? "An update is ready. Restart from the update bar."
+            : "An update is being downloaded. You can keep using Apogee.",
+          detail: update.status === "error" ? update.message : `Installed version: ${app.getVersion()}` });
+        return;
+      }
+      const result = await dialog.showMessageBox({ type: "info", title: "Apogee updates",
+        message: `Apogee ${app.getVersion()}`,
+        detail: "Use your package manager to update an installed Linux package, or download the latest portable build from the releases page.",
+        buttons: ["Open downloads", "Close"], defaultId: 1, cancelId: 1 });
+      if (result.response === 0) await shell.openExternal("https://github.com/swarlesgnb/Apogee-1v1s/releases");
+    }); },
   });
 
   // A previous sign-in is restored from the encrypted refresh token, so the player
@@ -2306,6 +2428,7 @@ app.whenReady().then(() => {
     // showing them signed in while every action answers "sign in".
     if (!state.session) return;
     state.session = null;
+    clearCloudHistory();
     broadcast("apogee:session", null);
     broadcast("apogee:error", "Your session expired. Sign in with Steam again.");
   });
@@ -2375,6 +2498,7 @@ ipcMain.handle("apogee:getState", () => ({
   scanning: state.scanning,
   session: state.session,
   signingIn: state.signingIn,
+  cloudHistory: cloudHistoryState,
   configured: isConfigured(),
   // A reloaded window has to be able to repaint a match in progress.
   match: state.match,
@@ -2476,6 +2600,7 @@ ipcMain.handle("apogee:signIn", async () => {
     state.session = session;
     state.lastError = null;
     broadcast("apogee:session", session);
+    void recoverCloudHistory();
     void refreshDuels("signed in");
     void queueBoard.refresh("signed in", true);
     void refreshTournaments("signed in");
@@ -2502,9 +2627,37 @@ ipcMain.handle("apogee:cancelSignIn", () => {
   return { ok: true };
 });
 
+ipcMain.handle("apogee:restoreCloudHistory", async () => {
+  if (!state.session) return {error: "Sign in with Steam to restore your saved history."};
+  await recoverCloudHistory();
+  return {...cloudHistoryState};
+});
+
+ipcMain.handle("apogee:updateName", async (_event, value: unknown) => {
+  const playerId = state.session?.playerId;
+  if (!playerId) return {error: "Sign in with Steam to edit your Apogee name."};
+  const name = typeof value === "string" ? value.trim() : "";
+  if ([...name].length < 2 || [...name].length > 32 || /[\x00-\x1f\x7f-\x9f]/.test(name)) {
+    return {error: "Use 2–32 characters without line breaks or control characters."};
+  }
+  try {
+    const {data, error} = await supabase().rpc("set_apogee_name", {new_name: name});
+    if (error) {
+      if (error.code === "PGRST202") return {error: "Name editing isn't available on the server yet. Your current name has not changed."};
+      throw Error(error.message);
+    }
+    if (typeof data !== "string" || !data) throw Error("The server did not confirm your new name.");
+    if (state.session?.playerId !== playerId) return {error: "Your account changed. Sign in and try again."};
+    state.session = {...state.session, displayName: data};
+    broadcast("apogee:session", state.session);
+    return {session: state.session};
+  } catch (error) { return {error: friendlyError(error)}; }
+});
+
 ipcMain.handle("apogee:signOut", async () => {
   await signOut().catch(() => undefined);
   state.session = null;
+  clearCloudHistory();
   // The match panel reads this broadcast; without it an open match stayed on screen
   // while nothing submitted its runs any more.
   if (state.match) broadcast("apogee:match", null);
@@ -2955,7 +3108,7 @@ async function currentEligibility(): Promise<QueueEligibility | null> {
 ipcMain.handle("apogee:queueEligibility", () => currentEligibility());
 
 ipcMain.handle("apogee:rescan", () => {
-  rebuild("manual rescan");
+  rescanStats();
   return state.snapshot;
 });
 
@@ -3121,7 +3274,7 @@ ipcMain.handle("apogee:availableScenarios", async () => {
     const windowSize =
       typeof season.windowSize === "number" && season.windowSize > 0 ? season.windowSize : 0;
 
-    // Three sources, because no single one is "every KovaaK's scenario".
+    // Four sources, because no single one is "every KovaaK's scenario".
     //
     //   the stats folder    everything this player has ever actually run, which on
     //                       this machine is 800-odd and is by far the most useful set:
@@ -3129,6 +3282,7 @@ ipcMain.handle("apogee:availableScenarios", async () => {
     //   the taxonomy        the 54 benchmark scenarios, with KovaaK's own aim type.
     //   benchmark files     everything any committed benchmark names, which reaches
     //                       scenarios never played here.
+    //   current season      custom scenarios, even on a fresh PC with no run history.
     //
     // All offline. KovaaK's full catalogue is far larger than any of these, so the
     // picker also accepts a name typed in directly rather than pretending this is
@@ -3231,6 +3385,19 @@ ipcMain.handle("apogee:availableScenarios", async () => {
       } catch {
         // Optional: a definition we cannot parse simply contributes nothing.
       }
+    }
+
+    // Custom season scenarios may never appear in the benchmark catalogue. They
+    // must remain searchable after a reinstall, before the player runs them again.
+    for (const slot of season.scenarios) {
+      if (!slot.scenario || known.has(slot.scenario)) continue;
+      known.set(slot.scenario, {
+        aimType: slot.category,
+        difficulty: null,
+        leaderboardId: slot.leaderboardId ?? null,
+        tiers: [],
+        benchmarks: [],
+      });
     }
 
     const history = state.statsDir ? scanStatsFolder(state.statsDir) : new Map();

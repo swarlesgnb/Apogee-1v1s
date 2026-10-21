@@ -17,6 +17,13 @@ directories:
   output: release
   buildResources: build
 
+afterPack: tools/afterPack.cjs
+
+# Pin the static runtime supported by this electron-builder version instead of
+# its legacy FUSE2 default, which requires libfuse.so.2 on the player's machine.
+toolsets:
+  appimage: "1.0.3"
+
 files:
   - dist/**
   # Source maps are a third of the package and the source is public on GitHub anyway.
@@ -50,6 +57,20 @@ win:
   target: nsis
   icon: build/icon.png
 
+linux:
+  syncDesktopName: true
+  executableName: apogee
+  icon: build/icon.png
+  category: Game
+  synopsis: KovaaK's training and ranked companion
+  artifactName: ${productName}-${version}-linux-${arch}.${ext}
+  target:
+    - AppImage
+  desktop:
+    entry:
+      StartupWMClass: apogee
+      Keywords: KovaaKs;Aim;Training;
+
 nsis:
   # A one-click installer picks the location, installs, and launches, which is the wrong
   # shape for a tool that reads another game's files: people want to see where it went.
@@ -61,28 +82,6 @@ nsis:
   createDesktopShortcut: true
   shortcutName: Apogee
   artifactName: ${productName}-${version}-setup.${ext}
-
-# KovaaK's has no native Linux build but runs under Proton, so Linux players exist and
-# their stats land in an ordinary folder (watcher.ts knows where). AppImage because it is
-# the one Linux format electron-updater can replace in place, and it needs no root to
-# install. A native build rather than the Windows one under Wine: under Wine the Windows
-# build would look for Steam inside the Wine prefix rather than the Linux library Proton
-# actually uses, and neither Electron nor Chromium supports running under Wine.
-#
-# `npm run dist:linux` has to run on Linux (WSL works). On Windows it fails twice over:
-# the AppImage step symlinks icons, which needs Developer Mode, and past that it packs
-# with mksquashfs, which electron-builder ships only for Linux and macOS.
-linux:
-  target: AppImage
-  # The single 1024px source; electron-builder cuts the hicolor sizes from it. The
-  # build/icons set is named icon-<n>.png, which it does not recognise as sizes.
-  icon: build/icon.png
-  category: Game
-  # Without this the window's app id is "Apogee" while the launcher is apogee.desktop,
-  # and the dock shows a second, iconless entry next to the pinned one.
-  syncDesktopName: true
-  synopsis: Ranked 1v1 for KovaaK's
-  artifactName: ${productName}-${version}-${arch}.${ext}
 
 # Where installed copies look for updates (src/app/updater.ts). Written into the package
 # as app-update.yml; electron-updater reads latest.yml from the newest release. Building

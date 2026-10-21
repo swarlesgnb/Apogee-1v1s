@@ -30,6 +30,7 @@
 
 import { mkdirSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { createHash } from "node:crypto";
 
 import { dataFile } from "../dataDir.ts";
 import { checkConsistency, type ScoreModel, type WeaponScoreModel } from "../verify/consistency.ts";
@@ -38,6 +39,7 @@ import { parseStatsFile, type ParsedRun } from "./parseStatsFile.ts";
 export interface StatsFileRun extends Pick<ParsedRun, "scenario" | "score" | "playedAt" | "challengeStart"> {
   /** Whether the file is internally consistent (verify/consistency.ts). */
   coherent: boolean;
+  csvSha256?: string;
 }
 
 const SETTLE_MS = 400;
@@ -68,7 +70,8 @@ function parseInto(dir: string, file: string): boolean {
   try {
     const path = join(dir, file);
     if (Date.now() - statSync(path).mtimeMs < SETTLE_MS) return false;
-    const result = parseStatsFile(file, readFileSync(path, "utf8"));
+    const content = readFileSync(path, "utf8");
+    const result = parseStatsFile(file, content);
     if (!result.ok) return false;
     const r = result.run;
     models ??= JSON.parse(readFileSync(dataFile("score_models.json"), "utf8"));
@@ -77,6 +80,7 @@ function parseInto(dir: string, file: string): boolean {
       score: r.score,
       playedAt: r.playedAt,
       challengeStart: r.challengeStart,
+      csvSha256: createHash("sha256").update(content, "utf8").digest("hex"),
       coherent: checkConsistency(r, {
         scoreModel: models!.models?.[r.scenario],
         weaponScoreModel: models!.weaponModels?.[r.scenario],
@@ -178,11 +182,11 @@ export function isPrimed(dir: string): boolean {
 // ---------------------------------------------------------------------------
 
 interface DiskCache {
-  version: 1;
+  version: 2;
   key: string;
   dir: string;
   /** [file, scenario, score, playedAt ms or null, challengeStart, coherent 1/0] */
-  runs: [string, string, number, number | null, string | null, 0 | 1][];
+  runs: [string, string, number, number | null, string | null, 0 | 1, string | undefined][];
 }
 
 /** Keep parsed runs at `path` between sessions, valid only under the same `key`. */
@@ -194,14 +198,15 @@ function loadDiskCache(dir: string): void {
   if (!disk) return;
   try {
     const data = JSON.parse(readFileSync(disk.path, "utf8")) as DiskCache;
-    if (data.version !== 1 || data.key !== disk.key || data.dir !== dir || !Array.isArray(data.runs)) return;
-    for (const [file, scenario, score, playedAt, challengeStart, coherent] of data.runs) {
+    if (data.version !== 2 || data.key !== disk.key || data.dir !== dir || !Array.isArray(data.runs)) return;
+    for (const [file, scenario, score, playedAt, challengeStart, coherent, csvSha256] of data.runs) {
       parsed.set(file, {
         scenario,
         score,
         playedAt: playedAt === null ? null : new Date(playedAt),
         challengeStart,
         coherent: coherent === 1,
+        csvSha256,
       });
     }
   } catch {
@@ -220,12 +225,12 @@ export function saveDiskCache(): boolean {
   const runs: DiskCache["runs"] = [];
   for (const [file, r] of parsed) {
     if (!present.has(file)) continue;
-    runs.push([file, r.scenario, r.score, r.playedAt ? r.playedAt.getTime() : null, r.challengeStart, r.coherent ? 1 : 0]);
+    runs.push([file, r.scenario, r.score, r.playedAt ? r.playedAt.getTime() : null, r.challengeStart, r.coherent ? 1 : 0, r.csvSha256]);
   }
   try {
     mkdirSync(dirname(disk.path), { recursive: true });
     const tmp = `${disk.path}.tmp`;
-    writeFileSync(tmp, JSON.stringify({ version: 1, key: disk.key, dir: parsedDir, runs } satisfies DiskCache));
+    writeFileSync(tmp, JSON.stringify({ version: 2, key: disk.key, dir: parsedDir, runs } satisfies DiskCache));
     renameSync(tmp, disk.path);
     unsaved = 0;
     return true;

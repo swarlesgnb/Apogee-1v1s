@@ -1,5 +1,24 @@
 # Setting up Apogee
 
+For Arch Linux, AppImage, and portable archive setup, see [the Linux guide](docs/linux.md).
+
+## Returning after a Windows reinstall
+
+Install the latest Windows setup executable to restore the desktop and Start menu
+shortcuts. Launch Apogee and sign in with the same Steam account. KovaaK's stats
+folder is detected automatically; use **Apogee > Choose stats folder** if it moved.
+
+Before the next reinstall, use **Apogee > Back up local progress…** (`Ctrl+Shift+B`).
+Choose a folder on a drive that will survive the reinstall, then keep the generated
+backup folder. It includes portable local saves and a `RESTORE.txt` with instructions.
+KovaaK's CSV history must be backed up separately from **Apogee > Open stats folder**.
+Steam sign-in, online rankings, and unfinished editor drafts are not in this backup.
+
+For development, restore the locked dependencies with `npm ci`, then run
+`npm run typecheck`, `npm run validate:backup`, and `npm run dist` to build the installer.
+Existing backend configuration belongs in `.env`; a Windows reinstall does not require
+creating a new Supabase project.
+
 Two halves: creating the Supabase project the client talks to, and running the client
 itself. Assumes no prior Supabase experience. Roughly 20 minutes, most of it waiting for
 the project to provision.
