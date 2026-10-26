@@ -29,6 +29,9 @@ contextBridge.exposeInMainWorld("apogee", {
   expedition: () => ipcRenderer.invoke("apogee:expedition"),
   expeditionAction: (action) => ipcRenderer.invoke("apogee:expeditionAction", action),
   onExpedition: (handler) => subscribe("apogee:expedition", handler),
+  rift: () => ipcRenderer.invoke("apogee:rift"),
+  riftAction: (action) => ipcRenderer.invoke("apogee:riftAction", action),
+  onRift: (handler) => subscribe("apogee:rift", handler),
   /** Ghost Mode: the screen as main computed it, an action, and pushes when a run lands. */
   ghost: () => ipcRenderer.invoke("apogee:ghost"),
   ghostAction: (action) => ipcRenderer.invoke("apogee:ghostAction", action),

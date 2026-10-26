@@ -3082,6 +3082,7 @@
 <link rel="stylesheet" href="tournament.css">
 <link rel="stylesheet" href="arcade.css">
 <link rel="stylesheet" href="expedition.css">
+<link rel="stylesheet" href="rift.css">
 <link rel="stylesheet" href="cosmic.css">
 <link rel="stylesheet" href="presentation.css">
 <link rel="stylesheet" href="mixtape.css">
@@ -3125,6 +3126,10 @@
       <button class="tab" role="tab" aria-selected="false" data-screen="expedition">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><path d="M12 2 22 12 12 22 2 12Z M12 6v12M6 12h12"/><circle cx="12" cy="12" r="3"/></svg>
         <span class="tab-key"></span><span class="tab-label">Expedition</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false" data-screen="rift">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" aria-hidden="true"><ellipse cx="12" cy="12" rx="6" ry="10" transform="rotate(30 12 12)"/><ellipse cx="12" cy="12" rx="6" ry="10" transform="rotate(-30 12 12)"/><circle cx="12" cy="12" r="2"/></svg>
+        <span class="tab-key"></span><span class="tab-label">Rift</span>
       </button>
       <div class="nav-label">Compete</div>
       <button class="tab" role="tab" aria-selected="true" data-screen="queue">
@@ -3803,6 +3808,7 @@
             <div id="expeditionRoot"><p class="exp-loading">Charting your expedition…</p></div>
             <p id="expeditionMessage" class="exp-message" role="status" aria-live="polite"></p>
           </section>
+          <section class="screen" id="screen-rift"><div id="riftRoot"><p>Opening the Rift…</p></div></section>
           <section class="screen" id="screen-profile">
             <div class="screen-head">
               <h1 data-copy="profile.title">Your aim</h1>
@@ -4415,6 +4421,7 @@
   <script src="account-profile.js"></script>
 <script src="cosmic.js"></script>
 <script src="expedition.js"></script>
+<script src="rift.js"></script>
 <script src="presentation.js"></script>
 <script src="mixtape-engine.js"></script>
 <script src="mixtape.js"></script>

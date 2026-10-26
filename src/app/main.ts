@@ -36,6 +36,8 @@ import { rebuildPool } from "../core/season/rebuildPool.ts";
 import { syncBandLadders, syncOverallLadder } from "../core/season/bandLadders.ts";
 import { loadQuestState, saveQuestState } from "./questStore.ts";
 import { ExpeditionService } from "./expedition.ts";
+import { RiftService } from "./rift.ts";
+import { registerRiftHandlers } from "./riftIpc.ts";
 import { clearOverrides, loadOverrides, overridesPath, saveOverrides } from "./adminStore.ts";
 import { MAX_COPY, PAIRS, TOKENS } from "../core/admin/overrides.ts";
 import { buildSnapshot, type Snapshot } from "../core/report/snapshot.ts";
@@ -211,6 +213,8 @@ let watcher: StatsWatcher | null = null;
 const observedBests = new Map<string, number>();
 let rebuildTimer: NodeJS.Timeout | null = null;
 let expeditionService: ExpeditionService | null = null;
+let riftService: RiftService | null = null;
+function rift(): RiftService { return riftService ??= new RiftService(app.getPath("userData")); }
 function expedition(): ExpeditionService {
   return expeditionService ??= new ExpeditionService(app.getPath("userData"));
 }
@@ -369,6 +373,8 @@ function rebuild(reason: string): void {
     } catch (err) {
       console.error("expedition sync failed:", err);
     }
+    try { broadcast("apogee:rift", rift().view(state.statsDir, true)); }
+    catch (err) { console.error("rift sync failed:", err); }
     if (!state.quests) state.quests = loadQuestState();
     const syncs: QuestSync[] = [];
     const snapshot = buildSnapshot({
@@ -1085,6 +1091,21 @@ function runSmokeTest(): void {
       "typeof window.apogee?.signIn === 'function' && document.getElementById('btnSignIn') !== null",
     );
     if (!hasSignIn) problems.push("sign-in is not wired to the renderer");
+
+    const riftProbe = await probe.webContents.executeJavaScript(`(async () => {
+      const tab = document.querySelector('.tab[data-screen="rift"]');
+      if (!tab || typeof window.apogee?.rift !== 'function' || typeof window.apogee?.riftAction !== 'function') return { error: 'missing navigation or bridge' };
+      const view = await window.apogee.rift();
+      tab.click();
+      await new Promise(resolve => setTimeout(resolve, 120));
+      const result = { error: view.error, abilities: view.abilities?.length, bands: view.bands?.length,
+        active: document.querySelector('#screen-rift')?.classList.contains('active'), kits: document.querySelectorAll('#riftRoot .rift-kit').length };
+      document.querySelector('.tab[data-screen="queue"]')?.click();
+      return result;
+    })()`);
+    if (riftProbe.error || riftProbe.abilities !== 12 || riftProbe.bands !== 4 || !riftProbe.active || riftProbe.kits !== 3) {
+      problems.push(`Rift could not open through the built desktop bridge: ${JSON.stringify(riftProbe)}`);
+    } else console.log('rift         : 3 ships, 12 abilities, 4 bands; built bridge and screen opened');
 
     // A build with no Supabase settings still runs, but sign-in cannot work, and that
     // is worth failing the smoke test over rather than discovering when a user clicks.
@@ -2504,6 +2525,8 @@ ipcMain.handle("apogee:getState", () => ({
   match: state.match,
   notice: state.notice,
 }));
+
+registerRiftHandlers(ipcMain, { service: rift, statsDir: () => state.statsDir, ready: statsRead, launch: launchKovaaks, broadcast });
 
 ipcMain.handle("apogee:expedition", async () => {
   await statsRead();

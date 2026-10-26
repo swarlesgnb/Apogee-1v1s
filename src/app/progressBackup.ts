@@ -2,7 +2,7 @@ import { copyFileSync, mkdirSync, mkdtempSync, readdirSync, writeFileSync, readF
 import { join } from "node:path";
 
 function portableFile(name: string): boolean {
-  return ["settings.json", "quests.json", "ghost.json", "social.json", "admin-overrides.json"].includes(name) ||
+  return ["settings.json", "quests.json", "ghost.json", "social.json", "admin-overrides.json", "rift-v1.json"].includes(name) ||
     /^expedition-first-light-v\d+\.json$/.test(name);
 }
 
@@ -26,7 +26,7 @@ export function createProgressBackup(source: string, destination: string): { fol
     "Open Apogee again. If KovaaK's moved, use Apogee > Choose stats folder.",
     "Sign in with Steam again to access your online account.",
     "",
-    "Includes local quests, expedition progress, ghosts, appearance overrides and settings when present.",
+    "Includes local quests, expedition and Rift progress, ghosts, appearance overrides and settings when present.",
     "Does not include KovaaK's CSV history, Steam sign-in, online rankings, or editor drafts.",
     "Back up the KovaaK's stats folder separately to preserve your training history.",
     "",

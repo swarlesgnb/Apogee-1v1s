@@ -9666,7 +9666,7 @@ function restoreScreen() {
 }
 
 /** Screens that work before any stats are read. */
-const STANDALONE_SCREENS = new Set(["home", "scenarios", "mixtape", "expedition"]);
+const STANDALONE_SCREENS = new Set(["home", "scenarios", "mixtape", "expedition", "rift"]);
 // The scenario pool exists before the first personal score does.
 $('app').before($('screen-scenarios'));
 /** Set while a locked tab sends the player back to the folder card, which is behind Queue. */
@@ -12966,6 +12966,7 @@ function mountArcadeCommand() {
     mixtape: 'Mixtape: build a short practice session.',
     ghost: 'Race a saved score on the same scenarios.',
     expedition: 'Solo challenges and unlockable rewards.',
+    rift: 'A solo roguelite: combine abilities and fight through eight sectors.',
     leaderboards: 'Compare scores and ladder standings.',
     queue: 'Queue a ranked match.', seasonview: 'Season benchmarks and your next rank.',
     tournaments: 'Groups, brackets and fixtures.', result: 'Rounds and rating change from your last match.',

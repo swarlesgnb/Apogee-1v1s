@@ -16,6 +16,7 @@ import { loadSeason } from "../src/core/season/season.ts";
 import { practicePlaylists, practiceRows } from "../src/core/season/practice.ts";
 import { sampleTournamentView } from "../src/core/tournament/sample.ts";
 import { loadExpedition, rewardCatalog } from "../src/core/expedition/definition.ts";
+import { ABILITIES, BOSSES, STARTERS } from "../src/core/rift/engine.ts";
 
 const RENDERER_DIR = new URL("../src/app/renderer/", import.meta.url);
 // APOGEE_PREVIEW_OUT lets a tool build its own copy (the video pipeline does) without
@@ -113,7 +114,8 @@ const tournamentSample = {
 };
 const body = bodyMatch[1]
   // The preview supplies its own inline script instead of loading the file.
-  .replace(/<script src="(?:renderer|cosmic|expedition|presentation|mixtape-engine|mixtape|ghost|share|practice-prefs|practice-home|queue-board|crowns|race)\.js"><\/script>/g, "");
+  .replace(/<script src="(?:renderer|cosmic|expedition|rift|presentation|mixtape-engine|mixtape|ghost|share|practice-prefs|practice-home|queue-board|crowns|race)\.js"><\/script>/g, "")
+  .replace(/^[ \t]+(?=\r?$)/gm, "");
 
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Apogee Client Preview</title>
@@ -122,6 +124,7 @@ ${style}
 <style>${cosmicCss}</style>
 <style>${readFileSync(new URL("presentation.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("mixtape.css", RENDERER_DIR), "utf8")}</style>
+<style>${readFileSync(new URL("rift.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("ghost.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("share.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("queue-board.css", RENDERER_DIR), "utf8")}</style>
@@ -159,6 +162,8 @@ ${rendererJs}
 <script>window.__COSMIC_ASSETS__ = ${JSON.stringify(cosmicAssets)};</script>
 <script>${cosmicJs}</script>
 <script>${expeditionJs}</script>
+<script>window.__APOGEE_RIFT__ = ${JSON.stringify({state:null,records:[],abilities:ABILITIES,bosses:BOSSES,starters:STARTERS,bands:previewSeason.windows,canPlay:false,error:null,warning:null})};</script>
+<script>${readFileSync(new URL("rift.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("presentation.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("mixtape-engine.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("mixtape.js", RENDERER_DIR), "utf8")}</script>
