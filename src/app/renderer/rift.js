@@ -62,6 +62,7 @@
     const play = !!bridge?.riftAction && view.canPlay && !view.error;
     const v = view.vessels.find(x => x.id === vessel) || view.vessels[0];
     return `<div class="rift-intro"><div class="rift-intro-copy"><span class="rift-eyebrow">A SOLO ROGUELITE / APOGEE</span><h1>INTO<br>THE <em>RIFT.</em></h1><p class="rift-lede">Your aim is the engine.<br>Your build is the multiplier.</p><p>Four star systems. Every run you play becomes <b class="t">Thrust</b> × <b class="f">Flux</b>. Collect anomalies that feed each other, chart the planets you love, and break stars that bend the rules.</p><div class="rift-intro-notes"><span>◈ 35 anomalies</span><span>☄ Comets &amp; star charts</span><span>✦ Eight stellar hazards</span><span>↘ An endless deep Rift</span></div></div>${portal()}</div>
+      ${window.ApogeeGuide ? `<aside class="rift-academy"><div><b>First time in the Rift?</b><span>Seven hands-on lessons, about ten minutes, using the real damage engine.</span></div>${button('learn', 'Start the Rift Academy', 'data-lesson="rift"', 'primary')}</aside>` : ''}
       <section class="rift-how"><div><b>1</b><h3>Pick a target</h3><p>Each fight deals three scenarios. Play one in KovaaK’s, or Jump to redraw it.</p></div><div><b>2</b><h3>Thrust × Flux</h3><p>Your score sets Thrust. The planet’s level sets Flux. Anomalies fire left to right.</p></div><div><b>3</b><h3>Break the body</h3><p>Moons and planets can be skipped for a signal. Stars cannot, and each has a hazard.</p></div><div><b>4</b><h3>Build to multiply</h3><p>Hulls grow about 2.5× a system. Adding is not enough; you need ×Flux.</p></div></section>
       <section class="rift-departure"><div class="rift-section-title"><h2>Choose your vessel</h2><span>Every vessel can find every anomaly.</span></div><div class="rift-kits">${view.vessels.map((k, i) => `<button type="button" data-rift="vessel" data-id="${e(k.id)}" class="rift-kit ${vessel === k.id ? 'selected' : ''}" aria-pressed="${vessel === k.id}"><span class="rift-kit-mark" aria-hidden="true">${['◌', '✦', '⌖', '◇'][i] || '◌'}</span><span class="rift-tag">0${i + 1}</span><h3>${e(k.name)}</h3><p>${e(k.text)}</p><small>${k.hull} hull · ${k.slots} slots · ${k.stardust} ✦ · ${k.start.map(id => e(def(id)?.name)).join(', ')}</small></button>`).join('')}</div><div class="rift-departure-controls"><label>Scenario difficulty<select id="riftBand">${view.bands.map((b, i) => `<option value="${i}" ${i === band ? 'selected' : ''}>${e(b)}</option>`).join('')}</select></label>${button('start', `Launch ${e(v?.name || '')} <span aria-hidden="true">↗</span>`, play ? '' : 'disabled', 'primary')}${!view.canPlay && bridge?.chooseFolder ? button('folder', 'Connect stats folder') : ''}</div><p class="rift-caption">References are the first published score threshold in the chosen difficulty and freeze for the voyage. Below 80% is a Drift, 80% a Graze, 100% a Strike, 115% a Nova. Rift damage never touches your scores, ranks or quests.</p>${!bridge?.riftAction ? '<p class="rift-notice">Open the desktop app to play. This preview cannot receive KovaaK’s runs.</p>' : !view.canPlay ? '<p class="rift-notice">Connect your KovaaK’s stats folder to begin. Steam sign-in is not required for this solo mode.</p>' : ''}</section>`;
   }
@@ -120,6 +121,24 @@
     return `<details class="rift-records"><summary>Flight recorder · ${view.records.length} recent voyages</summary>${view.records.map(r => `<div><strong>${e(r.outcome === 'won' ? 'Cleared' : r.outcome === 'lost' ? 'Lost' : 'Extracted')}</strong><span>${e(view.vessels.find(v => v.id === r.vessel)?.name || r.vessel)} · ${e(r.band)} · system ${r.system} · best hit ${big(r.bestHit)}</span><small>${r.anomalies.map(id => e(def(id)?.name || id)).join(' · ')}</small></div>`).join('')}</details>`;
   }
 
+  /** One line that always says what to do next, for players still learning the loop. */
+  function coach(s) {
+    const guide = window.ApogeeGuide, on = guide?.hints?.() !== false;
+    if (!guide) return '';
+    if (!on) return `<p class="rift-coach off">${button('hints', 'Turn hints on', 'data-on="1"', 'ghost small')}${button('learn', 'How to play', `data-lesson="rift"`, 'ghost small')}</p>`;
+    const f = s.fight, held = s.consumables.filter(c => c.kind === 'comet' && ['halley', 'wormhole'].includes(c.id)).map(c => cometDef(c.id)?.name);
+    let text = '';
+    if (s.phase === 'map') text = s.stage < 2
+      ? `<b>Engage</b> this ${['moon', 'planet'][s.stage]} to fight for stardust and a shop, or <b>Skip</b> it for its signal. Bodies get about 2.5× tougher each system, so early shops matter.`
+      : '<b>Stars can’t be skipped.</b> Read the hazard, then face it. Losing a star ends the voyage, so spend in the shop first if you can.';
+    else if (s.phase === 'combat' && f.armed) text = `Finish <b>one complete run</b> of <b>${e(f.hand[f.armed.card].scenario)}</b> in KovaaK’s, then come back. The result appears by itself.`;
+    else if (s.phase === 'combat') text = `Pick a card. The big number is what it deals at exactly the reference; <b>BREAKS IT</b> means one salvo is enough. Press <b>Play</b> to open it in KovaaK’s, or <b>Jump</b> to swap it.${held.length ? ` You’re holding ${held.map(e).join(' and ')}: use it <b>before</b> you press Play.` : ''}`;
+    else if (s.phase === 'result') text = ({ clear: '<b>Broken!</b> Cash out to collect stardust and visit the shop.', continue: `Not broken yet: <b>${(s.last.hull - s.last.dealt).toLocaleString()}</b> hull to go. Before the next salvo you can reorder anomalies or use a comet.`, failed: 'It held. You lose 1 hull and skip its reward, but the voyage goes on.', lost: 'This voyage is over. Open the recap to see how far you got.' })[s.last.verdict];
+    else if (s.phase === 'shop') text = 'Look for anomalies that <b>multiply</b> Flux (×) or that suit the disciplines you play best. Every 5 ✦ you keep earns 1 ✦ interest at the next clear.';
+    if (!text) return '';
+    return `<p class="rift-coach"><span class="rift-coach-mark" aria-hidden="true">?</span><span>${text}</span>${button('learn', 'Learn how', `data-lesson="${guide.lessonFor(s.phase)}"`, 'ghost small')}${button('hints', 'Hide hints', 'data-on="0"', 'ghost small')}</p>`;
+  }
+
   function render() {
     stopAnimation();
     if (!view?.anomalies) { root.innerHTML = `<div class="rift-notice" role="alert">${e(view?.error || 'Opening the Rift…')}${button('refresh', 'Try again')}</div>`; return; }
@@ -130,7 +149,7 @@
     if (!s || finished && planning) content = home();
     else {
       const stage = ({ map, combat, result, shop, won: ended, lost: ended, extracted: ended })[s.phase](s);
-      content = `${hud(s)}${finished ? '' : track(s)}<div class="rift-stage phase-${s.phase}">${stage}</div>${rail(s)}${planets(s)}`;
+      content = `${hud(s)}${finished ? '' : track(s)}${finished ? '' : coach(s)}<div class="rift-stage phase-${s.phase}">${stage}</div>${rail(s)}${planets(s)}`;
     }
     const endAction = s?.phase === 'combat' ? 'abandon' : s && ['map', 'shop'].includes(s.phase) ? 'extract' : null;
     root.innerHTML = `<div class="rift-page">${view.error ? `<div class="rift-notice" role="alert">${e(view.error)}</div>` : ''}${view.warning ? `<p class="rift-notice">${e(view.warning)}</p>` : ''}${content}<p class="rift-message" role="status" aria-live="polite">${e(message)}</p><footer class="rift-footer"><span>SOLO · ROGUELITE<br><small>Rift damage is separate from your aim score and ranked rating.</small></span><div>${endAction ? confirm === endAction ? `<span>${endAction === 'abandon' ? 'End this voyage? Your build will be lost.' : 'Extract now and keep this voyage’s record?'}</span>${button(endAction, 'Confirm', 'data-confirm="true"', 'danger')}${button('cancel', 'Keep going')}` : button(endAction, endAction === 'abandon' ? 'End voyage' : 'Extract safely', '', 'ghost') : ''}${button('refresh', 'Refresh', '', 'ghost')}</div></footer>${records()}</div>`;
@@ -187,6 +206,8 @@
     const el = event.target.closest('[data-rift]'); if (!el || el.disabled || busy) return;
     const type = el.dataset.rift;
     if (type === 'vessel') { vessel = el.dataset.id; render(); return; }
+    if (type === 'learn') { window.ApogeeGuide?.open(el.dataset.lesson || 'rift'); return; }
+    if (type === 'hints') { window.ApogeeGuide?.setHints(el.dataset.on === '1'); render(); return; }
     if (type === 'refresh') { await refresh(); return; }
     if (type === 'skipanim') { finishAnimation(); return; }
     if (type === 'new') { planning = true; confirm = ''; message = ''; render(); return; }

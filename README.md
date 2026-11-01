@@ -17,6 +17,10 @@ other, comets and star charts, eight stellar hazards, four vessels and an endles
 Rift after the final star. See
 [the Rift guide](docs/rift.md) for play, saves, and the limits of the current balance tests.
 
+New players can press **Guide** in the client's top bar (or `?`) for a mode finder, a
+spotlight tour of every screen, a glossary, and the Rift Academy: seven hands-on lessons
+that score practice salvos with the real Rift engine.
+
 See [PLAN.md](PLAN.md) for the full design: match format, rating, anti-cheat, and the
 phased build.
 

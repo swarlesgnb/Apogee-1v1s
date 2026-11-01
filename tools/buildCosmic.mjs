@@ -8,3 +8,7 @@ await build({entryPoints:[join(root,'src/app/renderer/cosmic-source.mjs')],outfi
 // GLSL template strings retain upstream trailing spaces; strip them for reproducible clean diffs.
 const output=join(root,'src/app/renderer/cosmic.js');
 writeFileSync(output,readFileSync(output,'utf8').replace(/[ \t]+$/gm,''));
+
+// The Rift Academy scores its practice salvos with the real engine rather than a copy of
+// the formula, so lessons and the game cannot disagree (rift-lab-source.ts).
+await build({entryPoints:[join(root,'src/app/renderer/rift-lab-source.ts')],outfile:join(root,'src/app/renderer/rift-lab.js'),bundle:true,format:'iife',platform:'browser',target:'chrome138',minify:true,logLevel:'warning'});

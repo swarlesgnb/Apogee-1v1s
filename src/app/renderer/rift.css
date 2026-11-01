@@ -252,3 +252,12 @@ body:not([data-screen="rift"]) .rift-page *,body[data-presentation-paused] .rift
   .rift-track li:not(.rift-track-line) span{display:none}.rift-steps{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce) { .rift-page * { animation:none!important; transition:none!important; } }
+
+/* Hints and the Academy banner; the Guide itself is styled in guide.css. */
+.rift-coach { display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin:16px 0 0!important; padding:12px 14px; border-radius:10px; border:1px solid #b8a3ff40; background:linear-gradient(90deg,#b8a3ff12,#b8a3ff04); font-size:12.5px; color:#d6deea!important; }
+.rift-coach>span:not(.rift-coach-mark) { flex:1 1 300px; line-height:1.55; }
+.rift-coach b { color:#fff; }
+.rift-coach-mark { display:inline-grid; place-items:center; width:22px; height:22px; border-radius:50%; background:var(--rift-violet); color:#1a1330; font-weight:800; font-size:12px; flex-shrink:0; }
+.rift-coach.off { border-style:dashed; background:none; justify-content:flex-end; }
+.rift-academy { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:14px; padding:16px 20px; border-radius:12px; border:1px solid #b9fbd660; background:linear-gradient(100deg,#b9fbd618,#b8a3ff10); }
+.rift-academy b { display:block; font-size:15px; } .rift-academy span { font-size:12px; color:#aeb9ca; }

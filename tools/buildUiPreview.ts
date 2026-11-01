@@ -114,7 +114,7 @@ const tournamentSample = {
 };
 const body = bodyMatch[1]
   // The preview supplies its own inline script instead of loading the file.
-  .replace(/<script src="(?:renderer|cosmic|expedition|rift|presentation|mixtape-engine|mixtape|ghost|share|practice-prefs|practice-home|queue-board|crowns|race)\.js"><\/script>/g, "")
+  .replace(/<script src="(?:renderer|cosmic|expedition|rift-lab|guide|rift|presentation|mixtape-engine|mixtape|ghost|share|practice-prefs|practice-home|queue-board|crowns|race)\.js"><\/script>/g, "")
   .replace(/^[ \t]+(?=\r?$)/gm, "");
 
 const html = `<!doctype html>
@@ -125,6 +125,7 @@ ${style}
 <style>${readFileSync(new URL("presentation.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("mixtape.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("rift.css", RENDERER_DIR), "utf8")}</style>
+<style>${readFileSync(new URL("guide.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("ghost.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("share.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("queue-board.css", RENDERER_DIR), "utf8")}</style>
@@ -163,6 +164,8 @@ ${rendererJs}
 <script>${cosmicJs}</script>
 <script>${expeditionJs}</script>
 <script>window.__APOGEE_RIFT__ = ${JSON.stringify({state:null,derived:null,records:[],anomalies:ANOMALIES,comets:COMETS,hazards:HAZARDS,signals:SIGNALS,vessels:VESSELS,grades:GRADES,bands:previewSeason.windows,canPlay:false,error:null,warning:null})};</script>
+<script>${readFileSync(new URL("rift-lab.js", RENDERER_DIR), "utf8")}</script>
+<script>${readFileSync(new URL("guide.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("rift.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("presentation.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("mixtape-engine.js", RENDERER_DIR), "utf8")}</script>
