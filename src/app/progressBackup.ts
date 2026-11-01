@@ -2,7 +2,7 @@ import { copyFileSync, mkdirSync, mkdtempSync, readdirSync, writeFileSync, readF
 import { join } from "node:path";
 
 function portableFile(name: string): boolean {
-  return ["settings.json", "quests.json", "ghost.json", "social.json", "admin-overrides.json", "rift-v1.json"].includes(name) ||
+  return ["settings.json", "quests.json", "ghost.json", "social.json", "admin-overrides.json", "rift-v1.json", "rift-v2.json"].includes(name) ||
     /^expedition-first-light-v\d+\.json$/.test(name);
 }
 

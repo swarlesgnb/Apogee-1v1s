@@ -1098,14 +1098,14 @@ function runSmokeTest(): void {
       const view = await window.apogee.rift();
       tab.click();
       await new Promise(resolve => setTimeout(resolve, 120));
-      const result = { error: view.error, abilities: view.abilities?.length, bands: view.bands?.length,
+      const result = { error: view.error, anomalies: view.anomalies?.length, bands: view.bands?.length,
         active: document.querySelector('#screen-rift')?.classList.contains('active'), kits: document.querySelectorAll('#riftRoot .rift-kit').length };
       document.querySelector('.tab[data-screen="queue"]')?.click();
       return result;
     })()`);
-    if (riftProbe.error || riftProbe.abilities !== 12 || riftProbe.bands !== 4 || !riftProbe.active || riftProbe.kits !== 3) {
+    if (riftProbe.error || riftProbe.anomalies !== 35 || riftProbe.bands !== 4 || !riftProbe.active || riftProbe.kits !== 4) {
       problems.push(`Rift could not open through the built desktop bridge: ${JSON.stringify(riftProbe)}`);
-    } else console.log('rift         : 3 ships, 12 abilities, 4 bands; built bridge and screen opened');
+    } else console.log('rift         : 4 vessels, 35 anomalies, 4 bands; built bridge and screen opened');
 
     // A build with no Supabase settings still runs, but sign-in cannot work, and that
     // is worth failing the smoke test over rather than discovering when a user clicks.

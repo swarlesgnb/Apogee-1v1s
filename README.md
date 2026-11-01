@@ -11,9 +11,10 @@ journeys (checkpoints, route choices, optional preparation, and direct trials), 
 earnable appearances and trophies. Ordinary training advances accepted challenges. See
 [the solo guide](docs/solo-expedition.md) for progression, saved state, and validation.
 
-**Rift — First Flight** is a local roguelite prototype: eight sectors, two bosses,
-three starting ships, and twelve abilities that combine around real KovaaK's runs.
-Choose routes, assemble a five-slot build, and spend salvage at waystations. See
+**Rift** is a local roguelite played through real KovaaK's runs: four star systems,
+each run scored as Thrust × Flux, 35 anomalies that resolve left to right and feed each
+other, comets and star charts, eight stellar hazards, four vessels and an endless deep
+Rift after the final star. See
 [the Rift guide](docs/rift.md) for play, saves, and the limits of the current balance tests.
 
 See [PLAN.md](PLAN.md) for the full design: match format, rating, anti-cheat, and the

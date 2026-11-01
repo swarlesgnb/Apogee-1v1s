@@ -1,8 +1,8 @@
 import { randomInt, createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { ABILITIES, BOSSES, STARTERS, actRift, receiveRift, startRift, terminal, type Receipt } from '../core/rift/engine.ts';
-import { RiftStore, type RiftSave } from '../core/rift/store.ts';
+import { ANOMALIES, COMETS, GRADES, HAZARDS, SIGNALS, STAGES, VESSELS, actRift, encounterHull, previews, receiveRift, startRift, terminal, type Receipt, type RiftState } from '../core/rift/engine.ts';
+import { RECORD_LIMIT, RiftStore, type RiftRecord, type RiftSave } from '../core/rift/store.ts';
 import { loadSeason } from '../core/season/season.ts';
 import { readStatsFolder, type StatsFileRun } from '../core/stats/folderCache.ts';
 import { runDurationSeconds, isAbandonedRun } from '../core/stats/duration.ts';
@@ -16,26 +16,40 @@ export function riftReceipt(run: StatsFileRun, expected: number | null): Receipt
   const at = run.playedAt.getTime();
   return { id: createHash('sha256').update(`${run.scenario}\n${at}\n${run.challengeStart}`).digest('hex'), scenario: run.scenario, score: run.score, at, startedAt: at - duration * 1000 };
 }
+const armedScenario = (s: RiftState | null) => s?.phase === 'combat' && s.fight?.armed ? s.fight.hand[s.fight.armed.card].scenario : null;
+function record(s: RiftState, at: number): RiftRecord {
+  return { id: s.id, outcome: s.phase, band: s.bandName, vessel: s.vessel, system: s.system + 1, cleared: s.stats.clears,
+    damage: s.stats.damage, bestHit: s.stats.bestHit, anomalies: s.anomalies.map(o => o.id), at };
+}
+/** The first flight saved to rift-v1.json in a format this version does not read; it is left in place, untouched. */
+export const RIFT_SAVE = 'rift-v2.json';
 export class RiftService {
   private store: RiftStore;
   private save: RiftSave | null = null;
   private warning: string | null = null;
   private durations: Map<string, number> | null = null;
-  constructor(folder: string, private now: () => number = Date.now) { this.store = new RiftStore(join(folder, 'rift-v1.json')); }
+  constructor(folder: string, private now: () => number = Date.now) { this.store = new RiftStore(join(folder, RIFT_SAVE)); }
   private load() {
     if (!this.save) { const result = this.store.load(); this.save = result.save; this.warning = result.warning; }
   }
   private commit(save: RiftSave) { this.store.save(save); this.save = save; }
   private sync(dir: string | null) {
     this.load();
-    if (!dir || this.save!.state?.phase !== 'combat' || !this.save!.state.fight?.armed) return;
-    const expected = this.duration(this.save!.state.fight.encounter.scenario);
-    const receipts = readStatsFolder(dir).filter(({ run }) => run.scenario === this.save!.state!.fight!.encounter.scenario)
+    const scenario = armedScenario(this.save!.state);
+    if (!dir || !scenario) return;
+    const expected = this.duration(scenario);
+    const receipts = readStatsFolder(dir).filter(({ run }) => run.scenario === scenario)
       .map(({ run }) => riftReceipt(run, expected)).filter((r): r is Receipt => !!r).sort((a, b) => a.at - b.at || a.id.localeCompare(b.id));
     for (const receipt of receipts) {
       const next = receiveRift(this.save!.state!, receipt, this.now());
-      if (next !== this.save!.state) { this.commit({ ...this.save!, state: next }); break; }
+      if (next !== this.save!.state) { this.commit(this.withRecord({ ...this.save!, state: next })); break; }
     }
+  }
+  /** A finished voyage keeps one record, refreshed if a won voyage goes on into the deep Rift. */
+  private withRecord(save: RiftSave): RiftSave {
+    const s = save.state;
+    if (!s || !terminal(s)) return save;
+    return { ...save, records: [record(s, this.now()), ...save.records.filter(r => r.id !== s.id)].slice(0, RECORD_LIMIT) };
   }
   private duration(scenario: string): number | null {
     this.durations ??= new Map(JSON.parse(readFileSync(dataFile('scenario_durations.json'), 'utf8')).durations
@@ -45,9 +59,14 @@ export class RiftService {
   view(dir: string | null, sync = false) {
     let error: string | null = null;
     try { this.load(); if (sync) this.sync(dir); } catch (e) { error = e instanceof Error ? e.message : String(e); }
-    const season = loadSeason();
-    return { state: this.save?.state ?? null, records: this.save?.records ?? [], abilities: ABILITIES, starters: STARTERS, bosses: BOSSES,
-      bands: season.windows ?? [], canPlay: !!dir, error, warning: this.warning };
+    const season = loadSeason(), state = this.save?.state ?? null;
+    // Derived numbers the renderer shows but must not compute: it is a pure view.
+    const derived = state ? {
+      previews: previews(state),
+      route: STAGES.map((st, i) => ({ stage: i, name: st.name, hull: encounterHull(state, state.system, i), pay: st.pay })),
+    } : null;
+    return { state, derived, records: this.save?.records ?? [], anomalies: ANOMALIES, comets: COMETS, hazards: HAZARDS, signals: SIGNALS,
+      vessels: VESSELS, grades: GRADES, bands: season.windows ?? [], canPlay: !!dir, error, warning: this.warning };
   }
   action(raw: unknown, dir: string | null) {
     this.load(); this.sync(dir);
@@ -57,28 +76,23 @@ export class RiftService {
       if (!dir) throw new Error("Choose your KovaaK's stats folder before entering the Rift.");
       if (this.save!.state && !terminal(this.save!.state)) throw new Error('Finish or extract from your current voyage first.');
       const season = loadSeason(), band = a.band;
-      if (typeof band !== 'number' || !Number.isInteger(band) || !season.windows?.[band] || typeof a.starter !== 'string') throw new Error('Choose a difficulty and starting ship.');
+      if (typeof band !== 'number' || !Number.isInteger(band) || !season.windows?.[band] || typeof a.vessel !== 'string') throw new Error('Choose a difficulty and a vessel.');
       // A fixed published reference avoids rewarding sandbagging and never moves after a voyage starts.
       const pool = season.scenarios.filter(s => (s.window ?? 0) === band && this.duration(s.scenario) !== null)
         .map(s => ({ scenario: s.scenario, category: s.category, target: s.rankMaxes[0] }));
-      this.commit({ ...this.save!, state: startRift(pool, band, season.windows[band], a.starter, randomInt(0x100000000), now) });
+      this.commit({ ...this.save!, state: startRift(pool, band, season.windows[band], a.vessel, randomInt(0x100000000), now) });
     } else {
       if (!this.save!.state) throw new Error('Start a voyage first.');
       if (a.type === 'arm' && !dir) throw new Error('Reconnect your stats folder before playing.');
-      const state = actRift(this.save!.state, a, now);
-      const records = [...this.save!.records];
-      if (terminal(state) && !records.some(r => r.id === state.id)) records.unshift({ id: state.id, outcome: state.phase, band: state.bandName,
-        starter: state.starter, depth: state.depth + 1, cleared: state.log.filter(r => r.verdict === 'clear').length,
-        damage: state.log.reduce((n, r) => n + r.damage, 0), abilities: [...state.abilities], at: now });
-      this.commit({ ...this.save!, state, records: records.slice(0, 12) });
+      this.commit(this.withRecord({ ...this.save!, state: actRift(this.save!.state, a, now) }));
     }
     return this.view(dir);
   }
   launchScenario(dir: string | null): string {
     this.load();
-    const s = this.save!.state;
-    if (!dir || s?.phase !== 'combat' || !s.fight?.armed) throw new Error('Prepare a round before launching.');
-    if (!loadSeason().scenarios.some(e => e.scenario === s.fight!.encounter.scenario)) throw new Error('This scenario has left the installed season. Your voyage is saved; restore its scenario before continuing.');
-    return s.fight.encounter.scenario;
+    const scenario = armedScenario(this.save!.state);
+    if (!dir || !scenario) throw new Error('Prepare a salvo before launching.');
+    if (!loadSeason().scenarios.some(e => e.scenario === scenario)) throw new Error('This scenario has left the installed season. Your voyage is saved; restore its scenario before continuing.');
+    return scenario;
   }
 }
