@@ -261,3 +261,10 @@ body:not([data-screen="rift"]) .rift-page *,body[data-presentation-paused] .rift
 .rift-coach.off { border-style:dashed; background:none; justify-content:flex-end; }
 .rift-academy { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:14px; padding:16px 20px; border-radius:12px; border:1px solid #b9fbd660; background:linear-gradient(100deg,#b9fbd618,#b8a3ff10); }
 .rift-academy b { display:block; font-size:15px; } .rift-academy span { font-size:12px; color:#aeb9ca; }
+
+.rift-contact {display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:1rem 1.25rem;margin:1rem 0;border:1px solid #627aa4;border-left:4px solid #a3d9ff;border-radius:12px;background:linear-gradient(110deg,#172439,#151927);color:#eff5ff}
+.rift-contact h2,.rift-contact h3,.rift-contact p {margin:0}
+.rift-contact p {margin-top:.3rem;max-width:65ch;color:#c8d6e8}
+.rift-contact.redline {border-left-color:#ffa787}
+.rift-anomaly[draggable="true"] {cursor:grab}
+.rift-anomaly[draggable="true"]:active {cursor:grabbing}

@@ -17,6 +17,8 @@
  * plain .cjs Electron entry; both are held to the same checks (validate:share here).
  */
 
+import { flightCardSvg, FLIGHT_CARD_SIZE } from './riftFlightCard.ts';
+import type { RiftRecord } from '../core/rift/store.ts';
 import { app, BrowserWindow, clipboard, dialog, nativeImage } from "electron";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -225,6 +227,20 @@ export class ShareCards {
     const { width, height } = SHARE_CARD_SIZES[layout];
     const svg = withFonts(anyCardSvg(input, { layout, palette: kit.palette, emblem: kit.emblem, ghostTint: kit.ghostTint }), kit.fontBase64);
 
+    const rendered = await this.rasterize(svg, width, height);
+    return { ...rendered, input, fileName: shareFileName(input, isMechanicCard(input) ? mechanicHeadline(input) : headline(input)) };
+  }
+
+  async saveFlight(record: RiftRecord): Promise<ShareResult> {
+    const { width, height } = FLIGHT_CARD_SIZE;
+    const render = this.busy.then(() => this.rasterize(withFonts(flightCardSvg(record), this.loadKit().fontBase64), width, height));
+    this.busy = render.catch(() => undefined);
+    const card = await render;
+    const fileName = `Apogee-Rift-${record.outcome}-system-${record.system}-${Math.trunc(record.at)}.png`;
+    return this.savePng(card.png, { ok: true, fileName, width, height });
+  }
+
+  private async rasterize(svg: string, width: number, height: number) {
     const win = new BrowserWindow({
       show: false,
       width: 1280,
@@ -249,7 +265,7 @@ export class ShareCards {
       const w = png.readUInt32BE(16);
       const h = png.readUInt32BE(20);
       if (w !== width || h !== height) throw new Error(`the card came out ${w}x${h}, not ${width}x${height}`);
-      return { png, width, height, texts: r.texts, input, fileName: shareFileName(input, isMechanicCard(input) ? mechanicHeadline(input) : headline(input)) };
+      return { png, width, height, texts: r.texts };
     } finally {
       win.destroy();
     }
@@ -288,6 +304,10 @@ export class ShareCards {
       return { ...base, copied: true };
     }
 
+    return this.savePng(card.png, base);
+  }
+
+  private async savePng(png: Buffer, base: { ok: true; fileName: string; width: number; height: number }): Promise<ShareResult> {
     // Pictures/Apogee is made up front so the dialog opens in it; the player can still
     // put the file anywhere.
     const folder = join(app.getPath("pictures"), "Apogee");
@@ -296,10 +316,10 @@ export class ShareCards {
     } catch {
       // A Pictures folder that cannot be written to still leaves the dialog to choose another.
     }
-    const target = await this.saveAs(join(folder, card.fileName));
+    const target = await this.saveAs(join(folder, base.fileName));
     if (!target) return { ok: false, error: "Not saved.", cancelled: true };
     try {
-      writeFileSync(target, card.png);
+      writeFileSync(target, png);
     } catch (err) {
       return { ok: false, error: `Could not save the card: ${err instanceof Error ? err.message : String(err)}` };
     }

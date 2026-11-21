@@ -32,7 +32,7 @@ writeFileSync(join(root, '.PKGINFO'), [
   'optdepend = gnome-keyring: remember Steam sign-in securely', '',
 ].join('\n'));
 const file = join(output, `Apogee-${version}-linux-x64.pkg.tar.gz`);
-await create({ cwd: root, file, gzip: true, portable: true, onWriteEntry: entry => {
+await create({ cwd: root, file, gzip: true, onWriteEntry: entry => {
   // Building on Windows must still produce real Unix permissions and root ownership.
   const name = entry.path.replaceAll('\\', '/');
   entry.stat.uid = 0; entry.stat.gid = 0;

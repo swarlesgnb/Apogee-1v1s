@@ -6,7 +6,9 @@ module.exports = async ({ electronPlatformName, appOutDir }) => {
   const file = join(appOutDir, 'start-apogee.sh');
   writeFileSync(file, `#!/bin/sh
 set -eu
-APP_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+# Desktop entries and ~/.local/bin often point to the launcher through a symlink.
+SCRIPT=$(readlink -f -- "$0")
+APP_DIR=$(dirname -- "$SCRIPT")
 exec "$APP_DIR/apogee" "$@"
 `, { mode: 0o755 });
   chmodSync(file, 0o755);

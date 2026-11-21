@@ -8,13 +8,26 @@
 (() => {
   const root = document.getElementById('dailyRoot');
   const bridge = window.apogee;
-  if (!root || !bridge?.daily) return;
+  if (!root) return;
   const e = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const num = (n) => (Number.isFinite(n) ? (Math.abs(n - Math.round(n)) < 0.05 ? Math.round(n).toLocaleString('en-US') : n.toLocaleString('en-US', { maximumFractionDigits: 1 })) : '–');
   const pct = (v) => (Number.isFinite(v) ? `${v > 0.0005 ? '+' : v < -0.0005 ? '−' : ''}${Math.abs(v * 100).toFixed(1)}%` : '–');
   const tone = (v) => (!Number.isFinite(v) ? '' : v > 0.0005 ? 'up' : v < -0.0005 ? 'down' : 'level');
 
+  if (!bridge?.daily) {
+    const sample = window.__APOGEE_DAILY_SAMPLE__;
+    const hasLibrary = !!window.__APOGEE_PRACTICE__?.scenarios?.length;
+    root.innerHTML = `<header class="dy-head"><div><h1>Daily challenge</h1><p>Three scenarios, one draw for everyone in your band. Open Apogee on desktop to play today’s three and track your streak.</p></div></header>
+      ${sample ? `<h2>Sample draw</h2><ol class="dy-lanes">${sample.scenarios.map((name, i) => `<li class="dy-lane"><span class="dy-glyph" aria-hidden="true">${i + 1}</span><div class="dy-lane-body"><small>${e(sample.skills[i] || 'Scenario')}</small><strong>${e(name)}</strong></div>${hasLibrary ? `<button data-sample-row="${i}" aria-label="Find ${e(name)} in the library">View drill</button>` : ''}</li>`).join('')}</ol>` : ''}`;
+    root.addEventListener('click', event => {
+      const row = event.target.closest('[data-sample-row]');
+      if (row) browseScenarios({ query: sample.scenarios[Number(row.dataset.sampleRow)] });
+    });
+    return;
+  }
   let screen = null;
+  let refreshError = '';
+  let readVersion = 0;
   let received = 0;
   let note = '';
   let message = '';
@@ -197,18 +210,20 @@
   }
 
   function draw() {
+    const retry = text => `<div class="dy-message" role="alert">${e(text)} <button type="button" data-dy-retry>Try again</button></div>`;
     if (!screen) {
-      root.innerHTML = '<div class="dy-empty">Reading today\'s draw…</div>';
+      root.innerHTML = refreshError ? retry(refreshError) : '<div class="dy-empty" role="status">Reading today’s draw…</div>';
       return;
     }
     if (screen.error && !screen.rounds.length) {
-      root.innerHTML = `${screen.bands?.length ? header() : ''}<div class="dy-empty">${e(screen.error)}</div>`;
+      root.innerHTML = `${screen.bands?.length ? header() : ''}${retry(refreshError || screen.error)}`;
       return;
     }
     root.dataset.state = screen.complete ? 'complete' : 'open';
     root.innerHTML = `${header()}
       ${bands()}
       ${proposal()}
+      ${refreshError ? retry(refreshError) : ''}
       ${!screen.hasFolder ? '<div class="dy-message">No stats folder yet. Choose it on the Play screen and the Daily reads your runs from it.</div>' : ''}
       ${message ? `<div class="dy-message" role="alert">${e(message)}</div>` : ''}
       ${note ? `<div class="dy-note" role="status">${e(note)}</div>` : ''}
@@ -256,6 +271,7 @@
   root.addEventListener('click', async (ev) => {
     const t = ev.target.closest('button');
     if (!t || t.disabled) return;
+    if (t.hasAttribute('data-dy-retry')) { t.disabled = true; return refresh(); }
     if (t.dataset.dyBand !== undefined) return act({ type: 'band', index: Number(t.dataset.dyBand) });
     if (t.dataset.dyLaunch !== undefined) return act({ type: 'launch', round: Number(t.dataset.dyLaunch) });
     if (t.dataset.dyDo) return act({ type: t.dataset.dyDo });
@@ -276,16 +292,26 @@
 
   function refresh() {
     refreshedAt = performance.now();
-    bridge.daily().then((s) => {
-      if (!s || s.error && !s.bands) { message = s?.error || ''; draw(); return; }
+    const version = ++readVersion;
+    if (!screen) { refreshError = ''; draw(); }
+    return bridge.daily().then((s) => {
+      if (version !== readVersion) return;
+      if (!s || (s.error && !s.bands)) throw new Error(s?.error || 'The Daily did not load.');
+      refreshError = '';
       screen = s;
       received = performance.now();
       draw();
-    }).catch(() => {});
+    }).catch(err => {
+      if (version !== readVersion) return;
+      refreshError = err?.message || 'The Daily could not refresh.';
+      draw();
+    });
   }
 
   bridge.onDaily?.((s) => {
     if (!s) return;
+    readVersion++;
+    refreshError = '';
     screen = s;
     received = performance.now();
     // Redrawn only when the screen is showing or about to: a push behind another screen

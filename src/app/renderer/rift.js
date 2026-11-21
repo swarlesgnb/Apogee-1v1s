@@ -10,6 +10,7 @@
   const num = v => Number(v).toLocaleString(undefined, { maximumFractionDigits: 2 });
   const big = v => Number(v) >= 1e6 ? Number(v).toExponential(2).replace('e+', 'e') : Number(v).toLocaleString();
   let view = window.__APOGEE_RIFT__ || null, busy = false, message = '', band = 0, vessel = 'drifter', confirm = '', planning = false;
+  let refreshId = 0, dragging = null;
   let selling = null, animated = null, timers = [];
   const def = id => view.anomalies.find(a => a.id === id);
   const cometDef = id => view.comets.find(c => c.id === id);
@@ -30,7 +31,7 @@
     const a = def(o.id); if (!a) return '';
     const dark = s?.fight?.dark?.includes(o.uid), i = s ? s.anomalies.indexOf(o) : -1, g = growth(o);
     const controls = opts.controls ? `<div class="rift-card-controls">${button('move', '←', `data-uid="${o.uid}" data-dir="-1" aria-label="Move ${e(a.name)} left" ${i <= 0 ? 'disabled' : ''}`, 'icon')}${button('move', '→', `data-uid="${o.uid}" data-dir="1" aria-label="Move ${e(a.name)} right" ${i >= s.anomalies.length - 1 ? 'disabled' : ''}`, 'icon')}${selling === o.uid ? button('sell', `Sell · ${Math.max(1, Math.floor(a.price / 2))} ✦`, `data-uid="${o.uid}" data-confirm="true"`, 'danger') : button('sell', 'Sell', `data-uid="${o.uid}" aria-label="Sell ${e(a.name)}"`, 'ghost')}</div>` : '';
-    return `<article class="rift-anomaly ${a.rarity} ${dark ? 'dark' : ''}" data-uid="${o.uid}" data-anomaly="${e(a.id)}"><header><span class="rift-tag">${e(a.tag)}</span>${i >= 0 ? `<span class="rift-slot-no">${i + 1}</span>` : ''}</header><h3>${e(a.name)}</h3><p>${e(a.text)}</p>${g ? `<strong class="rift-growth">${e(g)}</strong>` : ''}${dark ? '<em class="rift-dark-note">Dark this fight</em>' : ''}${controls}</article>`;
+    return `<article class="rift-anomaly ${a.rarity} ${dark ? 'dark' : ''}" data-uid="${o.uid}" data-anomaly="${e(a.id)}" ${opts.controls ? 'draggable="true"' : ''}><header><span class="rift-tag">${e(a.tag)}</span>${i >= 0 ? `<span class="rift-slot-no">${i + 1}</span>` : ''}</header><h3>${e(a.name)}</h3><p>${e(a.text)}</p>${g ? `<strong class="rift-growth">${e(g)}</strong>` : ''}${dark ? '<em class="rift-dark-note">Dark this fight</em>' : ''}${controls}</article>`;
   }
   function offerCard(id, price, attrs, free, can) {
     const a = def(id); if (!a) return '';
@@ -48,7 +49,7 @@
   }
   function hud(s) {
     const pending = s.signals.map(id => signalDef(id)).filter(Boolean);
-    return `<header class="rift-hud"><div class="rift-hud-id"><span class="rift-eyebrow">INTO THE RIFT / ${e(s.bandName.toUpperCase())}${s.stats.endless ? ' / DEEP RIFT' : ''}</span><h1>${e(view.vessels.find(v => v.id === s.vessel)?.name || 'Your voyage')}</h1></div><dl class="rift-hud-stats"><div><dt>System</dt><dd>${s.system + 1}<small>${s.system <= 3 ? ' / 4' : ''}</small></dd></div><div><dt>Hull</dt><dd class="rift-pips" aria-label="${s.hull} of ${s.maxHull} hull">${Array.from({ length: s.maxHull }, (_, i) => `<i class="${i < s.hull ? 'on' : ''}"></i>`).join('')}</dd></div><div><dt>Stardust</dt><dd class="rift-dust">${s.stardust}<small> ✦</small></dd></div><div><dt>Best hit</dt><dd>${big(s.stats.bestHit)}</dd></div></dl>${pending.length || s.surge ? `<div class="rift-signals">${pending.map(x => `<span class="rift-chip" title="${e(x.text)}">⟟ ${e(x.name)}</span>`).join('')}${s.surge ? '<span class="rift-chip">⟟ Overcharge</span>' : ''}</div>` : ''}</header>`;
+    return `<header class="rift-hud"><div class="rift-hud-id"><span class="rift-eyebrow">${s.firstContact ? 'FIRST CONTACT' : 'INTO THE RIFT'} / ${e(s.bandName.toUpperCase())}${s.stats.endless ? ' / DEEP RIFT' : ''}</span><h1>${s.firstContact ? 'First Light' : e(view.vessels.find(v => v.id === s.vessel)?.name || 'Your voyage')}</h1></div><dl class="rift-hud-stats"><div><dt>System</dt><dd>${s.system + 1}<small>${s.system <= 3 && !(s.firstContact && s.system === 0) ? ' / 4' : ''}</small></dd></div><div><dt>Hull</dt><dd class="rift-pips" aria-label="${s.hull} of ${s.maxHull} hull">${Array.from({ length: s.maxHull }, (_, i) => `<i class="${i < s.hull ? 'on' : ''}"></i>`).join('')}</dd></div><div><dt>Stardust</dt><dd class="rift-dust">${s.stardust}<small> ✦</small></dd></div><div><dt>Best hit</dt><dd>${big(s.stats.bestHit)}</dd></div></dl>${pending.length || s.surge ? `<div class="rift-signals">${pending.map(x => `<span class="rift-chip" title="${e(x.text)}">⟟ ${e(x.name)}</span>`).join('')}${s.surge ? '<span class="rift-chip">⟟ Overcharge</span>' : ''}</div>` : ''}</header>`;
   }
   function track(s) {
     const r = view.derived?.route || [];
@@ -63,6 +64,7 @@
     const v = view.vessels.find(x => x.id === vessel) || view.vessels[0];
     return `<div class="rift-intro"><div class="rift-intro-copy"><span class="rift-eyebrow">A SOLO ROGUELITE / APOGEE</span><h1>INTO<br>THE <em>RIFT.</em></h1><p class="rift-lede">Your aim is the engine.<br>Your build is the multiplier.</p><p>Four star systems. Every run you play becomes <b class="t">Thrust</b> × <b class="f">Flux</b>. Collect anomalies that feed each other, chart the planets you love, and break stars that bend the rules.</p><div class="rift-intro-notes"><span>◈ 35 anomalies</span><span>☄ Comets &amp; star charts</span><span>✦ Eight stellar hazards</span><span>↘ An endless deep Rift</span></div></div>${portal()}</div>
       ${window.ApogeeGuide ? `<aside class="rift-academy"><div><b>First time in the Rift?</b><span>Seven hands-on lessons, about ten minutes, using the real damage engine.</span></div>${button('learn', 'Start the Rift Academy', 'data-lesson="rift"', 'primary')}</aside>` : ''}
+      <aside class="rift-contact"><div><h2>First Contact</h2><p>Fly First Light through one star system. Every pilot at your difficulty starts with the same hand, trading post and star.</p></div>${button('firstContact', view.activeContact ? 'Resume First Contact ↗' : 'Play First Contact ↗', play ? '' : 'disabled', 'primary')}${view.activeStandard ? button('standard','Resume ordinary voyage') : ''}</aside>
       <section class="rift-how"><div><b>1</b><h3>Pick a target</h3><p>Each fight deals three scenarios. Play one in KovaaK’s, or Jump to redraw it.</p></div><div><b>2</b><h3>Thrust × Flux</h3><p>Your score sets Thrust. The planet’s level sets Flux. Anomalies fire left to right.</p></div><div><b>3</b><h3>Break the body</h3><p>Moons and planets can be skipped for a signal. Stars cannot, and each has a hazard.</p></div><div><b>4</b><h3>Build to multiply</h3><p>Hulls grow about 2.5× a system. Adding is not enough; you need ×Flux.</p></div></section>
       <section class="rift-departure"><div class="rift-section-title"><h2>Choose your vessel</h2><span>Every vessel can find every anomaly.</span></div><div class="rift-kits">${view.vessels.map((k, i) => `<button type="button" data-rift="vessel" data-id="${e(k.id)}" class="rift-kit ${vessel === k.id ? 'selected' : ''}" aria-pressed="${vessel === k.id}"><span class="rift-kit-mark" aria-hidden="true">${['◌', '✦', '⌖', '◇'][i] || '◌'}</span><span class="rift-tag">0${i + 1}</span><h3>${e(k.name)}</h3><p>${e(k.text)}</p><small>${k.hull} hull · ${k.slots} slots · ${k.stardust} ✦ · ${k.start.map(id => e(def(id)?.name)).join(', ')}</small></button>`).join('')}</div><div class="rift-departure-controls"><label>Scenario difficulty<select id="riftBand">${view.bands.map((b, i) => `<option value="${i}" ${i === band ? 'selected' : ''}>${e(b)}</option>`).join('')}</select></label>${button('start', `Launch ${e(v?.name || '')} <span aria-hidden="true">↗</span>`, play ? '' : 'disabled', 'primary')}${!view.canPlay && bridge?.chooseFolder ? button('folder', 'Connect stats folder') : ''}</div><p class="rift-caption">References are the first published score threshold in the chosen difficulty and freeze for the voyage. Below 80% is a Drift, 80% a Graze, 100% a Strike, 115% a Nova. Rift damage never touches your scores, ranks or quests.</p>${!bridge?.riftAction ? '<p class="rift-notice">Open the desktop app to play. This preview cannot receive KovaaK’s runs.</p>' : !view.canPlay ? '<p class="rift-notice">Connect your KovaaK’s stats folder to begin. Steam sign-in is not required for this solo mode.</p>' : ''}</section>`;
   }
@@ -78,22 +80,30 @@
   function combat(s) {
     const f = s.fight, armed = f.armed, hz = f.stage === 2 ? hazardDef(s.hazards[s.system]) : null;
     const left = Math.max(0, f.hull - f.dealt), pct = Math.min(100, f.dealt / f.hull * 100), previews = view.derived?.previews || [];
-    const enemy = `<div class="rift-enemy"><div class="rift-enemy-art">${body(f.stage, s, 'large')}</div><div class="rift-enemy-copy"><span class="rift-eyebrow">${e(['MOON', 'PLANET', 'STAR'][f.stage])} · SALVO ${Math.min(f.salvo + 1, f.salvos)} OF ${f.salvos}</span><h2>${e(f.name)}</h2><div class="rift-hullbar" role="meter" aria-valuemin="0" aria-valuemax="${f.hull}" aria-valuenow="${left}" aria-label="Hull remaining"><i style="width:${100 - pct}%"></i></div><p class="rift-hull-text"><b>${big(left)}</b> hull left of ${big(f.hull)}</p><div class="rift-fight-meta"><span>Salvos <b>${'◆'.repeat(Math.max(0, f.salvos - f.salvo))}${'◇'.repeat(f.salvo)}</b></span><span>Jumps <b>${f.jumps}</b></span>${f.boost ? '<span class="rift-chip hot">☄ Halley primed · ×2 Flux</span>' : ''}${f.lock ? `<span class="rift-chip">Locked · ${e(f.lock)}</span>` : ''}</div>${hz ? `<p class="rift-rule"><b>${e(hz.name)}.</b> ${e(hz.rule)}</p>` : ''}</div></div>`;
+    const enemy = `<div class="rift-enemy"><div class="rift-enemy-art">${body(f.stage, s, 'large')}</div><div class="rift-enemy-copy"><span class="rift-eyebrow">${e(['MOON', 'PLANET', 'STAR'][f.stage])} · SALVO ${Math.min(f.salvo + 1, f.salvos)} OF ${f.salvos}</span><h2>${e(f.name)}</h2><div class="rift-hullbar" role="meter" aria-valuemin="0" aria-valuemax="${f.hull}" aria-valuenow="${left}" aria-label="Hull remaining"><i style="width:${100 - pct}%"></i></div><p class="rift-hull-text"><b>${big(left)}</b> hull left of ${big(f.hull)}</p><div class="rift-fight-meta"><span>Salvos <b>${'◆'.repeat(Math.max(0, f.salvos - f.salvo))}${'◇'.repeat(f.salvo)}</b></span><span>Jumps <b>${f.jumps}</b></span>${f.redline ? `<span class="rift-chip hot">Redline · ${f.redline} Jumps wagered</span>` : ''}${f.boost ? '<span class="rift-chip hot">☄ Halley primed · ×2 Flux</span>' : ''}${f.lock ? `<span class="rift-chip">Locked · ${e(f.lock)}</span>` : ''}</div>${hz ? `<p class="rift-rule"><b>${e(hz.name)}.</b> ${e(hz.rule)}</p>` : ''}</div></div>`;
     if (armed) {
       const c = f.hand[armed.card];
       return `${enemy}<section class="rift-listening-card ${family(c.category)}" role="status"><span class="rift-pulse" aria-hidden="true"></span><div><span class="rift-eyebrow">LISTENING FOR YOUR RUN</span><h3>${e(c.scenario)}</h3><p>${e(c.category)} · reference ${num(c.target)}. Your first complete run on it, started after you pressed Play, fires this salvo.</p></div>${button('launch', 'Open scenario again')}</section><p class="rift-caption">You can close Apogee and come back; a completed armed run is recovered from your stats folder. Partial, unrelated, old and duplicate runs never settle a salvo.</p>`;
     }
     const hand = f.hand.map((c, i) => {
-      const blocked = f.lock && c.category !== f.lock, lv = s.levels[c.category] || 1, lethal = (previews[i] || 0) >= left;
+      const blocked = f.lock && c.category !== f.lock, lv = s.levels[c.category] ?? 1, lethal = (previews[i] || 0) >= left;
       return `<article class="rift-target ${family(c.category)} ${blocked ? 'blocked' : ''}" data-card="${i}"><span class="rift-tag">${e(c.category.toUpperCase())}</span><h3>${e(c.scenario)}</h3><dl><div><dt>Reference</dt><dd>${num(c.target)}</dd></div><div><dt>Planet</dt><dd>Lv ${lv}</dd></div></dl><div class="rift-preview ${lethal ? 'lethal' : ''}"><small>At reference</small><strong>${big(previews[i] ?? 0)}</strong>${lethal ? '<em>BREAKS IT</em>' : `<em>${Math.round((previews[i] || 0) / left * 100)}% of hull</em>`}</div><div class="rift-target-actions">${button('arm', 'Play ↗', `data-card="${i}" ${view.canPlay && !blocked ? '' : 'disabled'}`, 'primary')}${button('jump', 'Jump', `data-card="${i}" ${f.jumps ? '' : 'disabled'} aria-label="Jump away from ${e(c.scenario)}"`, 'ghost')}</div></article>`;
     }).join('');
-    return `${enemy}<div class="rift-section-title"><h2>Your hand</h2><span>Previews assume exactly the reference. Beat it and the number grows.</span></div><div class="rift-hand">${hand}</div>`;
+    const ability = s.firstContact ? redline(s) : '';
+    return `${enemy}${ability}<div class="rift-section-title"><h2>Your hand</h2><span>Previews assume exactly the reference. Beat it and the number grows.</span></div><div class="rift-hand">${hand}</div>`;
+  }
+
+  function redline(s) {
+    const f = s.fight;
+    const lit = s.anomalies.some(o => o.id === 'pulsar' && !f.dark.includes(o.uid));
+    const label = f.redline ? `Redline armed · ${f.redline} Jumps` : `Wager ${f.jumps} ${f.jumps === 1 ? 'Jump' : 'Jumps'}`;
+    return `<section class="rift-contact redline"><div><h3>Redline</h3><p>${!lit ? 'A lit Pulsar is required.' : 'Strike or Nova repeats Pulsar once per wagered Jump. A miss spends them all.'}</p></div>${button('redline', label, !lit || !f.jumps || f.redline ? 'disabled' : '', 'ghost')}</section>`;
   }
 
   function result(s) {
     const r = s.last, titles = { clear: 'Broken.', continue: 'It holds. Again.', failed: 'It held. Press on.', lost: 'The Rift takes this one.' };
     const left = Math.max(0, r.hull - r.dealt), total = r.payout.reduce((n, p) => n + p.amount, 0);
-    const label = r.verdict === 'clear' ? (s.stage === 2 && s.system === 3 && !s.stats.endless ? 'Escape the Rift →' : 'Cash out and shop →') : r.verdict === 'continue' ? 'Next salvo →' : r.verdict === 'lost' ? 'Voyage recap →' : 'Back to the map →';
+    const label = r.verdict === 'clear' ? (s.stage === 2 && (s.system === 3 || s.firstContact && s.system === 0) && !s.stats.endless ? 'Flight recap →' : 'Cash out and shop →') : r.verdict === 'continue' ? 'Next salvo →' : r.verdict === 'lost' ? 'Voyage recap →' : 'Back to the map →';
     return `<section class="rift-resolution ${r.verdict}" data-receipt="${e(r.receipt.id)}"><div class="rift-res-head"><div><span class="rift-eyebrow">SIGNAL RECEIVED / ${e(r.card.scenario.toUpperCase())}</span><h2 tabindex="-1" id="riftResultTitle">${titles[r.verdict]}</h2></div><div class="rift-grade ${r.grade}"><strong>${e(view.grades[r.grade].name)}</strong><small>KovaaK’s ${num(r.receipt.score)} · ${Math.round(r.ratio * 100)}% of ${num(r.card.target)}</small></div></div>
       <div class="rift-equation" aria-label="Damage equation"><div class="rift-thrust"><small>THRUST</small><strong data-final="${r.thrust}">${big(r.thrust)}</strong></div><span class="rift-op" aria-hidden="true">×</span><div class="rift-flux"><small>FLUX</small><strong data-final="${r.flux}">${num(r.flux)}</strong></div><span class="rift-op" aria-hidden="true">=</span><div class="rift-damage"><small>DAMAGE</small><strong data-final="${r.damage}">${big(r.damage)}</strong></div></div>
       <ol class="rift-steps">${r.steps.map((x, i) => `<li data-step="${i}" ${x.uid ? `data-uid="${x.uid}"` : ''}><span class="rift-step-src">${e(x.source)}</span><span class="rift-step-text">${e(x.text)}</span><span class="rift-step-run">${big(x.thrust)} × ${num(x.flux)}</span></li>`).join('')}</ol>
@@ -111,14 +121,14 @@
   }
 
   function ended(s) {
-    const won = s.phase === 'won', title = won ? 'You broke through.' : s.phase === 'extracted' ? 'Home in one piece.' : 'The Rift closes.';
+    const won = s.phase === 'won', contactClear = won && s.firstContact && s.system === 0, title = contactClear ? 'First contact confirmed.' : won ? 'You broke through.' : s.phase === 'extracted' ? 'Home in one piece.' : 'The Rift closes.';
     const why = s.phase !== 'lost' ? '' : s.hull === 0 ? 'Your hull ran out.' : s.last?.verdict === 'lost' ? `${e(s.fight?.name || 'The star')} outlasted your salvos.` : 'This voyage was ended mid-fight.';
-    return `<section class="rift-ending ${s.phase}">${won ? portal(true) : ''}<span class="rift-eyebrow">${won ? 'RIFT CLEARED' : s.phase === 'extracted' ? 'EXTRACTED' : 'VOYAGE ENDED'} · SYSTEM ${s.system + 1}</span><h2>${title}</h2>${why ? `<p>${why}</p>` : ''}<dl class="rift-end-stats"><div><dt>Best hit</dt><dd>${big(s.stats.bestHit)}</dd></div><div><dt>Total damage</dt><dd>${big(s.stats.damage)}</dd></div><div><dt>Bodies broken</dt><dd>${s.stats.clears}</dd></div><div><dt>Salvos</dt><dd>${s.stats.salvos}</dd></div></dl><div class="rift-end-build">${s.anomalies.map(o => `<span class="rift-chip ${def(o.id)?.rarity}">${e(def(o.id)?.name)}</span>`).join('')}</div><div class="rift-res-actions">${won ? button('deeper', 'Go deeper ↘', '', 'primary') : ''}${button('new', 'Plan another voyage ↗', '', won ? '' : 'primary')}</div>${won ? '<p class="rift-caption">The deep Rift keeps going: every system is 2.5× the last, and the record keeps your furthest system and best hit.</p>' : ''}</section>`;
+    return `<section class="rift-ending ${s.phase}">${won ? portal(true) : ''}<span class="rift-eyebrow">${won ? 'RIFT CLEARED' : s.phase === 'extracted' ? 'EXTRACTED' : 'VOYAGE ENDED'} · SYSTEM ${s.system + 1}</span><h2>${title}</h2>${why ? `<p>${why}</p>` : ''}<dl class="rift-end-stats"><div><dt>Best hit</dt><dd>${big(s.stats.bestHit)}</dd></div><div><dt>Total damage</dt><dd>${big(s.stats.damage)}</dd></div><div><dt>Bodies broken</dt><dd>${s.stats.clears}</dd></div><div><dt>Salvos</dt><dd>${s.stats.salvos}</dd></div></dl><div class="rift-end-build">${s.anomalies.map(o => `<span class="rift-chip ${def(o.id)?.rarity}">${e(def(o.id)?.name)}</span>`).join('')}</div><div class="rift-res-actions">${button('saveflight', 'Save flight card', `data-id="${e(s.id)}"`, 'ghost')}${won ? button('deeper', contactClear ? 'Keep flying →' : 'Go deeper ↘', '', 'primary') : ''}${button('new', 'Plan another voyage ↗', '', won ? '' : 'primary')}</div>${contactClear ? '<p class="rift-caption">Your launch flight is complete. Take this ship and its build into System 2, or fly the opening again.</p>' : won ? '<p class="rift-caption">The deep Rift keeps going: every system is 2.5× the last, and the record keeps your furthest system and best hit.</p>' : ''}</section>`;
   }
 
   function records() {
     if (!view.records?.length) return '';
-    return `<details class="rift-records"><summary>Flight recorder · ${view.records.length} recent voyages</summary>${view.records.map(r => `<div><strong>${e(r.outcome === 'won' ? 'Cleared' : r.outcome === 'lost' ? 'Lost' : 'Extracted')}</strong><span>${e(view.vessels.find(v => v.id === r.vessel)?.name || r.vessel)} · ${e(r.band)} · system ${r.system} · best hit ${big(r.bestHit)}</span><small>${r.anomalies.map(id => e(def(id)?.name || id)).join(' · ')}</small></div>`).join('')}</details>`;
+    return `<details class="rift-records"><summary>Flight recorder · ${view.records.length} recent voyages</summary>${view.records.map(r => `<div><strong>${e(r.outcome === 'won' ? 'Cleared' : r.outcome === 'lost' ? 'Lost' : 'Extracted')}</strong><span>${r.firstContact ? 'First Light' : e(view.vessels.find(v => v.id === r.vessel)?.name || r.vessel)} · ${e(r.band)} · system ${r.system} · best hit ${big(r.bestHit)}</span><small>${r.anomalies.map(id => e(def(id)?.name || id)).join(' · ')}</small>${button('saveflight', 'Save flight card', `data-id="${e(r.id)}"`, 'ghost small')}</div>`).join('')}</details>`;
   }
 
   /** One line that always says what to do next, for players still learning the loop. */
@@ -139,7 +149,20 @@
     return `<p class="rift-coach"><span class="rift-coach-mark" aria-hidden="true">?</span><span>${text}</span>${button('learn', 'Learn how', `data-lesson="${guide.lessonFor(s.phase)}"`, 'ghost small')}${button('hints', 'Hide hints', 'data-on="0"', 'ghost small')}</p>`;
   }
 
+  function updateHomeStatus() {
+    const s = view?.state;
+    const next = { map: 'Choose your route', combat: s?.fight?.armed ? 'Finish your scenario' : 'Choose a scenario',
+      result: 'Review your salvo', shop: 'Visit the shop' }[s?.phase];
+    const label = s?.firstContact ? (view.activeStandard ? 'Your ordinary voyage is saved.' : '') : next && !view.error ? `System ${s.system + 1} · ${next}` : '';
+    if (label !== window.ApogeeRiftResume || !!view?.activeContact !== window.ApogeeFirstContactActive) {
+      window.ApogeeFirstContactActive = !!view?.activeContact;
+      window.ApogeeRiftResume = label;
+      window.dispatchEvent(new Event('apogee:rift-resume'));
+    }
+  }
+
   function render() {
+    updateHomeStatus();
     stopAnimation();
     if (!view?.anomalies) { root.innerHTML = `<div class="rift-notice" role="alert">${e(view?.error || 'Opening the Rift…')}${button('refresh', 'Try again')}</div>`; return; }
     const focused = document.activeElement?.closest('[data-rift]');
@@ -149,7 +172,9 @@
     if (!s || finished && planning) content = home();
     else {
       const stage = ({ map, combat, result, shop, won: ended, lost: ended, extracted: ended })[s.phase](s);
-      content = `${hud(s)}${finished ? '' : track(s)}${finished ? '' : coach(s)}<div class="rift-stage phase-${s.phase}">${stage}</div>${rail(s)}${planets(s)}`;
+      const opening = s.firstContact && s.system === 0 && s.stage === 0 && s.phase === 'combat' && !s.fight.armed && !s.fight.salvo;
+      const rig = opening ? `<section class="rift-contact"><div><h2>Crack the first moon</h2><p>Drag Pulsar ahead of Volatile Reactor, or use the arrows. Watch the target previews change.</p></div></section>${rail(s)}` : '';
+      content = `${hud(s)}${rig}${finished ? '' : track(s)}${finished ? '' : coach(s)}<div class="rift-stage phase-${s.phase}">${stage}</div>${opening ? '' : rail(s)}${planets(s)}`;
     }
     const endAction = s?.phase === 'combat' ? 'abandon' : s && ['map', 'shop'].includes(s.phase) ? 'extract' : null;
     root.innerHTML = `<div class="rift-page">${view.error ? `<div class="rift-notice" role="alert">${e(view.error)}</div>` : ''}${view.warning ? `<p class="rift-notice">${e(view.warning)}</p>` : ''}${content}<p class="rift-message" role="status" aria-live="polite">${e(message)}</p><footer class="rift-footer"><span>SOLO · ROGUELITE<br><small>Rift damage is separate from your aim score and ranked rating.</small></span><div>${endAction ? confirm === endAction ? `<span>${endAction === 'abandon' ? 'End this voyage? Your build will be lost.' : 'Extract now and keep this voyage’s record?'}</span>${button(endAction, 'Confirm', 'data-confirm="true"', 'danger')}${button('cancel', 'Keep going')}` : button(endAction, endAction === 'abandon' ? 'End voyage' : 'Extract safely', '', 'ghost') : ''}${button('refresh', 'Refresh', '', 'ghost')}</div></footer>${records()}</div>`;
@@ -198,7 +223,8 @@
 
   async function refresh() {
     if (!bridge?.rift) { render(); return; }
-    try { view = await bridge.rift(); } catch (err) { message = String(err.message || err); }
+    const request = ++refreshId;
+    try { const fresh = await bridge.rift(); if (request !== refreshId || busy) return; view = fresh; } catch (err) { message = String(err.message || err); }
     render();
   }
   root.addEventListener('change', event => { if (event.target.id === 'riftBand') band = Number(event.target.value); });
@@ -215,22 +241,66 @@
     if (['extract', 'abandon'].includes(type) && !el.dataset.confirm) { confirm = type; render(); return; }
     if (type === 'sell' && !el.dataset.confirm) { selling = Number(el.dataset.uid); render(); return; }
     if (type === 'folder') { try { await bridge.chooseFolder(); await refresh(); } catch (err) { message = String(err.message || err); render(); } return; }
-    if (!bridge?.riftAction) return;
+    if (type === 'saveflight') {
+      busy = true; render();
+      try { const r = await bridge.saveFlightCard(el.dataset.id); message = r.ok ? 'Flight card saved.' : r.cancelled ? '' : r.error; }
+      catch (err) { message = String(err.message || err); }
+      finally { busy = false; render(); }
+      return;
+    }
     const action = { type };
     for (const k of ['card', 'slot', 'uid', 'dir', 'index']) if (el.dataset[k] !== undefined) action[k] = Number(el.dataset[k]);
     if (el.dataset.row) action.row = el.dataset.row;
     if (type === 'start') { action.band = band; action.vessel = vessel; }
+    if (type === 'firstContact') action.band = band;
+    await dispatch(action);
+  });
+
+  async function dispatch(action) {
+    if (busy || !bridge?.riftAction) return;
+    const type = action.type;
+    ++refreshId;
     busy = true; message = ''; render();
     try {
+      if (type === 'firstContact' && !view?.canPlay && bridge.chooseFolder) {
+        await bridge.chooseFolder();
+        view = await bridge.rift();
+        if (!view.canPlay) { message = 'Connect your stats folder to fly First Contact.'; return; }
+      }
       const response = await bridge.riftAction(action);
       if (response.view) { view = response.view; planning = false; }
       if (response.error) message = response.error;
       else { confirm = ''; selling = null; if (type === 'buy' && typeof window.playSound === 'function') window.playSound('ok'); }
     } catch (err) { message = String(err.message || err); }
     finally { busy = false; render(); }
+  }
+
+  window.addEventListener('apogee:choose-voyage', event => {
+    if (!bridge?.riftAction) return;
+    const { type, band: chosen } = event.detail;
+    void dispatch({ type, band: chosen });
   });
+  root.addEventListener('dragstart', event => {
+    const card = event.target.closest('.rift-anomaly[draggable="true"]');
+    if (!card || event.target.closest('button')) return;
+    dragging = Number(card.dataset.uid);
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', String(dragging));
+  });
+  root.addEventListener('dragover', event => {
+    if (dragging !== null && event.target.closest('.rift-anomaly[draggable="true"]')) event.preventDefault();
+  });
+  root.addEventListener('drop', event => {
+    const card = event.target.closest('.rift-anomaly[draggable="true"]');
+    if (!card || dragging === null) return;
+    event.preventDefault();
+    const target = Number(card.dataset.uid);
+    if (target !== dragging) void dispatch({ type: 'place', uid: dragging, target });
+    dragging = null;
+  });
+  root.addEventListener('dragend', () => { dragging = null; });
   root.addEventListener('keydown', event => { if (event.key === 'Escape' && (selling !== null || confirm)) { selling = null; confirm = ''; render(); } });
-  bridge?.onRift?.(next => { view = next; render(); });
+  bridge?.onRift?.(next => { ++refreshId; view = next; render(); });
   document.querySelector('.tab[data-screen="rift"]')?.addEventListener('click', refresh);
   window.addEventListener('focus', () => { if (document.body.dataset.screen === 'rift' && !busy && !timers.length) void refresh(); });
   void refresh();

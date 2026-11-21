@@ -13,7 +13,7 @@
 
 import { app, BrowserWindow, ipcMain, screen, shell, dialog } from "electron";
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, statSync, unlinkSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import { createHash } from "node:crypto";
 
 import { dataFile, setDataDir, sourceDataDir } from "../core/dataDir.ts";
@@ -85,6 +85,7 @@ import {
   supabase,
   type ApogeeSession,
 } from "./session.ts";
+import { libraryStatsFolders } from "./steamPaths.ts";
 import { candidateStatsFolders, findStatsFolder, statsFolderOverride, watchStatsFolder, type StatsWatcher } from "./watcher.ts";
 import { loadSettings, saveSettings, settingsPath, type WindowBounds } from "./settings.ts";
 import { installMenu } from "./menu.ts";
@@ -586,8 +587,8 @@ function holdsRuns(dir: string): boolean {
 function resolveStatsFolder(chosen: string): string | null {
   const tries = [chosen, join(chosen, "stats"), join(chosen, "FPSAimTrainer", "stats"),
     join(chosen, "FPSAimTrainer", "FPSAimTrainer", "stats"),
-    join(chosen, "steamapps", "common", "FPSAimTrainer", "FPSAimTrainer", "stats"),
-    join(chosen, "common", "FPSAimTrainer", "FPSAimTrainer", "stats")];
+    ...libraryStatsFolders(basename(chosen).toLowerCase() === "steamapps" ? dirname(chosen) : chosen,
+      process.platform, file => readFileSync(file, "utf8"))];
   return tries.find((dir) => existsSync(dir) && holdsRuns(dir))
     // A fresh install has the folder and no runs yet. That is the right folder too.
     ?? tries.find((dir) => /[\\/]FPSAimTrainer[\\/]stats$/i.test(dir) && existsSync(dir))
@@ -2526,7 +2527,7 @@ ipcMain.handle("apogee:getState", () => ({
   notice: state.notice,
 }));
 
-registerRiftHandlers(ipcMain, { service: rift, statsDir: () => state.statsDir, ready: statsRead, launch: launchKovaaks, broadcast });
+registerRiftHandlers(ipcMain, { service: rift, statsDir: () => state.statsDir, ready: statsRead, launch: launchKovaaks, saveFlight: record => shareCards.saveFlight(record), broadcast });
 
 ipcMain.handle("apogee:expedition", async () => {
   await statsRead();

@@ -21,6 +21,19 @@ assert(custom.includes("/mnt/Games/Steam Library" + suffix));
 assert(custom.includes("/mnt/games/steam library" + suffix));
 assert.equal(custom.filter(path => path === "/mnt/Games/Steam Library" + suffix).length, 1);
 console.log("PASS custom Linux mounts, spaces, case sensitivity and deduplication");
+const xdgRoot = "/mnt/player data/Steam";
+const manifestRead = (file: string) => {
+  if (file === xdgRoot + "/steamapps/libraryfolders.vdf") return '"1" { "path" "/games/Library" }';
+  if (file === "/games/Library/steamapps/appmanifest_824270.acf") return '"AppState" { "installdir" "KovaaK Custom" }';
+  return "";
+};
+const discovered = discoverStatsFolders({ platform: "linux", home: "/home/player",
+  env: { XDG_DATA_HOME: "/mnt/player data" }, readText: manifestRead });
+const located = "/games/Library/steamapps/common/KovaaK Custom/FPSAimTrainer/stats";
+assert(discovered.includes(xdgRoot + suffix));
+assert(discovered.includes(located) && discovered.indexOf(located) < discovered.indexOf("/games/Library" + suffix));
+assert(!linux(() => '"installdir" "../outside"').some(p => p.includes("outside")));
+console.log("PASS XDG Steam and manifest-named installs use the exact local directory");
 const windows = discoverStatsFolders({ platform: "win32", home: "C:\\Users\\Player", env: {},
   registryRoot: "D:\\Steam", readText: () => '"1" "D:\\\\steam" "2" { "path" "G:\\\\My Games" }' });
 assert(windows.includes("G:\\My Games\\steamapps\\common\\FPSAimTrainer\\FPSAimTrainer\\stats"));

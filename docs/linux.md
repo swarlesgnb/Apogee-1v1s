@@ -1,8 +1,8 @@
 # Apogee on Linux
 
 Linux builds target x86-64. KovaaK's runs through Steam/Proton; Apogee runs natively.
-Native Steam, Flatpak Steam and custom libraries listed in `libraryfolders.vdf` are
-detected automatically. **Apogee > Choose stats folder** can select a game folder,
+Apogee checks native Steam, Flatpak Steam, and Steam under `$XDG_DATA_HOME`.
+It reads `libraryfolders.vdf` and KovaaK’s install manifest to find custom libraries and game directories. **Apogee > Choose stats folder** can select a game folder,
 Steam library or the actual `FPSAimTrainer/stats` directory.
 An absolute `APOGEE_STATS_DIR` environment variable can point to an alternate stats
 folder for command-line launches and testing.
@@ -12,7 +12,7 @@ folder for command-line launches and testing.
 Use the native package when possible:
 
 ```sh
-sudo pacman -U ./Apogee-0.4.8-linux-x64.pkg.tar.gz
+sudo pacman -U ./Apogee-0.5.0-linux-x64.pkg.tar.gz
 apogee
 ```
 
@@ -26,8 +26,8 @@ The archive requires no FUSE. On Arch install the same runtime dependencies firs
 
 ```sh
 sudo pacman -S --needed gtk3 nss alsa-lib libxss libxtst xdg-utils libxkbcommon mesa
-tar -xzf Apogee-0.4.8-linux-x64.tar.gz
-cd Apogee-0.4.8-linux-x64
+tar -xzf Apogee-0.5.0-linux-x64.tar.gz
+cd Apogee-0.5.0-linux-x64
 ./start-apogee.sh
 ```
 
@@ -36,8 +36,8 @@ cd Apogee-0.4.8-linux-x64
 Launch it from a terminal to see the actual error:
 
 ```sh
-chmod +x Apogee-0.4.8-linux-x86_64.AppImage
-./Apogee-0.4.8-linux-x86_64.AppImage
+chmod +x Apogee-0.5.0-linux-x86_64.AppImage
+./Apogee-0.5.0-linux-x86_64.AppImage
 ```
 
 If an older build reports `libfuse.so.2`, Arch needs the `fuse2` package. New AppImage
@@ -47,7 +47,7 @@ portable archive avoids this requirement. AppImage also supports extracting with
 mounting it:
 
 ```sh
-./Apogee-0.4.8-linux-x86_64.AppImage --appimage-extract
+./Apogee-0.5.0-linux-x86_64.AppImage --appimage-extract
 ./squashfs-root/AppRun
 ```
 
@@ -74,7 +74,7 @@ npm run validate:desktop
 npm run validate:backup
 npm run dist:linux
 node tools/validatePackage.mjs release --linux
-npm run validate:linux-package
+npm run validate:linux-package -- --appimage
 ```
 
 `npm run dist` also selects Linux packaging automatically when run on Linux; on

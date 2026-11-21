@@ -9358,6 +9358,16 @@ const THEME_ACCENTS = [
   { hex: "#d9dde6", name: "Silver" },
 ];
 
+// Paired presets use the same contrast and persistence rules as a hand-picked theme.
+const STUDIO_LOOKS = [
+  { id: 'graphite', name: 'Field Notes', base: 'graphite', accent: '#d7d5c8' },
+  { id: 'press', name: 'Press Run', base: 'navy', accent: '#ff8072' },
+  { id: 'pastel', name: 'Soft Orbit', base: 'plum', accent: '#a4e5d9' },
+  { id: 'pixel', name: 'Starcade', base: 'navy', accent: '#ffcb62' },
+  { id: 'pop', name: 'Soundcheck', base: 'plum', accent: '#ff8ec4' },
+  { id: 'sun', name: 'Golden Hour', base: 'ember', accent: '#ffb473' },
+];
+
 const THEME_STOCK = { base: "ink", accent: null };
 
 /** The shape stored under THEME_KEY, or stock for anything that is not one. */
@@ -9527,6 +9537,9 @@ function loadTheme() {
  * switch it off to read the stylesheet's own values as its defaults.
  */
 function paintTheme() {
+  const look = STUDIO_LOOKS.find(item => item.base === theme.base && item.accent === theme.accent);
+  if (look) document.documentElement.dataset.art = look.id;
+  else delete document.documentElement.dataset.art;
   const tokens = themeTokens(themeStock, theme);
   const lines = Object.entries(tokens).map(([name, value]) => "  " + name + ": " + value + ";");
   let sheet = $("playerTheme");
@@ -9563,6 +9576,19 @@ function buildThemeMenu() {
   const bases = $("themeBases");
   const accents = $("themeAccents");
   if (!bases || !accents) return;
+
+  for (const look of STUDIO_LOOKS) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "theme-look";
+    button.dataset.art = look.id;
+    const print = document.createElement("span");
+    print.className = "studio-print";
+    print.setAttribute("aria-hidden", "true");
+    button.append(print, document.createTextNode(look.name));
+    button.addEventListener("click", () => setTheme(look));
+    $("themeLooks").append(button);
+  }
 
   for (const base of THEME_BASES) {
     const button = document.createElement("button");
@@ -9601,6 +9627,9 @@ function syncThemeMenu() {
   const bases = $("themeBases");
   if (!bases) return;
 
+  for (const button of $("themeLooks").children) {
+    button.setAttribute("aria-pressed", String(button.dataset.art === document.documentElement.dataset.art));
+  }
   for (const button of bases.querySelectorAll(".theme-base")) {
     const id = button.dataset.base;
     button.setAttribute("aria-pressed", String(id === theme.base));
@@ -12243,16 +12272,13 @@ if (HOST === "electron") {
   reserveTables();
 
   {
-    let pending = 0;
-    const later = () => {
-      cancelAnimationFrame(pending);
-      pending = requestAnimationFrame(syncWindowChrome);
-    };
-    const watch = new MutationObserver(later);
+    // Wayland can defer frames until a surface is mapped. The native title bar
+    // needs its colors before that first frame, including in hidden windows.
+    const watch = new MutationObserver(syncWindowChrome);
     watch.observe(document.documentElement, { attributes: true, subtree: false });
     watch.observe(document.body, { attributes: true, attributeFilter: ["class", "data-screen", "style"] });
     watch.observe(document.head, { childList: true, subtree: true, characterData: true });
-    later();
+    syncWindowChrome();
   }
 
   wireAdmin();
@@ -12961,12 +12987,33 @@ function mountArcadeCommand() {
   const list = $('arcadeCommandList');
   if (!dialog || !input || !list) return;
   let opener = null;
+  const pinKey = 'apogee.jump.pins';
+  let pins = new Set();
+  try {
+    const saved = JSON.parse(localStorage.getItem(pinKey) || '[]');
+    if (Array.isArray(saved)) pins = new Set(saved.filter(id => typeof id === 'string'));
+  } catch { /* Local preferences are optional. */ }
+
+  function togglePin(id) {
+    if (pins.has(id)) pins.delete(id);
+    else pins.add(id);
+    try { localStorage.setItem(pinKey, JSON.stringify([...pins])); } catch { /* Session only. */ }
+    renderRoutes();
+  }
+  function group(label) {
+    const heading = document.createElement('h3');
+    heading.className = 'jump-group';
+    heading.textContent = label;
+    list.append(heading);
+  }
   const descriptions = {
     home: 'Start practice, resume a session, or find a drill.',
     mixtape: 'Mixtape: build a short practice session.',
     ghost: 'Race a saved score on the same scenarios.',
     expedition: 'Solo challenges and unlockable rewards.',
-    rift: 'A solo roguelite: build anomalies that multiply and break four star systems.',
+    rift: 'Stack anomalies and break stars in a solo roguelite.',
+    daily: 'Play the daily challenge and compare scores.',
+    band: 'Explore scenarios and thresholds for this rank band.',
     leaderboards: 'Compare scores and ladder standings.',
     queue: 'Queue a ranked match.', seasonview: 'Season benchmarks and your next rank.',
     tournaments: 'Groups, brackets and fixtures.', result: 'Rounds and rating change from your last match.',
@@ -12979,23 +13026,46 @@ function mountArcadeCommand() {
   function renderRoutes() {
     const query = input.value.trim().toLowerCase();
     list.replaceChildren();
-    document.querySelectorAll('.nav .tab').forEach(tab => {
-      if (tab.hidden) return;
+    const tabs = [...document.querySelectorAll('.nav .tab')].filter(tab => !tab.hidden);
+    if (!query) tabs.sort((a, b) => Number(pins.has(b.dataset.screen)) - Number(pins.has(a.dataset.screen)));
+    let previousGroup;
+    tabs.forEach(tab => {
       const label = tab.querySelector('.tab-label')?.textContent || '';
       const description = descriptions[tab.dataset.screen] || '';
       if (query && !query.split(/\s+/).every(word => (label + ' ' + description).toLowerCase().includes(word))) return;
+      const id = tab.dataset.screen;
+      const section = !query && pins.has(id) ? 'Pinned' : 'Screens';
+      if (section !== previousGroup) group(section);
+      previousGroup = section;
+      const row = document.createElement('div');
+      row.className = 'jump-row';
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'arcade-command-route';
+      button.dataset.jump = id;
       button.innerHTML = '<span class="arcade-command-icon" aria-hidden="true">' + (tab.querySelector('svg')?.outerHTML || '') + '</span><span><strong>' + esc(label) + '</strong><small>' + esc(description) + '</small></span><span aria-hidden="true">↗</span>';
       button.addEventListener('click', () => {
         dialog.close();
         openScreen(tab.dataset.screen);
       });
-      list.append(button);
+      const pin = document.createElement('button');
+      pin.type = 'button';
+      pin.className = 'jump-pin';
+      pin.dataset.pin = id;
+      pin.setAttribute('aria-label', 'Pin ' + label);
+      pin.setAttribute('aria-pressed', String(pins.has(id)));
+      pin.title = (pins.has(id) ? 'Unpin ' : 'Pin ') + label;
+      pin.textContent = pins.has(id) ? '★' : '☆';
+      pin.addEventListener('click', () => {
+        togglePin(id);
+        list.querySelector('[data-pin="' + id + '"]')?.focus();
+      });
+      row.append(button, pin);
+      list.append(row);
     });
     if (query) {
       const rows = (practice?.scenarios || []).filter(row => matchesQuery(row, query));
+      if (rows.length) group('Scenarios');
       for (const row of rows.slice(0, 6)) {
         const button = document.createElement('button');
         button.type = 'button'; button.className = 'arcade-command-route';
@@ -13030,11 +13100,20 @@ function mountArcadeCommand() {
   });
   input.addEventListener('input', renderRoutes);
   dialog.addEventListener('keydown', event => {
-    const routes = [...list.querySelectorAll('button')];
+    const routes = [...list.querySelectorAll('.arcade-command-route')];
+    const row = event.target.closest('.jump-row');
+    if (row && event.key.toLowerCase() === 's' && !event.ctrlKey && !event.metaKey && !event.altKey) {
+      event.preventDefault();
+      if (event.repeat) return;
+      const { jump } = row.querySelector('[data-jump]').dataset;
+      togglePin(jump);
+      list.querySelector('[data-jump="' + jump + '"]')?.focus();
+      return;
+    }
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
       event.preventDefault();
       if (!routes.length) return;
-      const index = routes.indexOf(document.activeElement);
+      const index = routes.indexOf(row?.querySelector('[data-jump]') || document.activeElement);
       const next = index < 0 ? (event.key === 'ArrowDown' ? 0 : routes.length - 1) : (index + (event.key === 'ArrowDown' ? 1 : -1) + routes.length) % routes.length;
       routes[next].focus();
     } else if (event.key === 'Enter' && event.target === input) {

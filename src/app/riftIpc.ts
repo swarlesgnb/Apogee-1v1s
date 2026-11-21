@@ -1,3 +1,4 @@
+import type { RiftRecord } from '../core/rift/store.ts';
 import type { RiftService } from './rift.ts';
 
 interface RiftHost {
@@ -5,11 +6,16 @@ interface RiftHost {
   statsDir: () => string | null;
   ready: () => Promise<unknown>;
   launch: (scenario: string) => Promise<{ ok: boolean; error?: string }>;
+  saveFlight: (record: RiftRecord) => Promise<unknown>;
   broadcast: (channel: string, view: unknown) => void;
 }
 /** Shared by the desktop and isolated Electron flow test; launch is the only simulated side effect. */
 export function registerRiftHandlers(ipc: { handle: (channel: string, handler: (event: unknown, action?: unknown) => Promise<unknown>) => void }, host: RiftHost) {
   const errorText = (err: unknown) => err instanceof Error ? err.message : String(err);
+  ipc.handle('apogee:riftFlightCard', async (_event, id) => {
+    try { return await host.saveFlight(host.service().flightRecord(id)); }
+    catch (err) { return { ok: false, error: errorText(err) }; }
+  });
   ipc.handle('apogee:rift', async () => {
     await host.ready();
     try { return host.service().view(host.statsDir(), true); }

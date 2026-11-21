@@ -30,8 +30,12 @@ jobs:
           sudo chown root:root node_modules/electron/dist/chrome-sandbox
           sudo chmod 4755 node_modules/electron/dist/chrome-sandbox
           timeout 60s xvfb-run -a npm run validate:desktop-network
+      - name: Exercise Rift choices, save recovery and the UI on Linux
+        run: |
+          npm run validate:rift
+          timeout 240s xvfb-run -a npm run validate:rift-ui
       - run: npm run dist:linux
-      - run: node tools/validatePackage.mjs release --linux && npm run validate:linux-package
+      - run: node tools/validatePackage.mjs release --linux && npm run validate:linux-package -- --appimage
       - name: Test portable package on Ubuntu
         run: |
           node tools/linuxSmokeFixture.mjs
@@ -44,6 +48,19 @@ jobs:
           timeout 120s xvfb-run -a .cache/portable-test/Apogee-*/start-apogee.sh --smoke > release/linux-smoke.log 2>&1
           cat release/linux-smoke.log
           grep -F 'OK: desktop client boots, finds stats, and renders' release/linux-smoke.log
+      - name: Check packaged startup with Wayland
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y weston
+          export XDG_RUNTIME_DIR="$(mktemp -d)" WAYLAND_DISPLAY=apogee-ci XDG_SESSION_TYPE=wayland
+          unset DISPLAY
+          weston --backend=headless-backend.so --socket="$WAYLAND_DISPLAY" --idle-time=0 > "$RUNNER_TEMP/weston.log" 2>&1 &
+          compositor=$!
+          trap 'kill "$compositor" || true' EXIT
+          for i in {1..50}; do test -S "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" && break; sleep 0.2; done
+          test -S "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" || { cat "$RUNNER_TEMP/weston.log"; exit 1; }
+          timeout 120s .cache/portable-test/Apogee-*/start-apogee.sh --ozone-platform=wayland --disable-gpu --smoke > release/wayland-smoke.log 2>&1 || { cat release/wayland-smoke.log; exit 1; }
+          grep -F 'OK: desktop client boots, finds stats, and renders' release/wayland-smoke.log
       - name: Check AppImage extraction without FUSE
         run: |
           chmod +x release/*.AppImage

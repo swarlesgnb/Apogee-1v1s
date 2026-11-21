@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { mkdirSync, mkdtempSync, writeFileSync, readFileSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { ANOMALIES, COMETS, HAZARDS, VESSELS, actRift, startRift, receiveRift, terminal, previews, systemHull, encounterHull,
+import { ANOMALIES, COMETS, HAZARDS, VESSELS, actRift, startRift, startFirstContact, receiveRift, terminal, previews, systemHull, encounterHull,
   type AnomalyId, type HazardId, type RiftState, type Receipt } from './engine.ts';
 import { RiftStore, validRift } from './store.ts';
 import { loadSeason } from '../season/season.ts';
@@ -309,6 +309,62 @@ test('Winning opens the deep Rift; hulls keep growing and the record is refreshe
   v = service.action({ type: 'extract' }, folder); assert.equal(v.records.length, 1); assert.equal(v.records[0].outcome, 'extracted'); assert.equal(v.records[0].system, 5);
 });
 
-assert.equal(tests.length, 25, 'The expected validation inventory must run.');
+test('First Contact shares a hand, first shop and Eclipse per difficulty across pilots and input order', () => {
+  for (let band = 0; band < 4; band++) {
+    const pool = bandPool(band), name = season.windows![band];
+    const a = startFirstContact(pool, band, name, 11, clock);
+    let b = startFirstContact([...pool].reverse(), band, name, 1234, clock + 1);
+    assert.deepEqual(a.fight!.hand, b.fight!.hand);
+    assert.deepEqual(a.skips, b.skips); assert.equal(a.hazards[0], 'eclipse'); assert.deepEqual(a.hazards, b.hazards);
+    assert.notEqual(a.id, b.id); assert.notEqual(a.rng, b.rng);
+    assert.equal(a.fight!.hull, 1000); assert.deepEqual(previews(a), [650,650,650]);
+    b = act(b, { type: 'jump', card: 0 });
+    const firstShop = (s: RiftState) => {
+      s = act(s, {type:'place', uid:s.anomalies[1].uid, target:s.anomalies[0].uid});
+      assert.deepEqual(previews(s), [1250,1250,1250]); assert.ok(validRift(s));
+      return act(play(s), {type:'continue'});
+    };
+    const shop = firstShop(a); assert.equal(shop.phase, 'shop'); assert.deepEqual(shop.shop, firstShop(b).shop);
+    const bought=act(shop,{type:'buy',row:'anomaly',index:0});
+    const shield=act(bought,{type:'place',uid:bought.anomalies[2].uid,target:bought.anomalies[0].uid});
+    let star = act(act(shield,{type:'leave'}),{type:'skip'}); star = act(star,{type:'engage'});
+    assert.equal(star.fight!.name, 'The Eclipse'); assert.equal(star.fight!.hull, 2200);
+    while(star.phase === 'combat') star = act(play(star, 2), {type:'continue'});
+    assert.equal(star.phase, 'won'); assert.ok(validRift(star));
+    const onward = act(act(star,{type:'deeper'}),{type:'leave'});
+    assert.equal(onward.system, 1); assert.equal(onward.stats.endless, false);
+  }
+});
+test('Redline spends remaining Jumps once, pays out in rail order, survives reload and requires a lit Pulsar', () => {
+  let s = startFirstContact(pool, 0, 'Novice', 17, clock);
+  s = act(s, {type:'move', uid:s.anomalies[1].uid, dir:-1});
+  s = act(s, {type:'redline'}); assert.equal(s.fight!.jumps, 0); assert.equal(s.fight!.redline, 2);
+  assert.deepEqual(previews(s), [3250,3250,3250]); assert.throws(()=>act(s,{type:'redline'})); assert.throws(()=>act(s,{type:'jump',card:0}));
+  const store = new RiftStore(join(mkdtempSync(join(testRoot,'redline-')), RIFT_SAVE));
+  store.save({version:2,state:armed(s),records:[]}); const restored=store.load().save.state!;
+  const hit=play(restored); assert.equal(hit.last!.damage,3250); assert.equal(hit.last!.steps.filter(x=>x.source==='Redline → Pulsar').length,2);
+  assert.equal(hit.fight!.redline,undefined);
+  const miss=play(s,.9); assert.equal(miss.last!.steps.filter(x=>x.source==='Redline → Pulsar').length,0); assert.equal(miss.fight!.jumps,0);
+  assert.match(miss.last!.notes.join(' '),/missed/);
+  const dark=startFirstContact(pool,0,'Novice',12,clock); dark.fight!.dark=[dark.anomalies[1].uid];
+  assert.throws(()=>act(dark,{type:'redline'})); assert.throws(()=>act(fight(),{type:'redline'}));
+});
+test('First Contact and ordinary voyages resume independently and share historical flight cards', () => {
+  const dir=mkdtempSync(join(testRoot,'flights-'));
+  let svc=new RiftService(dir,()=>++clock);
+  const regular=svc.action({type:'start',band:0,vessel:'prospector'},dir).state!;
+  const contact=svc.action({type:'firstContact',band:1},dir).state!;
+  svc=new RiftService(dir,()=>++clock);
+  assert.deepEqual(svc.action({type:'standard'},dir).state,regular);
+  assert.deepEqual(svc.action({type:'firstContact',band:0},dir).state,contact);
+  svc.action({type:'arm',card:0},dir); assert.throws(()=>svc.action({type:'standard'},dir),/prepared salvo/);
+  svc.action({type:'abandon'},dir); const card=svc.flightRecord(contact.id);
+  assert.equal(card.ending,'Voyage ended by pilot'); assert.equal(card.firstContact,true);
+  assert.deepEqual(card.anomalies,['volatile','pulsar']); assert.throws(()=>svc.flightRecord('missing'));
+  assert.equal(svc.action({type:'standard'},dir).state!.id,regular.id);
+  assert.equal(svc.action({type:'firstContact',band:1},dir).state!.phase,'combat');
+  assert.equal(svc.flightRecord(card.id).id,card.id);
+});
+assert.equal(tests.length, 28, 'The expected validation inventory must run.');
 for (const [name, run] of tests) { run(); console.log(`PASS ${name}`); }
 console.log(`Rift: ${tests.length}/${tests.length} checks passed. Simulated scores test rules and relative balance, not human difficulty or a live KovaaK's hand-off.`);

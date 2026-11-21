@@ -8,6 +8,20 @@ export interface SteamDiscovery {
   readText(path: string): string;
 }
 
+/** Steam records the installed game's actual directory, including its casing. */
+export function libraryStatsFolders(library: string, platform: string, readText: SteamDiscovery["readText"]): string[] {
+  const path = platform === "win32" ? win32 : posix;
+  const apps = path.join(library, "steamapps");
+  const names = new Set<string>();
+  try {
+    const manifest = readText(path.join(apps, "appmanifest_824270.acf"));
+    const installed = /"installdir"\s+"([^"]+)"/i.exec(manifest)?.[1];
+    if (installed && installed !== "." && installed !== ".." && !/[\\/:]/.test(installed)) names.add(installed);
+  } catch { /* The default location also works before Steam writes its manifest. */ }
+  names.add("FPSAimTrainer");
+  return [...names].map(name => path.join(apps, "common", name, "FPSAimTrainer", "stats"));
+}
+
 /** Steam's own library list covers custom mount points without scanning entire drives. */
 export function discoverStatsFolders(options: SteamDiscovery): string[] {
   const windows = options.platform === "win32";
@@ -18,6 +32,8 @@ export function discoverStatsFolders(options: SteamDiscovery): string[] {
     "C:/Program Files (x86)/Steam", "C:/Steam",
     ...["D", "E", "F"].flatMap(drive => [`${drive}:/Steam`, `${drive}:/SteamLibrary`]),
   ] : [
+    options.env.XDG_DATA_HOME && posix.isAbsolute(options.env.XDG_DATA_HOME)
+      ? path.join(options.env.XDG_DATA_HOME, "Steam") : undefined,
     path.join(options.home, ".local/share/Steam"),
     path.join(options.home, ".steam/steam"), path.join(options.home, ".steam/root"),
     path.join(options.home, ".var/app/com.valvesoftware.Steam/.local/share/Steam"),
@@ -47,7 +63,6 @@ export function discoverStatsFolders(options: SteamDiscovery): string[] {
   }
   return unique([
     options.env.APOGEE_STATS_DIR && path.isAbsolute(options.env.APOGEE_STATS_DIR) ? options.env.APOGEE_STATS_DIR : undefined,
-    ...unique(libraries).map(library => path.join(library,
-      "steamapps", "common", "FPSAimTrainer", "FPSAimTrainer", "stats")),
+    ...unique(libraries).flatMap(library => libraryStatsFolders(library, options.platform, options.readText)),
   ]);
 }

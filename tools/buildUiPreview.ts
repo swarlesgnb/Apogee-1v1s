@@ -9,9 +9,11 @@
  *   npx tsx tools/buildUiPreview.ts
  */
 
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 
+import { findStatsFolder } from "../src/app/watcher.ts";
 import { scanStatsFolder } from "../src/core/history/history.ts";
+import { drawDaily } from "../src/core/social/daily.ts";
 import { loadSeason } from "../src/core/season/season.ts";
 import { practicePlaylists, practiceRows } from "../src/core/season/practice.ts";
 import { sampleTournamentView } from "../src/core/tournament/sample.ts";
@@ -36,13 +38,12 @@ const snapshot = readFileSync(new URL("../data/snapshot.json", import.meta.url),
  * the panel says so itself.
  */
 const previewSeason = loadSeason();
+// A fixed example stays accurate when the HTML is opened on another day.
+const dailySample = drawDaily(previewSeason.scenarios.map(s => ({
+  name: s.scenario, category: s.category, window: s.window ?? 0,
+})), previewSeason.name, 1, 0);
 const practice = (() => {
-  const statsDir = [
-    process.env.APOGEE_STATS_DIR,
-    "C:/Program Files (x86)/Steam/steamapps/common/FPSAimTrainer/FPSAimTrainer/stats",
-    "D:/steam/steamapps/common/FPSAimTrainer/FPSAimTrainer/stats",
-    "E:/steam/steamapps/common/FPSAimTrainer/FPSAimTrainer/stats",
-  ].find((p): p is string => Boolean(p) && existsSync(p!));
+  const statsDir = findStatsFolder();
   if (!statsDir) return null;
 
   try {
@@ -114,7 +115,7 @@ const tournamentSample = {
 };
 const body = bodyMatch[1]
   // The preview supplies its own inline script instead of loading the file.
-  .replace(/<script src="(?:renderer|cosmic|expedition|rift-lab|guide|rift|presentation|mixtape-engine|mixtape|ghost|share|practice-prefs|practice-home|queue-board|crowns|race)\.js"><\/script>/g, "")
+  .replace(/<script src="(?:renderer|cosmic|expedition|rift-lab|guide|rift|presentation|mixtape-engine|mixtape|ghost|share|practice-prefs|practice-home|account-profile|daily|social|queue-board|crowns|race)\.js"><\/script>/g, "")
   .replace(/^[ \t]+(?=\r?$)/gm, "");
 
 const html = `<!doctype html>
@@ -128,6 +129,8 @@ ${style}
 <style>${readFileSync(new URL("guide.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("ghost.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("share.css", RENDERER_DIR), "utf8")}</style>
+<style>${readFileSync(new URL("daily.css", RENDERER_DIR), "utf8")}</style>
+<style>${readFileSync(new URL("social.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("queue-board.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("crowns.css", RENDERER_DIR), "utf8")}</style>
 <style>${readFileSync(new URL("practice-ux.css", RENDERER_DIR), "utf8")}</style>
@@ -160,6 +163,7 @@ ${readFileSync(new URL("practice-prefs.js", RENDERER_DIR), "utf8")}
 <script>
 ${rendererJs}
 </script>
+<script>${readFileSync(new URL("account-profile.js", RENDERER_DIR), "utf8")}</script>
 <script>window.__COSMIC_ASSETS__ = ${JSON.stringify(cosmicAssets)};</script>
 <script>${cosmicJs}</script>
 <script>${expeditionJs}</script>
@@ -172,6 +176,9 @@ ${rendererJs}
 <script>${readFileSync(new URL("mixtape.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("ghost.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("share.js", RENDERER_DIR), "utf8")}</script>
+<script>window.__APOGEE_DAILY_SAMPLE__ = ${JSON.stringify(dailySample).replace(/</g, "\\u003c")};</script>
+<script>${readFileSync(new URL("daily.js", RENDERER_DIR), "utf8")}</script>
+<script>${readFileSync(new URL("social.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("queue-board.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("crowns.js", RENDERER_DIR), "utf8")}</script>
 <script>${readFileSync(new URL("race.js", RENDERER_DIR), "utf8")}</script>

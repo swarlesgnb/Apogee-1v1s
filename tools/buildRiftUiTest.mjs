@@ -9,4 +9,5 @@ await build({ entryPoints:['tools/riftUiHost.ts'], outfile:'.cache/rift-ui/main.
 writeFileSync('.cache/rift-ui/preload.cjs', `const {contextBridge,ipcRenderer}=require('electron');
 contextBridge.exposeInMainWorld('riftTest',{
 rift:()=>ipcRenderer.invoke('apogee:rift'),riftAction:a=>ipcRenderer.invoke('apogee:riftAction',a),
+saveFlightCard:id=>ipcRenderer.invoke('apogee:riftFlightCard',id),
 chooseFolder:()=>ipcRenderer.invoke('test:folder'),onRift:fn=>ipcRenderer.on('apogee:rift',(_,v)=>fn(v))});`);

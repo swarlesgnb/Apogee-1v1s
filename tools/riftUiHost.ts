@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import assert from 'node:assert/strict';
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync, utimesSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { ShareCards } from '../src/app/shareCard.ts';
 import { RiftService, RIFT_SAVE } from '../src/app/rift.ts';
 import { registerRiftHandlers } from '../src/app/riftIpc.ts';
 import { RiftStore } from '../src/core/rift/store.ts';
@@ -44,8 +45,13 @@ function seedBuild(){
   for(const c of Object.keys(s.levels))s.levels[c]=30;
   store.save(save);service=new RiftService(folder,()=>now);
 }
+const cardPath = join(folder, 'first-contact.png');
+app.setPath('pictures', folder);
+const cards = new ShareCards({rendererDir:resolve('src/app/renderer'),fontsDir:resolve('assets/brand/fonts'),
+  window:()=>win,ghost:()=>null,context:()=>({playerName:'Pilot',season:'Apogee',tier:null}),saveAs:async()=>cardPath});
 registerRiftHandlers(ipcMain,{service:()=>service,statsDir:()=>connected?stats:null,ready:async()=>{},
   launch:async name=>{launches.push(name);return failLaunch?{ok:false,error:'Fixture launch unavailable. Retry opening the saved round.'}:{ok:true};},
+  saveFlight:record=>cards.saveFlight(record),
   broadcast:(channel,view)=>win?.webContents.send(channel,view)});
 ipcMain.handle('test:folder',()=>{connected=true;return stats;});
 
@@ -72,6 +78,11 @@ app.whenReady().then(async()=>{
     assert.equal(current().vessel,'prospector');assert.equal(current().phase,'map');
     assert.equal(await run(`document.querySelectorAll('.rift-body-card').length`),3);
     assert.equal(await run(`document.querySelectorAll('.rift-anomaly[data-uid]').length`),1);await shot('map');
+    await click('.tab[data-screen="home"]');
+    assert.match(await run("document.querySelector('.practice-rift-copy p').textContent"), /System 1 · Choose your route/);
+    await click('[data-home-route="rift"]');
+    assert.equal(await run('document.body.dataset.screen'), 'rift');
+    assert.equal(current().phase, 'map');
     pass('The chosen vessel persists; the system map shows moon, planet and star with its hazard');
     await action('engage');assert.equal(current().phase,'combat');
     assert.equal(await run(`document.querySelectorAll('.rift-target').length`),3);
@@ -143,6 +154,7 @@ app.whenReady().then(async()=>{
     assert.equal(service.view(stats).records[0].outcome,'lost');await shot('ended');
     await action('new');await action('start');await action('extract');await click('[data-rift="extract"][data-confirm="true"]');assert.equal(current().phase,'extracted');
     assert.equal(service.view(stats).records.length,2);
+    assert.equal(await run("document.querySelector('[data-home-route=rift]').textContent"), 'Open Rift →');
     pass('Ending a fight and safe extraction have explicit confirmation and distinct saved outcomes');
     const saved=readFileSync(join(folder,RIFT_SAVE),'utf8');
     win.webContents.send('apogee:rift',{...service.view(stats),error:'Fixture read error <img src=x onerror=alert(1)>'});await settle();
@@ -197,7 +209,27 @@ app.whenReady().then(async()=>{
       assert.ok(await run(`(()=>{const d=document.querySelector('#apogeeGuide');return d.getBoundingClientRect().right<=innerWidth+1&&d.querySelector('.guide-body').scrollWidth<=d.querySelector('.guide-body').clientWidth+2})()`),`Guide fits ${width}`);}
     win.setSize(1440,1050);await run(`window.ApogeeGuide.close()`);
     pass('Rift Academy lessons run on the real engine, complete their goals and track progress at every width');
-    assert.deepEqual(errors,[],'Renderer emitted no errors');assert.equal(checks.length,16);
+    const ordinaryId=current().id;
+    await click('.tab[data-screen="home"]');await click('#homeFirstContact');
+    assert.equal(current().firstContact,true); assert.equal(current().phase,'combat');
+    assert.equal(await run("document.querySelector('.rift-preview strong').textContent"), '650');
+    await run(`(()=>{const [reactor,pulsar]=document.querySelectorAll('.rift-anomaly[draggable="true"]'),dataTransfer=new DataTransfer();
+      pulsar.dispatchEvent(new DragEvent('dragstart',{bubbles:true,dataTransfer}));
+      reactor.dispatchEvent(new DragEvent('drop',{bubbles:true,cancelable:true,dataTransfer}));})()`); await settle();
+    assert.equal(await run("document.querySelector('.rift-preview strong').textContent.replace(/[^0-9]/g,'')"),'1250');
+    assert.equal(await run("document.querySelector('.rift-preview em').textContent"),'BREAKS IT');
+    await shot('first-contact-opening'); await action('redline'); assert.equal(current().fight!.redline,2);
+    await click('[data-rift="arm"][data-card="0"]');addRun({ratio:1.3});await action('refresh');
+    assert.equal(current().last!.steps.filter(x=>x.source==='Redline → Pulsar').length,2);
+    await action('continue');assert.equal(current().phase,'shop');await action('extract');await click('[data-rift="extract"][data-confirm="true"]');
+    await action('saveflight');
+    for(let i=0;i<80&&!await run("document.querySelector('.rift-message').textContent.includes('saved')");i++) await settle();
+    assert.match(await run("document.querySelector('.rift-message').textContent"),/saved/);
+    const png=readFileSync(cardPath);assert.equal(png.subarray(1,4).toString(),'PNG');assert.equal(png.readUInt32BE(16),1200);assert.equal(png.readUInt32BE(20),675);
+    writeFileSync(join(out,'first-contact-card.png'),png);
+    await click('.tab[data-screen="home"]');await click('[data-home-route="rift"]');assert.equal(current().id,ordinaryId);
+    pass('First Contact starts from Home, drag changes 650 to 1,250, Redline settles a CSV, exports a 1200×675 flight card and restores the other voyage');
+    assert.deepEqual(errors,[],'Renderer emitted no errors');assert.equal(checks.length,17);
     writeFileSync(join(out,'report.json'),JSON.stringify({passed:checks.length,checks,launches:launches.length,screenshots:out,limitations:['Synthetic CSVs and a simulated game launcher; no human aiming or live Steam hand-off tested.','The full-voyage check seeds high planet levels into the save rather than earning a build.']},null,2));
     console.log(`Rift UI: ${checks.length}/${checks.length} checks passed. Screenshots: ${out}`);clearTimeout(timeout);app.exit(0);
   }catch(err){console.error(err);clearTimeout(timeout);if(win)await shot('failure');app.exit(1);}

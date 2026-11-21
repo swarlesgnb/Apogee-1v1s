@@ -439,7 +439,7 @@
     nudge = document.createElement('div'); nudge.className = 'guide-nudge'; nudge.setAttribute('role', 'status');
     nudge.innerHTML = '<b>New to Apogee?</b><span>A quick guide to every mode, plus hands-on Rift lessons.</span><div><button type="button" class="guide-btn primary" data-n="open">Open the guide</button><button type="button" class="guide-btn ghost" data-n="later">Not now</button></div>';
     nudge.onclick = ev => { const b = ev.target.closest('[data-n]'); if (!b) return; if (b.dataset.n === 'open') open('welcome'); else hideNudge(); };
-    document.body.append(nudge);
+    (document.querySelector('.scroll') || document.body).append(nudge);
   }
   const topbar = document.querySelector('.topbar-right');
   if (topbar && !document.getElementById('guideButton')) {

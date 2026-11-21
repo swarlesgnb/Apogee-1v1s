@@ -1,7 +1,7 @@
 import { randomInt, createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { ANOMALIES, COMETS, GRADES, HAZARDS, SIGNALS, STAGES, VESSELS, actRift, encounterHull, previews, receiveRift, startRift, terminal, type Receipt, type RiftState } from '../core/rift/engine.ts';
+import { ANOMALIES, COMETS, GRADES, HAZARDS, SIGNALS, STAGES, VESSELS, actRift, encounterHull, previews, receiveRift, startFirstContact, startRift, terminal, type Receipt, type RiftState } from '../core/rift/engine.ts';
 import { RECORD_LIMIT, RiftStore, type RiftRecord, type RiftSave } from '../core/rift/store.ts';
 import { loadSeason } from '../core/season/season.ts';
 import { readStatsFolder, type StatsFileRun } from '../core/stats/folderCache.ts';
@@ -19,7 +19,14 @@ export function riftReceipt(run: StatsFileRun, expected: number | null): Receipt
 const armedScenario = (s: RiftState | null) => s?.phase === 'combat' && s.fight?.armed ? s.fight.hand[s.fight.armed.card].scenario : null;
 function record(s: RiftState, at: number): RiftRecord {
   return { id: s.id, outcome: s.phase, band: s.bandName, vessel: s.vessel, system: s.system + 1, cleared: s.stats.clears,
+    ...(s.firstContact ? { firstContact: true as const } : {}), ending: flightEnding(s),
     damage: s.stats.damage, bestHit: s.stats.bestHit, anomalies: s.anomalies.map(o => o.id), at };
+}
+function flightEnding(s: RiftState): string {
+  if (s.phase === 'won') return s.firstContact && s.system === 0 ? 'First Contact cleared' : 'Escaped the Rift';
+  if (s.phase === 'extracted') return 'Extracted safely';
+  if (s.last?.verdict === 'lost') return 'Lost to ' + (s.fight?.name || 'the Rift');
+  return 'Voyage ended by pilot';
 }
 /** The first flight saved to rift-v1.json in a format this version does not read; it is left in place, untouched. */
 export const RIFT_SAVE = 'rift-v2.json';
@@ -65,28 +72,49 @@ export class RiftService {
       previews: previews(state),
       route: STAGES.map((st, i) => ({ stage: i, name: st.name, hull: encounterHull(state, state.system, i), pay: st.pay })),
     } : null;
-    return { state, derived, records: this.save?.records ?? [], anomalies: ANOMALIES, comets: COMETS, hazards: HAZARDS, signals: SIGNALS,
+    const voyages = [state, this.save?.reserve].filter((s): s is RiftState => !!s && !terminal(s));
+    return { state, derived, activeContact: voyages.some(s => s.firstContact), activeStandard: voyages.some(s => !s.firstContact), records: this.save?.records ?? [], anomalies: ANOMALIES, comets: COMETS, hazards: HAZARDS, signals: SIGNALS,
       vessels: VESSELS, grades: GRADES, bands: season.windows ?? [], canPlay: !!dir, error, warning: this.warning };
   }
   action(raw: unknown, dir: string | null) {
     this.load(); this.sync(dir);
     if (!raw || typeof raw !== 'object' || Array.isArray(raw)) throw new Error('Choose a Rift action.');
     const a = raw as Record<string, unknown>, now = this.now();
-    if (a.type === 'start') {
+    const contact = a.type === 'firstContact';
+    if (contact || a.type === 'standard' || a.type === 'start') {
+      const saved = this.save!;
+      let selected = saved;
+      if ((saved.state && !!saved.state.firstContact !== contact) || (!saved.state && saved.reserve && !!saved.reserve.firstContact === contact)) {
+        if (saved.state?.fight?.armed) throw new Error('Finish the prepared salvo or end that voyage before switching flights.');
+        selected = { ...saved, state: saved.reserve ?? null, reserve: saved.state };
+      }
+      if (a.type === 'standard' || (contact && selected.state && !terminal(selected.state))) {
+        if (selected !== saved) this.commit(selected);
+        return this.view(dir);
+      }
       if (!dir) throw new Error("Choose your KovaaK's stats folder before entering the Rift.");
-      if (this.save!.state && !terminal(this.save!.state)) throw new Error('Finish or extract from your current voyage first.');
+      if (selected.state && !terminal(selected.state)) throw new Error('Finish or extract from your current voyage first.');
       const season = loadSeason(), band = a.band;
-      if (typeof band !== 'number' || !Number.isInteger(band) || !season.windows?.[band] || typeof a.vessel !== 'string') throw new Error('Choose a difficulty and a vessel.');
+      if (typeof band !== 'number' || !Number.isInteger(band) || !season.windows?.[band] || (!contact && typeof a.vessel !== 'string')) throw new Error('Choose a difficulty and a vessel.');
       // A fixed published reference avoids rewarding sandbagging and never moves after a voyage starts.
       const pool = season.scenarios.filter(s => (s.window ?? 0) === band && this.duration(s.scenario) !== null)
         .map(s => ({ scenario: s.scenario, category: s.category, target: s.rankMaxes[0] }));
-      this.commit({ ...this.save!, state: startRift(pool, band, season.windows[band], a.vessel, randomInt(0x100000000), now) });
+      const seed = randomInt(0x100000000);
+      const state = contact ? startFirstContact(pool, band, season.windows[band], seed, now)
+        : startRift(pool, band, season.windows[band], a.vessel as string, seed, now);
+      this.commit({ ...selected, state });
     } else {
       if (!this.save!.state) throw new Error('Start a voyage first.');
       if (a.type === 'arm' && !dir) throw new Error('Reconnect your stats folder before playing.');
       this.commit(this.withRecord({ ...this.save!, state: actRift(this.save!.state, a, now) }));
     }
     return this.view(dir);
+  }
+  flightRecord(id: unknown): RiftRecord {
+    this.load();
+    const flight = this.save!.records.find(r => r.id === id);
+    if (!flight) throw new Error('Finish a voyage before saving its flight card.');
+    return flight;
   }
   launchScenario(dir: string | null): string {
     this.load();

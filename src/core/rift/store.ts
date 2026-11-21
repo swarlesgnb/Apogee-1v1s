@@ -4,9 +4,10 @@ import { ANOMALIES, COMETS, CONSUMABLE_SLOTS, HAND_SIZE, HAZARDS, LOG_LIMIT, SIG
 
 export interface RiftRecord {
   id: string; outcome: string; band: string; vessel: string; system: number; cleared: number;
+  firstContact?: true; ending?: string;
   damage: number; bestHit: number; anomalies: string[]; at: number;
 }
-export interface RiftSave { version: 2; state: RiftState | null; records: RiftRecord[] }
+export interface RiftSave { version: 2; state: RiftState | null; reserve?: RiftState | null; records: RiftRecord[] }
 export const RECORD_LIMIT = 12;
 const obj = (v: any): boolean => !!v && typeof v === 'object' && !Array.isArray(v);
 const finite = (v: any): boolean => typeof v === 'number' && Number.isFinite(v);
@@ -35,14 +36,14 @@ function resolution(r: any, cats: Set<string>): r is Resolution {
 }
 
 export function validRift(s: any): s is RiftState {
-  if (!obj(s) || s.version !== 2 || !str(s.id) || !int(s.seed, 0, 0xffffffff) || !int(s.rng, 0, 0xffffffff) ||
+  if (!obj(s) || (s.firstContact !== undefined && (s.firstContact !== true || s.vessel !== 'drifter')) || s.version !== 2 || !str(s.id) || !int(s.seed, 0, 0xffffffff) || !int(s.rng, 0, 0xffffffff) ||
       !finite(s.startedAt) || !int(s.band, 0, 3) || !str(s.bandName) || !VESSELS.some(k => k.id === s.vessel) ||
       !['map', 'combat', 'result', 'shop', 'won', 'lost', 'extracted'].includes(s.phase) ||
       !int(s.system, 0, 200) || !int(s.stage, 0, 2) || !int(s.maxHull, 1, 9) || !int(s.hull, 0, s.maxHull) ||
       !int(s.stardust, 0, 1e6) || !int(s.slots, 1, 9) || !int(s.nextUid, 1, 1e6) || !bool(s.surge)) return false;
   if (!obj(s.levels)) return false;
   const cats = new Set(Object.keys(s.levels));
-  if (cats.size < 3 || !Object.values(s.levels).every(l => int(l, 1, 99))) return false;
+  if (cats.size < 3 || !Object.values(s.levels).every(l => int(l, s.firstContact ? 0 : 1, 99))) return false;
   if (!Array.isArray(s.pool) || s.pool.length < 6 || !s.pool.every((p: any) => obj(p) && str(p.scenario) && cats.has(p.category) && finite(p.target) && p.target > 0)) return false;
   if (!Array.isArray(s.hazards) || s.hazards.length !== s.system + 1 || !s.hazards.every((h: any) => hazardIds.has(h))) return false;
   if (!Array.isArray(s.skips) || s.skips.length !== 2 || !s.skips.every((x: any) => signalIds.has(x))) return false;
@@ -66,7 +67,7 @@ export function validRift(s: any): s is RiftState {
   }
   if (s.fight !== null) {
     const f = s.fight;
-    if (!obj(f) || !int(f.stage, 0, 2) || f.stage !== s.stage || !str(f.name) || !int(f.hull, 1, BIG) || !int(f.dealt, 0, BIG) ||
+    if (!obj(f) || (f.redline !== undefined && (!s.firstContact || !int(f.redline, 1, 20) || f.jumps !== 0)) || !int(f.stage, 0, 2) || f.stage !== s.stage || !str(f.name) || !int(f.hull, 1, BIG) || !int(f.dealt, 0, BIG) ||
         !int(f.salvos, 1, 20) || !int(f.salvo, 0, f.salvos) || !int(f.jumps, 0, 20) || !int(f.novas, 0, f.salvo) || !bool(f.boost) ||
         !Array.isArray(f.hand) || f.hand.length !== HAND_SIZE || !f.hand.every((c: any) => card(c, cats)) ||
         !Array.isArray(f.dark) || !f.dark.every((u: any) => int(u, 1, s.nextUid - 1)) || !(f.lock === null || cats.has(f.lock)) ||
@@ -81,8 +82,9 @@ export function validRift(s: any): s is RiftState {
   return true;
 }
 export function validSave(v: any): v is RiftSave {
-  return obj(v) && v.version === 2 && (v.state === null || validRift(v.state)) && Array.isArray(v.records) && v.records.length <= RECORD_LIMIT &&
-    v.records.every((r: any) => obj(r) && str(r.id) && ['won', 'lost', 'extracted'].includes(r.outcome) && str(r.band) && VESSELS.some(k => k.id === r.vessel) &&
+  return obj(v) && v.version === 2 && (v.state === null || validRift(v.state)) &&
+    (v.reserve == null || (validRift(v.reserve) && !v.reserve.fight?.armed && (!v.state || !!v.state.firstContact !== !!v.reserve.firstContact))) && Array.isArray(v.records) && v.records.length <= RECORD_LIMIT &&
+    v.records.every((r: any) => obj(r) && (r.firstContact === undefined || r.firstContact === true) && (r.ending === undefined || str(r.ending)) && str(r.id) && ['won', 'lost', 'extracted'].includes(r.outcome) && str(r.band) && VESSELS.some(k => k.id === r.vessel) &&
       int(r.system, 1, 201) && int(r.cleared, 0, 1e6) && finite(r.damage) && r.damage >= 0 && finite(r.bestHit) && r.bestHit >= 0 &&
       Array.isArray(r.anomalies) && r.anomalies.length <= 9 && r.anomalies.every((id: any) => anomalyIds.has(id)) && finite(r.at));
 }

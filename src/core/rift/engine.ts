@@ -144,6 +144,7 @@ export interface Resolution {
 }
 export interface Fight {
   stage: number; name: string; hull: number; dealt: number; salvo: number; salvos: number; jumps: number;
+  redline?: number;
   hand: Card[]; armed: { at: number; card: number } | null; boost: boolean; dark: number[]; lock: string | null; novas: number;
 }
 export type Phase = 'map' | 'combat' | 'result' | 'shop' | 'won' | 'lost' | 'extracted';
@@ -156,6 +157,7 @@ export interface RiftStats {
   last: string | null; chain: number; systemCats: string[]; endless: boolean;
 }
 export interface RiftState {
+  firstContact?: true;
   version: 2; id: string; seed: number; rng: number; startedAt: number; band: number; bandName: string; vessel: VesselId;
   phase: Phase; system: number; stage: number; pool: RiftScenario[]; hazards: HazardId[]; skips: SignalId[];
   hull: number; maxHull: number; stardust: number; slots: number; anomalies: Owned[]; consumables: Consumable[];
@@ -179,6 +181,7 @@ function shuffle<T>(s: { rng: number }, list: readonly T[]): T[] {
 }
 export const categories = (s: RiftState) => Object.keys(s.levels);
 export function encounterHull(s: RiftState, system = s.system, stage = s.stage): number {
+  if (s.firstContact && system === 0) return [1000, 1500, 2200][stage];
   const giant = stage === 2 && s.hazards[system] === 'bluegiant' ? 1.5 : 1;
   return Math.round(systemHull(system) * STAGES[stage].scale * giant);
 }
@@ -229,9 +232,31 @@ export function startRift(pool: RiftScenario[], band: number, bandName: string, 
   return s;
 }
 
+/** The challenge seed controls the opening only. The voyage keeps its own identity and RNG afterwards. */
+export function startFirstContact(pool: RiftScenario[], band: number, bandName: string, seed: number, now: number): RiftState {
+  const sorted = [...pool].sort((a, b) => a.scenario < b.scenario ? -1 : a.scenario > b.scenario ? 1 : 0);
+  const s = startRift(sorted, band, bandName, 'drifter', seed, now);
+  s.firstContact = true;
+  s.rng = 0x0500fc00 + band;
+  s.anomalies = [];
+  addAnomaly(s, 'volatile');
+  addAnomaly(s, 'pulsar');
+  for (const cat of categories(s)) s.levels[cat] = 0;
+  rollHazards(s);
+  s.hazards[0] = 'eclipse';
+  beginFight(s);
+  s.rng = seed;
+  return s;
+}
+
 function stockShop(s: RiftState): Shop {
   const free = s.signals.includes('berth'), rare = s.signals.includes('beacon');
   s.signals = s.signals.filter(x => x !== 'berth' && x !== 'beacon');
+  if (s.firstContact && s.system === 0 && s.stats.clears === 1) {
+    return { free, rerollCost: 3, anomalies: (['lens', 'miner'] as const).map(id => ({ id, price: anomaly(id)!.price })),
+      goods: [{ item: { kind: 'chart', category: categories(s)[s.band % categories(s).length] }, price: CHART_PRICE },
+        { item: { kind: 'comet', id: 'wormhole' }, price: comet('wormhole')!.price }] };
+  }
   const c = pick(s, COMETS);
   return { anomalies: anomalyRow(s, rare), rerollCost: 3, free, goods: [
     { item: { kind: 'chart', category: pick(s, categories(s)) }, price: CHART_PRICE },
@@ -253,7 +278,7 @@ function anomalyRow(s: RiftState, rare = false): AnomalyOffer[] {
 function beginFight(s: RiftState) {
   const hazard = s.stage === 2 ? s.hazards[s.system] : null;
   const salvos = BASE_SALVOS + owns(s, 'station') + (s.surge ? 1 : 0);
-  const jumps = hazard === 'deadstar' ? 0 : BASE_JUMPS + (s.vessel === 'drifter' ? 1 : 0) + owns(s, 'warp');
+  const jumps = hazard === 'deadstar' ? 0 : BASE_JUMPS + (s.vessel === 'drifter' && !s.firstContact ? 1 : 0) + owns(s, 'warp');
   const hand: Card[] = [];
   for (let i = 0; i < HAND_SIZE; i++) hand.push(draw(s, hand, null));
   s.surge = false;
@@ -329,6 +354,14 @@ export function actRift(state: RiftState, raw: unknown, now: number): RiftState 
       if (rest.some(c => c.scenario === s.fight!.hand[i].scenario)) s.fight!.hand[i] = draw(s, rest, s.fight!.lock);
       s.fight!.jumps--; break;
     }
+    case 'redline': {
+      const f = s.fight;
+      check(s.firstContact && s.phase === 'combat' && f && !f.armed && f.jumps > 0 && !f.redline, 'Redline needs unspent Jumps before a salvo.');
+      check(s.anomalies.some(o => o.id === 'pulsar' && !f!.dark.includes(o.uid)), 'Redline needs a lit Pulsar.');
+      f!.redline = f!.jumps;
+      f!.jumps = 0;
+      break;
+    }
     case 'arm': {
       check(s.phase === 'combat' && s.fight && !s.fight.armed, 'This salvo is already listening or is not ready.');
       const i = index(a.card, s.fight!.hand.length, 'Choose a target to play.');
@@ -343,6 +376,7 @@ export function actRift(state: RiftState, raw: unknown, now: number): RiftState 
       check(between, 'Sell anomalies between salvos.');
       const i = s.anomalies.findIndex(o => o.uid === a.uid);
       check(i >= 0, 'Choose an anomaly you carry.');
+      check(!(s.fight?.redline && s.anomalies[i].id === 'pulsar'), 'Keep Pulsar aboard until Redline resolves.');
       s.stardust += sellValue(s.anomalies[i].id); s.anomalies.splice(i, 1); s.stats.sold++;
       for (const o of s.anomalies) if (o.id === 'scrap') o.n += 4;
       if (s.fight) s.fight.dark = s.fight.dark.filter(uid => s.anomalies.some(o => o.uid === uid));
@@ -354,13 +388,20 @@ export function actRift(state: RiftState, raw: unknown, now: number): RiftState 
       check(i >= 0 && j >= 0 && j < s.anomalies.length, 'That anomaly cannot move further.');
       [s.anomalies[i], s.anomalies[j]] = [s.anomalies[j], s.anomalies[i]]; break;
     }
+    case 'place': {
+      check(between, 'Rearrange anomalies between salvos.');
+      const from = s.anomalies.findIndex(o => o.uid === a.uid);
+      const to = s.anomalies.findIndex(o => o.uid === a.target);
+      check(from >= 0 && to >= 0, 'Choose two anomalies you carry.');
+      s.anomalies.splice(to, 0, s.anomalies.splice(from, 1)[0]); break;
+    }
     case 'continue': {
       check(s.phase === 'result' && s.last, 'There is no result to continue.');
       const v = s.last!.verdict;
       if (v === 'continue') s.phase = 'combat';
       else if (v === 'lost') s.phase = 'lost';
       else if (v === 'failed') { advance(s); s.phase = 'map'; }
-      else if (s.stage === 2 && s.system === FINAL_SYSTEM && !s.stats.endless) { s.phase = 'won'; }
+      else if (s.stage === 2 && (s.system === FINAL_SYSTEM || (s.firstContact && s.system === 0)) && !s.stats.endless) { s.phase = 'won'; }
       else { s.shop = stockShop(s); s.phase = 'shop'; }
       break;
     }
@@ -387,7 +428,7 @@ export function actRift(state: RiftState, raw: unknown, now: number): RiftState 
       s.shop = null; advance(s); s.phase = 'map'; break;
     case 'deeper':
       check(s.phase === 'won', 'The deep Rift opens only after the final star.');
-      s.stats.endless = true; s.shop = stockShop(s); s.phase = 'shop'; break;
+      s.stats.endless = s.system >= FINAL_SYSTEM; s.shop = stockShop(s); s.phase = 'shop'; break;
     case 'extract':
       check(['map', 'shop'].includes(s.phase), 'Extract between encounters.'); s.shop = null; s.phase = 'extracted'; break;
     case 'abandon':
@@ -478,7 +519,11 @@ export function score(s: RiftState, card: Card, rawScore: number, boost = s.figh
   add(c, 20 * level, 1 + level);
   c.steps.push({ uid: null, source: `${card.category} · level ${level}`, text: `+${20 * level} Thrust, ${1 + level} Flux`, thrust: c.thrust, flux: c.flux });
   if (boost) { times(c, 2); c.steps.push({ uid: null, source: "Halley's Comet", text: '×2 Flux', thrust: c.thrust, flux: c.flux }); }
-  for (let i = 0; i < s.anomalies.length; i++) trigger(c, i, 0);
+  const pulsar = f.redline && at(c, 'strike') ? s.anomalies.findIndex(o => o.id === 'pulsar' && !f.dark.includes(o.uid)) : -1;
+  for (let i = 0; i < s.anomalies.length; i++) {
+    trigger(c, i, 0);
+    if (i === pulsar) for (let j = 0; j < f.redline!; j++) trigger(c, i, 0, 'Redline → Pulsar');
+  }
   if (hazard === 'dimmer') { c.flux = round2(c.flux / 2); c.steps.push({ uid: null, source: 'The Brown Dwarf', text: '½ Flux', thrust: c.thrust, flux: c.flux }); }
   return { ratio, grade, thrust: c.thrust, flux: c.flux, damage: Math.floor(c.thrust * c.flux), steps: c.steps };
 }
@@ -498,6 +543,10 @@ export function receiveRift(state: RiftState, receipt: Receipt, now: number): Ri
       !Number.isFinite(receipt.startedAt) || receipt.startedAt < armed.at || receipt.at <= receipt.startedAt || receipt.at > now + 2000) return state;
   const s = structuredClone(state), fight = s.fight!, notes: string[] = [], payout: Payout[] = [];
   const result = score(s, card, receipt.score);
+  if (fight.redline) {
+    notes.push(RANK[result.grade] >= RANK.strike ? 'Redline paid out on a Strike or better.' : 'Redline missed. Your wagered Jumps are spent.');
+    delete fight.redline;
+  }
   fight.armed = null; fight.boost = false; fight.salvo++; fight.dealt += result.damage;
   if (result.grade === 'nova') fight.novas++;
   const st = s.stats;
