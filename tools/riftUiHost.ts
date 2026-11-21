@@ -218,6 +218,8 @@ app.whenReady().then(async()=>{
       reactor.dispatchEvent(new DragEvent('drop',{bubbles:true,cancelable:true,dataTransfer}));})()`); await settle();
     assert.equal(await run("document.querySelector('.rift-preview strong').textContent.replace(/[^0-9]/g,'')"),'1250');
     assert.equal(await run("document.querySelector('.rift-preview em').textContent"),'BREAKS IT');
+    assert.equal(await run("document.querySelector('.rift-contact-readout strong').textContent.replace(/[^0-9]/g,'')"),'1250');
+    assert.ok(await run("document.querySelector('.rift-contact-readout').getBoundingClientRect().bottom<=innerHeight"),'Opening combo payoff fits the first viewport');
     await shot('first-contact-opening'); await action('redline'); assert.equal(current().fight!.redline,2);
     await click('[data-rift="arm"][data-card="0"]');addRun({ratio:1.3});await action('refresh');
     assert.equal(current().last!.steps.filter(x=>x.source==='Redline → Pulsar').length,2);

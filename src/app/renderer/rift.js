@@ -93,6 +93,17 @@
     return `${enemy}${ability}<div class="rift-section-title"><h2>Your hand</h2><span>Previews assume exactly the reference. Beat it and the number grows.</span></div><div class="rift-hand">${hand}</div>`;
   }
 
+  function openingForecast(s) {
+    const hits = view.derived?.previews || [];
+    const shot = hits.length ? Math.max(...hits) : 0, hull = s.fight.hull - s.fight.dealt;
+    const canBreak = shot >= hull, hasPair = ['pulsar','volatile'].every(id => s.anomalies.some(o => o.id === id));
+    const hint = canBreak ? 'Pick a target below and hit its reference score in KovaaK’s.' : hasPair
+      ? 'Drag Pulsar ahead of Volatile Reactor, or use the arrows to change their firing order.'
+      : 'Try Redline or play a second salvo to finish the moon.';
+    return `<section class="rift-contact rift-contact-forecast"><div><h2>${canBreak ? 'One salvo can break it.' : 'Crack the first moon'}</h2><p>${hint}</p></div>
+      <div class="rift-contact-readout ${canBreak ? 'lethal' : ''}" role="status" aria-label="Opening damage forecast"><small>Best shot at reference</small><strong>${big(shot)}</strong><span>${canBreak ? 'BREAKS IT' : big(hull) + ' hull to break'}</span></div></section>`;
+  }
+
   function redline(s) {
     const f = s.fight;
     const lit = s.anomalies.some(o => o.id === 'pulsar' && !f.dark.includes(o.uid));
@@ -173,7 +184,7 @@
     else {
       const stage = ({ map, combat, result, shop, won: ended, lost: ended, extracted: ended })[s.phase](s);
       const opening = s.firstContact && s.system === 0 && s.stage === 0 && s.phase === 'combat' && !s.fight.armed && !s.fight.salvo;
-      const rig = opening ? `<section class="rift-contact"><div><h2>Crack the first moon</h2><p>Drag Pulsar ahead of Volatile Reactor, or use the arrows. Watch the target previews change.</p></div></section>${rail(s)}` : '';
+      const rig = opening ? `${openingForecast(s)}${rail(s)}` : '';
       content = `${hud(s)}${rig}${finished ? '' : track(s)}${finished ? '' : coach(s)}<div class="rift-stage phase-${s.phase}">${stage}</div>${opening ? '' : rail(s)}${planets(s)}`;
     }
     const endAction = s?.phase === 'combat' ? 'abandon' : s && ['map', 'shop'].includes(s.phase) ? 'extract' : null;

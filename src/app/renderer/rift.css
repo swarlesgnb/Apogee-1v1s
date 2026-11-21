@@ -268,3 +268,8 @@ body:not([data-screen="rift"]) .rift-page *,body[data-presentation-paused] .rift
 .rift-contact.redline {border-left-color:#ffa787}
 .rift-anomaly[draggable="true"] {cursor:grab}
 .rift-anomaly[draggable="true"]:active {cursor:grabbing}
+
+.rift-contact-readout {min-width:12rem;padding:.25rem 1rem;border-left:2px solid #7186a7;display:grid;gap:.1rem;font-variant-numeric:tabular-nums}
+.rift-contact-readout strong {font-size:2rem;line-height:1.05}
+.rift-contact-readout small,.rift-contact-readout span {font-size:.8rem}
+.rift-contact-readout.lethal {border-color:#93e4aa;color:#93e4aa}
